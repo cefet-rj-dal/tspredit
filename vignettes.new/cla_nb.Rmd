@@ -1,0 +1,98 @@
+---
+title: "cla_nb"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{cla_nb}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# DAL Package
+
+## Classification using naive bayes
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(daltoolbox)
+library(ROCR)
+library(RSNNS)  
+library(nnet)  
+library(MLmetrics) 
+library(e1071)
+```
+
+```{r}
+iris <- datasets::iris
+head(iris)
+```
+
+```{r}
+#extracting the levels for the dataset
+slevels <- levels(iris$Species)
+slevels
+```
+
+```{r}
+#for performance issues, you can use matrix instead of data.frame (uncomment next line to test)
+#iris <- cbind(as.matrix(iris[,1:4]), Species=iris$Species)
+```
+
+## Building samples (training and testing)
+
+```{r}
+# preparing dataset for random sampling
+set.seed(1)
+sr <- sample_random()
+sr <- train_test(sr, iris)
+iris_train = sr$train
+iris_test = sr$test
+```
+
+```{r}
+tbl <- rbind(table(iris[,"Species"]), 
+             table(iris_train[,"Species"]), 
+             table(iris_test[,"Species"]))
+rownames(tbl) <- c("dataset", "training", "test")
+head(tbl)
+```
+
+### Model training
+
+```{r}
+model <- cla_nb("Species", slevels)
+print(describe(model))
+model <- fit(model, iris_train)
+train_prediction <- predict(model, iris_train)
+  
+iris_train_predictand = RSNNS::decodeClassLabels(iris_train[,"Species"])
+train_eval <- evaluation.classification(iris_train_predictand, train_prediction)
+print(train_eval$metrics)
+```
+
+```{r}
+rc <- roc_curve(iris_train_predictand, train_prediction)
+plot(rc)
+```
+
+### Model testing
+
+```{r}
+# Test  
+test_prediction <- predict(model, iris_test)
+  
+iris_test_predictand = RSNNS::decodeClassLabels(iris_test[,"Species"])
+test_eval <- evaluation.classification(iris_test_predictand, test_prediction)
+print(test_eval$metrics)
+rc <-roc_curve(iris_test_predictand, test_prediction) 
+plot(rc)
+```
+
+
+
+

@@ -1,0 +1,330 @@
+---
+title: "classification"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{classification}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(dal)
+```
+
+# DAL Classification
+
+```{r}
+# load dataset
+iris <- datasets::iris
+head(iris)
+```
+
+```{r}
+#extracting the levels for the dataset
+slevels <- levels(iris$Species)
+slevels
+```
+
+```{r}
+#for performance issues, you can use matrix instead of data.frame (uncomment next line to test)
+#iris <- cbind(as.matrix(iris[,1:4]), Species=iris$Species)
+```
+
+#### building samples (training and testing)
+
+```{r}
+# preparing dataset for random sampling
+set.seed(1)
+sr <- sample_random()
+sr <- train_test(sr, iris)
+iris_train = sr$train
+iris_test = sr$test
+```
+
+```{r}
+tbl <- rbind(table(iris[,"Species"]), 
+             table(iris_train[,"Species"]), 
+             table(iris_test[,"Species"]))
+rownames(tbl) <- c("dataset", "training", "test")
+head(tbl)
+```
+
+----
+
+## Decision Tree
+
+#### model training
+
+```{r}
+model <- cla_dtree("Species", slevels)
+print(describe(model))
+model <- fit(model, iris_train)
+train_prediction <- predict(model, iris_train)
+  
+iris_train_predictand = RSNNS::decodeClassLabels(iris_train[,"Species"])
+train_eval <- evaluation.classification(iris_train_predictand, train_prediction)
+print(train_eval$metrics)
+```
+
+```{r}
+rc <- roc_curve(iris_train_predictand, train_prediction)
+plot(rc)
+```
+
+#### model testing
+
+```{r}
+# Test  
+test_prediction <- predict(model, iris_test)
+  
+iris_test_predictand = RSNNS::decodeClassLabels(iris_test[,"Species"])
+test_eval <- evaluation.classification(iris_test_predictand, test_prediction)
+print(test_eval$metrics)
+```
+
+```{r}
+rc <-roc_curve(iris_test_predictand, test_prediction) 
+plot(rc)
+```
+
+----
+
+## KNN
+
+#### model training
+
+```{r}
+model <- cla_knn("Species", slevels, k=1)
+print(describe(model))
+model <- fit(model, iris_train)
+train_prediction <- predict(model, iris_train)
+  
+iris_train_predictand = RSNNS::decodeClassLabels(iris_train[,"Species"])
+train_eval <- evaluation.classification(iris_train_predictand, train_prediction)
+print(train_eval$metrics)
+```
+
+```{r}
+rc <- roc_curve(iris_train_predictand, train_prediction)
+plot(rc)
+```
+
+#### model testing
+
+```{r}
+# Test  
+test_prediction <- predict(model, iris_test)
+  
+iris_test_predictand = RSNNS::decodeClassLabels(iris_test[,"Species"])
+test_eval <- evaluation.classification(iris_test_predictand, test_prediction)
+print(test_eval$metrics)
+```
+
+```{r}
+rc <-roc_curve(iris_test_predictand, test_prediction) 
+plot(rc)
+```
+
+----
+
+## Majority
+
+#### model training
+
+```{r}
+model <- cla_majority("Species", slevels)
+print(describe(model))
+model <- fit(model, iris_train)
+train_prediction <- predict(model, iris_train)
+  
+iris_train_predictand = RSNNS::decodeClassLabels(iris_train[,"Species"])
+train_eval <- evaluation.classification(iris_train_predictand, train_prediction)
+print(train_eval$metrics)
+```
+
+```{r}
+rc <- roc_curve(iris_train_predictand, train_prediction)
+plot(rc)
+```
+
+#### model testing
+
+```{r}
+# Test  
+test_prediction <- predict(model, iris_test)
+  
+iris_test_predictand = RSNNS::decodeClassLabels(iris_test[,"Species"])
+test_eval <- evaluation.classification(iris_test_predictand, test_prediction)
+print(test_eval$metrics)
+```
+
+```{r}
+rc <-roc_curve(iris_test_predictand, test_prediction) 
+plot(rc)
+```
+
+----
+
+## Multilayer Perceptron
+
+#### model training
+
+```{r}
+model <- cla_mlp("Species", slevels, size=3,decay=0.03)
+print(describe(model))
+model <- fit(model, iris_train)
+train_prediction <- predict(model, iris_train)
+  
+iris_train_predictand = RSNNS::decodeClassLabels(iris_train[,"Species"])
+train_eval <- evaluation.classification(iris_train_predictand, train_prediction)
+print(train_eval$metrics)
+```
+
+```{r}
+rc <- roc_curve(iris_train_predictand, train_prediction)
+plot(rc)
+```
+
+#### model testing
+
+```{r}
+# Test  
+test_prediction <- predict(model, iris_test)
+  
+iris_test_predictand = RSNNS::decodeClassLabels(iris_test[,"Species"])
+test_eval <- evaluation.classification(iris_test_predictand, test_prediction)
+print(test_eval$metrics)
+```
+
+```{r}
+rc <-roc_curve(iris_test_predictand, test_prediction) 
+plot(rc)
+```
+
+----
+
+## Naive Bayes
+
+#### model training
+
+```{r}
+model <- cla_nb("Species", slevels)
+print(describe(model))
+model <- fit(model, iris_train)
+train_prediction <- predict(model, iris_train)
+  
+iris_train_predictand = RSNNS::decodeClassLabels(iris_train[,"Species"])
+train_eval <- evaluation.classification(iris_train_predictand, train_prediction)
+print(train_eval$metrics)
+```
+
+```{r}
+rc <- roc_curve(iris_train_predictand, train_prediction)
+plot(rc)
+```
+
+#### model testing
+
+```{r}
+# Test  
+test_prediction <- predict(model, iris_test)
+  
+iris_test_predictand = RSNNS::decodeClassLabels(iris_test[,"Species"])
+test_eval <- evaluation.classification(iris_test_predictand, test_prediction)
+print(test_eval$metrics)
+```
+
+```{r}
+rc <-roc_curve(iris_test_predictand, test_prediction) 
+plot(rc)
+```
+
+----
+
+## Support Vector Machine
+
+#### model training
+
+```{r}
+model <- cla_svm("Species", slevels, epsilon=0.0,cost=20.000)
+print(describe(model))
+model <- fit(model, iris_train)
+train_prediction <- predict(model, iris_train)
+  
+iris_train_predictand = RSNNS::decodeClassLabels(iris_train[,"Species"])
+train_eval <- evaluation.classification(iris_train_predictand, train_prediction)
+print(train_eval$metrics)
+```
+
+```{r}
+rc <- roc_curve(iris_train_predictand, train_prediction)
+plot(rc)
+```
+
+#### model testing
+
+```{r}
+# Test  
+test_prediction <- predict(model, iris_test)
+  
+iris_test_predictand = RSNNS::decodeClassLabels(iris_test[,"Species"])
+test_eval <- evaluation.classification(iris_test_predictand, test_prediction)
+print(test_eval$metrics)
+```
+
+```{r}
+rc <-roc_curve(iris_test_predictand, test_prediction) 
+plot(rc)
+```
+
+----
+
+## Random Forest
+
+#### model training
+
+```{r}
+model <- cla_rf("Species", slevels, mtry=3, ntree=5)
+print(describe(model))
+model <- fit(model, iris_train)
+train_prediction <- predict(model, iris_train)
+  
+iris_train_predictand = RSNNS::decodeClassLabels(iris_train[,"Species"])
+train_eval <- evaluation.classification(iris_train_predictand, train_prediction)
+print(train_eval$metrics)
+```
+
+```{r}
+rc <- roc_curve(iris_train_predictand, train_prediction)
+plot(rc)
+```
+
+#### model testing
+
+```{r}
+# Test  
+test_prediction <- predict(model, iris_test)
+  
+iris_test_predictand = RSNNS::decodeClassLabels(iris_test[,"Species"])
+test_eval <- evaluation.classification(iris_test_predictand, test_prediction)
+print(test_eval$metrics)
+```
+
+```{r}
+rc <-roc_curve(iris_test_predictand, test_prediction) 
+plot(rc)
+```
+
+----
+
+
+
+
+

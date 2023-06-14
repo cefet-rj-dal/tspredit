@@ -1,0 +1,62 @@
+---
+title: "clu_pam"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{clu_pam}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# DAL Package
+
+## Clustering - pam
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(daltoolbox)
+library(dplyr)
+library(factoextra)  
+library(cluster)
+```
+
+```{r}
+iris <- datasets::iris
+```
+
+## General function to test clustering methods
+
+```{r}
+test_clustering <- function(model, data, attribute, opt=FALSE) {
+  describe(model)
+  if (opt) 
+    model <- optimize(model, data)    
+  clu <- fit(model, data)
+  print(table(clu))
+  eval <- cluster_evaluation(clu, attribute)
+  print(eval$entropy)
+}
+```
+
+```{r}
+# kmedoid with k equals 3
+test_clustering(cluster_pam(k=3), iris[,1:4], iris[,5])
+```
+
+```{r}
+test_clustering(cluster_pam(NULL), iris[,1:4], iris[,5], TRUE)
+```
+
+## Influence of normalization in clustering
+
+```{r}
+norm_minmax <- fit(minmax(), iris)
+iris_minmax <- transform(norm_minmax, iris)
+test_clustering(cluster_pam(NULL), iris_minmax[,1:4], iris_minmax[,5], TRUE)
+```
+

@@ -1,0 +1,72 @@
+---
+title: "dal_normalization"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{dal_normalization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# DAL Package
+
+## Normalization
+
+Normalization is a technique used to equal strength among variables. 
+
+It is also important to apply it as an input for some machine learning methods. 
+
+Min-Max: Adjust to 0 (minimum value) - 1 (maximum value).
+
+Z-Score: Adjust to 0 (mean), 1 (variance).
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(daltoolbox)
+```
+
+General function for evaluating normalization techniques
+
+```{r}
+iris <- datasets::iris  
+summary(iris)
+```
+
+```{r}
+norm <- minmax()
+describe(norm)
+norm <- fit(norm, iris)
+ndata <- transform(norm, iris)
+summary(ndata)
+
+ddata <- inverse_transform(norm, ndata)
+summary(ddata)
+```
+
+```{r}
+norm <- zscore()
+describe(norm)
+norm <- fit(norm, iris)
+ndata <- transform(norm, iris)
+summary(ndata)
+
+ddata <- inverse_transform(norm, ndata)
+summary(ddata)
+```
+
+```{r}
+norm <- zscore(nmean=0.5, nsd=0.5/2.698)
+describe(norm)
+norm <- fit(norm, iris)
+ndata <- transform(norm, iris)
+summary(ndata)
+
+ddata <- inverse_transform(norm, ndata)
+summary(ddata)
+```
+

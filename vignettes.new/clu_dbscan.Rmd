@@ -1,0 +1,70 @@
+---
+title: "clu_dbscan"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{clu_dbscan}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# DAL Package
+
+## Clustering - dbscan
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(daltoolbox)
+library(dplyr)
+library(fpc)
+library(Rcpp)
+library(dbscan)
+```
+
+```{r}
+iris <- datasets::iris
+```
+
+General entropy of dataset
+
+```{r}
+eval <- cluster_evaluation(rep(1, nrow(iris)), iris$Species)
+print(eval$entropy)
+```
+
+## General function to test clustering methods
+
+```{r}
+test_clustering <- function(model, data, attribute, opt=FALSE) {
+  describe(model)
+  if (opt) 
+    model <- optimize(model, data)    
+  clu <- fit(model, data)
+  print(table(clu))
+  eval <- cluster_evaluation(clu, attribute)
+  print(eval$entropy)
+}
+```
+
+```{r}
+# dbscan
+test_clustering(cluster_dbscan(eps = 0.4, MinPts = 3), iris[,1:4], iris[,5])
+```
+
+```{r}
+test_clustering(cluster_dbscan(eps = NULL, MinPts = 3), iris[,1:4], iris[,5], TRUE)
+```
+
+## Influence of normalization in clustering
+
+```{r}
+norm_minmax <- fit(minmax(), iris)
+iris_minmax <- transform(norm_minmax, iris)
+# dbscan optimized
+test_clustering(cluster_dbscan(eps = NULL, MinPts = 3), iris_minmax[,1:4], iris_minmax[,5], TRUE)
+```

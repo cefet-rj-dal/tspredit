@@ -1,0 +1,97 @@
+---
+title: "ts_mlp"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ts_mlp}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# DAL Package
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(daltoolbox)
+library(nnet)
+```
+
+## Time Series regression - Multilayer perceptron
+
+### Cosine series for studying
+```{r}
+i <- seq(0, 25, 0.25)
+x <- cos(i)
+
+plot(i, x)
+lines(i, x)
+```
+
+### sliding windows
+```{r}
+sw_size <- 10
+ts <- ts_data(x, sw_size)
+tshead(ts, 3)
+```
+
+### data sampling
+```{r}
+test_size <- 1
+samp <- ts_sample(ts, test_size)
+tshead(samp$train, 3)
+tshead(samp$test)
+```
+
+### data preprocessing
+```{r}
+preproc <- ts_gminmax()
+```
+
+### Model training
+```{r}
+model <- ts_mlp(preproc, input_size=4, size=4, decay=0)
+
+io_train <- ts_projection(samp$train)
+model <- fit(model, x=io_train$input, y=io_train$output)
+
+print(describe(model))
+```
+
+### Evaluation of adjustment
+```{r}
+adjust <- predict(model, io_train$input)
+ev_adjust <- evaluation.tsreg(io_train$output, adjust)
+print(head(ev_adjust$metrics))
+```
+
+### Prediction of test
+```{r}
+steps_ahead <- 1
+io_test <- ts_projection(samp$test)
+prediction <- predict(model, x=io_test$input, steps_ahead=steps_ahead)
+prediction <- as.vector(prediction)
+
+output <- as.vector(io_test$output)
+if (steps_ahead > 1)
+    output <- output[1:steps_ahead]
+
+print(sprintf("%.2f, %.2f", output, prediction))
+```
+
+### Evaluation of test data
+```{r}
+ev_test <- evaluation.tsreg(output, prediction)
+print(head(ev_test$metrics))
+print(sprintf("%s: smape: %.2f", describe(model), 100*ev_test$metrics$smape))
+```
+
+### Plot results
+```{r}
+yvalues <- c(io_train$output, io_test$output)
+tsplot(model, y=yvalues, yadj=adjust, ypre=prediction)
+```
