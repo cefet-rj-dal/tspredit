@@ -1,14 +1,3 @@
-# DAL Library
-# version 2.1
- 
-# depends dal_transform.R
-
-### Feature Selection
-# loadlibrary("leaps")
-# loadlibrary("glmnet")
-# loadlibrary("FSelector")
-# loadlibrary("doBy")
- 
 #'@title Feature Selection
 #'@description Feature selection is a process of selecting a subset of relevant features from a larger set of features in a dataset for use in model training. The FeatureSelection class in R provides a framework for performing feature selection.
 #'@details The FeatureSelection class has the following properties:
@@ -20,10 +9,10 @@
 #'wrapper(method): applies a wrapper method to the data to select the most relevant features;
 #'embedded(method): applies an embedded method to the data to select the most relevant features;
 #'summary(): provides a summary of the selected features.
-#'
 #'@param attribute The target variable.
 #'@return An instance of the FeatureSelection class.
 #'@examples
+#'@import daltoolbox
 #'@export
 feature_selection <- function(attribute) {
   obj <- dal_transform()
@@ -39,7 +28,6 @@ transform.feature_selection <- function(obj, data) {
 }
 
 
-#Lasso
 #'@title Feature Selection using Lasso regression
 #'@description Feature selection using Lasso regression is a technique for selecting a subset of relevant features from a larger set of features in a dataset for use in model training. The FeatureSelectionLasso class in R provides a framework for performing feature selection using Lasso regression.
 #'@details The FeatureSelectionLasso class has the following properties:
@@ -65,7 +53,7 @@ feature_selection_lasso <- function(attribute) {
 
 #'@import glmnet
 #'@export
-fit.feature_selection_lasso <- function(obj, data) {
+fit.feature_selection_lasso <- function(obj, data, ...) {
   data = data.frame(data)
   if (!is.numeric(data[,obj$attribute]))
     data[,obj$attribute] =  as.numeric(data[,obj$attribute])
@@ -113,7 +101,7 @@ feature_selection_fss <- function(attribute) {
 }
 
 #'@export
-fit.feature_selection_fss <- function(obj, data) {
+fit.feature_selection_fss <- function(obj, data, ...) {
   data = data.frame(data)
   if (!is.numeric(data[, obj$attribute]))
     data[, obj$attribute] = as.numeric(data[, obj$attribute])
@@ -153,7 +141,7 @@ feature_selection_ig <- function(attribute) {
 }
 
 #'@export
-fit.feature_selection_ig <- function(obj, data) {
+fit.feature_selection_ig <- function(obj, data, ...) {
   data <- data.frame(data)
   data[,obj$attribute] = as.factor(data[, obj$attribute])
 
@@ -190,7 +178,7 @@ feature_selection_relief <- function(attribute) {
 }
 
 #' @export
-fit.feature_selection_relief <- function(obj, data) {
+fit.feature_selection_relief <- function(obj, data, ...) {
   data <- data.frame(data)
   data[, obj$attribute] <- as.factor(data[, obj$attribute])
 
