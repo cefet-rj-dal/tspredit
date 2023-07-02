@@ -27,14 +27,21 @@ transform.bal_oversampling <- function(obj, data, ...) {
   result <- data[data[obj$attribute]==names(x)[length(x)],]
 
   for (i in 1:(length(x)-1)) {
-    small <- data[,obj$attribute]==names(x)[i]
-    large <- data[,obj$attribute]==names(x)[length(x)]
+    small_name <- names(x)[i]
+    large_name <- names(x)[length(x)]
+    small <- data[,obj$attribute]==small_name
+    large <- data[,obj$attribute]==large_name
     data_smote <- data[small | large,]
-    syn_data <- smotefamily::SMOTE(data_smote[,-j], as.integer(data_smote[,j]))$syn_data
-    syn_data$class <- NULL
-    syn_data[obj$attribute] <- data[small, j][1]
-    result <- rbind(result, data[small,])
-    result <- rbind(result, syn_data)
+    output <- data_smote[,j] == large_name
+    data_smote <- data_smote[,-j]
+    syn_data <- smotefamily::SMOTE(data_smote, output)
+    syn_data <- syn_data$syn_data
+    if (nrow(syn_data) > 0) {
+      syn_data$class <- NULL
+      syn_data[obj$attribute] <- data[small, j][1]
+      result <- rbind(result, data[small,])
+      result <- rbind(result, syn_data)
+    }
   }
   return(result)
 }
