@@ -9,6 +9,9 @@ cla_fs_relief(attribute)
 \arguments{
 \item{attribute}{The target variable.}
 }
+\value{
+An instance of the \code{cla_fs_relief} class.
+}
 \description{
 The Relief algorithm is a feature selection technique used in machine learning to determine the relevance of a feature to the target variable. It calculates the relevance of a feature by considering the difference in feature values between nearest neighbors of the same and different classes.
 }
