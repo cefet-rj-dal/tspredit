@@ -9,9 +9,15 @@ cla_fs_ig(attribute)
 \arguments{
 \item{attribute}{The target variable.}
 }
+\value{
+A instance of \code{cla_fs_ig}
+}
 \description{
 Information Gain is a feature selection technique used in machine learning to determine the relevance of a feature to the target variable. It measures the amount of information obtained for the target variable by knowing the presence or absence of a feature.
 }
-\details{
-The InformationGain function has the following parameters: data: the data frame containing the features and target variable; target: the name of the target variable in the data frame; threshold: a threshold value for selecting features (optional). The InformationGain function returns a named numeric vector of Information Gain scores for each feature in the data frame.
+\examples{
+data(iris)
+myfeature <- daltoolbox::fit(cla_fs_ig("Species"), iris)
+data <- daltoolbox::transform(myfeature, iris)
+head(data)
 }

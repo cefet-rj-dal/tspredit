@@ -15,11 +15,12 @@ An instance of the BalanceOversampling class.
 \description{
 The R class BalanceOversampling represents a method to balance the class distribution of a dataset by oversampling the minority class. It can be used to increase the representation of the minority class in the data used for modeling or analysis.
 }
-\details{
-The BalanceOversampling class has the following properties:
-data: the oversampled data frame;
-seed: the random seed used for reproducibility.
-The BalanceOversampling class has the following methods:
-summary(): provides a summary of the oversampled dataset, including the class distribution before and after oversampling;
-plot(): produces a plot of the class distribution before and after oversampling.
+\examples{
+data(iris)
+mod_iris <- iris[c(1:50,51:71,101:111),]
+
+bal <- bal_oversampling('Species')
+bal <- daltoolbox::fit(bal, mod_iris)
+adjust_iris <- daltoolbox::transform(bal, mod_iris)
+table(adjust_iris$Species)
 }

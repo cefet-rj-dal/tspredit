@@ -15,7 +15,7 @@
 #'@import daltoolbox
 #'@export
 cla_fs <- function(attribute) {
-  obj <- dal_transform()
+  obj <- daltoolbox::dal_transform()
   obj$attribute <- attribute
   class(obj) <- append("cla_fs", class(obj))
   return(obj)
@@ -23,7 +23,7 @@ cla_fs <- function(attribute) {
 
 #'@export
 transform.cla_fs <- function(obj, data, ...) {
-  data <- data[, c(obj$selected, obj$attribute)]
+  data <- data[, c(obj$features, obj$attribute)]
   return(data)
 }
 

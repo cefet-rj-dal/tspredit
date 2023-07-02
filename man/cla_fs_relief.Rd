@@ -12,6 +12,9 @@ cla_fs_relief(attribute)
 \description{
 The Relief algorithm is a feature selection technique used in machine learning to determine the relevance of a feature to the target variable. It calculates the relevance of a feature by considering the difference in feature values between nearest neighbors of the same and different classes.
 }
-\details{
-The relief function has the following parameters: data: the data frame containing the features and target variable; target: the name of the target variable in the data frame; nn: the number of nearest neighbors to consider (optional); sample.size: the number of samples to use in the estimation of the feature distribution (optional). The relief function returns a named numeric vector of Relief scores for each feature in the data frame.
+\examples{
+data(iris)
+myfeature <- daltoolbox::fit(cla_fs_relief("Species"), iris)
+data <- daltoolbox::transform(myfeature, iris)
+head(data)
 }
