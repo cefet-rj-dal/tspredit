@@ -36,9 +36,6 @@ Config/reticulate:
       list(package = "pandas"),
       list(package = "numpy"),
       list(package = "matplotlib"),
-      list(package = "os"),
-      list(package = "sys"),
-      list(package = "scikit-learn"),
-      list(package = "random")
+      list(package = "scikit-learn")
     )
   )
