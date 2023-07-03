@@ -1,8 +1,3 @@
-#'@import reticulate
-.onLoad <- function(libname, pkgname) {
-  reticulate::source_python(system.file("python", "ts_lstm.py", package = "daltoolboxext"))
-}
-
 #'@title LSTM
 #'@description Creates a time series prediction object that
 #' uses the LSTM.
@@ -31,6 +26,7 @@
 #'ev_test <- evaluate(model, output, prediction)
 #'ev_test
 #'@import daltoolbox
+#'@import reticulate
 #'@export
 ts_lstm <- function(preprocess = NA, input_size = NA, epochs = 10000L) {
   obj <- ts_regsw(preprocess, input_size)
@@ -38,13 +34,13 @@ ts_lstm <- function(preprocess = NA, input_size = NA, epochs = 10000L) {
   obj$epochs <- epochs
   class(obj) <- append("ts_lstm", class(obj))
 
-  reticulate::source_python(system.file("python", "ts_lstm.py", package = "daltoolboxext"))
-
   return(obj)
 }
 
 #'@export
 do_fit.ts_lstm <- function(obj, x, y) {
+  reticulate::source_python(system.file("python", "ts_lstm.py", package = "daltoolboxext"))
+
   if (is.null(obj$model))
     obj$model <- create_torch_lstm(obj$input_size, obj$input_size)
 
@@ -58,6 +54,8 @@ do_fit.ts_lstm <- function(obj, x, y) {
 
 #'@export
 do_predict.ts_lstm <- function(obj, x) {
+  reticulate::source_python(system.file("python", "ts_lstm.py", package = "daltoolboxext"))
+
   X_values <- as.data.frame(x)
   X_values$t0 <- 0
   prediction <- predict_torch_lstm(obj$model, X_values)
