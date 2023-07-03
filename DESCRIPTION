@@ -26,4 +26,23 @@ Imports:
   leaps,
   FSelector,
   doBy,  
-  daltoolbox
+  daltoolbox,
+  reticulate
+Config/reticulate:
+  list(
+    packages = list(
+      list(package = "scipy")
+      list(package = "torch")
+      list(package = "torchvision")
+      list(package = "jsonschema")
+      list(package = "scikit-learn")
+      list(package = "scikit-multiflow")
+      list(package = "pandas")
+      list(package = "matplotlib")
+      list(package = "pyarrow")
+      list(package = "db-dtypes")
+      list(package = "train")
+      list(package = "early-stopping")
+      list(package = "wisardpkg")
+    )
+  )
