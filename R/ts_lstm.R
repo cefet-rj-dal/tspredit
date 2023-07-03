@@ -41,7 +41,7 @@ ts_lstm <- function(preprocess = NA, input_size = NA, epochs = 10000L) {
 
 #'@export
 do_fit.ts_lstm <- function(obj, x, y) {
-  reticulate::source_python(system.file("python", "ts_lstm.py", package = "daltoolboxext"))
+  reticulate::source_python(system.file("python", "ts_lstm.py", package = "tspredit"))
 
   if (is.null(obj$model))
     obj$model <- create_torch_lstm(obj$input_size, obj$input_size)
@@ -56,7 +56,7 @@ do_fit.ts_lstm <- function(obj, x, y) {
 
 #'@export
 do_predict.ts_lstm <- function(obj, x) {
-  reticulate::source_python(system.file("python", "ts_lstm.py", package = "daltoolboxext"))
+  reticulate::source_python(system.file("python", "ts_lstm.py", package = "tspredit"))
 
   X_values <- as.data.frame(x)
   X_values$t0 <- 0
