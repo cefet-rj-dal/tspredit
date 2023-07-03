@@ -3,7 +3,9 @@
 
 #'@import reticulate
 .onLoad <- function(libname, pkgname) {
-  #python_env <<- new.env()
+
+  path <- system.file(package="daltoolboxext")
+  reticulate::source_python(paste(path, "python/ts_lstm.py", sep="/"))
 }
 
 
