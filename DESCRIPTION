@@ -3,6 +3,30 @@ Title: Time Series Prediction Integrated Tuning
 Version: 1.0.80
 Authors@R: 
   c(    person(
+            given = "Rebecca",
+            family = "Salles",
+            role = c("aut"),
+            email = "rebecca.salles@eic.cefet-rj.br"
+        ),
+        person(
+            given = "Eduardo",
+            family = "Bezerra",
+            role = c("aut"),
+            email = "ebezerra@cefet-rj.br"
+        ),
+        person(
+            given = "Esther",
+            family = "Pacitti",
+            role = c("aut"),
+            email = "Esther.Pacitti@lirmm.fr"
+        ),
+        person(
+            given = "Fabio",
+            family = "Porto",
+            role = c("aut"),
+            email = "fporto@lncc.br"
+        ),
+        person(
             given = "Eduardo",
             family = "Ogasawara",
             role = c("aut", "ths", "cre"),
