@@ -1,3 +1,12 @@
+create_torch_lstm <- NULL
+predict_torch_lstm  <- NULL
+train_torch_lstm <- NULL
+
+#'@import reticulate
+.onLoad <- function(libname, pkgname) {
+  reticulate::source_python(system.file("python", "ts_lstm.py", package = "daltoolboxext"))
+}
+
 #'@title LSTM
 #'@description Creates a time series prediction object that
 #' uses the LSTM.
@@ -7,6 +16,7 @@
 #'@param epochs maximum number of epochs
 #'@return a `ts_lstm` object.
 #'@examples
+#'library(daltoolbox)
 #'data(sin_data)
 #'ts <- ts_data(sin_data$y, 10)
 #'ts_head(ts, 3)
@@ -24,12 +34,14 @@
 #'
 #'ev_test <- evaluate(model, output, prediction)
 #'ev_test
+#'@import daltoolbox
 #'@export
 ts_lstm <- function(preprocess = NA, input_size = NA, epochs = 10000L) {
   obj <- ts_regsw(preprocess, input_size)
   obj$deep_debug <- FALSE
   obj$epochs <- epochs
   class(obj) <- append("ts_lstm", class(obj))
+
   return(obj)
 }
 
