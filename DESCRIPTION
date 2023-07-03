@@ -33,16 +33,12 @@ Config/reticulate:
     packages = list(
       list(package = "scipy"),
       list(package = "torch"),
-      list(package = "torchvision"),
-      list(package = "jsonschema"),
-      list(package = "scikit-learn"),
-      list(package = "scikit-multiflow"),
       list(package = "pandas"),
+      list(package = "numpy"),
       list(package = "matplotlib"),
-      list(package = "pyarrow"),
-      list(package = "db-dtypes"),
-      list(package = "train"),
-      list(package = "early-stopping"),
-      list(package = "wisardpkg")
+      list(package = "os"),
+      list(package = "sys"),
+      list(package = "scikit-learn"),
+      list(package = "random")
     )
   )
