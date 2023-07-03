@@ -13,36 +13,31 @@ knitr::opts_chunk$set(
 )
 ```
 
-# daltoolbox
+# TSPredIT
 
 <!-- badges: start -->
 ![GitHub Repo stars](https://img.shields.io/github/stars/cefet-rj-dal/daltoolbox?logo=Github)
 <!-- badges: end -->
 
-The goal of DAL Toolbox Extensions is to provide additional components to DAL Toolbox. 
+The TSPredIT is an extension of DAL Toolbox to support multiple hyper parameter optimization.
 
-You can install the development version of DAL Toolbox from [GitHub](https://github.com/) with:
+You can install the development version of TSPredIT x from [GitHub](https://github.com/) with:
 
 ``` r
 library(devtools)
-devtools::install_github("cefet-rj-dal/daltoolboxext", force=TRUE, upgrade="never")
+devtools::install_github("cefet-rj-dal/tspredit", force=TRUE, upgrade="never")
 ```
 
 ## Examples
 
-The DAL Toolbox examples are made available at:
+The TSPredIT and DAL Toolbox examples are made available at:
 <https://nbviewer.org/github/cefet-rj-dal/daltoolbox-examples/tree/main/>
 
 A demo video is provided at:
-<https://eic.cefet-rj.br/~dal/leveraging-experiment-lines-to-data-analytics/>
-
-
-The examples are organized according to general (data preprocessing),
-clustering, classification, regression, and time series functions.
+<https://eic.cefet-rj.br/~dal/tspredit/>
 
 
 ```{r example}
-library(daltoolboxext)
-## loading DAL Toolbox
+library(tspredit)
 ```
 
