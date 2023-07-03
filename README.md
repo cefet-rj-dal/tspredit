@@ -9,28 +9,15 @@
 stars](https://img.shields.io/github/stars/cefet-rj-dal/daltoolbox?logo=Github)
 <!-- badges: end -->
 
-The goal of DAL Toolbox is to provide a series data analytics functions
-organized as a framework. It supports data preprocessing,
-classification, regression, clustering, and time series prediction
-functions.
-
-## Installation
-
-The latest version of DAL Toolbox at CRAN is available at:
-<https://cran.r-project.org/web/packages/daltoolbox/index.html/>
-
-You can install the stable version of DAL Toolbox from CRAN with:
-
-``` r
-install.packages("daltoolbox")
-```
+The goal of DAL Toolbox Extensions is to provide additional components
+to DAL Toolbox.
 
 You can install the development version of DAL Toolbox from
 [GitHub](https://github.com/) with:
 
 ``` r
 library(devtools)
-devtools::install_github("cefet-rj-dal/daltoolbox", force=TRUE, dependencies=FALSE, upgrade="never")
+devtools::install_github("cefet-rj-dal/daltoolboxext", force=TRUE, upgrade="never")
 ```
 
 ## Examples
@@ -45,14 +32,9 @@ The examples are organized according to general (data preprocessing),
 clustering, classification, regression, and time series functions.
 
 ``` r
-library(daltoolbox)
+library(daltoolboxext)
 #> Registered S3 method overwritten by 'quantmod':
 #>   method            from
 #>   as.zoo.data.frame zoo
-#> 
-#> Attaching package: 'daltoolbox'
-#> The following object is masked from 'package:base':
-#> 
-#>     transform
 ## loading DAL Toolbox
 ```

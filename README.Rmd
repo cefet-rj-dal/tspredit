@@ -25,7 +25,7 @@ You can install the development version of DAL Toolbox from [GitHub](https://git
 
 ``` r
 library(devtools)
-devtools::install_github("cefet-rj-dal/daltoolboxext", force=TRUE, dependencies=FALSE, upgrade="never")
+devtools::install_github("cefet-rj-dal/daltoolboxext", force=TRUE, upgrade="never")
 ```
 
 ## Examples
