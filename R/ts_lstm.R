@@ -1,3 +1,8 @@
+#'@import reticulate
+.onLoad <- function(libname, pkgname) {
+  reticulate::source_python(system.file("python", "ts_lstm.py", package = "daltoolboxext"))
+}
+
 #'@title LSTM
 #'@description Creates a time series prediction object that
 #' uses the LSTM.
@@ -32,6 +37,8 @@ ts_lstm <- function(preprocess = NA, input_size = NA, epochs = 10000L) {
   obj$deep_debug <- FALSE
   obj$epochs <- epochs
   class(obj) <- append("ts_lstm", class(obj))
+
+  reticulate::source_python(system.file("python", "ts_lstm.py", package = "daltoolboxext"))
 
   return(obj)
 }
