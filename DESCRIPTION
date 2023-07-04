@@ -50,6 +50,7 @@ Imports:
   leaps,
   FSelector,
   doBy,  
+  dplyr,
   daltoolbox,
   reticulate
 Config/reticulate:
