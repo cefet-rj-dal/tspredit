@@ -10,10 +10,11 @@ cla_fs_fss(attribute)
 \item{attribute}{The target variable.}
 }
 \value{
-An instance of the ForwardStepwiseSelection class.
+A \code{cla_fs_fss} object.
 }
 \description{
-Forward stepwise selection is a technique for feature selection in which features are added to a model one at a time, based on their ability to improve the performance of the model. The ForwardStepwiseSelection class in R provides a framework for performing forward stepwise selection.
+Forward stepwise selection is a technique for feature selection in which attributes are added to a model one at a time based on their ability to improve the model's performance. It stops adding once the candidate addition does not significantly improve model adjustment.
+It wraps the leaps library.
 }
 \examples{
 data(iris)

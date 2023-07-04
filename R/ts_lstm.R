@@ -1,6 +1,5 @@
 #'@title LSTM
-#'@description Creates a time series prediction object that
-#' uses the LSTM.
+#'@description Creates a time series prediction object that uses the LSTM.
 #' It wraps the pytorch library.
 #'@param preprocess normalization
 #'@param input_size input size for machine learning model
@@ -39,9 +38,12 @@ ts_lstm <- function(preprocess = NA, input_size = NA, epochs = 10000L) {
   return(obj)
 }
 
+
+
 #'@export
 do_fit.ts_lstm <- function(obj, x, y) {
-  reticulate::source_python(system.file("python", "ts_lstm.py", package = "tspredit"))
+  if (!exists("create_torch_lstm"))
+    reticulate::source_python(system.file("python", "ts_lstm.py", package = "tspredit"))
 
   if (is.null(obj$model))
     obj$model <- create_torch_lstm(obj$input_size, obj$input_size)
@@ -56,7 +58,8 @@ do_fit.ts_lstm <- function(obj, x, y) {
 
 #'@export
 do_predict.ts_lstm <- function(obj, x) {
-  reticulate::source_python(system.file("python", "ts_lstm.py", package = "tspredit"))
+  if (!exists("predict_torch_lstm"))
+    reticulate::source_python(system.file("python", "ts_lstm.py", package = "tspredit"))
 
   X_values <- as.data.frame(x)
   X_values$t0 <- 0

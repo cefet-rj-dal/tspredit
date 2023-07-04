@@ -10,10 +10,11 @@ cla_fs_ig(attribute)
 \item{attribute}{The target variable.}
 }
 \value{
-A instance of \code{cla_fs_ig}
+A \code{cla_fs_ig} object.
 }
 \description{
-Information Gain is a feature selection technique used in machine learning to determine the relevance of a feature to the target variable. It measures the amount of information obtained for the target variable by knowing the presence or absence of a feature.
+Information Gain is a feature selection technique based on information theory. It measures the information obtained for the target variable by knowing the presence or absence of a feature.
+It wraps the FSelector library.
 }
 \examples{
 data(iris)

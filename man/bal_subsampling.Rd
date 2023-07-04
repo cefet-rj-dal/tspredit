@@ -2,18 +2,18 @@
 % Please edit documentation in R/bal_subsampling.R
 \name{bal_subsampling}
 \alias{bal_subsampling}
-\title{Class Balance Subsampling}
+\title{Subsampling}
 \usage{
 bal_subsampling(attribute)
 }
 \arguments{
-\item{attribute}{The attribute to be balanced through subsampling.}
+\item{attribute}{The class attribute to target balancing using subsampling}
 }
 \value{
-An instance of the BalanceSubsampling class.
+A \code{bal_subsampling} object.
 }
 \description{
-The R class BalanceSubsampling represents a method to balance the class distribution of a dataset by subsampling the majority class. It can be used to reduce the representation of the majority class in the data used for modeling or analysis.
+Subsampling balances the class distribution of a dataset by reducing the representation of the majority class in the dataset.
 }
 \examples{
 data(iris)

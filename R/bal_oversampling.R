@@ -1,7 +1,8 @@
-#'@title Class Balance Oversampling
-#'@description The R class BalanceOversampling represents a method to balance the class distribution of a dataset by oversampling the minority class. It can be used to increase the representation of the minority class in the data used for modeling or analysis.
-#'@param attribute The attribute to be balanced through oversampling.
-#'@return An instance of the BalanceOversampling class.
+#'@title Oversampling
+#'@description Oversampling balances the class distribution of a dataset by increasing the representation of the minority class in the dataset.
+#' It wraps the smotefamily library.
+#'@param attribute The class attribute to target balancing using oversampling.
+#'@return A `bal_oversampling` object.
 #'@examples
 #'data(iris)
 #'mod_iris <- iris[c(1:50,51:71,101:111),]

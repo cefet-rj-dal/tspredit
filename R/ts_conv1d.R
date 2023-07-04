@@ -1,6 +1,5 @@
 #'@title Conv1D
-#'@description Creates a time series prediction object that
-#' uses the Conv1D
+#'@description Creates a time series prediction object that uses the Conv1D.
 #' It wraps the pytorch library.
 #'@param preprocess normalization
 #'@param input_size input size for machine learning model

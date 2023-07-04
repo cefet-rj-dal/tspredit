@@ -1,8 +1,8 @@
-# information gain
 #'@title Information Gain
-#'@description Information Gain is a feature selection technique used in machine learning to determine the relevance of a feature to the target variable. It measures the amount of information obtained for the target variable by knowing the presence or absence of a feature.
+#'@description Information Gain is a feature selection technique based on information theory. It measures the information obtained for the target variable by knowing the presence or absence of a feature.
+#' It wraps the FSelector library.
 #'@param attribute The target variable.
-#'@return A instance of `cla_fs_ig`
+#'@return A `cla_fs_ig` object.
 #'@examples
 #'data(iris)
 #'myfeature <- daltoolbox::fit(cla_fs_ig("Species"), iris)

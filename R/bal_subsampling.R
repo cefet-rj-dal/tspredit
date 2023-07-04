@@ -1,7 +1,7 @@
-#'@title Class Balance Subsampling
-#'@description The R class BalanceSubsampling represents a method to balance the class distribution of a dataset by subsampling the majority class. It can be used to reduce the representation of the majority class in the data used for modeling or analysis.
-#'@param attribute The attribute to be balanced through subsampling.
-#'@return An instance of the BalanceSubsampling class.
+#'@title Subsampling
+#'@description Subsampling balances the class distribution of a dataset by reducing the representation of the majority class in the dataset.
+#'@param attribute The class attribute to target balancing using subsampling
+#'@return A `bal_subsampling` object.
 #'@examples
 #'data(iris)
 #'mod_iris <- iris[c(1:50,51:71,101:111),]

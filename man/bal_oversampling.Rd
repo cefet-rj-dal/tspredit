@@ -2,18 +2,19 @@
 % Please edit documentation in R/bal_oversampling.R
 \name{bal_oversampling}
 \alias{bal_oversampling}
-\title{Class Balance Oversampling}
+\title{Oversampling}
 \usage{
 bal_oversampling(attribute)
 }
 \arguments{
-\item{attribute}{The attribute to be balanced through oversampling.}
+\item{attribute}{The class attribute to target balancing using oversampling.}
 }
 \value{
-An instance of the BalanceOversampling class.
+A \code{bal_oversampling} object.
 }
 \description{
-The R class BalanceOversampling represents a method to balance the class distribution of a dataset by oversampling the minority class. It can be used to increase the representation of the minority class in the data used for modeling or analysis.
+Oversampling balances the class distribution of a dataset by increasing the representation of the minority class in the dataset.
+It wraps the smotefamily library.
 }
 \examples{
 data(iris)

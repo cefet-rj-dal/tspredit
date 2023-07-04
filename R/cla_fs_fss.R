@@ -1,8 +1,8 @@
-# forward stepwise selection
 #'@title Forward Stepwise Selection
-#'@description Forward stepwise selection is a technique for feature selection in which features are added to a model one at a time, based on their ability to improve the performance of the model. The ForwardStepwiseSelection class in R provides a framework for performing forward stepwise selection.
+#'@description Forward stepwise selection is a technique for feature selection in which attributes are added to a model one at a time based on their ability to improve the model's performance. It stops adding once the candidate addition does not significantly improve model adjustment.
+#' It wraps the leaps library.
 #'@param attribute The target variable.
-#'@return An instance of the ForwardStepwiseSelection class.
+#'@return A `cla_fs_fss` object.
 #'@examples
 #'data(iris)
 #'myfeature <- daltoolbox::fit(cla_fs_fss("Species"), iris)

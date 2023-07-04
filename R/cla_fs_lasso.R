@@ -1,7 +1,8 @@
-#'@title Feature Selection using Lasso regression
-#'@description Feature selection using Lasso regression is a technique for selecting a subset of relevant features from a larger set of features in a dataset for use in model training. The FeatureSelectionLasso class in R provides a framework for performing feature selection using Lasso regression.
+#'@title Feature Selection using Lasso
+#'@description Feature selection using Lasso regression is a technique for selecting a subset of relevant features.
+#' It wraps the glmnet library.
 #'@param attribute The target variable.
-#'@return An instance of the FeatureSelectionLasso class.
+#'@return A `cla_fs_lasso` object.
 #'@examples
 #'data(iris)
 #'myfeature <- daltoolbox::fit(cla_fs_lasso("Species"), iris)

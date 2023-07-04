@@ -17,8 +17,7 @@ ts_lstm(preprocess = NA, input_size = NA, epochs = 10000L)
 a \code{ts_lstm} object.
 }
 \description{
-Creates a time series prediction object that
-uses the LSTM.
+Creates a time series prediction object that uses the LSTM.
 It wraps the pytorch library.
 }
 \examples{

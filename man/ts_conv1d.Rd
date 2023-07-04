@@ -17,8 +17,7 @@ ts_conv1d(preprocess = NA, input_size = NA, epochs = 10000L)
 a \code{ts_conv1d} object.
 }
 \description{
-Creates a time series prediction object that
-uses the Conv1D
+Creates a time series prediction object that uses the Conv1D.
 It wraps the pytorch library.
 }
 \examples{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/cla_fs_lasso.R
 \name{cla_fs_lasso}
 \alias{cla_fs_lasso}
-\title{Feature Selection using Lasso regression}
+\title{Feature Selection using Lasso}
 \usage{
 cla_fs_lasso(attribute)
 }
@@ -10,10 +10,11 @@ cla_fs_lasso(attribute)
 \item{attribute}{The target variable.}
 }
 \value{
-An instance of the FeatureSelectionLasso class.
+A \code{cla_fs_lasso} object.
 }
 \description{
-Feature selection using Lasso regression is a technique for selecting a subset of relevant features from a larger set of features in a dataset for use in model training. The FeatureSelectionLasso class in R provides a framework for performing feature selection using Lasso regression.
+Feature selection using Lasso regression is a technique for selecting a subset of relevant features.
+It wraps the glmnet library.
 }
 \examples{
 data(iris)
