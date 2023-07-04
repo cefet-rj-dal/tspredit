@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 ![GitHub Repo stars](https://img.shields.io/github/stars/cefet-rj-dal/daltoolbox?logo=Github)
 <!-- badges: end -->
 
-The TSPredIT is an extension of DAL Toolbox to support multiple hyper parameter optimization.
+The Time Series Prediction with Integrated Tuning (TSPredIT) is based on DAL Toolbox with integrated hyperparameter optimization combining machine learning and data preprocessing. It also contains time series outliers removal, data augmentation, ensemble models, and a more flexible workflow design for Data Analytics tasks.
 
 You can install the development version of TSPredIT x from [GitHub](https://github.com/) with:
 
