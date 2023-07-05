@@ -9,9 +9,9 @@
 #'xw <- ts_data(sin_data$y, 10)
 #'
 #'#no data filter
-#'augment <- ts_fil_none()
-#'augment <- fit(augment, xw)
-#'xa <- transform(augment, xw)
+#'filtering <- ts_fil_none()
+#'filtering <- fit(filtering, xw)
+#'xa <- transform(filtering, xw)
 #'ts_head(xa)
 #'@export
 ts_fil_none <- function() {
