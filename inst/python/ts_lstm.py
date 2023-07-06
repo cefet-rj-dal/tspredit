@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from torch.utils.data import TensorDataset
 import torch.nn.functional as F
-import os
+import sys
 
 class LSTMNet(nn.Module):
   def __init__(self, n_neurons, input_shape):
