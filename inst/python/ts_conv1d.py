@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from torch.utils.data import TensorDataset
 import torch.nn.functional as F
 import sys
+import functools
 
 class Conv1DNet(nn.Module):
     def __init__(self, in_channels, input_dim):
