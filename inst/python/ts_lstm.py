@@ -17,27 +17,7 @@ class LSTMNet(nn.Module):
     out = self.fc(out)
     return out
 
-def seed_everything(seed=1):
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.backends.cudnn.deterministic = True
 
-def savemodel(model, filename):
-  torch.save(model, filename)
-  
-
-def loadmodel(filename):
-  model = torch.load(filename)
-  model.eval()
-  return(model)
-
-
-def savedf(data, filename):      
-  data.to_csv(filename, index=False)
-    
 def create_torch_lstm(n_neurons, look_back):
   n_neurons = int(n_neurons)
   look_back = int(look_back)
@@ -63,9 +43,7 @@ def torch_fit_lstm(epochs, lr, model, train_loader, opt_func=torch.optim.SGD):
   
   optimizer = opt_func(model.parameters(), lr)
   for epoch in range(epochs):
-    ###################
     # train the model #
-    ###################
     model.train() # prep model for training
     for data, target in train_loader:
       # clear the gradients of all optimized variables
@@ -132,7 +110,6 @@ def train_torch_lstm(model, df_train, n_epochs = 10000, lr = 0.001):
   
   return model
 
-	
 
 def predict_torch_lstm(model, df_test):
   X_test = df_test.drop('t0', axis=1).to_numpy()

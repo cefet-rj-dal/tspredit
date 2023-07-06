@@ -27,3 +27,6 @@ def loadmodel(filename):
   model = torch.load(filename)
   model.eval()
   return(model)
+
+def savedf(data, filename):      
+  data.to_csv(filename, index=False)
