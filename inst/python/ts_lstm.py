@@ -113,9 +113,6 @@ def torch_fit_lstm(epochs, lr, model, train_loader, opt_func=torch.optim.SGD):
 def train_torch_lstm(model, df_train, n_epochs = 10000, lr = 0.001):
   n_epochs = int(n_epochs)
   
-  if (reproduce):
-    seed_everything()
-    
   X_train = df_train.drop('t0', axis=1).to_numpy()
   y_train = df_train.t0.to_numpy()
   X_train = X_train[:, :, np.newaxis]
