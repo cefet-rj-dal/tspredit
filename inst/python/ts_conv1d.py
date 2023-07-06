@@ -4,13 +4,8 @@ from torch.utils.data import Dataset, DataLoader
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import os
-import sys
 from torch.utils.data import TensorDataset
 import torch.nn.functional as F
-import random
-import functools
-import operator
 
 class Conv1DNet(nn.Module):
     def __init__(self, in_channels, input_dim):
@@ -39,30 +34,7 @@ class Conv1DNet(nn.Module):
         out = self.regressor(out)
         return out
       
-      
-def seed_everything(seed=1):
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.backends.cudnn.deterministic = True
-      
-      
-def savemodel(model, filename):
-  torch.save(model, filename)
-  
 
-def loadmodel(filename):
-  model = torch.load(filename)
-  model.eval()
-  return(model)
-
-
-def savedf(data, filename):      
-    data.to_csv(filename, index=False)
-    
-    
 def create_torch_conv1d(in_channels, input_dim):
   in_channels = int(in_channels)
   input_dim = int(input_dim)
@@ -71,7 +43,7 @@ def create_torch_conv1d(in_channels, input_dim):
   return(model)  
 
 
-def torch_fit_conv1d(epochs, lr, model, train_loader, opt_func=torch.optim.SGD, debug=False):
+def torch_fit_conv1d(epochs, lr, model, train_loader, opt_func=torch.optim.SGD):
   # to track the training loss as the model trains
   
   train_losses = []
@@ -102,8 +74,6 @@ def torch_fit_conv1d(epochs, lr, model, train_loader, opt_func=torch.optim.SGD, 
       # calculate the loss
       loss = criterion(output, target.float())
       
-      #print('Done computing loss.')
-      
       # backward pass: compute gradient of the loss with respect to model parameters
       loss.backward()
       # perform a single optimization step (parameter update)
@@ -111,9 +81,7 @@ def torch_fit_conv1d(epochs, lr, model, train_loader, opt_func=torch.optim.SGD, 
       # record training loss
       train_losses.append(loss.item())
     
-    ######################    
     # validate the model #
-    ######################
     model.eval() # prep model for evaluation
     
     # print training/validation statistics 
@@ -134,21 +102,12 @@ def torch_fit_conv1d(epochs, lr, model, train_loader, opt_func=torch.optim.SGD, 
     if (epoch - last_epoch > convergency):
       break
 
-  if debug:
-    epoch_len = len(str(epochs))
-    print_msg = (f'[{epoch:>{epoch_len}}/{epochs:>{epoch_len}}] ' +
-                 f'train_loss: {train_loss:.5f}')
-    print(print_msg)
-
   return model, avg_train_losses
 
 
-def train_torch_conv1d(model, df_train, n_epochs = 3000, lr = 0.001, deep_debug=False, reproduce=True):
+def train_torch_conv1d(model, df_train, n_epochs = 3000, lr = 0.001):
   n_epochs = int(n_epochs)
   
-  if (reproduce):
-    seed_everything()
-
   X_train = df_train.drop('t0', axis=1).to_numpy()
   y_train = df_train.t0.to_numpy()
   
@@ -159,16 +118,14 @@ def train_torch_conv1d(model, df_train, n_epochs = 3000, lr = 0.001, deep_debug=
   train_y = torch.from_numpy(y_train)
   
   train_x = torch.permute(train_x, (0, 2, 1))
-  
-  #print(train_x.shape)
-  
+
   train_ds = TensorDataset(train_x, train_y)
   
   BATCH_SIZE = 8
   train_loader = torch.utils.data.DataLoader(train_ds, batch_size = BATCH_SIZE, shuffle = False)
   
   model = model.float()
-  model, train_loss = torch_fit_conv1d(n_epochs, lr, model, train_loader, opt_func=torch.optim.Adam, debug = deep_debug)
+  model, train_loss = torch_fit_conv1d(n_epochs, lr, model, train_loader, opt_func=torch.optim.Adam)
 
   return model
 

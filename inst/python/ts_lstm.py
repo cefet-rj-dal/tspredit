@@ -1,26 +1,10 @@
-# DAL Library
-# version 2.1
-
-# depends dal_transform.R
-# depends ts_data.R
-# depends ts_regression.R
-# depends ts_preprocessing.R
-
-# class ts_lstm
-# loadlibrary("reticulate")
-# source_python('ts_lstm.py')
-
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
-import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import os
-import sys
 from torch.utils.data import TensorDataset
 import torch.nn.functional as F
-import random
 
 class LSTMNet(nn.Module):
   def __init__(self, n_neurons, input_shape):
@@ -62,7 +46,7 @@ def create_torch_lstm(n_neurons, look_back):
   return model    
 
 
-def torch_fit_lstm(epochs, lr, model, train_loader, opt_func=torch.optim.SGD, debug=False):
+def torch_fit_lstm(epochs, lr, model, train_loader, opt_func=torch.optim.SGD):
   # to track the training loss as the model trains
   
   train_losses = []
@@ -102,9 +86,7 @@ def torch_fit_lstm(epochs, lr, model, train_loader, opt_func=torch.optim.SGD, de
       # record training loss
       train_losses.append(loss.item())
     
-    ######################    
     # validate the model #
-    ######################
     model.eval() # prep model for evaluation
     
     # print training/validation statistics 
@@ -125,16 +107,10 @@ def torch_fit_lstm(epochs, lr, model, train_loader, opt_func=torch.optim.SGD, de
     if (epoch - last_epoch > convergency):
       break
 
-  if debug:
-    epoch_len = len(str(epochs))
-    print_msg = (f'[{epoch:>{epoch_len}}/{epochs:>{epoch_len}}] ' +
-                 f'train_loss: {train_loss:.5f}')
-    print(print_msg)
-
   return model, avg_train_losses
 
 
-def train_torch_lstm(model, df_train, n_epochs = 10000, lr = 0.001, deep_debug=False, reproduce=True):
+def train_torch_lstm(model, df_train, n_epochs = 10000, lr = 0.001):
   n_epochs = int(n_epochs)
   
   if (reproduce):
@@ -155,7 +131,7 @@ def train_torch_lstm(model, df_train, n_epochs = 10000, lr = 0.001, deep_debug=F
   train_loader = torch.utils.data.DataLoader(train_ds, batch_size = BATCH_SIZE, shuffle = False)
   
   model = model.float()
-  model, train_loss = torch_fit_lstm(n_epochs, lr, model, train_loader, opt_func=torch.optim.Adam, debug = deep_debug)
+  model, train_loss = torch_fit_lstm(n_epochs, lr, model, train_loader, opt_func=torch.optim.Adam)
   
   return model
 
