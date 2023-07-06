@@ -31,7 +31,6 @@
 #'@export
 ts_lstm <- function(preprocess = NA, input_size = NA, epochs = 10000L) {
   obj <- ts_regsw(preprocess, input_size)
-  obj$deep_debug <- FALSE
   obj$epochs <- epochs
   class(obj) <- append("ts_lstm", class(obj))
 
@@ -51,7 +50,7 @@ do_fit.ts_lstm <- function(obj, x, y) {
   df_train <- as.data.frame(x)
   df_train$t0 <- as.vector(y)
 
-  obj$model <- train_torch_lstm(obj$model, df_train, obj$epochs, 0.001, obj$deep_debug, obj$reproduce)
+  obj$model <- train_torch_lstm(obj$model, df_train, obj$epochs, 0.001)
 
   return(obj)
 }

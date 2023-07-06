@@ -32,7 +32,6 @@
 ts_conv1d <- function(preprocess = NA, input_size = NA, epochs = 10000L) {
   obj <- ts_regsw(preprocess, input_size)
   obj$channels <- 1
-  obj$deep_debug <- FALSE
   obj$epochs <- epochs
   class(obj) <- append("ts_conv1d", class(obj))
   return(obj)
@@ -48,7 +47,7 @@ do_fit.ts_conv1d <- function(obj, x, y) {
   df_train <- as.data.frame(x)
   df_train$t0 <- as.vector(y)
 
-  obj$model <- train_torch_conv1d(obj$model, df_train, obj$epochs, 0.001, obj$deep_debug, obj$reproduce)
+  obj$model <- train_torch_conv1d(obj$model, df_train, obj$epochs, 0.001)
 
   return(obj)
 }
