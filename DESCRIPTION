@@ -1,6 +1,6 @@
 Package: tspredit
 Title: Time Series Prediction Integrated Tuning
-Version: 1.0.80
+Version: 1.0.81
 Authors@R: 
   c(    person(
             given = "Rebecca",
