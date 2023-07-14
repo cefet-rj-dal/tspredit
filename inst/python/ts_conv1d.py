@@ -10,9 +10,9 @@ import sys
 import functools
 import operator
 
-class Conv1DNet(nn.Module):
+class TsConv1DNet(nn.Module):
     def __init__(self, in_channels, input_dim):
-        super(Conv1DNet,self).__init__()
+        super(TsConv1DNet,self).__init__()
         ksize = 2
         if (input_dim == 1): 
           ksize = 1
@@ -38,15 +38,15 @@ class Conv1DNet(nn.Module):
         return out
       
 
-def create_torch_conv1d(in_channels, input_dim):
+def ts_conv1d_create(in_channels, input_dim):
   in_channels = int(in_channels)
   input_dim = int(input_dim)
   device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-  model = Conv1DNet(in_channels, input_dim).to(device)
+  model = TsConv1DNet(in_channels, input_dim).to(device)
   return(model)  
 
 
-def torch_fit_conv1d(epochs, lr, model, train_loader, opt_func=torch.optim.SGD):
+def ts_conv1d_train(epochs, lr, model, train_loader, opt_func=torch.optim.SGD):
   # to track the training loss as the model trains
   
   train_losses = []
@@ -108,7 +108,7 @@ def torch_fit_conv1d(epochs, lr, model, train_loader, opt_func=torch.optim.SGD):
   return model, avg_train_losses
 
 
-def train_torch_conv1d(model, df_train, n_epochs = 3000, lr = 0.001):
+def ts_conv1d_fit(model, df_train, n_epochs = 3000, lr = 0.001):
   n_epochs = int(n_epochs)
   
   X_train = df_train.drop('t0', axis=1).to_numpy()
@@ -128,12 +128,12 @@ def train_torch_conv1d(model, df_train, n_epochs = 3000, lr = 0.001):
   train_loader = torch.utils.data.DataLoader(train_ds, batch_size = BATCH_SIZE, shuffle = False)
   
   model = model.float()
-  model, train_loss = torch_fit_conv1d(n_epochs, lr, model, train_loader, opt_func=torch.optim.Adam)
+  model, train_loss = ts_conv1d_train(n_epochs, lr, model, train_loader, opt_func=torch.optim.Adam)
 
   return model
 
 
-def predict_torch_conv1d(model, df_test):
+def ts_conv1d_predict(model, df_test):
   X_test = df_test.drop('t0', axis=1).to_numpy()
   y_test = df_test.t0.to_numpy()
   

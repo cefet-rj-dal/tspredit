@@ -7,9 +7,9 @@ from torch.utils.data import TensorDataset
 import torch.nn.functional as F
 import sys
 
-class LSTMNet(nn.Module):
+class TsLSTMNet(nn.Module):
   def __init__(self, n_neurons, input_shape):
-    super(LSTMNet, self).__init__()
+    super(TsLSTMNet, self).__init__()
     self.lstm = nn.LSTM(input_size=input_shape, hidden_size=n_neurons)
     self.fc = nn.Linear(n_neurons, 1)
   
@@ -19,15 +19,15 @@ class LSTMNet(nn.Module):
     return out
 
 
-def create_torch_lstm(n_neurons, look_back):
+def ts_lstm_create(n_neurons, look_back):
   n_neurons = int(n_neurons)
   look_back = int(look_back)
   device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-  model = LSTMNet(n_neurons, look_back).to(device)
+  model = TsLSTMNet(n_neurons, look_back).to(device)
   return model    
 
 
-def torch_fit_lstm(epochs, lr, model, train_loader, opt_func=torch.optim.SGD):
+def ts_lstm_train(epochs, lr, model, train_loader, opt_func=torch.optim.SGD):
   # to track the training loss as the model trains
   
   train_losses = []
@@ -89,7 +89,7 @@ def torch_fit_lstm(epochs, lr, model, train_loader, opt_func=torch.optim.SGD):
   return model, avg_train_losses
 
 
-def train_torch_lstm(model, df_train, n_epochs = 10000, lr = 0.001):
+def ts_lstm_fit(model, df_train, n_epochs = 10000, lr = 0.001):
   n_epochs = int(n_epochs)
   
   X_train = df_train.drop('t0', axis=1).to_numpy()
@@ -107,12 +107,12 @@ def train_torch_lstm(model, df_train, n_epochs = 10000, lr = 0.001):
   train_loader = torch.utils.data.DataLoader(train_ds, batch_size = BATCH_SIZE, shuffle = False)
   
   model = model.float()
-  model, train_loss = torch_fit_lstm(n_epochs, lr, model, train_loader, opt_func=torch.optim.Adam)
+  model, train_loss = ts_lstm_train(n_epochs, lr, model, train_loader, opt_func=torch.optim.Adam)
   
   return model
 
 
-def predict_torch_lstm(model, df_test):
+def ts_lstm_predict(model, df_test):
   X_test = df_test.drop('t0', axis=1).to_numpy()
   y_test = df_test.t0.to_numpy()
   X_test = X_test[:, :, np.newaxis]

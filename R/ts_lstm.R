@@ -7,7 +7,6 @@
 #'@return a `ts_lstm` object.
 #'@examples
 #'\dontrun{
-#'library(daltoolbox)
 #'data(sin_data)
 #'ts <- ts_data(sin_data$y, 10)
 #'ts_head(ts, 3)
@@ -26,7 +25,6 @@
 #'ev_test <- evaluate(model, output, prediction)
 #'ev_test
 #'}
-#'@import daltoolbox
 #'@import reticulate
 #'@export
 ts_lstm <- function(preprocess = NA, input_size = NA, epochs = 10000L) {
@@ -41,28 +39,28 @@ ts_lstm <- function(preprocess = NA, input_size = NA, epochs = 10000L) {
 
 #'@export
 do_fit.ts_lstm <- function(obj, x, y) {
-  if (!exists("create_torch_lstm"))
-    reticulate::source_python(system.file("python", "ts_lstm.py", package = "tspredit"))
+  if (!exists("ts_lstm_create"))
+    reticulate::source_python(system.file("python", "ts_lstm.py", package = "daltoolbox"))
 
   if (is.null(obj$model))
-    obj$model <- create_torch_lstm(obj$input_size, obj$input_size)
+    obj$model <- ts_lstm_create(obj$input_size, obj$input_size)
 
   df_train <- as.data.frame(x)
   df_train$t0 <- as.vector(y)
 
-  obj$model <- train_torch_lstm(obj$model, df_train, obj$epochs, 0.001)
+  obj$model <- ts_lstm_fit(obj$model, df_train, obj$epochs, 0.001)
 
   return(obj)
 }
 
 #'@export
 do_predict.ts_lstm <- function(obj, x) {
-  if (!exists("predict_torch_lstm"))
-    reticulate::source_python(system.file("python", "ts_lstm.py", package = "tspredit"))
+  if (!exists("ts_lstm_predict"))
+    reticulate::source_python(system.file("python", "ts_lstm.py", package = "daltoolbox"))
 
   X_values <- as.data.frame(x)
   X_values$t0 <- 0
-  prediction <- predict_torch_lstm(obj$model, X_values)
+  prediction <- ts_lstm_predict(obj$model, X_values)
   prediction <- as.vector(prediction)
   return(prediction)
 }

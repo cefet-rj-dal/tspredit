@@ -7,7 +7,6 @@
 #'@return a `ts_conv1d` object.
 #'@examples
 #'\dontrun{
-#'library(daltoolbox)
 #'data(sin_data)
 #'ts <- ts_data(sin_data$y, 10)
 #'ts_head(ts, 3)
@@ -26,7 +25,6 @@
 #'ev_test <- evaluate(model, output, prediction)
 #'ev_test
 #'}
-#'@import daltoolbox
 #'@import reticulate
 #'@export
 ts_conv1d <- function(preprocess = NA, input_size = NA, epochs = 10000L) {
@@ -39,26 +37,26 @@ ts_conv1d <- function(preprocess = NA, input_size = NA, epochs = 10000L) {
 
 #'@export
 do_fit.ts_conv1d <- function(obj, x, y) {
-  reticulate::source_python(system.file("python", "ts_conv1d.py", package = "tspredit"))
+  reticulate::source_python(system.file("python", "ts_conv1d.py", package = "daltoolbox"))
 
   if (is.null(obj$model))
-    obj$model <- create_torch_conv1d(obj$channels, obj$input_size)
+    obj$model <- ts_conv1d_create(obj$channels, obj$input_size)
 
   df_train <- as.data.frame(x)
   df_train$t0 <- as.vector(y)
 
-  obj$model <- train_torch_conv1d(obj$model, df_train, obj$epochs, 0.001)
+  obj$model <- ts_conv1d_fit(obj$model, df_train, obj$epochs, 0.001)
 
   return(obj)
 }
 
 #'@export
 do_predict.ts_conv1d <- function(obj, x) {
-  reticulate::source_python(system.file("python", "ts_conv1d.py", package = "tspredit"))
+  reticulate::source_python(system.file("python", "ts_conv1d.py", package = "daltoolbox"))
 
   X_values <- as.data.frame(x)
   X_values$t0 <- 0
-  prediction <- predict_torch_conv1d(obj$model, X_values)
+  prediction <- ts_conv1d_predict(obj$model, X_values)
   prediction <- as.vector(prediction)
   return(prediction)
 }
