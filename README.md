@@ -1,12 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# <img src='https://raw.githubusercontent.com/cefet-rj-dal/tspredit/master/inst/logo.png' align='centre' height='150' width='129'/> TSPredIT
+# <img src='https://raw.githubusercontent.com/cefet-rj-dal/tspredit/master/inst/logo.png' align='centre' height='125' width='125'/> TSPredIT
 
 <!-- badges: start -->
 
 ![GitHub Repo
-stars](https://img.shields.io/github/stars/cefet-rj-dal/daltoolbox?logo=Github)
+stars](https://img.shields.io/github/stars/cefet-rj-dal/tspredit?logo=Github)
 <!-- badges: end -->
 
 The Time Series Prediction with Integrated Tuning (TSPredIT) is based on
