@@ -3,6 +3,7 @@
 #'@return a `ts_fil_smooth` object.
 #'@examples
 #'# time series with noise
+#'library(daltoolbox)
 #'data(sin_data)
 #'sin_data$y[9] <- 2*sin_data$y[9]
 #'# convert to sliding windows

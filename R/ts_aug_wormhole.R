@@ -3,6 +3,7 @@
 #'Wormhole does data augmentation by removing lagged terms and adding old terms.
 #'@return a `ts_aug_wormhole` object.
 #'@examples
+#'library(daltoolbox)
 #'data(sin_data)
 #'
 #'#convert to sliding windows

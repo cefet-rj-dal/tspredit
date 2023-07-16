@@ -4,6 +4,7 @@
 #'@param factor increase factor for data augmentation
 #'@return a `ts_aug_awaresmooth` object.
 #'@examples
+#'library(daltoolbox)
 #'data(sin_data)
 #'
 #'#convert to sliding windows

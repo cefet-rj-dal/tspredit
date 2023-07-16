@@ -3,6 +3,7 @@
 #'Flip mirror the sliding observations relative to the mean of the sliding windows.
 #'@return a `ts_aug_flip` object.
 #'@examples
+#'library(daltoolbox)
 #'data(sin_data)
 #'
 #'#convert to sliding windows

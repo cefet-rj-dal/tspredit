@@ -4,6 +4,7 @@
 #'@param scale_factor for stretch
 #'@return a `ts_aug_stretch` object.
 #'@examples
+#'library(daltoolbox)
 #'data(sin_data)
 #'
 #'#convert to sliding windows

@@ -22,6 +22,7 @@ It wraps the pytorch library.
 }
 \examples{
 \dontrun{
+library(daltoolbox)
 data(sin_data)
 ts <- ts_data(sin_data$y, 10)
 ts_head(ts, 3)

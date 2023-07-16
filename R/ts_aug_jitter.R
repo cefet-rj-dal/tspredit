@@ -3,6 +3,7 @@
 #'jitter adds random noise to each data point in the time series.
 #'@return a `ts_aug_jitter` object.
 #'@examples
+#'library(daltoolbox)
 #'data(sin_data)
 #'
 #'#convert to sliding windows

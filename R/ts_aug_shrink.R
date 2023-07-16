@@ -4,6 +4,7 @@
 #'@param scale_factor for shrink
 #'@return a `ts_aug_shrink` object.
 #'@examples
+#'library(daltoolbox)
 #'data(sin_data)
 #'
 #'#convert to sliding windows
