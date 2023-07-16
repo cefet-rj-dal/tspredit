@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# TSPredIT
+# <img src='https://raw.githubusercontent.com/cefet-rj-dal/tspredit/master/inst/logo.png' align='centre' height='150' width='129'/> TSPredIT
 
 <!-- badges: start -->
 
@@ -25,10 +25,12 @@ devtools::install_github("cefet-rj-dal/tspredit", force=TRUE, upgrade="never")
 
 ## Examples
 
-The TSPredIT and DAL Toolbox examples are made available at:
-<https://nbviewer.org/github/cefet-rj-dal/daltoolbox-examples/tree/main/>
+The TSPredIT examples are made available at:
+<https://nbviewer.org/github/cefet-rj-dal/tspredit-examples/tree/main/>
 
-A demo video is provided at: <https://eic.cefet-rj.br/~dal/tspredit/>
+The TSPredIT is built on top of DAL Toolbox. Documentation of DAL
+Toolbox is made available at:
+<https://cefet-rj-dal.github.io/daltoolbox/>
 
 ``` r
 library(tspredit)
