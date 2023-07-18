@@ -9,6 +9,18 @@ Authors@R:
             email = "rebecca.salles@eic.cefet-rj.br"
         ),
         person(
+            given = "Cristiane",
+            family = "Gea",
+            role = c("aut"),
+            email = "cristiane.gea@eic.cefet-rj.br"
+        ),
+        person(
+            given = "Cristiane",
+            family = "Gea",
+            role = c("aut"),
+            email = "carla.pacheco@eic.cefet-rj.br"
+        ),        
+        person(
             given = "Eduardo",
             family = "Bezerra",
             role = c("aut"),
@@ -38,22 +50,20 @@ Authors@R:
             role = "cph"
         )
    )
-Description: Time Series Prediction Integrated Tuning.
+Description: Prediction is one of the most important activities while working with time series. There are many alternative ways to model the time series. Finding the right one is challenging to model them. Most data-centric models (either statistical or machine learning) have hyperparameters to tune. Setting them right is mandatory for good predictions. It is even more complex since time series prediction also demands choosing a data preprocessing that complies with the chosen model. Many time series frameworks, such as Scikit Learning, have features to build models and tune their hyperparameters. However, only some works address tuning data preprocessing hyperparameters and model building. TSPredIT addresses this issue in this scope by providing a framework that seamlessly integrates data preprocessing activities with models' hyperparameters. TSPredIT is made available as an R-package, which provides functions for defining and conducting time series prediction, including data pre(post)processing, decomposition, hyperparameter optimization, modeling, prediction, and accuracy assessment. Besides, TSPredIT is also extensible, which significantly expands the framework's applicability, especially with other languages such as Python. More information is made available at Izau et al. <doi:10.5753/sbbd.2022.224330>.
 License: MIT + file LICENSE
 URL: https://github.com/cefet-rj-dal/daltoolbox, https://cefet-rj-dal.github.io/daltoolbox/
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.2
 Imports: 
-  FNN,
   glmnet,
   smotefamily,
   leaps,
   FSelector,
   doBy,  
   dplyr,
-  daltoolbox,
-  reticulate
+  daltoolbox
 Config/reticulate:
   list(
     packages = list(
