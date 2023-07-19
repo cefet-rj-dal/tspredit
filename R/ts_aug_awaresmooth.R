@@ -11,10 +11,11 @@
 #'xw <- ts_data(sin_data$y, 10)
 #'
 #'#data augmentation using awareness
-#'augment <- ts_aug_awareness()
+#'augment <- ts_aug_awaresmooth()
 #'augment <- fit(augment, xw)
 #'xa <- transform(augment, xw)
 #'ts_head(xa)
+#'@export
 ts_aug_awaresmooth <- function(factor = 1) {
   obj <- dal_transform()
   obj$factor <- factor
