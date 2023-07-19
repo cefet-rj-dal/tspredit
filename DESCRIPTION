@@ -15,8 +15,8 @@ Authors@R:
             email = "cristiane.gea@eic.cefet-rj.br"
         ),
         person(
-            given = "Cristiane",
-            family = "Gea",
+            given = "Carla",
+            family = "Pacheco",
             role = c("aut"),
             email = "carla.pacheco@eic.cefet-rj.br"
         ),        
