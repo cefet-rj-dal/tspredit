@@ -15,7 +15,18 @@ machine learning and data preprocessing. It also contains time series
 outliers removal, data augmentation, ensemble models, and a more
 flexible workflow design for Data Analytics tasks.
 
-You can install the development version of TSPredIT x from
+## Installation
+
+The latest version of TSPredIT at CRAN is available at:
+<https://CRAN.R-project.org/package=tspredit>
+
+You can install the stable version of TSPredIT from CRAN with:
+
+``` r
+install.packages("harbinger")
+```
+
+You can install the development version of TSPredIT from
 [GitHub](https://github.com/) with:
 
 ``` r
