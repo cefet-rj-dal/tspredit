@@ -29,7 +29,7 @@ The latest version of TSPredIT at CRAN is available at:
 You can install the stable version of TSPredIT from CRAN with:
 
 ``` r
-install.packages("harbinger")
+install.packages("tspredit")
 ```
 
 You can install the development version of TSPredIT from [GitHub](https://github.com/) with:
