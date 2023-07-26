@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 ![GitHub Repo stars](https://img.shields.io/github/stars/cefet-rj-dal/tspredit?logo=Github)
+![GitHub Repo stars](https://cranlogs.r-pkg.org/badges/tspredit)
 <!-- badges: end -->
 
 The Time Series Prediction with Integrated Tuning (TSPredIT) is based on DAL Toolbox with integrated hyperparameter optimization combining machine learning and data preprocessing. It also contains time series outliers removal, data augmentation, ensemble models, and a more flexible workflow design for Data Analytics tasks.

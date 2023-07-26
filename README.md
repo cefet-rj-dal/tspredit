@@ -7,6 +7,7 @@
 
 ![GitHub Repo
 stars](https://img.shields.io/github/stars/cefet-rj-dal/tspredit?logo=Github)
+![GitHub Repo stars](https://cranlogs.r-pkg.org/badges/tspredit)
 <!-- badges: end -->
 
 The Time Series Prediction with Integrated Tuning (TSPredIT) is based on
