@@ -50,3 +50,7 @@ library(tspredit)
 #>   method            from
 #>   as.zoo.data.frame zoo
 ```
+
+## Bugs and new features request
+
+<https://github.com/cefet-rj-dal/tspredit/issues>

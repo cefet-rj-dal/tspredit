@@ -54,3 +54,6 @@ The TSPredIT is built on top of DAL Toolbox. Documentation of DAL Toolbox is mad
 library(tspredit)
 ```
 
+
+## Bugs and new features request
+<https://github.com/cefet-rj-dal/tspredit/issues>
