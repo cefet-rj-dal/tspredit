@@ -27,8 +27,8 @@ You can install the stable version of TSPredIT from CRAN with:
 install.packages("tspredit")
 ```
 
-You can install the development version of TSPredIT from
-[GitHub](https://github.com/cefet-rj-dal/tspredit) with:
+You can install the development version of TSPredIT from GitHub
+<https://github.com/cefet-rj-dal/tspredit> with:
 
 ``` r
 library(devtools)
