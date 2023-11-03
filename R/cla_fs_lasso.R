@@ -8,6 +8,9 @@
 #'myfeature <- daltoolbox::fit(cla_fs_lasso("Species"), iris)
 #'data <- daltoolbox::transform(myfeature, iris)
 #'head(data)
+#'@importFrom daltoolbox dal_transform
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox transform
 #'@export
 cla_fs_lasso <- function(attribute) {
   obj <- cla_fs(attribute)
@@ -16,6 +19,7 @@ cla_fs_lasso <- function(attribute) {
 }
 
 
+#'@importFrom daltoolbox fit
 #'@importFrom glmnet cv.glmnet
 #'@importFrom glmnet glmnet
 #'@export

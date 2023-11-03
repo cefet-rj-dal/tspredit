@@ -6,18 +6,16 @@
 #'library(daltoolbox)
 #'data(sin_data)
 #'sin_data$y[9] <- 2*sin_data$y[9]
-#'# convert to sliding windows
-#'ts <- ts_data(sin_data$y, 10)
-#'ts_head(ts, 3)
-#'summary(ts[,10])
 #'
-#'# filter
 #'filter <- ts_fil_smooth()
 #'filter <- fit(filter, sin_data$y)
 #'y <- transform(filter, sin_data$y)
 #'
 #'# plot
 #'plot_ts_pred(y=sin_data$y, yadj=y)
+#'@importFrom daltoolbox dal_transform
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox transform
 #'@export
 ts_fil_smooth <- function() {
   obj <- dal_transform()
@@ -25,9 +23,11 @@ ts_fil_smooth <- function() {
   return(obj)
 }
 
-#'@export
 #'@importFrom stats na.omit
 #'@importFrom graphics boxplot
+#'@importFrom daltoolbox transform
+#'@export transform.ts_fil_smooth
+#'@export
 transform.ts_fil_smooth <- function(obj, data, ...) {
   progressive_smoothing <- function(serie) {
     serie <- stats::na.omit(serie)

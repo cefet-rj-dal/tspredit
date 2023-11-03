@@ -8,6 +8,9 @@
 #'myfeature <- daltoolbox::fit(cla_fs_ig("Species"), iris)
 #'data <- daltoolbox::transform(myfeature, iris)
 #'head(data)
+#'@importFrom daltoolbox dal_transform
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox transform
 #'@export
 cla_fs_ig <- function(attribute) {
   obj <- cla_fs(attribute)
@@ -17,7 +20,7 @@ cla_fs_ig <- function(attribute) {
 
 #'@importFrom FSelector information.gain
 #'@importFrom doBy orderBy
-#'@import daltoolbox
+#'@importFrom daltoolbox fit
 #'@export
 fit.cla_fs_ig <- function(obj, data, ...) {
   data <- data.frame(data)

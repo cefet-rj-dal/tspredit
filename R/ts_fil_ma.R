@@ -19,6 +19,9 @@
 #'
 #'# plot
 #'plot_ts_pred(y=sin_data$y, yadj=y)
+#'@importFrom daltoolbox dal_transform
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox transform
 #'@export
 ts_fil_ma <- function(ma = 3) {
   obj <- dal_transform()
@@ -27,6 +30,8 @@ ts_fil_ma <- function(ma = 3) {
   return(obj)
 }
 
+#'@importFrom daltoolbox transform
+#'@export transform.ts_fil_ma
 #'@export
 transform.ts_fil_ma <- function(obj, data, ...) {
   data <- ts_data(data, obj$ma)

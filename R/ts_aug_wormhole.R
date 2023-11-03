@@ -14,6 +14,10 @@
 #'augment <- fit(augment, xw)
 #'xa <- transform(augment, xw)
 #'ts_head(xa)
+#'@importFrom daltoolbox dal_transform
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox transform
+#'@importFrom daltoolbox adjust_ts_data
 #'@export
 ts_aug_wormhole <- function() {
   obj <- dal_transform()
@@ -24,6 +28,9 @@ ts_aug_wormhole <- function() {
 }
 
 #'@importFrom utils combn
+#'@importFrom daltoolbox transform
+#'@importFrom daltoolbox adjust_ts_data
+#'@export transform.ts_aug_wormhole
 #'@export
 transform.ts_aug_wormhole <- function(obj, data, ...) {
   add.ts_aug_wormhole <- function(data) {
@@ -34,7 +41,7 @@ transform.ts_aug_wormhole <- function(obj, data, ...) {
     data <- NULL
     idx <- NULL
     for (i in 1:obj$fold) {
-      temp <- adjust_ts_data(ts[,c(space[,ncol(space)-i], ncol(ts))])
+      temp <- daltoolbox::adjust_ts_data(ts[,c(space[,ncol(space)-i], ncol(ts))])
       idx <- c(idx, 1:nrow(temp))
       data <- rbind(data, temp)
     }
@@ -45,7 +52,7 @@ transform.ts_aug_wormhole <- function(obj, data, ...) {
   if (obj$preserve_data) {
     idx <- c(1:nrow(data), attr(result, "idx"))
     result <- rbind(data, result)
-    result <- adjust_ts_data(result)
+    result <- daltoolbox::adjust_ts_data(result)
     attr(result, "idx") <- idx
   }
   return(result)

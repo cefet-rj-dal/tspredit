@@ -14,6 +14,9 @@
 #'augment <- fit(augment, xw)
 #'xa <- transform(augment, xw)
 #'ts_head(xa)
+#'@importFrom daltoolbox dal_transform
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox transform
 #'@export
 ts_aug_jitter <- function() {
   obj <- dal_transform()
@@ -23,6 +26,8 @@ ts_aug_jitter <- function() {
 }
 
 #'@importFrom stats sd
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox adjust_ts_data
 #'@export
 fit.ts_aug_jitter <- function(obj, data, ...) {
   an <- apply(data, 1, mean)
@@ -32,6 +37,8 @@ fit.ts_aug_jitter <- function(obj, data, ...) {
 }
 
 #'@importFrom stats rnorm
+#'@importFrom daltoolbox transform
+#'@export transform.ts_aug_jitter
 #'@export
 transform.ts_aug_jitter <- function(obj, data, ...) {
   add.ts_aug_jitter <- function(obj, data) {
@@ -46,7 +53,7 @@ transform.ts_aug_jitter <- function(obj, data, ...) {
   if (obj$preserve_data) {
     idx <- c(1:nrow(data), attr(result, "idx"))
     result <- rbind(data, result)
-    result <- adjust_ts_data(result)
+    result <- daltoolbox::adjust_ts_data(result)
     attr(result, "idx") <- idx
   }
   return(result)

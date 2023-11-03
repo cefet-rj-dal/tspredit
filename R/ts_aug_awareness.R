@@ -15,6 +15,10 @@
 #'augment <- fit(augment, xw)
 #'xa <- transform(augment, xw)
 #'ts_head(xa)
+#'@importFrom daltoolbox dal_transform
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox adjust_ts_data
+#'@importFrom daltoolbox transform
 #'@export
 ts_aug_awareness <- function(factor = 1) {
   obj <- dal_transform()
@@ -26,6 +30,8 @@ ts_aug_awareness <- function(factor = 1) {
 #'@importFrom stats rexp
 #'@importFrom stats rnorm
 #'@importFrom stats sd
+#'@importFrom daltoolbox transform
+#'@export transform.ts_aug_awareness
 #'@export
 transform.ts_aug_awareness <- function(obj, data, ...) {
   noise.parameters <- function(obj, data) {
@@ -59,7 +65,7 @@ transform.ts_aug_awareness <- function(obj, data, ...) {
   attr(result, "idx") <-  i
   idx <- c(1:nrow(data), attr(result, "idx"))
   result <- rbind(data, result)
-  result <- adjust_ts_data(result)
+  result <- daltoolbox::adjust_ts_data(result)
   attr(result, "idx") <- idx
   return(result)
 }

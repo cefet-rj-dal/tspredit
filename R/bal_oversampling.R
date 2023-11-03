@@ -11,7 +11,9 @@
 #'bal <- daltoolbox::fit(bal, mod_iris)
 #'adjust_iris <- daltoolbox::transform(bal, mod_iris)
 #'table(adjust_iris$Species)
-#'@import daltoolbox
+#'@importFrom daltoolbox dal_transform
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox transform
 #'@export
 bal_oversampling <- function(attribute) {
   obj <- dal_transform()
@@ -20,7 +22,9 @@ bal_oversampling <- function(attribute) {
   return(obj)
 }
 
+#'@importFrom daltoolbox transform
 #'@importFrom smotefamily SMOTE
+#'@export transform.bal_oversampling
 #'@export
 transform.bal_oversampling <- function(obj, data, ...) {
   j <- match(obj$attribute, colnames(data))

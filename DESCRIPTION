@@ -1,6 +1,6 @@
 Package: tspredit
 Title: Time Series Prediction Integrated Tuning
-Version: 1.0.717
+Version: 1.0.737
 Authors@R: 
   c(    person(
             given = "Rebecca",
@@ -13,6 +13,12 @@ Authors@R:
             family = "Gea",
             role = c("aut"),
             email = "cristiane.gea@eic.cefet-rj.br"
+        ),
+        person(
+            given = "Vitoria",
+            family = "Birindiba",
+            role = c("aut"),
+            email = "vitoria.birindiba@eic.cefet-rj.br"
         ),
         person(
             given = "Carla",
@@ -55,14 +61,18 @@ License: MIT + file LICENSE
 URL: https://github.com/cefet-rj-dal/daltoolbox, https://cefet-rj-dal.github.io/daltoolbox/
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3
 Imports: 
+  dplyr,
+  stats,
   glmnet,
   smotefamily,
   leaps,
   FSelector,
+  forecast,
+  mFilter,
+  KFAS,
   doBy,  
-  dplyr,
   daltoolbox
 Config/reticulate:
   list(

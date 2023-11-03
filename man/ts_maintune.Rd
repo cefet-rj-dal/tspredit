@@ -8,7 +8,7 @@ ts_maintune(
   input_size,
   base_model,
   folds = 10,
-  preprocess = list(ts_norm_gminmax()),
+  preprocess = list(daltoolbox::ts_norm_gminmax()),
   augment = list(ts_aug_none())
 )
 }

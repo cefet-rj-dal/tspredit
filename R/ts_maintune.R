@@ -27,8 +27,12 @@
 #'
 #'ev_test <- evaluate(model, output, prediction)
 #'ev_test
+#'@importFrom daltoolbox dal_tune
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox select_hyper
+#'@importFrom daltoolbox ts_norm_gminmax
 #'@export
-ts_maintune <- function(input_size, base_model, folds=10, preprocess = list(ts_norm_gminmax()), augment = list(ts_aug_none())) {
+ts_maintune <- function(input_size, base_model, folds=10, preprocess = list(daltoolbox::ts_norm_gminmax()), augment = list(ts_aug_none())) {
   obj <- dal_tune(base_model, folds)
   obj$input_size <- input_size
   obj$preprocess <- preprocess
@@ -39,7 +43,11 @@ ts_maintune <- function(input_size, base_model, folds=10, preprocess = list(ts_n
 }
 
 
-#'@import daltoolbox
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox k_fold
+#'@importFrom daltoolbox evaluate
+#'@importFrom daltoolbox sample_random
+#'@importFrom daltoolbox train_test_from_folds
 #'@export
 fit.ts_maintune <- function(obj, x, y, ranges, ...) {
   obj <- prepare_ranges(obj, ranges)
@@ -52,10 +60,10 @@ fit.ts_maintune <- function(obj, x, y, ranges, ...) {
   hyperparameters <- NULL
   if (n > 1) {
     data <- data.frame(i = 1:nrow(x), idx = 1:nrow(x))
-    folds <- k_fold(sample_random(), data, obj$folds)
+    folds <- daltoolbox::k_fold(daltoolbox::sample_random(), data, obj$folds)
     nfolds <- length(folds)
     for (j in 1:nfolds) {
-      tt <- train_test_from_folds(folds, j)
+      tt <- daltoolbox::train_test_from_folds(folds, j)
       error <- rep(0, n)
       msg <- rep("", n)
       for (i in 1:n) {
@@ -82,7 +90,7 @@ fit.ts_maintune <- function(obj, x, y, ranges, ...) {
   model <- build_model(obj, ranges[i,], x, y)
   if (n == 1) {
     prediction <- predict(model, x)
-    error <- evaluate(model, y, prediction)$mse
+    error <- daltoolbox::evaluate(model, y, prediction)$mse
     hyperparameters <- cbind(ranges, error)
   }
 
@@ -93,11 +101,13 @@ fit.ts_maintune <- function(obj, x, y, ranges, ...) {
   return(model)
 }
 
-#'@importFrom dplyr filter group_by summarise
+#'@importFrom dplyr group_by
+#'@importFrom dplyr summarise
+#'@importFrom daltoolbox select_hyper
 #'@export
 select_hyper.ts_maintune <- function(obj, hyperparameters) {
   key <- msg <- error <- ""
-  hyper_summary <- hyperparameters |> dplyr::filter(msg == "") |>
+  hyper_summary <- hyperparameters[msg == "",] |>
     dplyr::group_by(key) |> dplyr::summarise(error = mean(error, na.rm=TRUE))
 
   mim_error <- hyper_summary |> dplyr::summarise(error = min(error))
@@ -118,9 +128,10 @@ get_augment <- function(obj, name) {
   return(obj$augment[[i]])
 }
 
+#'@importFrom daltoolbox adjust_ts_data
 fit_augment <- function(obj, x, y) {
   data <- cbind(x, y)
-  data <-  adjust_ts_data(data)
+  data <-  daltoolbox::adjust_ts_data(data)
   for (i in 1:length(obj$augment)) {
     augment <- obj$augment[[i]]
     obj$augment[[i]] <- fit(augment, data)
@@ -128,21 +139,25 @@ fit_augment <- function(obj, x, y) {
   return(obj)
 }
 
+#'@importFrom daltoolbox transform
+#'@importFrom daltoolbox adjust_ts_data
+#'@importFrom daltoolbox ts_projection
+#'@importFrom daltoolbox set_params
 build_model <- function(obj, ranges, x, y) {
   augment_data <- function(augment, x, y) {
     data <- cbind(x, y)
-    data <-  adjust_ts_data(data)
-    data <- transform(augment, data)
-    data <-  adjust_ts_data(data)
+    data <-  daltoolbox::adjust_ts_data(data)
+    data <- daltoolbox::transform(augment, data)
+    data <-  daltoolbox::adjust_ts_data(data)
 
-    io <- ts_projection(data)
+    io <- daltoolbox::ts_projection(data)
 
     return(list(x=io$input, y=io$output))
   }
 
   model <- obj$base_model
   model$input_size <- ranges$input_size
-  model <- set_params(model, ranges)
+  model <- daltoolbox::set_params(model, ranges)
   model$preprocess <- get_preprocess(obj, ranges$preprocess)
   augment <- get_augment(obj, ranges$augment)
   data <- augment_data(augment, x, y)
@@ -166,10 +181,11 @@ prepare_ranges <- function(obj, ranges) {
   return(obj)
 }
 
+#'@importFrom daltoolbox evaluate
 evaluate_error <- function(model, i, x, y) {
   x <- x[i,]
   y <- as.vector(y[i,])
   prediction <- as.vector(stats::predict(model, x))
-  error <- evaluate(model, y, prediction)$mse
+  error <- daltoolbox::evaluate(model, y, prediction)$mse
   return(error)
 }

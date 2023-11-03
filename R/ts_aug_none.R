@@ -13,6 +13,9 @@
 #'augment <- fit(augment, xw)
 #'xa <- transform(augment, xw)
 #'ts_head(xa)
+#'@importFrom daltoolbox dal_transform
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox transform
 #'@export
 ts_aug_none <- function() {
   obj <- dal_transform()
@@ -20,6 +23,8 @@ ts_aug_none <- function() {
   return(obj)
 }
 
+#'@importFrom daltoolbox transform
+#'@export transform.ts_aug_none
 #'@export
 transform.ts_aug_none <- function(obj, data, ...) {
   result <- data

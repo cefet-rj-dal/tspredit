@@ -8,6 +8,9 @@
 #'myfeature <- daltoolbox::fit(cla_fs_relief("Species"), iris)
 #'data <- daltoolbox::transform(myfeature, iris)
 #'head(data)
+#'@importFrom daltoolbox dal_transform
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox transform
 #'@export
 cla_fs_relief <- function(attribute) {
   obj <- cla_fs(attribute)
@@ -15,6 +18,7 @@ cla_fs_relief <- function(attribute) {
   return(obj)
 }
 
+#'@importFrom daltoolbox fit
 #'@importFrom FSelector relief
 #'@importFrom doBy orderBy
 #'@importFrom stats coef formula predict

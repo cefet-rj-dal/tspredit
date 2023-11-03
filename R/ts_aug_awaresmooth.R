@@ -15,6 +15,9 @@
 #'augment <- fit(augment, xw)
 #'xa <- transform(augment, xw)
 #'ts_head(xa)
+#'@importFrom daltoolbox dal_transform
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox transform
 #'@export
 ts_aug_awaresmooth <- function(factor = 1) {
   obj <- dal_transform()
@@ -27,6 +30,10 @@ ts_aug_awaresmooth <- function(factor = 1) {
 #'@importFrom stats rnorm
 #'@importFrom stats sd
 #'@importFrom graphics boxplot
+#'@importFrom daltoolbox transform
+#'@importFrom daltoolbox adjust_ts_data
+#'@importFrom daltoolbox ts_data
+#'@export transform.ts_aug_awaresmooth
 #'@export
 transform.ts_aug_awaresmooth <- function(obj, data, ...) {
   progressive_smoothing <- function(serie) {
@@ -81,7 +88,7 @@ transform.ts_aug_awaresmooth <- function(obj, data, ...) {
     attr(result, "idx") <-  i
     idx <- c(1:nrow(data), attr(result, "idx"))
     result <- rbind(data, result)
-    result <- adjust_ts_data(result)
+    result <- daltoolbox::adjust_ts_data(result)
     attr(result, "idx") <- idx
     return(result)
   }
@@ -89,7 +96,7 @@ transform.ts_aug_awaresmooth <- function(obj, data, ...) {
   n <- ncol(data)
   x <- c(as.vector(data[1,1:(n-1)]), as.vector(data[,n]))
   xd <- progressive_smoothing(x)
-  result <- ts_data(xd, n)
+  result <- daltoolbox::ts_data(xd, n)
 
   result <- transform_ts_aug_awareness(result, obj$factor)
 

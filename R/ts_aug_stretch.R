@@ -15,6 +15,10 @@
 #'augment <- fit(augment, xw)
 #'xa <- transform(augment, xw)
 #'ts_head(xa)
+#'@importFrom daltoolbox dal_transform
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox transform
+#'@importFrom daltoolbox adjust_ts_data
 #'@export
 ts_aug_stretch <- function(scale_factor=1.2) {
   obj <- dal_transform()
@@ -24,6 +28,8 @@ ts_aug_stretch <- function(scale_factor=1.2) {
   return(obj)
 }
 
+#'@importFrom daltoolbox transform
+#'@export transform.ts_aug_stretch
 #'@export
 transform.ts_aug_stretch <- function(obj, data, ...) {
   add.ts_aug_stretch <- function(obj, data) {
@@ -39,7 +45,7 @@ transform.ts_aug_stretch <- function(obj, data, ...) {
   if (obj$preserve_data) {
     idx <- c(1:nrow(data), attr(result, "idx"))
     result <- rbind(data, result)
-    result <- adjust_ts_data(result)
+    result <- daltoolbox::adjust_ts_data(result)
     attr(result, "idx") <- idx
   }
   return(result)

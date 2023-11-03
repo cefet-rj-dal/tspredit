@@ -21,6 +21,9 @@
 #'
 #'# plot
 #'plot_ts_pred(y=sin_data$y, yadj=y)
+#'@importFrom daltoolbox dal_transform
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox transform
 #'@export
 ts_fil_ema <- function(ema = 3) {
   obj <- dal_transform()
@@ -29,6 +32,8 @@ ts_fil_ema <- function(ema = 3) {
   return(obj)
 }
 
+#'@importFrom daltoolbox transform
+#'@export transform.ts_fil_ema
 #'@export
 transform.ts_fil_ema <- function(obj, data, ...) {
   exp_mean <- function(x) {

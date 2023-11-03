@@ -8,6 +8,9 @@
 #'myfeature <- daltoolbox::fit(cla_fs_fss("Species"), iris)
 #'data <- daltoolbox::transform(myfeature, iris)
 #'head(data)
+#'@importFrom daltoolbox dal_transform
+#'@importFrom daltoolbox fit
+#'@importFrom daltoolbox transform
 #'@export
 cla_fs_fss <- function(attribute) {
   obj <- cla_fs(attribute)
@@ -15,6 +18,7 @@ cla_fs_fss <- function(attribute) {
   return(obj)
 }
 
+#'@importFrom daltoolbox fit
 #'@importFrom stats coef
 #'@export
 fit.cla_fs_fss <- function(obj, data, ...) {
