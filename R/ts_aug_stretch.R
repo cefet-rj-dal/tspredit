@@ -29,7 +29,6 @@ ts_aug_stretch <- function(scale_factor=1.2) {
 }
 
 #'@importFrom daltoolbox transform
-#'@export transform.ts_aug_stretch
 #'@export
 transform.ts_aug_stretch <- function(obj, data, ...) {
   add.ts_aug_stretch <- function(obj, data) {

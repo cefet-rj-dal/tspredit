@@ -27,7 +27,6 @@ ts_aug_flip <- function() {
 }
 
 #'@importFrom daltoolbox transform
-#'@export transform.ts_aug_flip
 #'@export
 transform.ts_aug_flip <- function(obj, data, ...) {
   add.ts_aug_flip <- function(obj, data) {

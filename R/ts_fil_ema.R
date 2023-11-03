@@ -33,7 +33,6 @@ ts_fil_ema <- function(ema = 3) {
 }
 
 #'@importFrom daltoolbox transform
-#'@export transform.ts_fil_ema
 #'@export
 transform.ts_fil_ema <- function(obj, data, ...) {
   exp_mean <- function(x) {

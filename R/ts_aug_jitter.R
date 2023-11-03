@@ -38,7 +38,6 @@ fit.ts_aug_jitter <- function(obj, data, ...) {
 
 #'@importFrom stats rnorm
 #'@importFrom daltoolbox transform
-#'@export transform.ts_aug_jitter
 #'@export
 transform.ts_aug_jitter <- function(obj, data, ...) {
   add.ts_aug_jitter <- function(obj, data) {

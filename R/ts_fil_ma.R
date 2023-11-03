@@ -31,7 +31,6 @@ ts_fil_ma <- function(ma = 3) {
 }
 
 #'@importFrom daltoolbox transform
-#'@export transform.ts_fil_ma
 #'@export
 transform.ts_fil_ma <- function(obj, data, ...) {
   data <- ts_data(data, obj$ma)

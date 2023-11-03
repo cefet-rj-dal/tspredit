@@ -32,7 +32,6 @@ ts_fil_kalman <- function(H = 0.1, Q = 1) {
 #'@importFrom KFAS SSModel
 #'@importFrom KFAS KFS
 #'@importFrom KFAS SSMtrend
-#'@export transform.ts_fil_kalman
 #'@export
 transform.ts_fil_kalman <- function(obj, data, ...) {
   logmodel <- KFAS::SSModel(data ~ SSMtrend(1, Q = obj$Q), H = obj$H)

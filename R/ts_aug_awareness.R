@@ -31,7 +31,6 @@ ts_aug_awareness <- function(factor = 1) {
 #'@importFrom stats rnorm
 #'@importFrom stats sd
 #'@importFrom daltoolbox transform
-#'@export transform.ts_aug_awareness
 #'@export
 transform.ts_aug_awareness <- function(obj, data, ...) {
   noise.parameters <- function(obj, data) {

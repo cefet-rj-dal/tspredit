@@ -24,7 +24,6 @@ bal_oversampling <- function(attribute) {
 
 #'@importFrom daltoolbox transform
 #'@importFrom smotefamily SMOTE
-#'@export transform.bal_oversampling
 #'@export
 transform.bal_oversampling <- function(obj, data, ...) {
   j <- match(obj$attribute, colnames(data))

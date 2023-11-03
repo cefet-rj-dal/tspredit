@@ -22,7 +22,6 @@ bal_subsampling <- function(attribute) {
 }
 
 #'@importFrom daltoolbox transform
-#'@export transform.bal_subsampling
 #'@export
 transform.bal_subsampling <- function(obj, data, ...) {
   data <- data

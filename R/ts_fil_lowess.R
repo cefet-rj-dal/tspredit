@@ -26,7 +26,6 @@ ts_fil_lowess <- function(f = 0.2){
 
 
 #'@importFrom stats lowess
-#'@export transform.ts_fil_lowess
 #'@export
 transform.ts_fil_lowess <- function(obj, data, ...){
   ts_final <- stats::lowess(x=1:length(data),  y = data, f = obj$f)$y

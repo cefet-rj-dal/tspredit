@@ -16,7 +16,6 @@ cla_fs <- function(attribute) {
 }
 
 #'@importFrom daltoolbox transform
-#'@export transform.cla_fs
 #'@export
 transform.cla_fs <- function(obj, data, ...) {
   data <- data[, c(obj$features, obj$attribute)]

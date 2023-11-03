@@ -24,7 +24,6 @@ ts_fil_none <- function() {
 }
 
 #'@importFrom daltoolbox transform
-#'@export transform.ts_fil_none
 #'@export
 transform.ts_fil_none <- function(obj, data, ...) {
   result <- data

@@ -29,7 +29,6 @@ ts_aug_shrink <- function(scale_factor = 0.8) {
 }
 
 #'@importFrom daltoolbox transform
-#'@export transform.ts_aug_shrink
 #'@export
 transform.ts_aug_shrink <- function(obj, data, ...) {
   add.ts_aug_shrink <- function(obj, data) {
