@@ -1,18 +1,32 @@
 Package: tspredit
 Title: Time Series Prediction Integrated Tuning
-Version: 1.0.737
+Version: 1.0.747
 Authors@R: 
-  c(    person(
-            given = "Rebecca",
-            family = "Salles",
-            role = c("aut"),
-            email = "rebecca.salles@eic.cefet-rj.br"
+  c(
+        person(
+            given = "Eduardo",
+            family = "Ogasawara",
+            role = c("aut", "ths", "cre"),
+            email = "eogasawara@ieee.org",
+            comment = c(ORCID = "0000-0002-0466-0626")
         ),
         person(
             given = "Cristiane",
             family = "Gea",
             role = c("aut"),
             email = "cristiane.gea@eic.cefet-rj.br"
+        ),
+        person(
+            given = "Diogo",
+            family = "Santos",
+            role = c("aut"),
+            email = "diogo.santos@eic.cefet-rj.br"
+        ),
+        person(
+            given = "Rebecca",
+            family = "Salles",
+            role = c("aut"),
+            email = "rebecca.salles@eic.cefet-rj.br"
         ),
         person(
             given = "Vitoria",
@@ -45,13 +59,6 @@ Authors@R:
             email = "fporto@lncc.br"
         ),
         person(
-            given = "Eduardo",
-            family = "Ogasawara",
-            role = c("aut", "ths", "cre"),
-            email = "eogasawara@ieee.org",
-            comment = c(ORCID = "0000-0002-0466-0626")
-        ),
-        person(
             given = "Federal Center for Technological Education of Rio de Janeiro (CEFET/RJ)",
             role = "cph"
         )
@@ -71,6 +78,7 @@ Imports:
   FSelector,
   forecast,
   mFilter,
+  DescTools,
   KFAS,
   doBy,  
   daltoolbox
