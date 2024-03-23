@@ -72,15 +72,10 @@ RoxygenNote: 7.3.1
 Imports: 
   dplyr,
   stats,
-  glmnet,
-  smotefamily,
-  leaps,
-  FSelector,
   forecast,
   mFilter,
   DescTools,
   KFAS,
-  doBy,  
   daltoolbox
 Config/reticulate:
   list(

@@ -182,6 +182,7 @@ prepare_ranges <- function(obj, ranges) {
 }
 
 #'@importFrom daltoolbox evaluate
+#'@importFrom stats predict
 evaluate_error <- function(model, i, x, y) {
   x <- x[i,]
   y <- as.vector(y[i,])

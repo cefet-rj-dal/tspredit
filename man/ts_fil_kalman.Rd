@@ -16,6 +16,7 @@ a \code{ts_fil_kalman} object.
 }
 \description{
 The Kalman filter is an estimation algorithm that produces estimates of certain variables based on imprecise measurements to provide a prediction of the future state of the system.
+It wraps KFAS package.
 }
 \examples{
 # time series with noise
