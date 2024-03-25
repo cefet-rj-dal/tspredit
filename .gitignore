@@ -9,6 +9,9 @@
 # User-specific files
 .Ruserdata
 
+# Jupyter
+.ipynb_checkpoints
+
 # Example code in package build process
 *-Ex.R
 
