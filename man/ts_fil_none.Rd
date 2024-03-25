@@ -13,15 +13,16 @@ a \code{ts_fil_none} object.
 Does not make data filter
 }
 \examples{
+# time series with noise
 library(daltoolbox)
 data(sin_data)
+sin_data$y[9] <- 2*sin_data$y[9]
 
-#convert to sliding windows
-xw <- ts_data(sin_data$y, 10)
+# filter
+filter <- ts_fil_none()
+filter <- fit(filter, sin_data$y)
+y <- transform(filter, sin_data$y)
 
-#no data filter
-filtering <- ts_fil_none()
-filtering <- fit(filtering, xw)
-xa <- transform(filtering, xw)
-ts_head(xa)
+# plot
+plot_ts_pred(y=sin_data$y, yadj=y)
 }
