@@ -1,6 +1,6 @@
 Package: tspredit
 Title: Time Series Prediction Integrated Tuning
-Version: 1.0.747
+Version: 1.0.767
 Authors@R: 
   c(
         person(
