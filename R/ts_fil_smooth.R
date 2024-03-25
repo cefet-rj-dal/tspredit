@@ -7,6 +7,7 @@
 #'data(sin_data)
 #'sin_data$y[9] <- 2*sin_data$y[9]
 #'
+#'# filter
 #'filter <- ts_fil_smooth()
 #'filter <- fit(filter, sin_data$y)
 #'y <- transform(filter, sin_data$y)

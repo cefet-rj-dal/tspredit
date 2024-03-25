@@ -2,17 +2,18 @@
 #'@description Does not make data filter
 #'@return a `ts_fil_none` object.
 #'@examples
+#'# time series with noise
 #'library(daltoolbox)
 #'data(sin_data)
+#'sin_data$y[9] <- 2*sin_data$y[9]
 #'
-#'#convert to sliding windows
-#'xw <- ts_data(sin_data$y, 10)
+#'# filter
+#'filter <- ts_fil_none()
+#'filter <- fit(filter, sin_data$y)
+#'y <- transform(filter, sin_data$y)
 #'
-#'#no data filter
-#'filtering <- ts_fil_none()
-#'filtering <- fit(filtering, xw)
-#'xa <- transform(filtering, xw)
-#'ts_head(xa)
+#'# plot
+#'plot_ts_pred(y=sin_data$y, yadj=y)
 #'@importFrom daltoolbox dal_transform
 #'@importFrom daltoolbox fit
 #'@importFrom daltoolbox transform
@@ -27,8 +28,6 @@ ts_fil_none <- function() {
 #'@export
 transform.ts_fil_none <- function(obj, data, ...) {
   result <- data
-  idx <- c(1:nrow(result))
-  attr(result, "idx") <- idx
   return(result)
 }
 
