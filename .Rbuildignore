@@ -7,5 +7,6 @@
 ^pkgdown$
 ^\.github$
 ^examples$
+^develop$
 package.R
 jupyter.R

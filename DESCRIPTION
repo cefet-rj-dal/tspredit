@@ -75,6 +75,8 @@ Imports:
   forecast,
   mFilter,
   DescTools,
+  hht,
+  wavelets,
   KFAS,
   daltoolbox
 Config/reticulate:
