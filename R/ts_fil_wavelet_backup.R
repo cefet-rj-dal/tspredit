@@ -2,7 +2,7 @@
 #'@description Wavelet Filter
 #'@param filter Availables wavelet filters: haar, d4, la8, bl14, c6
 #'@param dim Dimensions to be used. When dim equals 0, dim is optimized.
-#'@return a `ts_fil_wavelet` object.
+#'@return a `ts_fil_wavelet_bkp` object.
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)
@@ -10,7 +10,7 @@
 #'sin_data$y[9] <- 2*sin_data$y[9]
 #'
 #'# filter
-#'filter <- ts_fil_wavelet()
+#'filter <- ts_fil_wavelet_bkp()
 #'filter <- fit(filter, sin_data$y)
 #'y <- transform(filter, sin_data$y)
 #'
@@ -20,10 +20,10 @@
 #'@importFrom daltoolbox fit
 #'@importFrom daltoolbox transform
 #'@export
-ts_fil_wavelet <- function(filter = "haar") {
+ts_fil_wavelet_bkp <- function(filter = "haar") {
   obj <- dal_transform()
   obj$filter <- filter
-  class(obj) <- append("ts_fil_wavelet", class(obj))
+  class(obj) <- append("ts_fil_wavelet_bkp", class(obj))
   return(obj)
 }
 
@@ -32,7 +32,7 @@ ts_fil_wavelet <- function(filter = "haar") {
 #'@importFrom daltoolbox R2.ts
 #'@importFrom wavelets modwt
 #'@export
-fit.ts_fil_wavelet_bkp <- function(obj, data, ...) {
+fit.ts_fil_wavelet_bkp_bkp <- function(obj, data, ...) {
   sel_filter <- ""
   bestr2 <- -.Machine$double.xmax
 
@@ -62,7 +62,7 @@ fit.ts_fil_wavelet_bkp <- function(obj, data, ...) {
 #'@importFrom daltoolbox transform
 #'@importFrom wavelets modwt
 #'@export
-transform.ts_fil_wavelet <- function(obj, data, ...) {
+transform.ts_fil_wavelet_bkp <- function(obj, data, ...) {
   id <- 1:length(data)
 
   wt <- wavelets::modwt(data, filter = obj$filter, boundary = "periodic")
