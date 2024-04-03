@@ -1,3 +1,5 @@
+
+
 # TSPredIT
 # version 1.0.767
 
@@ -5,10 +7,11 @@ source("https://raw.githubusercontent.com/cefet-rj-dal/daltoolbox/main/jupyter.R
 
 #loading DAL Toolbox
 load_library("daltoolbox")
-#load_library("tspredit")
+load_library("tspredit")
 
 #load required library
 library(ggplot2)
+
 
 i <- seq(0, 25, 0.25)
 x <- cos(i)
@@ -28,16 +31,11 @@ ts_head(samp$test)
 
 
 
-# Setup for tunning using ELM
 tune <- ts_maintune(input_size=c(3:5), base_model = ts_elm(), preprocess = list(ts_norm_gminmax()))
 ranges <- list(nhid = 1:5, actfun=c('sig', 'radbas', 'tribas', 'relu', 'purelin'))
 
-
-
-
 io_train <- ts_projection(samp$train)
 
-# Generic model tunning
 model <- fit(tune, x=io_train$input, y=io_train$output, ranges)
 
 adjust <- predict(model, io_train$input)
@@ -55,19 +53,5 @@ if (steps_ahead > 1)
 
 print(sprintf("%.2f, %.2f", output, prediction))
 
-
-ev_test <- evaluate(model, output, prediction)
-print(head(ev_test$metrics))
-print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
-
 yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))
-
-
-
-ev_test <- evaluate(model, output, prediction)
-print(head(ev_test$metrics))
-print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
-
-
-
