@@ -3,6 +3,7 @@ library(dplyr)
 library(daltoolbox)
 library(tspredit)
 source("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/R/ts_fil_wavelet.R")
+source("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/R/ts_fil_wavelet_alt.R")
 
 data <- read_delim("develop/Etanol_df.csv",
                    delim = ";",
