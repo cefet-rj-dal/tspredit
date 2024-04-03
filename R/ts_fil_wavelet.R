@@ -27,51 +27,45 @@ ts_fil_wavelet <- function(filter = "haar") {
   return(obj)
 }
 
-
 #'@importFrom daltoolbox fit
 #'@importFrom daltoolbox R2.ts
 #'@importFrom wavelets modwt
+#'@importFrom wavelets imodwt
 #'@export
 fit.ts_fil_wavelet <- function(obj, data, ...) {
-  sel_filter <- ""
-  bestr2 <- -.Machine$double.xmax
+  if (length(obj$filter) > 1) {
+    sel_filter <- ""
+    bestr2 <- -.Machine$double.xmax
 
-  id <- 1:length(data)
+    id <- 1:length(data)
 
-  for (f in obj$filter) {
-    wt <- wavelets::modwt(data, filter = f, boundary = "periodic")
+    for (f in obj$filter) {
+      wt <- wavelets::modwt(data, filter = f, boundary = "periodic")
+      wt@W[[1]] <- as.matrix(rep(0, length(wt@W[[1]])), ncol=1)
+      yhatV <- wavelets::imodwt(wt)
+      r2 <- R2.ts(data, yhatV)
 
-    W <- as.data.frame(wt@W)
-    W <- W[, 1, drop = FALSE]
-
-    noise <- apply(W, 1, sum)
-
-    r2 <- R2.ts(data, data - noise)
-
-    if (r2 > bestr2) {
-      sel_filter <- f
-      bestr2 <- r2
+      if (r2 > bestr2) {
+        sel_filter <- f
+        bestr2 <- r2
+      }
     }
+    obj$filter <- sel_filter
   }
 
-  obj$filter <- sel_filter
   return(obj)
 }
 
 
 #'@importFrom daltoolbox transform
 #'@importFrom wavelets modwt
+#'@importFrom wavelets imodwt
 #'@export
 transform.ts_fil_wavelet <- function(obj, data, ...) {
   id <- 1:length(data)
 
   wt <- wavelets::modwt(data, filter = obj$filter, boundary = "periodic")
-
-  W <- as.data.frame(wt@W)
-  W <- W[, 1, drop = FALSE]
-  noise <- apply(W, 1, sum)
-
-  result <- data - noise
-
+  wt@W[[1]] <- as.matrix(rep(0, length(wt@W[[1]])), ncol=1)
+  result <- wavelets::imodwt(wt)
   return(result)
 }

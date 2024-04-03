@@ -3,7 +3,7 @@ library(dplyr)
 library(daltoolbox)
 library(tspredit)
 source("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/R/ts_fil_wavelet.R")
-source("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/R/ts_fil_wavelet_alt.R")
+source("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/R/ts_fil_wavelet_backup.R")
 
 data <- read_delim("develop/Etanol_df.csv",
                    delim = ";",
@@ -26,12 +26,12 @@ filter <- fit(filter, ts$series)
 y <- transform(filter, ts$series)
 plot(plot_ts_pred(y=ts$series, yadj=y))
 
-filter <- ts_fil_wavelet_alt()
+filter <- ts_fil_wavelet_bpk()
 filter <- fit(filter, ts$series)
 y <- transform(filter, ts$series)
 plot(plot_ts_pred(y=ts$series, yadj=y))
 
-filter <- ts_fil_wavelet_alt(filter = c("haar", "d4", "la8", "bl14", "c6"))
+filter <- ts_fil_wavelet_bpk(filter = c("haar", "d4", "la8", "bl14", "c6"))
 filter <- fit(filter, ts$series)
 y <- transform(filter, ts$series)
 plot(plot_ts_pred(y=ts$series, yadj=y))
