@@ -1,8 +1,8 @@
 library(readr)
 library(dplyr)
 library(daltoolbox)
-#library(tspredit)
-#source("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/R/ts_fil_wavelet.R")
+library(tspredit)
+source("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/R/ts_fil_wavelet.R")
 
 data <- read_delim("develop/Etanol_df.csv",
                    delim = ";",

@@ -41,9 +41,7 @@ fit.ts_fil_wavelet_alt <- function(obj, data, ...) {
 
     for (f in obj$filter) {
       wt <- wavelets::modwt(data, filter = f, boundary = "periodic")
-      for (i in 1:length(wt@V)) { #(i in 1:length(wt@V))
-        wt@V[[i]] <- as.matrix(rep(0, length(wt@V[[i]])), ncol=1)
-      }
+      wt@W[[1]] <- as.matrix(rep(0, length(wt@W[[1]])), ncol=1)
       yhatV <- wavelets::imodwt(wt)
       r2 <- R2.ts(data, yhatV)
 
@@ -67,12 +65,7 @@ transform.ts_fil_wavelet_alt <- function(obj, data, ...) {
   id <- 1:length(data)
 
   wt <- wavelets::modwt(data, filter = obj$filter, boundary = "periodic")
-  for (i in 1:length(wt@V)) { #(i in 1:length(wt@V))
-    wt@V[[i]] <- as.matrix(rep(0, length(wt@V[[i]])), ncol=1)
-  }
-  yhatV <- wavelets::imodwt(wt)
-  result <- yhatV
-  r2 <- R2.ts(data, yhatV)
-  print(r2)
+  wt@W[[1]] <- as.matrix(rep(0, length(wt@W[[1]])), ncol=1)
+  result <- wavelets::imodwt(wt)
   return(result)
 }
