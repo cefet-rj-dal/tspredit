@@ -32,7 +32,7 @@ ts_fil_wavelet_bkp <- function(filter = "haar") {
 #'@importFrom daltoolbox R2.ts
 #'@importFrom wavelets modwt
 #'@export
-fit.ts_fil_wavelet_bkp_bkp <- function(obj, data, ...) {
+fit.ts_fil_wavelet_bkp <- function(obj, data, ...) {
   sel_filter <- ""
   bestr2 <- -.Machine$double.xmax
 
