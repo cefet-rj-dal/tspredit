@@ -1,7 +1,6 @@
 #'@title Wavelet Filter
 #'@description Wavelet Filter
 #'@param filter Availables wavelet filters: haar, d4, la8, bl14, c6
-#'@param dim Dimensions to be used. When dim equals 0, dim is optimized.
 #'@return a `ts_fil_wavelet` object.
 #'@examples
 #'# time series with noise
