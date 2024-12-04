@@ -30,10 +30,10 @@ ts_fil_winsor <- function(li = 0.05) {
 
 #'@importFrom daltoolbox transform
 #'@importFrom DescTools Winsorize
+#'@importFrom stats quantile
 #'@export
 transform.ts_fil_winsor <- function(obj, data, ...) {
-  adjust <- DescTools::Winsorize(data, minval = NULL, maxval = NULL,
-                      probs = c(obj$li, (1 - obj$li)), na.rm = FALSE)
+  adjust <- DescTools::Winsorize(data, val = quantile(data, probs=c(obj$li, (1 - obj$li))))
   result <- as.vector(adjust)
   return(result)
 }
