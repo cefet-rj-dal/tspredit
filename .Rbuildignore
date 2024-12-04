@@ -8,5 +8,6 @@
 ^\.github$
 ^examples$
 ^develop$
+^Rmd$
 package.R
 jupyter.R

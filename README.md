@@ -38,7 +38,7 @@ devtools::install_github("cefet-rj-dal/tspredit", force=TRUE, upgrade="never")
 ## Examples
 
 The TSPredIT examples are made available at:
-<https://nbviewer.org/github/cefet-rj-dal/tspredit/tree/main/examples>
+<https://github.com/cefet-rj-dal/tspredit/tree/main/examples>
 
 The TSPredIT is built on top of DAL Toolbox. Documentation of DAL
 Toolbox is made available at:

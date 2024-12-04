@@ -1,0 +1,55 @@
+---
+title: An R Markdown document converted from "Rmd/examples/ts_aug_flip.ipynb"
+output: html_document
+---
+
+## Time series augmentation - flip
+
+```{r}
+# TSPredIT
+# version 1.0.767
+
+source("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/jupyter.R")
+
+#loading TSPredIT
+load_library("daltoolbox") 
+load_library("tspredit") 
+```
+
+### Series for studying
+
+```{r}
+data(sin_data)
+library(ggplot2)
+plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
+```
+
+### Sliding windows
+
+```{r}
+sw_size <- 10
+xw <- ts_data(sin_data$y, sw_size)
+```
+
+### Augment
+
+```{r}
+augment <- ts_aug_flip()
+augment <- fit(augment, xw)
+xa <- transform(augment, xw)
+idx <- attr(xa, "idx")
+ts_head(xa)
+```
+
+### Plot
+
+```{r}
+i <- 1:nrow(xw)
+y <- xw[,sw_size]
+plot(x = i, y = y, main = "cosine")
+lines(x = i, y = y, col="black")
+for (j in 1:nrow(xa)) {
+  lines(x = (idx[j]-sw_size+1):idx[j], y = xa[j,1:sw_size], col="green")
+}
+```
+
