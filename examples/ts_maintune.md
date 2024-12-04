@@ -1,8 +1,3 @@
----
-title: An R Markdown document converted from "Rmd/examples/ts_maintune.ipynb"
-output: html_document
----
-
 ## Time Series regression - tune - example
 
 Our objective here is to generate a model that is able to do time series forecasting.
@@ -17,8 +12,8 @@ Configuring the environment:
 source("https://raw.githubusercontent.com/cefet-rj-dal/daltoolbox/main/jupyter.R")
 
 #loading DAL Toolbox
-load_library("daltoolbox")
-load_library("tspredit")
+library(daltoolbox)
+library(tspredit)
 
 #load required library
 library(ggplot2)

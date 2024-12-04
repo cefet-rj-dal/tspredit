@@ -1,8 +1,3 @@
----
-title: An R Markdown document converted from "Rmd/examples/ts_fil_emd.ipynb"
-output: html_document
----
-
 ## Filter - EMD
 
 
@@ -10,11 +5,11 @@ output: html_document
 # TSPredIT
 # version 1.0.767
 
-source("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/jupyter.R")
+
 
 #loading TSPredIT
-load_library("daltoolbox") 
-load_library("tspredit") 
+library(daltoolbox) 
+library(tspredit) 
 
 source("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/R/ts_fil_emd.R")
 ```

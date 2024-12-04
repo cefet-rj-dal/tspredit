@@ -49,13 +49,13 @@ convert_rmd_md <- function(input) {
 dir <- "Rmd"
 
 texs <- list.files(path = dir, pattern = ".ipynb$", full.names = TRUE, recursive = TRUE)
-if (TRUE) {
+if (FALSE) {
   for (tex in texs) {
     print(tex)
     convert_ipynb_to_rmarkdown(tex)
   }
 }
-if (TRUE) {
+if (FALSE) {
   for (tex in texs) {
     print(tex)
     delete_ipynb(tex)

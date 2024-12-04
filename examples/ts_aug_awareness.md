@@ -1,8 +1,3 @@
----
-title: An R Markdown document converted from "Rmd/examples/ts_aug_awareness.ipynb"
-output: html_document
----
-
 ## Time series preprocessing
 
 
@@ -10,39 +5,11 @@ output: html_document
 # TSPredIT
 # version 1.0.767
 
-source("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/jupyter.R")
+
 
 #loading TSPredIT
-load_library("daltoolbox") 
-```
-
-```
-## Loading required package: daltoolbox
-```
-
-```
-## Registered S3 method overwritten by 'quantmod':
-##   method            from
-##   as.zoo.data.frame zoo
-```
-
-```
-## 
-## Attaching package: 'daltoolbox'
-```
-
-```
-## The following object is masked from 'package:base':
-## 
-##     transform
-```
-
-```r
-load_library("tspredit") 
-```
-
-```
-## Loading required package: tspredit
+library(daltoolbox) 
+library(tspredit) 
 ```
 
 ### Noise cosine series for studying

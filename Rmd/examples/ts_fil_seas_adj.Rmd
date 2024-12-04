@@ -1,19 +1,14 @@
----
-title: An R Markdown document converted from "Rmd/examples/ts_fil_seas_adj.ipynb"
-output: html_document
----
-
 ## Filter - seasonal adjustment
 
 ```{r}
 # TSPredIT
 # version 1.0.767
 
-source("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/jupyter.R")
+
 
 #loading TSPredIT
-load_library("daltoolbox") 
-load_library("tspredit") 
+library(daltoolbox) 
+library(tspredit) 
 ```
 
 ### Series for studying with added noise
