@@ -5,8 +5,8 @@ Our objective here is to generate a model that is able to do time series forecas
 Configuring the environment:
 
 ```{r}
-# TSPredIT
-# version 1.0.767
+# tspredit: Time Series Prediction Integrated Tuning
+# version 1.0.787
 
 source("https://raw.githubusercontent.com/cefet-rj-dal/daltoolbox/main/jupyter.R")
 

@@ -2,13 +2,27 @@
 
 
 ```r
-# TSPredIT
-# version 1.0.767
+# tspredit: Time Series Prediction Integrated Tuning
+# version 1.0.787
 
 
 
 #loading TSPredIT
 library(daltoolbox) 
+```
+
+```
+## 
+## Attaching package: 'daltoolbox'
+```
+
+```
+## The following object is masked from 'package:base':
+## 
+##     transform
+```
+
+```r
 library(tspredit) 
 ```
 
