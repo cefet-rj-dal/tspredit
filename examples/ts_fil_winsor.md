@@ -39,12 +39,19 @@ plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 
 ```r
 filter <- ts_fil_winsor(li = 0.05)
+```
+
+```
+## Error in ts_fil_winsor(li = 0.05): unused argument (li = 0.05)
+```
+
+```r
 filter <- fit(filter, sin_data$y)
 y <- transform(filter, sin_data$y)
 ```
 
 ```
-## Error in DescTools::Winsorize(data, val = quantile(data, probs = c(obj$li, : unused argument (val = quantile(data, probs = c(obj$li, (1 - obj$li))))
+## Error in action.default(obj = filter, sin_data$y): could not find function "action.default"
 ```
 
 ```r

@@ -2,7 +2,6 @@
 #'@description This code implements the Winsorization technique on a time series.
 #'Winsorization is a statistical method used to handle extreme values in a time series
 #'by replacing them with values closer to the center of the distribution.
-#'@param li Defines the Winsorization limit (proportion of values to be trimmed)
 #'@return a `ts_fil_winsor` obj.
 #'@examples
 #'# time series with noise
@@ -21,9 +20,8 @@
 #'@importFrom daltoolbox fit
 #'@importFrom daltoolbox transform
 #'@export
-ts_fil_winsor <- function(li = 0.05) {
+ts_fil_winsor <- function() {
   obj <- dal_transform()
-  obj$li <- li
   class(obj) <- append("ts_fil_winsor", class(obj))
   return(obj)
 }
@@ -33,7 +31,7 @@ ts_fil_winsor <- function(li = 0.05) {
 #'@importFrom stats quantile
 #'@export
 transform.ts_fil_winsor <- function(obj, data, ...) {
-  adjust <- DescTools::Winsorize(data, val = quantile(data, probs=c(obj$li, (1 - obj$li))))
+  adjust <-DescTools::Winsorize(data)
   result <- as.vector(adjust)
   return(result)
 }

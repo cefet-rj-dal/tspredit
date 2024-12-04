@@ -4,10 +4,7 @@
 \alias{ts_fil_winsor}
 \title{Winsorization of Time Series}
 \usage{
-ts_fil_winsor(li = 0.05)
-}
-\arguments{
-\item{li}{Defines the Winsorization limit (proportion of values to be trimmed)}
+ts_fil_winsor()
 }
 \value{
 a \code{ts_fil_winsor} obj.
