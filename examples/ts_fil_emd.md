@@ -1,7 +1,7 @@
 ## Filter - EMD
 
 
-```r
+``` r
 # tspredit: Time Series Prediction Integrated Tuning
 # version 1.0.787
 
@@ -17,7 +17,7 @@ source("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/R/ts_fil_em
 ### Series for studying with added noise
 
 
-```r
+``` r
 data(sin_data)
 y <- sin_data$y
 noise <- rnorm(length(y), 0, sd(y)/10)
@@ -29,7 +29,7 @@ sin_data$y[30] <- sin_data$y[30] + spike
 ```
 
 
-```r
+``` r
 library(ggplot2)
 plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ```
@@ -39,7 +39,7 @@ plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ### smooth
 
 
-```r
+``` r
 filter <- ts_fil_emd()
 filter <- fit(filter, sin_data$y)
 y <- transform(filter, sin_data$y)

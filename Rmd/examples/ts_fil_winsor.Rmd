@@ -32,7 +32,7 @@ plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ### smooth
 
 ```{r}
-filter <- ts_fil_winsor(li = 0.05)
+filter <- ts_fil_winsor()
 filter <- fit(filter, sin_data$y)
 y <- transform(filter, sin_data$y)
 plot_ts_pred(y=sin_data$y, yadj=y) + theme(text = element_text(size=16))

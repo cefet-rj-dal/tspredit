@@ -1,7 +1,7 @@
 ## Normalization none
 
 
-```r
+``` r
 # tspredit: Time Series Prediction Integrated Tuning
 # version 1.0.787
 
@@ -15,12 +15,12 @@ library(tspredit)
 ### Series for studying
 
 
-```r
+``` r
 data(sin_data)
 ```
 
 
-```r
+``` r
 library(ggplot2)
 plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ```
@@ -30,7 +30,7 @@ plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ### sliding windows
 
 
-```r
+``` r
 sw_size <- 10
 ts <- ts_data(sin_data$y, sw_size)
 ts_head(ts, 3)
@@ -43,7 +43,7 @@ ts_head(ts, 3)
 ## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
 ```
 
-```r
+``` r
 summary(ts[,10])
 ```
 
@@ -58,7 +58,7 @@ summary(ts[,10])
 ```
 
 
-```r
+``` r
 library(ggplot2)
 plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ```
@@ -68,7 +68,7 @@ plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ### normalization
 
 
-```r
+``` r
 preproc <- ts_norm_none()
 preproc <- fit(preproc, ts)
 tst <- transform(preproc, ts)
@@ -82,7 +82,7 @@ ts_head(tst, 3)
 ## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
 ```
 
-```r
+``` r
 summary(tst[,10])
 ```
 
@@ -96,7 +96,7 @@ summary(tst[,10])
 ##  Max.   : 0.99460
 ```
 
-```r
+``` r
 plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ```
 

@@ -1,7 +1,7 @@
 ## Filter - Kalman
 
 
-```r
+``` r
 # tspredit: Time Series Prediction Integrated Tuning
 # version 1.0.787
 
@@ -15,7 +15,7 @@ library(tspredit)
 ### Series for studying with added noise
 
 
-```r
+``` r
 data(sin_data)
 y <- sin_data$y
 noise <- rnorm(length(y), 0, sd(y)/10)
@@ -27,7 +27,7 @@ sin_data$y[30] <- sin_data$y[30] + spike
 ```
 
 
-```r
+``` r
 library(ggplot2)
 plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ```
@@ -37,7 +37,7 @@ plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ### kalman filter
 
 
-```r
+``` r
 filter <- ts_fil_kalman(H = 0.1, Q = 1)
 filter <- fit(filter, sin_data$y)
 y <- transform(filter, sin_data$y)

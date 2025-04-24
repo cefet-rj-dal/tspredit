@@ -1,7 +1,7 @@
 ## Time series augmentation - stretch
 
 
-```r
+``` r
 # tspredit: Time Series Prediction Integrated Tuning
 # version 1.0.787
 
@@ -15,7 +15,7 @@ library(tspredit)
 ### Series for studying
 
 
-```r
+``` r
 data(sin_data)
 library(ggplot2)
 plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
@@ -26,7 +26,7 @@ plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ### Sliding windows
 
 
-```r
+``` r
 sw_size <- 10
 xw <- ts_data(sin_data$y, sw_size)
 ```
@@ -34,7 +34,7 @@ xw <- ts_data(sin_data$y, sw_size)
 ### Augment
 
 
-```r
+``` r
 augment <- ts_aug_stretch()
 augment <- fit(augment, xw)
 xa <- transform(augment, xw)
@@ -55,7 +55,7 @@ ts_head(xa)
 ### Plot
 
 
-```r
+``` r
 i <- 1:nrow(xw)
 y <- xw[,sw_size]
 plot(x = i, y = y, main = "cosine")

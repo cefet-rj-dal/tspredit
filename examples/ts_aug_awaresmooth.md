@@ -1,7 +1,7 @@
 ## Time series preprocessing
 
 
-```r
+``` r
 # tspredit: Time Series Prediction Integrated Tuning
 # version 1.0.787
 
@@ -15,7 +15,7 @@ library(tspredit)
 ### Noise cosine series for studying
 
 
-```r
+``` r
 i <- seq(0, 2*pi+8*pi/50, pi/50)
 x <- cos(i)
 noise <- rnorm(length(x), 0, sd(x)/10)
@@ -39,7 +39,7 @@ lines(i, x)
 ### sliding windows
 
 
-```r
+``` r
 sw_size <- 10
 xw <- ts_data(x, sw_size)
 i <- 1:nrow(xw)
@@ -54,7 +54,7 @@ lines(i, y)
 ### augment
 
 
-```r
+``` r
 filter <- tspredit::ts_aug_awaresmooth(0.25)
 xa <- transform(filter, xw)
 idx <- attr(xa, "idx")
@@ -63,7 +63,7 @@ idx <- attr(xa, "idx")
 ### Plot
 
 
-```r
+``` r
 plot(x = i, y = y, main = "cosine")
 lines(x = i, y = y, col="black")
 for (j in 1:nrow(xa)) {
