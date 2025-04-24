@@ -11,6 +11,12 @@ Authors@R:
       comment = c(ORCID = "0000-0002-0466-0626")
     ),
     person(
+      given = "Fernando",
+      family = "Alexandrino",
+      role = c("aut"),
+      email = "fernando.alexandrino@ifsp.edu.br"
+    ),
+    person(
       given = "Carla",
       family = "Pacheco",
       role = c("aut"),
@@ -57,6 +63,12 @@ Authors@R:
       family = "Porto",
       role = c("aut"),
       email = "fporto@lncc.br"
+    ),
+    person(
+      given = "Diego",
+      family = "Carvalho",
+      role = c("aut"),
+      email = "diego.carvalho@cefet-rj.br"
     ),
     person(
       given = "CEFET/RJ",
