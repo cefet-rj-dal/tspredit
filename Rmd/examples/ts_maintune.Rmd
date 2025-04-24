@@ -6,7 +6,7 @@ Configuring the environment:
 
 ```{r}
 # tspredit: Time Series Prediction Integrated Tuning
-# version 1.0.787
+# version 1.1.707
 
 source("https://raw.githubusercontent.com/cefet-rj-dal/daltoolbox/main/jupyter.R")
 
