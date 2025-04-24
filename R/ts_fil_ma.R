@@ -27,7 +27,7 @@ ts_fil_ma <- function(ma = 3) {
 }
 
 #'@importFrom daltoolbox transform
-#'@export
+#'@exportS3Method transform ts_fil_ma
 transform.ts_fil_ma <- function(obj, data, ...) {
   data <- ts_data(data, obj$ma)
   ma <- apply(data, 1, mean)

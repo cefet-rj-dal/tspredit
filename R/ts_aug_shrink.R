@@ -29,7 +29,7 @@ ts_aug_shrink <- function(scale_factor = 0.8) {
 }
 
 #'@importFrom daltoolbox transform
-#'@export
+#'@exportS3Method transform ts_aug_shrink
 transform.ts_aug_shrink <- function(obj, data, ...) {
   add.ts_aug_shrink <- function(obj, data) {
     an <- apply(data, 1, mean)

@@ -31,7 +31,7 @@ ts_fil_seas_adj <- function(frequency = NULL){
 #'@importFrom forecast bats
 #'@importFrom stats ts
 #'@importFrom stats fitted
-#'@export
+#'@exportS3Method transform ts_fil_seas_adj
 transform.ts_fil_seas_adj <- function(obj, data, ...){
   if (!is.null(obj$frequency))
     data<- ts(data, frequency = obj$frequency)

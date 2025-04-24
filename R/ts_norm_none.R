@@ -24,7 +24,7 @@ ts_norm_none <- function() {
 }
 
 #'@importFrom daltoolbox transform
-#'@export
+#'@exportS3Method transform ts_norm_none
 transform.ts_norm_none <- function(obj, data, ...) {
   result <- data
   idx <- c(1:nrow(result))

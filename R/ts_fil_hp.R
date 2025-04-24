@@ -41,7 +41,7 @@ ts_fil_hp <- function(lambda = 100, preserve = 0.9) {
 
 #'@importFrom mFilter hpfilter
 #'@importFrom daltoolbox transform
-#'@export
+#'@exportS3Method transform ts_fil_hp
 transform.ts_fil_hp <- function(obj, data, ...) {
   ts_filter <- mFilter::hpfilter(data, freq = obj$lambda, type = "lambda")$trend
   result = as.vector(obj$preserve * data + (1 - obj$preserve) * ts_filter)

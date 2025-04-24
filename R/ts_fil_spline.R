@@ -30,7 +30,7 @@ ts_fil_spline <- function(spar = NULL) {
 
 #'@importFrom daltoolbox transform
 #'@importFrom stats smooth.spline
-#'@export
+#'@exportS3Method transform ts_fil_spline
 transform.ts_fil_spline <- function(obj, data, ...) {
   ts_final <- smooth.spline(x = data, spar = obj$spar)$y
   result <- ts_final

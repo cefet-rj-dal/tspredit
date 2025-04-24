@@ -38,7 +38,7 @@ compute_cut_index <- function(freqs) {
 #'@importFrom daltoolbox transform
 #'@importFrom stats fft
 #'@importFrom stats sd
-#'@export
+#'@exportS3Method transform ts_fil_fft
 transform.ts_fil_fft <- function(obj, data, ...) {
 
   fft_signal <- stats::fft(data)

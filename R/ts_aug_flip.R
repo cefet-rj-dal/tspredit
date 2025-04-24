@@ -27,7 +27,7 @@ ts_aug_flip <- function() {
 }
 
 #'@importFrom daltoolbox transform
-#'@export
+#'@exportS3Method transform ts_aug_flip
 transform.ts_aug_flip <- function(obj, data, ...) {
   add.ts_aug_flip <- function(obj, data) {
     an <- apply(data, 1, mean)

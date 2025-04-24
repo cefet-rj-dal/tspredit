@@ -30,7 +30,7 @@ ts_aug_wormhole <- function() {
 #'@importFrom utils combn
 #'@importFrom daltoolbox transform
 #'@importFrom daltoolbox adjust_ts_data
-#'@export
+#'@exportS3Method transform ts_aug_wormhole
 transform.ts_aug_wormhole <- function(obj, data, ...) {
   add.ts_aug_wormhole <- function(data) {
     n <- ncol(data)

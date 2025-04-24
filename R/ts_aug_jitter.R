@@ -28,7 +28,7 @@ ts_aug_jitter <- function() {
 #'@importFrom stats sd
 #'@importFrom daltoolbox fit
 #'@importFrom daltoolbox adjust_ts_data
-#'@export
+#'@exportS3Method fit ts_aug_jitter
 fit.ts_aug_jitter <- function(obj, data, ...) {
   an <- apply(data, 1, mean)
   x <- data - an
@@ -38,7 +38,7 @@ fit.ts_aug_jitter <- function(obj, data, ...) {
 
 #'@importFrom stats rnorm
 #'@importFrom daltoolbox transform
-#'@export
+#'@exportS3Method transform ts_aug_jitter
 transform.ts_aug_jitter <- function(obj, data, ...) {
   add.ts_aug_jitter <- function(obj, data) {
     x <- stats::rnorm(length(data), mean = 0, sd = obj$sd)

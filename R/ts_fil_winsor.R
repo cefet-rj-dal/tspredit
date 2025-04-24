@@ -29,7 +29,7 @@ ts_fil_winsor <- function() {
 #'@importFrom daltoolbox transform
 #'@importFrom DescTools Winsorize
 #'@importFrom stats quantile
-#'@export
+#'@exportS3Method transform ts_fil_winsor
 transform.ts_fil_winsor <- function(obj, data, ...) {
   adjust <-DescTools::Winsorize(data)
   result <- as.vector(adjust)

@@ -25,7 +25,7 @@ ts_fil_none <- function() {
 }
 
 #'@importFrom daltoolbox transform
-#'@export
+#'@exportS3Method transform ts_fil_none
 transform.ts_fil_none <- function(obj, data, ...) {
   result <- data
   return(result)

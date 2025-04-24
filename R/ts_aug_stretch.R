@@ -29,7 +29,7 @@ ts_aug_stretch <- function(scale_factor=1.2) {
 }
 
 #'@importFrom daltoolbox transform
-#'@export
+#'@exportS3Method transform ts_aug_stretch
 transform.ts_aug_stretch <- function(obj, data, ...) {
   add.ts_aug_stretch <- function(obj, data) {
     an <- apply(data, 1, mean)

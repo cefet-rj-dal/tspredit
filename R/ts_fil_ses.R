@@ -30,7 +30,7 @@ ts_fil_ses <- function(gamma = FALSE) {
 
 #'@importFrom daltoolbox transform
 #'@importFrom stats HoltWinters
-#'@export
+#'@exportS3Method transform ts_fil_ses
 transform.ts_fil_ses <- function(obj, data, ...) {
   adjust <- stats::HoltWinters(data, beta=FALSE, gamma=obj$gamma)
   result <- as.vector(adjust$fitted[,1])

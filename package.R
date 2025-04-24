@@ -16,6 +16,9 @@ if (FALSE) {
   library(devtools)
   check()
   load_all()
+  #'@exportS3Method fit harbinger
+  #'@exportS3Method detect harbinger
+  #'@exportS3Method transform ts_aug_jitter
 }
 
 if (FALSE) {
@@ -37,6 +40,8 @@ if (FALSE) {
 
 if (FALSE) {
   #update documentation
+  devtools::document()
+  devtools::check()
   pkgdown::build_site()
 }
 if (FALSE) {
@@ -55,9 +60,10 @@ if (FALSE) { #build package for cran
   library(devtools)
   pkgbuild::build(manual = TRUE)
 
+
   #run in terminal
-  #R CMD check tspredit_1.0.787.tar.gz
-  #R CMD check tspredit_1.0.787.tar.gz --as-cran
+  #R CMD check tspredit_1.1.707.tar.gz
+  #R CMD check tspredit_1.1.707.tar.gz --as-cran
 
   #upload package
   #https://cran.r-project.org/submit.html

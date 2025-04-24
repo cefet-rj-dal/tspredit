@@ -48,7 +48,7 @@ ts_maintune <- function(input_size, base_model, folds=10, preprocess = list(dalt
 #'@importFrom daltoolbox evaluate
 #'@importFrom daltoolbox sample_random
 #'@importFrom daltoolbox train_test_from_folds
-#'@export
+#'@exportS3Method fit ts_maintune
 fit.ts_maintune <- function(obj, x, y, ranges, ...) {
   obj <- prepare_ranges(obj, ranges)
   ranges <- obj$ranges
@@ -104,7 +104,7 @@ fit.ts_maintune <- function(obj, x, y, ranges, ...) {
 #'@importFrom dplyr group_by
 #'@importFrom dplyr summarise
 #'@importFrom daltoolbox select_hyper
-#'@export
+#'@exportS3Method select_hyper ts_maintune
 select_hyper.ts_maintune <- function(obj, hyperparameters) {
   key <- msg <- error <- ""
   hyper_summary <- hyperparameters[msg == "",] |>

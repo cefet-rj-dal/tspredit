@@ -30,7 +30,7 @@ ts_fil_emd <- function(noise = 0.1, trials = 5) {
 
 #'@importFrom daltoolbox transform
 #'@importFrom hht CEEMD
-#'@export
+#'@exportS3Method transform ts_fil_emd
 transform.ts_fil_emd <- function(obj, data, ...) {
 
   id <- 1:length(data)

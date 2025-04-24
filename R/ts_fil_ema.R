@@ -29,7 +29,7 @@ ts_fil_ema <- function(ema = 3) {
 }
 
 #'@importFrom daltoolbox transform
-#'@export
+#'@exportS3Method transform ts_fil_ema
 transform.ts_fil_ema <- function(obj, data, ...) {
   exp_mean <- function(x) {
     n <- length(x)

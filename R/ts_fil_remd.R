@@ -38,7 +38,7 @@ fc_roughness <- function(x) {
 #'@importFrom daltoolbox transform
 #'@importFrom daltoolbox fit_curvature_min
 #'@importFrom hht CEEMD
-#'@export
+#'@exportS3Method transform ts_fil_remd
 transform.ts_fil_remd <- function(obj, data, ...) {
 
   id <- 1:length(data)

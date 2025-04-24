@@ -13,47 +13,72 @@ knitr::opts_chunk$set(
 )
 ```
 
-# <img src='https://raw.githubusercontent.com/cefet-rj-dal/tspredit/master/inst/logo.png' align='centre' height='125' width='125'/> TSPredIT
+# <img src='https://raw.githubusercontent.com/cefet-rj-dal/tspredit/master/inst/logo.png' alt='Logo do pacote TSPredIT' align='centre' height='125' width='125'/> TSPredIT
 
 <!-- badges: start -->
-![GitHub Repo stars](https://img.shields.io/github/stars/cefet-rj-dal/tspredit?logo=Github)
-![GitHub Repo stars](https://cranlogs.r-pkg.org/badges/tspredit)
+![GitHub Stars](https://img.shields.io/github/stars/cefet-rj-dal/tspredit?logo=Github)
+![CRAN Downloads](https://cranlogs.r-pkg.org/badges/tspredit)
 <!-- badges: end -->
 
-The Time Series Prediction with Integrated Tuning (TSPredIT) is based on DAL Toolbox with integrated hyperparameter optimization combining machine learning and data preprocessing. It also contains time series outliers removal, data augmentation, time series filtering, ensemble models, and a more flexible workflow design for Data Analytics tasks.
+**TSPredIT** (Time Series Prediction with Integrated Tuning) is a framework for time series prediction with automatic preprocessing and hyperparameter optimization. It is built on top of the [DAL Toolbox](https://github.com/cefet-rj-dal/daltoolbox) and enhances its capabilities by integrating several advanced functionalities:
+
+- Automatic hyperparameter tuning for models and preprocessing
+- Outlier detection and removal
+- Time series data augmentation
+- Filtering techniques for noise reduction
+- Ensemble learning support
+- Modular and extensible workflow for predictive modeling
+
+TSPredIT is designed to provide a **more flexible and customizable pipeline** for building predictive models on time series data, making it easier to compare alternatives and automate repetitive tasks.
+
+---
 
 ## Installation
 
-The latest version of TSPredIT at CRAN is available at:
-<https://CRAN.R-project.org/package=tspredit>
+The latest version of TSPredIT is available on CRAN:
 
-You can install the stable version of TSPredIT from CRAN with:
-
-``` r
+```r
 install.packages("tspredit")
 ```
 
-You can install the development version of TSPredIT from GitHub [https://github.com/cefet-rj-dal/tspredit](https://github.com/cefet-rj-dal/tspredit) with:
+You can install the development version from GitHub:
 
-``` r
+```r
+# install.packages("devtools")
 library(devtools)
-devtools::install_github("cefet-rj-dal/tspredit", force=TRUE, upgrade="never")
+devtools::install_github("cefet-rj-dal/tspredit", force = TRUE, upgrade = "never")
 ```
+
+---
 
 ## Examples
 
-The TSPredIT examples are made available at:
-<https://github.com/cefet-rj-dal/tspredit/tree/main/examples>
+Examples of TSPredIT usage are available in the official GitHub repository:
 
-The TSPredIT is built on top of DAL Toolbox. Documentation of DAL Toolbox is made available at:
-<https://cefet-rj-dal.github.io/daltoolbox/>
+- [Example scripts](https://github.com/cefet-rj-dal/tspredit/tree/main/examples)
 
+Additional documentation and tutorials for the underlying DAL Toolbox can be found at:
 
+- [DAL Toolbox documentation](https://cefet-rj-dal.github.io/daltoolbox/)
 
 ```{r example}
 library(tspredit)
+data(fertilizers)
+
+#convert to sliding windows
+xw <- daltoolbox::ts_data(fertilizers$brazil_n, 10)
+
+#no data augmentation
+augment <- ts_aug_none()
+augment <- fit(augment, xw)
+xa <- transform(augment, xw)
+daltoolbox::ts_head(xa)
 ```
 
+---
 
-## Bugs and new features request
+## Bug reports and feature requests
+
+To report issues or suggest improvements, please open a ticket here:
+
 <https://github.com/cefet-rj-dal/tspredit/issues>

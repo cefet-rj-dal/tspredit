@@ -33,7 +33,7 @@ ts_aug_awaresmooth <- function(factor = 1) {
 #'@importFrom daltoolbox transform
 #'@importFrom daltoolbox adjust_ts_data
 #'@importFrom daltoolbox ts_data
-#'@export
+#'@exportS3Method transform ts_aug_awaresmooth
 transform.ts_aug_awaresmooth <- function(obj, data, ...) {
   progressive_smoothing <- function(serie) {
     serie <- stats::na.omit(serie)

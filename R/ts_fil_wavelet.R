@@ -30,7 +30,7 @@ ts_fil_wavelet <- function(filter = "haar") {
 #'@importFrom daltoolbox R2.ts
 #'@importFrom wavelets modwt
 #'@importFrom wavelets imodwt
-#'@export
+#'@exportS3Method fit ts_fil_wavelet
 fit.ts_fil_wavelet <- function(obj, data, ...) {
   if (length(obj$filter) > 1) {
     sel_filter <- ""
@@ -59,7 +59,7 @@ fit.ts_fil_wavelet <- function(obj, data, ...) {
 #'@importFrom daltoolbox transform
 #'@importFrom wavelets modwt
 #'@importFrom wavelets imodwt
-#'@export
+#'@exportS3Method transform ts_fil_wavelet
 transform.ts_fil_wavelet <- function(obj, data, ...) {
   id <- 1:length(data)
 
