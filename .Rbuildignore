@@ -7,6 +7,8 @@
 ^pkgdown$
 ^\.github$
 ^examples$
+^augment$
+^filter$
 ^develop$
 ^Rmd$
 package.R

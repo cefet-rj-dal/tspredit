@@ -10,7 +10,18 @@ Configuring the environment:
 # version 1.1.707
 
 source("https://raw.githubusercontent.com/cefet-rj-dal/daltoolbox/main/jupyter.R")
+```
 
+```
+## Warning in file(filename, "r", encoding = encoding): cannot open URL
+## 'https://raw.githubusercontent.com/cefet-rj-dal/daltoolbox/main/jupyter.R': HTTP status was '404 Not Found'
+```
+
+```
+## Error in file(filename, "r", encoding = encoding): cannot open the connection to 'https://raw.githubusercontent.com/cefet-rj-dal/daltoolbox/main/jupyter.R'
+```
+
+``` r
 #loading DAL Toolbox
 library(daltoolbox)
 library(tspredit)
