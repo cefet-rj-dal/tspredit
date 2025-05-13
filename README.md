@@ -52,28 +52,18 @@ devtools::install_github("cefet-rj-dal/tspredit", force = TRUE, upgrade = "never
 Examples of TSPredIT usage are available in the official GitHub
 repository:
 
-- [Example
-  scripts](https://github.com/cefet-rj-dal/tspredit/tree/main/examples)
+- [Time Series
+  examples](https://github.com/cefet-rj-dal/tspredit/tree/main/timeseries)
+- [Augmentation
+  examples](https://github.com/cefet-rj-dal/tspredit/tree/main/augment)
+- [Filter
+  examples](https://github.com/cefet-rj-dal/tspredit/tree/main/filter)
 
 Additional documentation and tutorials for the underlying DAL Toolbox
 can be found at:
 
 - [DAL Toolbox
   documentation](https://cefet-rj-dal.github.io/daltoolbox/)
-
-``` r
-library(tspredit)
-#> Registered S3 method overwritten by 'quantmod':
-#>   method            from
-#>   as.zoo.data.frame zoo
-#> Registered S3 methods overwritten by 'forecast':
-#>   method  from 
-#>   head.ts stats
-#>   tail.ts stats
-
-# Example usage (basic)
-# Load a model and apply to example data (to be defined by user)
-```
 
 ------------------------------------------------------------------------
 
