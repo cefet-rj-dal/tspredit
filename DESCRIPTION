@@ -1,6 +1,6 @@
 Package: tspredit
 Title: Time Series Prediction with Integrated Tuning
-Version: 1.1.707
+Version: 1.2.707
 Authors@R: 
   c(    person(given = "Eduardo", family = "Ogasawara", role = c("aut", "ths", "cre"), 
                email = "eogasawara@ieee.org", comment = c(ORCID = "0000-0002-0466-0626")),
@@ -30,12 +30,18 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Depends: R (>= 4.1.0)
 Imports: 
-  dplyr,
   stats,
-  forecast,
-  mFilter,
   DescTools,
+  e1071, 
+  elmNNRcpp, 
+  FNN, 
+  forecast,
   hht,
-  wavelets,
   KFAS,
+  mFilter,
+  nnet, 
+  randomForest,
+  wavelets,
+  dplyr,
   daltoolbox
+

@@ -30,9 +30,8 @@
 #'@importFrom daltoolbox dal_tune
 #'@importFrom daltoolbox fit
 #'@importFrom daltoolbox select_hyper
-#'@importFrom daltoolbox ts_norm_gminmax
 #'@export
-ts_maintune <- function(input_size, base_model, folds=10, preprocess = list(daltoolbox::ts_norm_gminmax()), augment = list(ts_aug_none())) {
+ts_maintune <- function(input_size, base_model, folds=10, preprocess = list(ts_norm_gminmax()), augment = list(ts_aug_none())) {
   obj <- dal_tune(base_model, folds)
   obj$input_size <- input_size
   obj$preprocess <- preprocess
