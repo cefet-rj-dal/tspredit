@@ -2,7 +2,7 @@
 
 ```{r}
 # tspredit: Time Series Prediction Integrated Tuning
-# version 1.1.707
+# version 1.2.707
 
 
 
