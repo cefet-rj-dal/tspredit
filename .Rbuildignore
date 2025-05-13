@@ -6,9 +6,9 @@
 ^docs$
 ^pkgdown$
 ^\.github$
-^examples$
 ^augment$
 ^filter$
+^timeseries$
 ^develop$
 ^Rmd$
 package.R

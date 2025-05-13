@@ -9,6 +9,26 @@
 
 #loading TSPredIT
 library(daltoolbox) 
+```
+
+```
+## 
+## Attaching package: 'daltoolbox'
+```
+
+```
+## The following object is masked from 'package:tspredit':
+## 
+##     ts_arima
+```
+
+```
+## The following object is masked from 'package:base':
+## 
+##     transform
+```
+
+``` r
 library(tspredit) 
 ```
 

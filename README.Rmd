@@ -55,27 +55,13 @@ devtools::install_github("cefet-rj-dal/tspredit", force = TRUE, upgrade = "never
 
 Examples of TSPredIT usage are available in the official GitHub repository:
 
-- [Global examples](https://github.com/cefet-rj-dal/tspredit/tree/main/examples)
+- [Time Series examples](https://github.com/cefet-rj-dal/tspredit/tree/main/timeseries)
 - [Augmentation examples](https://github.com/cefet-rj-dal/tspredit/tree/main/augmentation)
 - [Filter examples](https://github.com/cefet-rj-dal/tspredit/tree/main/filter)
 
 Additional documentation and tutorials for the underlying DAL Toolbox can be found at:
 
 - [DAL Toolbox documentation](https://cefet-rj-dal.github.io/daltoolbox/)
-
-```{r example}
-library(tspredit)
-data(fertilizers)
-
-#convert to sliding windows
-xw <- daltoolbox::ts_data(fertilizers$brazil_n, 10)
-
-#no data augmentation
-augment <- ts_aug_none()
-augment <- fit(augment, xw)
-xa <- transform(augment, xw)
-daltoolbox::ts_head(xa)
-```
 
 ---
 
