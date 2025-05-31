@@ -1,19 +1,20 @@
-## Normalization none
+```{r}
+# Normalization none
+
+# Installing tspredit
+install.packages("tspredit")
+```
 
 ```{r}
-# tspredit: Time Series Prediction Integrated Tuning
-# version 1.2.707
-
-
-
-#loading TSPredIT
-library(daltoolbox) 
+# Loading tspredit
+library(daltoolbox)
 library(tspredit) 
 ```
 
-### Series for studying
 
 ```{r}
+# Series for studying
+
 data(sin_data)
 ```
 
@@ -22,9 +23,9 @@ library(ggplot2)
 plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ```
 
-### sliding windows
-
 ```{r}
+# sliding windows
+
 sw_size <- 10
 ts <- ts_data(sin_data$y, sw_size)
 ts_head(ts, 3)
@@ -36,9 +37,9 @@ library(ggplot2)
 plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ```
 
-### normalization
-
 ```{r}
+# normalization
+
 preproc <- ts_norm_none()
 preproc <- fit(preproc, ts)
 tst <- transform(preproc, ts)

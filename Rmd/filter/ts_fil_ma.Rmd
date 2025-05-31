@@ -1,19 +1,20 @@
-## Filter - Moving Average
+```{r}
+# Filter - Moving Average
+
+# Installing tspredit
+install.packages("tspredit")
+```
 
 ```{r}
-# tspredit: Time Series Prediction Integrated Tuning
-# version 1.2.707
-
-
-
-#loading TSPredIT
-library(daltoolbox) 
+# Loading tspredit
+library(daltoolbox)
 library(tspredit) 
 ```
 
-### Series for studying with added noise
 
 ```{r}
+# Series for studying with added noise
+
 data(sin_data)
 y <- sin_data$y
 noise <- rnorm(length(y), 0, sd(y)/10)
@@ -29,9 +30,9 @@ library(ggplot2)
 plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ```
 
-### smooth
-
 ```{r}
+# filtering
+
 filter <- ts_fil_ma(3)
 filter <- fit(filter, sin_data$y)
 y <- transform(filter, sin_data$y)

@@ -1,20 +1,27 @@
-## Normalization Global Min-Max
-
 
 ``` r
-# DAL ToolBox
-# version 1.1.737
+# Normalization Global Min-Max
 
-
-
-#loading DAL
-library(daltoolbox) 
+# Installing tspredit
+install.packages("tspredit")
 ```
 
-### Series for studying
+```
+
+```
 
 
 ``` r
+# Loading tspredit
+library(daltoolbox)
+library(tspredit) 
+```
+
+
+
+``` r
+# Series for studying
+
 data(sin_data)
 ```
 
@@ -24,12 +31,12 @@ library(ggplot2)
 plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ```
 
-![plot of chunk unnamed-chunk-3](fig/ts_norm_gminmax/unnamed-chunk-3-1.png)
-
-### sliding windows
+![plot of chunk unnamed-chunk-4](fig/ts_norm_gminmax/unnamed-chunk-4-1.png)
 
 
 ``` r
+# sliding windows
+
 sw_size <- 10
 ts <- ts_data(sin_data$y, sw_size)
 ts_head(ts, 3)
@@ -62,12 +69,12 @@ library(ggplot2)
 plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ```
 
-![plot of chunk unnamed-chunk-5](fig/ts_norm_gminmax/unnamed-chunk-5-1.png)
-
-### normalization
+![plot of chunk unnamed-chunk-6](fig/ts_norm_gminmax/unnamed-chunk-6-1.png)
 
 
 ``` r
+# normalization
+
 preproc <- ts_norm_gminmax()
 preproc <- fit(preproc, ts)
 tst <- transform(preproc, ts)
@@ -99,5 +106,5 @@ summary(tst[,10])
 plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ```
 
-![plot of chunk unnamed-chunk-6](fig/ts_norm_gminmax/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-7](fig/ts_norm_gminmax/unnamed-chunk-7-1.png)
 

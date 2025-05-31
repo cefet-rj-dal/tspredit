@@ -1,21 +1,25 @@
-## Time series preprocessing
+
+``` r
+# Installing tspredit
+install.packages("tspredit")
+```
+
+```
+
+```
 
 
 ``` r
-# tspredit: Time Series Prediction Integrated Tuning
-# version 1.2.707
-
-
-
-#loading TSPredIT
-library(daltoolbox) 
+# Loading tspredit
+library(daltoolbox)
 library(tspredit) 
 ```
 
-### Noise cosine series for studying
 
 
 ``` r
+# Noise cosine series for studying
+
 i <- seq(0, 2*pi+8*pi/50, pi/50)
 x <- cos(i)
 noise <- rnorm(length(x), 0, sd(x)/10)
@@ -34,12 +38,12 @@ plot(i, x)
 lines(i, x)
 ```
 
-![plot of chunk unnamed-chunk-2](fig/ts_aug_awaresmooth/unnamed-chunk-2-1.png)
-
-### sliding windows
+![plot of chunk unnamed-chunk-3](fig/ts_aug_awaresmooth/unnamed-chunk-3-1.png)
 
 
 ``` r
+# sliding windows
+
 sw_size <- 10
 xw <- ts_data(x, sw_size)
 i <- 1:nrow(xw)
@@ -49,21 +53,21 @@ plot(i, y)
 lines(i, y)
 ```
 
-![plot of chunk unnamed-chunk-3](fig/ts_aug_awaresmooth/unnamed-chunk-3-1.png)
-
-### augment
+![plot of chunk unnamed-chunk-4](fig/ts_aug_awaresmooth/unnamed-chunk-4-1.png)
 
 
 ``` r
+# augment
+
 filter <- tspredit::ts_aug_awaresmooth(0.25)
 xa <- transform(filter, xw)
 idx <- attr(xa, "idx")
 ```
 
-### Plot
-
 
 ``` r
+# Plot
+
 plot(x = i, y = y, main = "cosine")
 lines(x = i, y = y, col="black")
 for (j in 1:nrow(xa)) {
@@ -71,5 +75,5 @@ lines(x = (idx[j]-sw_size+1):idx[j], y = xa[j,1:sw_size], col="green")
 }
 ```
 
-![plot of chunk unnamed-chunk-5](fig/ts_aug_awaresmooth/unnamed-chunk-5-1.png)
+![plot of chunk unnamed-chunk-6](fig/ts_aug_awaresmooth/unnamed-chunk-6-1.png)
 

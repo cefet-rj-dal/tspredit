@@ -1,40 +1,47 @@
-## Time series augmentation - none
+
+``` r
+# Time series augmentation - none
+
+# Installing tspredit
+install.packages("tspredit")
+```
+
+```
+
+```
 
 
 ``` r
-# tspredit: Time Series Prediction Integrated Tuning
-# version 1.2.707
+# Loading tspredit
 
-
-
-#loading TSPredIT
-library(daltoolbox) 
+library(daltoolbox)
 library(tspredit) 
 ```
 
-### Series for studying
 
 
 ``` r
+# Series for studying
+
 data(sin_data)
 library(ggplot2)
 plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ```
 
-![plot of chunk unnamed-chunk-2](fig/ts_aug_none/unnamed-chunk-2-1.png)
-
-### Sliding windows
+![plot of chunk unnamed-chunk-3](fig/ts_aug_none/unnamed-chunk-3-1.png)
 
 
 ``` r
+# Sliding windows
+
 sw_size <- 10
 xw <- ts_data(sin_data$y, sw_size)
 ```
 
-### Augment
-
 
 ``` r
+# Augment
+
 augment <- ts_aug_none()
 augment <- fit(augment, xw)
 xa <- transform(augment, xw)
@@ -52,10 +59,10 @@ ts_head(xa)
 ## [6,] 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610 0.1411200 -0.1081951 -0.3507832
 ```
 
-### Plot
-
 
 ``` r
+# Plot
+
 i <- 1:nrow(xw)
 y <- xw[,sw_size]
 plot(x = i, y = y, main = "cosine")
@@ -65,5 +72,5 @@ for (j in 1:nrow(xa)) {
 }
 ```
 
-![plot of chunk unnamed-chunk-5](fig/ts_aug_none/unnamed-chunk-5-1.png)
+![plot of chunk unnamed-chunk-6](fig/ts_aug_none/unnamed-chunk-6-1.png)
 

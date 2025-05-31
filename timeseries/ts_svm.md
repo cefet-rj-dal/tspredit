@@ -1,20 +1,27 @@
-## Time Series regression - SVM
-
 
 ``` r
-# DAL ToolBox
-# version 1.1.737
+# Time Series regression - SVM
 
-
-
-#loading DAL
-library(daltoolbox) 
+# Installing tspredit
+install.packages("tspredit")
 ```
 
-### Series for studying
+```
+
+```
 
 
 ``` r
+# Loading tspredit
+library(daltoolbox)
+library(tspredit) 
+```
+
+
+
+``` r
+# Series for studying
+
 data(sin_data)
 ts <- ts_data(sin_data$y, 10)
 ts_head(ts, 3)
@@ -33,36 +40,36 @@ library(ggplot2)
 plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ```
 
-![plot of chunk unnamed-chunk-3](fig/ts_svm/unnamed-chunk-3-1.png)
-
-### data sampling
+![plot of chunk unnamed-chunk-4](fig/ts_svm/unnamed-chunk-4-1.png)
 
 
 ``` r
+# data sampling
+
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
 io_test <- ts_projection(samp$test)
 ```
 
-### data preprocessing
-
 
 ``` r
+# data preprocessing
+
 preproc <- ts_norm_gminmax()
 ```
 
-### Model training
-
 
 ``` r
+# Model training
+
 model <- ts_svm(ts_norm_gminmax(), input_size=4)
 model <- fit(model, x=io_train$input, y=io_train$output)
 ```
 
-### Evaluation of adjustment
-
 
 ``` r
+# Evaluation of adjustment
+
 adjust <- predict(model, io_train$input)
 adjust <- as.vector(adjust)
 output <- as.vector(io_train$output)
@@ -74,10 +81,10 @@ ev_adjust$mse
 ## [1] 5.130098e-07
 ```
 
-### Prediction of test
-
 
 ``` r
+# Prediction of test
+
 prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
 prediction <- as.vector(prediction)
 output <- as.vector(io_test$output)
@@ -106,13 +113,13 @@ ev_test
 ## 1 3.199991e-07 0.002684197 0.9999972
 ```
 
-### Plot results
-
 
 ``` r
+# Plot results
+
 yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))
 ```
 
-![plot of chunk unnamed-chunk-9](fig/ts_svm/unnamed-chunk-9-1.png)
+![plot of chunk unnamed-chunk-10](fig/ts_svm/unnamed-chunk-10-1.png)
 

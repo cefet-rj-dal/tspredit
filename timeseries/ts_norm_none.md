@@ -1,21 +1,27 @@
-## Normalization none
+
+``` r
+# Normalization none
+
+# Installing tspredit
+install.packages("tspredit")
+```
+
+```
+
+```
 
 
 ``` r
-# tspredit: Time Series Prediction Integrated Tuning
-# version 1.2.707
-
-
-
-#loading TSPredIT
-library(daltoolbox) 
+# Loading tspredit
+library(daltoolbox)
 library(tspredit) 
 ```
 
-### Series for studying
 
 
 ``` r
+# Series for studying
+
 data(sin_data)
 ```
 
@@ -25,12 +31,12 @@ library(ggplot2)
 plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ```
 
-![plot of chunk unnamed-chunk-3](fig/ts_norm_none/unnamed-chunk-3-1.png)
-
-### sliding windows
+![plot of chunk unnamed-chunk-4](fig/ts_norm_none/unnamed-chunk-4-1.png)
 
 
 ``` r
+# sliding windows
+
 sw_size <- 10
 ts <- ts_data(sin_data$y, sw_size)
 ts_head(ts, 3)
@@ -63,12 +69,12 @@ library(ggplot2)
 plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ```
 
-![plot of chunk unnamed-chunk-5](fig/ts_norm_none/unnamed-chunk-5-1.png)
-
-### normalization
+![plot of chunk unnamed-chunk-6](fig/ts_norm_none/unnamed-chunk-6-1.png)
 
 
 ``` r
+# normalization
+
 preproc <- ts_norm_none()
 preproc <- fit(preproc, ts)
 tst <- transform(preproc, ts)
@@ -100,5 +106,5 @@ summary(tst[,10])
 plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ```
 
-![plot of chunk unnamed-chunk-6](fig/ts_norm_none/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-7](fig/ts_norm_none/unnamed-chunk-7-1.png)
 

@@ -1,23 +1,27 @@
-## Filter - EMD
-
 
 ``` r
-# tspredit: Time Series Prediction Integrated Tuning
-# version 1.2.707
+# Filter - EMD
 
-
-
-#loading TSPredIT
-library(daltoolbox) 
-library(tspredit) 
-
-source("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/R/ts_fil_emd.R")
+# Installing tspredit
+install.packages("tspredit")
 ```
 
-### Series for studying with added noise
+```
+
+```
 
 
 ``` r
+# Loading tspredit
+library(daltoolbox)
+library(tspredit) 
+```
+
+
+
+``` r
+# Series for studying with added noise
+
 data(sin_data)
 y <- sin_data$y
 noise <- rnorm(length(y), 0, sd(y)/10)
@@ -34,17 +38,17 @@ library(ggplot2)
 plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 ```
 
-![plot of chunk unnamed-chunk-3](fig/ts_fil_emd/unnamed-chunk-3-1.png)
-
-### smooth
+![plot of chunk unnamed-chunk-4](fig/ts_fil_emd/unnamed-chunk-4-1.png)
 
 
 ``` r
+# filtering
+
 filter <- ts_fil_emd()
 filter <- fit(filter, sin_data$y)
 y <- transform(filter, sin_data$y)
 plot_ts_pred(y=sin_data$y, yadj=y) + theme(text = element_text(size=16))
 ```
 
-![plot of chunk unnamed-chunk-4](fig/ts_fil_emd/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-5](fig/ts_fil_emd/unnamed-chunk-5-1.png)
 

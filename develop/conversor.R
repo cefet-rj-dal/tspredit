@@ -70,4 +70,8 @@ if (TRUE) {
     convert_rmd_md(tex)
   }
 }
+
 #Procurar por ## Error
+
+#Procurar por ## Error in install.packages : Updating loaded packages
+
