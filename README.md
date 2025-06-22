@@ -40,7 +40,6 @@ install.packages("tspredit")
 You can install the development version from GitHub:
 
 ``` r
-# install.packages("devtools")
 library(devtools)
 devtools::install_github("cefet-rj-dal/tspredit", force = TRUE, upgrade = "never")
 ```

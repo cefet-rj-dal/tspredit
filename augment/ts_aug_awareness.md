@@ -4,42 +4,10 @@
 install.packages("tspredit")
 ```
 
-```
-## Installing package into '/home/gpca/R/x86_64-pc-linux-gnu-library/4.5'
-## (as 'lib' is unspecified)
-```
-
 
 ``` r
 # Loading tspredit
 library(daltoolbox)
-```
-
-```
-## Registered S3 method overwritten by 'quantmod':
-##   method            from
-##   as.zoo.data.frame zoo
-```
-
-```
-## Registered S3 methods overwritten by 'forecast':
-##   method  from 
-##   head.ts stats
-##   tail.ts stats
-```
-
-```
-## 
-## Attaching package: 'daltoolbox'
-```
-
-```
-## The following object is masked from 'package:base':
-## 
-##     transform
-```
-
-``` r
 library(tspredit) 
 ```
 

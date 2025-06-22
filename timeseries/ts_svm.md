@@ -6,17 +6,12 @@
 install.packages("tspredit")
 ```
 
-```
-
-```
-
 
 ``` r
 # Loading tspredit
 library(daltoolbox)
 library(tspredit) 
 ```
-
 
 
 ``` r

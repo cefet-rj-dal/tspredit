@@ -1,0 +1,42 @@
+```{r}
+install.packages("tspredit")
+
+# loading tspredit
+library(tspredit) 
+```
+
+```{r}
+# Series for studying
+
+data(tsd)
+```
+
+```{r}
+library(ggplot2)
+plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
+```
+
+```{r}
+# sliding windows
+
+sw_size <- 5
+ts <- ts_data(tsd$y, sw_size)
+ts_head(ts, 3)
+```
+
+```{r}
+# projection
+
+io <- ts_projection(ts)
+```
+
+```{r}
+# input data
+ts_head(io$input)
+```
+
+```{r}
+# output data
+ts_head(io$output)
+```
+

@@ -4,10 +4,6 @@
 install.packages("tspredit")
 ```
 
-```
-
-```
-
 
 ``` r
 # Loading tspredit

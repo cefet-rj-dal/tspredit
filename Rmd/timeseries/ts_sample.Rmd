@@ -1,0 +1,48 @@
+```{r}
+install.packages("tspredit")
+
+# loading tspredit
+library(tspredit) 
+```
+
+```{r}
+# Series for studying
+
+data(tsd)
+```
+
+```{r}
+library(ggplot2)
+plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
+```
+
+```{r}
+# sliding windows
+
+sw_size <- 10
+ts <- ts_data(tsd$y, sw_size)
+ts_head(ts, 3)
+```
+
+```{r}
+# data sampling
+
+test_size <- 3
+samp <- ts_sample(ts, test_size)
+```
+
+```{r}
+# first five rows from training data
+ts_head(samp$train, 5)
+```
+
+```{r}
+# last five rows from training data
+ts_head(samp$train[-c(1:(nrow(samp$train)-5)),])
+```
+
+```{r}
+# testing data
+ts_head(samp$test)
+```
+
