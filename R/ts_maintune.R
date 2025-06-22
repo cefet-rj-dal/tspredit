@@ -146,7 +146,7 @@ build_model <- function(obj, ranges, x, y) {
     data <- daltoolbox::transform(augment, data)
     data <-  adjust_ts_data(data)
 
-    io <- daltoolbox::ts_projection(data)
+    io <- ts_projection(data)
 
     return(list(x=io$input, y=io$output))
   }

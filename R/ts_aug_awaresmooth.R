@@ -93,7 +93,7 @@ transform.ts_aug_awaresmooth <- function(obj, data, ...) {
   n <- ncol(data)
   x <- c(as.vector(data[1,1:(n-1)]), as.vector(data[,n]))
   xd <- progressive_smoothing(x)
-  result <- daltoolbox::ts_data(xd, n)
+  result <- ts_data(xd, n)
 
   result <- transform_ts_aug_awareness(result, obj$factor)
 
