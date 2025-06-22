@@ -127,10 +127,9 @@ get_augment <- function(obj, name) {
   return(obj$augment[[i]])
 }
 
-#'@importFrom daltoolbox adjust_ts_data
 fit_augment <- function(obj, x, y) {
   data <- cbind(x, y)
-  data <-  daltoolbox::adjust_ts_data(data)
+  data <-  adjust_ts_data(data)
   for (i in 1:length(obj$augment)) {
     augment <- obj$augment[[i]]
     obj$augment[[i]] <- fit(augment, data)
@@ -139,15 +138,13 @@ fit_augment <- function(obj, x, y) {
 }
 
 #'@importFrom daltoolbox transform
-#'@importFrom daltoolbox adjust_ts_data
-#'@importFrom daltoolbox ts_projection
 #'@importFrom daltoolbox set_params
 build_model <- function(obj, ranges, x, y) {
   augment_data <- function(augment, x, y) {
     data <- cbind(x, y)
-    data <-  daltoolbox::adjust_ts_data(data)
+    data <-  adjust_ts_data(data)
     data <- daltoolbox::transform(augment, data)
-    data <-  daltoolbox::adjust_ts_data(data)
+    data <-  adjust_ts_data(data)
 
     io <- daltoolbox::ts_projection(data)
 

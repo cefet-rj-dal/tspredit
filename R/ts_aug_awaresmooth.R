@@ -31,8 +31,6 @@ ts_aug_awaresmooth <- function(factor = 1) {
 #'@importFrom stats sd
 #'@importFrom graphics boxplot
 #'@importFrom daltoolbox transform
-#'@importFrom daltoolbox adjust_ts_data
-#'@importFrom daltoolbox ts_data
 #'@exportS3Method transform ts_aug_awaresmooth
 transform.ts_aug_awaresmooth <- function(obj, data, ...) {
   progressive_smoothing <- function(serie) {
@@ -87,7 +85,7 @@ transform.ts_aug_awaresmooth <- function(obj, data, ...) {
     attr(result, "idx") <-  i
     idx <- c(1:nrow(data), attr(result, "idx"))
     result <- rbind(data, result)
-    result <- daltoolbox::adjust_ts_data(result)
+    result <- adjust_ts_data(result)
     attr(result, "idx") <- idx
     return(result)
   }

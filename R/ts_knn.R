@@ -24,7 +24,6 @@
 #'
 #'ev_test <- evaluate(model, output, prediction)
 #'ev_test
-#'@importFrom daltoolbox ts_regsw
 #'@export
 ts_knn <- function(preprocess=NA, input_size=NA, k=NA) {
   obj <- ts_regsw(preprocess, input_size)
@@ -37,7 +36,6 @@ ts_knn <- function(preprocess=NA, input_size=NA, k=NA) {
 }
 
 #'@importFrom FNN knn.reg
-#'@importFrom daltoolbox do_fit
 #'@importFrom daltoolbox adjust_data.frame
 #'@exportS3Method do_fit ts_knn
 do_fit.ts_knn <- function(obj, x, y) {
@@ -50,7 +48,6 @@ do_fit.ts_knn <- function(obj, x, y) {
 }
 
 #'@importFrom FNN knn.reg
-#'@importFrom daltoolbox do_predict
 #'@importFrom daltoolbox adjust_data.frame
 #'@exportS3Method do_predict ts_knn
 do_predict.ts_knn <- function(obj, x) {

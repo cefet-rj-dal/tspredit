@@ -5,7 +5,6 @@
 #' \item brazil_p2o5: phosphate consumption from 1961 to 2020.
 #' \item brazil_k2o: potash consumption from 1961 to 2020.
 #' }
-#'
 #' @docType data
 #' @usage data(fertilizers)
 #' @format list of fertilizers' time series.

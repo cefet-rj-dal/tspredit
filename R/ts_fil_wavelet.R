@@ -27,7 +27,6 @@ ts_fil_wavelet <- function(filter = "haar") {
 }
 
 #'@importFrom daltoolbox fit
-#'@importFrom daltoolbox R2.ts
 #'@importFrom wavelets modwt
 #'@importFrom wavelets imodwt
 #'@exportS3Method fit ts_fil_wavelet

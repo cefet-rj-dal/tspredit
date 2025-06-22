@@ -27,7 +27,6 @@
 #'
 #'ev_test <- evaluate(model, output, prediction)
 #'ev_test
-#'@importFrom daltoolbox ts_regsw
 #'@export
 ts_elm <- function(preprocess=NA, input_size=NA, nhid=NA, actfun='purelin') {
   obj <- ts_regsw(preprocess, input_size)
@@ -40,16 +39,14 @@ ts_elm <- function(preprocess=NA, input_size=NA, nhid=NA, actfun='purelin') {
   return(obj)
 }
 
-#'@import elmNNRcpp
-#'@importFrom daltoolbox do_fit
+#'@importFrom elmNNRcpp elm_train
 #'@exportS3Method do_fit ts_elm
 do_fit.ts_elm <- function(obj, x, y) {
   obj$model <- elmNNRcpp::elm_train(x, y, nhid = obj$nhid, actfun = obj$actfun, init_weights = "uniform_positive", bias = FALSE, verbose = FALSE)
   return(obj)
 }
 
-#'@import elmNNRcpp
-#'@importFrom daltoolbox do_predict
+#'@importFrom elmNNRcpp elm_predict
 #'@exportS3Method do_predict ts_elm
 do_predict.ts_elm <- function(obj, x) {
   if (is.data.frame(x))

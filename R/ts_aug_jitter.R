@@ -27,7 +27,6 @@ ts_aug_jitter <- function() {
 
 #'@importFrom stats sd
 #'@importFrom daltoolbox fit
-#'@importFrom daltoolbox adjust_ts_data
 #'@exportS3Method fit ts_aug_jitter
 fit.ts_aug_jitter <- function(obj, data, ...) {
   an <- apply(data, 1, mean)
@@ -52,7 +51,7 @@ transform.ts_aug_jitter <- function(obj, data, ...) {
   if (obj$preserve_data) {
     idx <- c(1:nrow(data), attr(result, "idx"))
     result <- rbind(data, result)
-    result <- daltoolbox::adjust_ts_data(result)
+    result <- adjust_ts_data(result)
     attr(result, "idx") <- idx
   }
   return(result)

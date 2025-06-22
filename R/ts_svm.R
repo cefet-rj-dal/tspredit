@@ -27,7 +27,6 @@
 #'
 #'ev_test <- evaluate(model, output, prediction)
 #'ev_test
-#'@importFrom daltoolbox ts_regsw
 #'@export
 ts_svm <- function(preprocess=NA, input_size=NA, kernel="radial", epsilon=0, cost=10) {
   obj <- ts_regsw(preprocess, input_size)
@@ -40,8 +39,7 @@ ts_svm <- function(preprocess=NA, input_size=NA, kernel="radial", epsilon=0, cos
   return(obj)
 }
 
-#'@import e1071
-#'@importFrom daltoolbox do_fit
+#'@importFrom e1071 svm
 #'@exportS3Method do_fit ts_svm
 do_fit.ts_svm <- function(obj, x, y) {
   obj$model <- e1071::svm(x = as.data.frame(x), y = y, epsilon=obj$epsilon, cost=obj$cost, kernel=obj$kernel)
@@ -49,7 +47,6 @@ do_fit.ts_svm <- function(obj, x, y) {
 }
 
 #'@importFrom stats predict
-#'@importFrom daltoolbox do_predict
 #'@exportS3Method do_predict ts_svm
 do_predict.ts_svm <- function(obj, x) {
   prediction <- stats::predict(obj$model, as.data.frame(x))
