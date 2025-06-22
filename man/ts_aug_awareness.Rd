@@ -18,10 +18,10 @@ Awareness reinforce recent data preferably.
 }
 \examples{
 library(daltoolbox)
-data(sin_data)
+data(tsd)
 
 #convert to sliding windows
-xw <- ts_data(sin_data$y, 10)
+xw <- ts_data(tsd$y, 10)
 
 #data augmentation using awareness
 augment <- ts_aug_awareness()

@@ -14,10 +14,10 @@ Does not make data augmentation.
 }
 \examples{
 library(daltoolbox)
-data(sin_data)
+data(tsd)
 
 #convert to sliding windows
-xw <- ts_data(sin_data$y, 10)
+xw <- ts_data(tsd$y, 10)
 
 #no data augmentation
 augment <- ts_aug_none()

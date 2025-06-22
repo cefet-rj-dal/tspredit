@@ -10,8 +10,8 @@
 #'@return returns a `ts_rf` object.
 #'@examples
 #'library(daltoolbox)
-#'data(sin_data)
-#'ts <- ts_data(sin_data$y, 10)
+#'data(tsd)
+#'ts <- ts_data(tsd$y, 10)
 #'ts_head(ts, 3)
 #'
 #'samp <- ts_sample(ts, test_size = 5)

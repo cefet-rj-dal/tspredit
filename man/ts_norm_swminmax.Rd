@@ -18,10 +18,10 @@ The ts_norm_swminmax function creates an object for normalizing a time series ba
 \examples{
 # time series to normalize
 library(daltoolbox)
-data(sin_data)
+data(tsd)
 
 # convert to sliding windows
-ts <- ts_data(sin_data$y, 10)
+ts <- ts_data(tsd$y, 10)
 ts_head(ts, 3)
 summary(ts[,10])
 

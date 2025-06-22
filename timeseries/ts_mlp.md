@@ -22,8 +22,8 @@ library(tspredit)
 ``` r
 # Series for studying
 
-data(sin_data)
-ts <- ts_data(sin_data$y, 10)
+data(tsd)
+ts <- ts_data(tsd$y, 10)
 ts_head(ts, 3)
 ```
 
@@ -37,7 +37,7 @@ ts_head(ts, 3)
 
 ``` r
 library(ggplot2)
-plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
+plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 
 ![plot of chunk unnamed-chunk-4](fig/ts_mlp/unnamed-chunk-4-1.png)

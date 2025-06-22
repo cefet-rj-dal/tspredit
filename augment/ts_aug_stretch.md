@@ -23,9 +23,9 @@ library(tspredit)
 ``` r
 # Series for studying
 
-data(sin_data)
+data(tsd)
 library(ggplot2)
-plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
+plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 
 ![plot of chunk unnamed-chunk-3](fig/ts_aug_stretch/unnamed-chunk-3-1.png)
@@ -35,7 +35,7 @@ plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 # Sliding windows
 
 sw_size <- 10
-xw <- ts_data(sin_data$y, sw_size)
+xw <- ts_data(tsd$y, sw_size)
 ```
 
 

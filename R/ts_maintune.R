@@ -8,8 +8,8 @@
 #'@return a `ts_maintune` object.
 #'@examples
 #'library(daltoolbox)
-#'data(sin_data)
-#'ts <- ts_data(sin_data$y, 10)
+#'data(tsd)
+#'ts <- ts_data(tsd$y, 10)
 #'
 #'samp <- ts_sample(ts, test_size = 5)
 #'io_train <- ts_projection(samp$train)

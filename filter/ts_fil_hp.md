@@ -22,20 +22,20 @@ library(tspredit)
 ``` r
 # Series for studying with added noise
 
-data(sin_data)
-y <- sin_data$y
+data(tsd)
+y <- tsd$y
 noise <- rnorm(length(y), 0, sd(y)/10)
 spike <- rnorm(1, 0, sd(y))
-sin_data$y <- sin_data$y + noise
-sin_data$y[10] <- sin_data$y[10] + spike
-sin_data$y[20] <- sin_data$y[20] + spike
-sin_data$y[30] <- sin_data$y[30] + spike
+tsd$y <- tsd$y + noise
+tsd$y[10] <- tsd$y[10] + spike
+tsd$y[20] <- tsd$y[20] + spike
+tsd$y[30] <- tsd$y[30] + spike
 ```
 
 
 ``` r
 library(ggplot2)
-plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
+plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 
 ![plot of chunk unnamed-chunk-4](fig/ts_fil_hp/unnamed-chunk-4-1.png)
@@ -45,9 +45,9 @@ plot_ts(x=sin_data$x, y=sin_data$y) + theme(text = element_text(size=16))
 # Hodrick-Prescott Filter
 
 filter <- ts_fil_hp()
-filter <- fit(filter, sin_data$y)
-y <- transform(filter, sin_data$y)
-plot_ts_pred(y=sin_data$y, yadj=y) + theme(text = element_text(size=16))
+filter <- fit(filter, tsd$y)
+y <- transform(filter, tsd$y)
+plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 ```
 
 ![plot of chunk unnamed-chunk-5](fig/ts_fil_hp/unnamed-chunk-5-1.png)
