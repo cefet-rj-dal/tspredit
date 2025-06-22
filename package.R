@@ -16,9 +16,6 @@ if (FALSE) {
   library(devtools)
   check()
   load_all()
-  #'@exportS3Method fit harbinger
-  #'@exportS3Method detect harbinger
-  #'@exportS3Method transform ts_aug_jitter
 }
 
 if (FALSE) {
