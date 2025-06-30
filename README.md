@@ -29,23 +29,6 @@ easier to compare alternatives and automate repetitive tasks.
 
 ------------------------------------------------------------------------
 
-## Installation
-
-The latest version of TSPredIT is available on CRAN:
-
-``` r
-install.packages("tspredit")
-```
-
-You can install the development version from GitHub:
-
-``` r
-library(devtools)
-devtools::install_github("cefet-rj-dal/tspredit", force = TRUE, upgrade = "never")
-```
-
-------------------------------------------------------------------------
-
 ## Examples
 
 Examples of TSPredIT usage are available in the official GitHub
@@ -63,6 +46,23 @@ can be found at:
 
 - [DAL Toolbox
   documentation](https://cefet-rj-dal.github.io/daltoolbox/)
+
+------------------------------------------------------------------------
+
+## Installation
+
+The latest version of TSPredIT is available on CRAN:
+
+``` r
+install.packages("tspredit")
+```
+
+You can install the development version from GitHub:
+
+``` r
+library(devtools)
+devtools::install_github("cefet-rj-dal/tspredit", force = TRUE, upgrade = "never")
+```
 
 ------------------------------------------------------------------------
 
