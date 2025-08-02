@@ -7,14 +7,11 @@
 install.packages("tspredit")
 ```
 
-```
-
-```
-
 
 ``` r
 # loading DAL
 library(daltoolbox)
+library(daltoolboxdp)
 library(tspredit)
 ```
 
@@ -72,7 +69,7 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 0.0004929936
+## [1] 0.0002068997
 ```
 
 
@@ -92,7 +89,7 @@ print(sprintf("%.2f, %.2f", output, prediction))
 ```
 
 ```
-## [1] "0.41, 0.42"   "0.17, 0.17"   "-0.08, -0.10" "-0.32, -0.35" "-0.54, -0.58"
+## [1] "0.41, 0.41"   "0.17, 0.18"   "-0.08, -0.08" "-0.32, -0.33" "-0.54, -0.56"
 ```
 
 
@@ -104,8 +101,8 @@ print(head(ev_test$metrics))
 ```
 
 ```
-##            mse      smape        R2
-## 1 0.0005544012 0.09930321 0.9952116
+##            mse     smape        R2
+## 1 4.037657e-05 0.0166221 0.9996513
 ```
 
 ``` r
@@ -113,7 +110,7 @@ print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
 ```
 
 ```
-## [1] "smape: 9.93"
+## [1] "smape: 1.66"
 ```
 
 

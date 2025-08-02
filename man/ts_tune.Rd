@@ -4,7 +4,7 @@
 \alias{ts_tune}
 \title{Time Series Tune}
 \usage{
-ts_tune(input_size, base_model, folds = 10)
+ts_tune(input_size, base_model, folds = 10, ranges = NULL)
 }
 \arguments{
 \item{input_size}{input size for machine learning model}
@@ -12,6 +12,8 @@ ts_tune(input_size, base_model, folds = 10)
 \item{base_model}{base model for tuning}
 
 \item{folds}{number of folds for cross-validation}
+
+\item{ranges}{a list of hyperparameter ranges to explore}
 }
 \value{
 returns a \code{ts_tune} object
@@ -31,11 +33,11 @@ samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
 io_test <- ts_projection(samp$test)
 
-tune <- ts_tune(input_size=c(3:5), base_model = ts_elm(ts_norm_gminmax()))
-ranges <- list(nhid = 1:5, actfun=c('purelin'))
+tune <- ts_tune(input_size=c(3:5), base_model = ts_elm(ts_norm_gminmax()),
+    ranges = list(nhid = 1:5, actfun=c('purelin')))
 
 # Generic model tunning
-model <- fit(tune, x=io_train$input, y=io_train$output, ranges)
+model <- fit(tune, x=io_train$input, y=io_train$output)
 
 prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
 prediction <- as.vector(prediction)

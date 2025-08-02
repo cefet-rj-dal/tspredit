@@ -1,19 +1,18 @@
 Package: tspredit
 Title: Time Series Prediction with Integrated Tuning
-Version: 1.2.727
+Version: 1.2.737
 Authors@R: 
   c(    person(given = "Eduardo", family = "Ogasawara", role = c("aut", "ths", "cre"), 
                email = "eogasawara@ieee.org", comment = c(ORCID = "0000-0002-0466-0626")),
-        person(given = "Fernando", family = "Alexandrino", role = "aut", email = "fernando.alexandrino@ifsp.edu.br"),
         person(given = "Cristiane", family = "Gea", role = "aut", email = "cristiane.gea@eic.cefet-rj.br"),
+        person(given = "Diego", family = "Carvalho", role = "ctb", email = "diego.carvalho@cefet-rj.br"),
         person(given = "Diogo", family = "Santos", role = "aut", email = "diogo.santos@eic.cefet-rj.br"),
-        person(given = "Rebecca", family = "Salles", role = "aut", email = "rebecca.salles@eic.cefet-rj.br"),
-        person(given = "Vitoria", family = "Birindiba", role = "aut", email = "vitoria.birindiba@eic.cefet-rj.br"),
-        person(given = "Carla", family = "Pacheco", role = "ctb", email = "carla.pacheco@eic.cefet-rj.br"),
         person(given = "Eduardo", family = "Bezerra", role = "ctb", email = "ebezerra@cefet-rj.br"),
         person(given = "Esther", family = "Pacitti", role = "ctb", email = "Esther.Pacitti@lirmm.fr"),
         person(given = "Fabio", family = "Porto", role = "ctb", email = "fporto@lncc.br"),
-        person(given = "Diego", family = "Carvalho", role = "ctb", email = "diego.carvalho@cefet-rj.br"),
+        person(given = "Fernando", family = "Alexandrino", role = "aut", email = "fernando.alexandrino@ifsp.edu.br"),
+        person(given = "Rebecca", family = "Salles", role = "aut", email = "rebecca.salles@eic.cefet-rj.br"),
+        person(given = "Vitoria", family = "Birindiba", role = "aut", email = "vitoria.birindiba@eic.cefet-rj.br"),
         person(given = "CEFET/RJ", role = "cph")
   )
 Description: 

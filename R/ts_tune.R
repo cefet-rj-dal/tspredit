@@ -5,6 +5,7 @@
 #'@param input_size input size for machine learning model
 #'@param base_model base model for tuning
 #'@param folds number of folds for cross-validation
+#'@param ranges a list of hyperparameter ranges to explore
 #'@return returns a `ts_tune` object
 #'@examples
 #'library(daltoolbox)
@@ -16,11 +17,11 @@
 #'io_train <- ts_projection(samp$train)
 #'io_test <- ts_projection(samp$test)
 #'
-#'tune <- ts_tune(input_size=c(3:5), base_model = ts_elm(ts_norm_gminmax()))
-#'ranges <- list(nhid = 1:5, actfun=c('purelin'))
+#'tune <- ts_tune(input_size=c(3:5), base_model = ts_elm(ts_norm_gminmax()),
+#'     ranges = list(nhid = 1:5, actfun=c('purelin')))
 #'
 #'# Generic model tunning
-#'model <- fit(tune, x=io_train$input, y=io_train$output, ranges)
+#'model <- fit(tune, x=io_train$input, y=io_train$output)
 #'
 #'prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
 #'prediction <- as.vector(prediction)
@@ -29,8 +30,8 @@
 #'ev_test <- evaluate(model, output, prediction)
 #'ev_test
 #'@export
-ts_tune <- function(input_size, base_model, folds=10) {
-  obj <- dal_tune(base_model, folds)
+ts_tune <- function(input_size, base_model, folds=10, ranges=NULL) {
+  obj <- dal_tune(base_model, folds, ranges)
   obj$input_size <- input_size
   obj$name <- ""
   class(obj) <- append("ts_tune", class(obj))
@@ -39,7 +40,7 @@ ts_tune <- function(input_size, base_model, folds=10) {
 
 #'@importFrom stats predict
 #'@export
-fit.ts_tune <- function(obj, x, y, ranges, ...) {
+fit.ts_tune <- function(obj, x, y, ...) {
 
   build_model <- function(obj, ranges, x, y) {
     model <- obj$base_model
@@ -49,12 +50,11 @@ fit.ts_tune <- function(obj, x, y, ranges, ...) {
     return(model)
   }
 
-  prepare_ranges <- function(obj, ranges) {
-    ranges <- append(list(input_size = obj$input_size), ranges)
+  prepare_ranges <- function(input_size, ranges) {
+    ranges <- append(list(input_size = input_size), ranges)
     ranges <- expand.grid(ranges)
     ranges$key <- 1:nrow(ranges)
-    obj$ranges <- ranges
-    return(obj)
+    return(ranges)
   }
 
   evaluate_error <- function(model, i, x, y) {
@@ -65,8 +65,8 @@ fit.ts_tune <- function(obj, x, y, ranges, ...) {
     return(error)
   }
 
-  obj <- prepare_ranges(obj, ranges)
-  ranges <- obj$ranges
+
+  ranges <- prepare_ranges(obj$input_size, obj$ranges)
 
   n <- nrow(ranges)
   i <- 1

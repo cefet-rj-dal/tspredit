@@ -9,6 +9,7 @@ install.packages("tspredit")
 ```{r}
 # loading DAL
 library(daltoolbox)
+library(daltoolboxdp)
 library(tspredit)
 ```
 

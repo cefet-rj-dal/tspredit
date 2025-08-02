@@ -18,13 +18,16 @@ x <- cos(i)
 ```
 
 ```{r}
-# Plot the time series
+# plot the time series
 
 plot_ts(x=i, y=x) + theme(text = element_text(size=16))
 ```
 
+
+
 ```{r}
 # Sliding windows
+
 # Creates a matrix representing a sliding window to be used in the process of training the model. Each row of the matrix represents one moment of the sliding window, with 10 (ten) elements as attributes (t9, t8, t7, ..., t0).
 
 sw_size <- 10
@@ -34,6 +37,7 @@ ts_head(ts, 3)
 
 ```{r}
 # Data sampling
+
 # Samples data into train and test.
 
 test_size <- 1
@@ -45,19 +49,16 @@ ts_head(samp$test)
 ```{r}
 # Model training
 
-# Tune optimizes a learner hyperparameter, no matter which one. 
+# Tune optimizes a learner hyperparameter, no matter which one. This way, in this example, an ELM is used in the hyperparameters tuning using an appropriate range. The result of tunning is an ELM model for the training set.
 
-# In this example, an ELM is used in the hyperparameters tuning using an appropriate range. The result of tunning is an ELM model for the training set.
-
-tune <- ts_tune(input_size=c(3:5), base_model = ts_elm(ts_norm_gminmax()), 
-                ranges = list(nhid = 1:5, actfun=c('sig', 'radbas', 'tribas', 'relu', 'purelin')))
+# Setup for tunning using ELM
+tune <- ts_integtune(input_size=c(3:5), base_model = ts_elm(), preprocess = list(ts_norm_gminmax()),
+                    ranges = list(nhid = 1:5, actfun=c('sig', 'radbas', 'tribas', 'relu', 'purelin')))
 
 ```
 
-
-
 ```{r}
-# The prediction output using the training set can be used to evaluate the model's adjustment level to the training data
+# The prediction output using the training set can be used to evaluate the model's adjustment level to the training data:
 
 io_train <- ts_projection(samp$train)
 
@@ -98,6 +99,8 @@ print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
 
 ```{r}
 # Plot results
+
+# The plot shows results of the prediction. 
 
 yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))
