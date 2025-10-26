@@ -2,15 +2,15 @@
 % Please edit documentation in R/ts_fil_none.R
 \name{ts_fil_none}
 \alias{ts_fil_none}
-\title{no filter}
+\title{No Filter}
 \usage{
 ts_fil_none()
 }
 \value{
-a \code{ts_fil_none} object.
+A \code{ts_fil_none} object.
 }
 \description{
-Does not make data filter
+Identity filter that returns the original series unchanged.
 }
 \examples{
 # time series with noise

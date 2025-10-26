@@ -7,30 +7,59 @@
 ts_arima()
 }
 \value{
-returns a \code{ts_arima} object.
+A \code{ts_arima} object (S3), which inherits from \code{ts_reg}.
 }
 \description{
-Creates a time series prediction object that
-uses the AutoRegressive Integrated Moving Average (ARIMA).
-It wraps the forecast library.
+Create a time series prediction object based on the
+AutoRegressive Integrated Moving Average (ARIMA) family.
+
+This constructor sets up an S3 time series regressor that leverages the
+\code{forecast} package to automatically select orders via \code{auto.arima} and
+provide one-step and multi-step forecasts.
+}
+\details{
+ARIMA models combine autoregressive (AR), differencing (I), and
+moving average (MA) components to model temporal dependence in a univariate
+time series. The \code{fit()} method uses \code{forecast::auto.arima()} to select
+orders using information criteria, and \code{predict()} supports both a single
+one-step-ahead over a horizon (rolling) and direct multi-step forecasting.
+
+Assumptions include (after differencing) approximate stationarity and
+homoskedastic residuals. Always inspect residual diagnostics for adequacy.
 }
 \examples{
+# Example: rolling-origin evaluation with multi-step prediction
 library(daltoolbox)
 data(tsd)
+
+# 1) Wrap the raw vector as `ts_data` without sliding windows
 ts <- ts_data(tsd$y, 0)
 ts_head(ts, 3)
 
+# 2) Split into train/test using the last 5 observations as test
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
 io_test <- ts_projection(samp$test)
 
+# 3) Fit ARIMA via auto.arima
 model <- ts_arima()
-model <- fit(model, x=io_train$input, y=io_train$output)
+model <- fit(model, x = io_train$input, y = io_train$output)
 
-prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
+# 4) Predict 5 steps ahead from the most recent observed point
+prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 prediction <- as.vector(prediction)
 output <- as.vector(io_test$output)
 
+# 5) Evaluate forecast accuracy
 ev_test <- evaluate(model, output, prediction)
 ev_test
+}
+\references{
+\itemize{
+\item G. E. P. Box, G. M. Jenkins, G. C. Reinsel, and G. M. Ljung (2015).
+Time Series Analysis: Forecasting and Control. Wiley.
+\item R. J. Hyndman and Y. Khandakar (2008). Automatic time series forecasting:
+The forecast package for R. Journal of Statistical Software, 27(3), 1–22.
+doi:10.18637/jss.v027.i03
+}
 }

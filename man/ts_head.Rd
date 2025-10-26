@@ -14,10 +14,10 @@ ts_head(x, n = 6L, ...)
 \item{...}{optional arguments}
 }
 \value{
-returns the first n observations of a \code{ts_data}
+The first n observations of a \code{ts_data} (as a matrix/data.frame).
 }
 \description{
-Returns the first n observations from a \code{ts_data}
+Return the first n observations from a \code{ts_data}.
 }
 \examples{
 data(tsd)

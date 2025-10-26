@@ -14,45 +14,58 @@ ts_integtune(
 )
 }
 \arguments{
-\item{input_size}{input size for machine learning model}
+\item{input_size}{Integer vector. Candidate input window sizes.}
 
-\item{base_model}{base model for tuning}
+\item{base_model}{Base model object for tuning.}
 
-\item{folds}{number of folds for cross-validation}
+\item{folds}{Integer. Number of cross-validation folds.}
 
-\item{ranges}{a list of hyperparameter ranges to explore}
+\item{ranges}{Named list of hyperparameter ranges to explore.}
 
-\item{preprocess}{list of preprocessing methods}
+\item{preprocess}{List of preprocessing objects to compare.}
 
-\item{augment}{data augmentation method}
+\item{augment}{List of augmentation objects to apply during training.}
 }
 \value{
-a \code{ts_integtune} object.
+A \code{ts_integtune} object.
 }
 \description{
-Time Series Tune
+Integrated tuning over input sizes, preprocessing, augmentation,
+and model hyperparameters for time series.
 }
 \examples{
+# Integrated search over input size, preprocessing and model hyperparameters
 library(daltoolbox)
 data(tsd)
-ts <- ts_data(tsd$y, 10)
 
+# Build windows and split into train/test, then project to (X, y)
+ts <- ts_data(tsd$y, 10)
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
 io_test <- ts_projection(samp$test)
 
-tune <- ts_integtune(input_size=c(3:5), base_model = ts_elm(),
-ranges = list(nhid = 1:5, actfun=c('purelin')),
-preprocess = list(ts_norm_gminmax()))
+# Configure integrated tuning: ranges for input_size, ELM (nhid, actfun), and preprocessors
+tune <- ts_integtune(
+  input_size = 3:5,
+  base_model = ts_elm(),
+  ranges = list(nhid = 1:5, actfun = c('purelin')),
+  preprocess = list(ts_norm_gminmax())
+)
 
+# Run search; augmentation (if provided) is applied during training internally
+model <- fit(tune, x = io_train$input, y = io_train$output)
 
-# Generic model tunning
-model <- fit(tune, x=io_train$input, y=io_train$output)
-
-prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
+# Forecast and evaluate on the held-out window
+prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 prediction <- as.vector(prediction)
 output <- as.vector(io_test$output)
 
 ev_test <- evaluate(model, output, prediction)
 ev_test
+}
+\references{
+Salles, R., Pacitti, E., Bezerra, E., Marques, C., Pacheco, C., Oliveira,
+C., Porto, F., Ogasawara, E. (2023). TSPredIT: Integrated Tuning of Data
+Preprocessing and Time Series Prediction Models. Lecture Notes in Computer
+Science.
 }

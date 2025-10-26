@@ -2,7 +2,7 @@
 % Please edit documentation in R/ts_fil_remd.R
 \name{ts_fil_remd}
 \alias{ts_fil_remd}
-\title{EMD Filter}
+\title{Robust EMD Filter}
 \usage{
 ts_fil_remd(noise = 0.1, trials = 5)
 }
@@ -12,10 +12,11 @@ ts_fil_remd(noise = 0.1, trials = 5)
 \item{trials}{trials}
 }
 \value{
-a \code{ts_fil_remd} object.
+A \code{ts_fil_remd} object.
 }
 \description{
-EMD Filter
+Ensemble/robust EMD-based denoising using CEEMD to separate
+noise-dominated IMFs and reconstruct the signal.
 }
 \examples{
 # time series with noise
@@ -30,4 +31,10 @@ y <- transform(filter, tsd$y)
 
 # plot
 plot_ts_pred(y=tsd$y, yadj=y)
+}
+\references{
+\itemize{
+\item Z. Wu and N. E. Huang (2009). Ensemble Empirical Mode Decomposition: a
+noise-assisted data analysis method. Advances in Adaptive Data Analysis.
+}
 }

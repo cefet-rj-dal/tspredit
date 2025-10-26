@@ -2,41 +2,60 @@
 % Please edit documentation in R/ts_knn.R
 \name{ts_knn}
 \alias{ts_knn}
-\title{KNN time series prediction}
+\title{KNN Time Series Prediction}
 \usage{
 ts_knn(preprocess = NA, input_size = NA, k = NA)
 }
 \arguments{
-\item{preprocess}{normalization}
+\item{preprocess}{Normalization preprocessor (e.g., \code{ts_norm_gminmax()}).}
 
-\item{input_size}{input size for machine learning model}
+\item{input_size}{Integer. Number of lagged inputs.}
 
-\item{k}{number of k neighbors}
+\item{k}{Integer. Number of neighbors.}
 }
 \value{
-returns a \code{ts_knn} object.
+A \code{ts_knn} object (S3) inheriting from \code{ts_regsw}.
 }
 \description{
-Creates a prediction object that
-uses the K-Nearest Neighbors (KNN) method for time series regression
+Create a prediction object that uses the
+K-Nearest Neighbors regression for time series via sliding windows.
+}
+\details{
+KNN regression predicts a value as the average (or weighted average)
+of the outputs of the k most similar windows in the training set. Similarity
+is computed in the feature space induced by lagged inputs. Consider
+normalization for distance-based methods.
 }
 \examples{
+# Example: distance-based regression on sliding windows
+# Load tools and example series
 library(daltoolbox)
 data(tsd)
+
+# Build 10-lag windows and preview a few rows
 ts <- ts_data(tsd$y, 10)
 ts_head(ts, 3)
 
+# Split end of series as test and project (X, y)
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
 io_test <- ts_projection(samp$test)
 
-model <- ts_knn(ts_norm_gminmax(), input_size=4, k=3)
-model <- fit(model, x=io_train$input, y=io_train$output)
+# Define KNN regressor and fit (distance-based; normalization recommended)
+model <- ts_knn(ts_norm_gminmax(), input_size = 4, k = 3)
+model <- fit(model, x = io_train$input, y = io_train$output)
 
-prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
+# Predict multiple steps ahead and evaluate
+prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 prediction <- as.vector(prediction)
 output <- as.vector(io_test$output)
 
 ev_test <- evaluate(model, output, prediction)
 ev_test
+}
+\references{
+\itemize{
+\item T. M. Cover and P. E. Hart (1967). Nearest neighbor pattern classification.
+IEEE Transactions on Information Theory, 13(1), 21–27.
+}
 }

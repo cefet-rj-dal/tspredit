@@ -2,30 +2,39 @@
 % Please edit documentation in R/ts_aug_shrink.R
 \name{ts_aug_shrink}
 \alias{ts_aug_shrink}
-\title{Augmentation by shrink}
+\title{Augmentation by Shrink}
 \usage{
 ts_aug_shrink(scale_factor = 0.8)
 }
 \arguments{
-\item{scale_factor}{for shrink}
+\item{scale_factor}{Numeric factor used to scale deviations.}
 }
 \value{
-a \code{ts_aug_shrink} object.
+A \code{ts_aug_shrink} object.
 }
 \description{
-Time series data augmentation is a technique used to increase the size and diversity of a time series dataset by creating new instances of the original data through transformations or modifications. The goal is to improve the performance of machine learning models trained on time series data by reducing overfitting and improving generalization.
-stretch does data augmentation by decreasing the volatility of the time series.
+Decrease within-window deviation magnitude by a scaling factor
+to generate lower-variance variants while preserving the mean.
 }
 \examples{
+# Shrink augmentation reduces within-window deviations
+# Load package and example dataset
 library(daltoolbox)
 data(tsd)
 
-#convert to sliding windows
+# Convert to sliding windows and preview
 xw <- ts_data(tsd$y, 10)
+ts_head(xw)
 
-#data augmentation using flip
+# Apply shrink augmentation and inspect augmented windows
 augment <- ts_aug_shrink()
 augment <- fit(augment, xw)
 xa <- transform(augment, xw)
 ts_head(xa)
+}
+\references{
+\itemize{
+\item Q. Wen et al. (2021). Time Series Data Augmentation for Deep Learning:
+A Survey. IJCAI Workshop on Time Series.
+}
 }

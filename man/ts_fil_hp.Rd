@@ -21,10 +21,18 @@ daily (5 days a week) => frequency = 252 // lambda = 6812100}
 Values close to 1 preserve original values. Values close to 0 adopts HP filter values.}
 }
 \value{
-a \code{ts_fil_hp} object.
+A \code{ts_fil_hp} object.
 }
 \description{
-This filter eliminates the cyclical component of the series, performs smoothing on it, making it more sensitive to long-term fluctuations. Each observation is decomposed into a cyclical and a growth component.
+Decompose a series into trend and cyclical components using the
+Hodrick–Prescott (HP) filter and optionally blend with the original series.
+
+This filter removes short-term fluctuations by penalizing changes in the
+growth rate of the trend component.
+}
+\details{
+The filter strength is governed by \code{lambda = 100 * frequency^2}.
+Use \code{preserve} in (0, 1] to convex-combine the raw series and the HP trend.
 }
 \examples{
 # time series with noise
@@ -39,4 +47,10 @@ y <- transform(filter, tsd$y)
 
 # plot
 plot_ts_pred(y=tsd$y, yadj=y)
+}
+\references{
+\itemize{
+\item R. J. Hodrick and E. C. Prescott (1997). Postwar U.S. business cycles:
+An empirical investigation. Journal of Money, Credit and Banking, 29(1).
+}
 }

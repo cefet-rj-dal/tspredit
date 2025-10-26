@@ -2,7 +2,7 @@
 % Please edit documentation in R/ts_norm_swminmax.R
 \name{ts_norm_swminmax}
 \alias{ts_norm_swminmax}
-\title{Time Series Sliding Window Min-Max}
+\title{Sliding-Window Min–Max Normalization}
 \usage{
 ts_norm_swminmax(outliers = outliers_boxplot())
 }
@@ -10,10 +10,11 @@ ts_norm_swminmax(outliers = outliers_boxplot())
 \item{outliers}{Indicate outliers transformation class. NULL can avoid outliers removal.}
 }
 \value{
-returns a \code{ts_norm_swminmax} object.
+A \code{ts_norm_swminmax} object.
 }
 \description{
-The ts_norm_swminmax function creates an object for normalizing a time series based on the "sliding window min-max scaling" method
+Create an object for normalizing each window by its own min and
+max, preserving local contrast while standardizing scales.
 }
 \examples{
 # time series to normalize
@@ -31,4 +32,9 @@ preproc <- fit(preproc, ts)
 tst <- transform(preproc, ts)
 ts_head(tst, 3)
 summary(tst[,10])
+}
+\references{
+Ogasawara, E., Murta, L., Zimbrão, G., Mattoso, M. (2009). Neural networks
+cartridges for data mining on time series. Proceedings of the International
+Joint Conference on Neural Networks (IJCNN). doi:10.1109/IJCNN.2009.5178615
 }

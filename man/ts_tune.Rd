@@ -7,42 +7,63 @@
 ts_tune(input_size, base_model, folds = 10, ranges = NULL)
 }
 \arguments{
-\item{input_size}{input size for machine learning model}
+\item{input_size}{Integer vector. Candidate input window sizes.}
 
-\item{base_model}{base model for tuning}
+\item{base_model}{Base model object to tune (e.g., \code{ts_mlp()}).}
 
-\item{folds}{number of folds for cross-validation}
+\item{folds}{Integer. Number of cross-validation folds.}
 
-\item{ranges}{a list of hyperparameter ranges to explore}
+\item{ranges}{Named list of hyperparameter ranges to explore.}
 }
 \value{
-returns a \code{ts_tune} object
+A \code{ts_tune} object.
 }
 \description{
-Creates a \code{ts_tune} object for tuning hyperparameters of a time series model.
-This function sets up a tuning process for the specified base model by exploring different
-configurations of hyperparameters using cross-validation.
+Create a \code{ts_tune} object for hyperparameter tuning of a
+time series model.
+
+Sets up a cross-validated search over hyperparameter ranges and input sizes
+for a base model. Results include the evaluated configurations and the
+selected best configuration.
 }
 \examples{
+# Example: grid search over input_size and ELM hyperparameters
+# Load library and example data
 library(daltoolbox)
 data(tsd)
+
+# Prepare 10-lag windows and split into train/test
 ts <- ts_data(tsd$y, 10)
 ts_head(ts, 3)
-
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
 io_test <- ts_projection(samp$test)
 
-tune <- ts_tune(input_size=c(3:5), base_model = ts_elm(ts_norm_gminmax()),
-    ranges = list(nhid = 1:5, actfun=c('purelin')))
+# Define tuning: vary input_size and ELM hyperparameters (nhid, actfun)
+tune <- ts_tune(
+  input_size = 3:5,
+  base_model = ts_elm(ts_norm_gminmax()),
+  ranges = list(nhid = 1:5, actfun = c('purelin'))
+)
 
-# Generic model tunning
-model <- fit(tune, x=io_train$input, y=io_train$output)
+# Run CV-based search and get the best fitted model
+model <- fit(tune, x = io_train$input, y = io_train$output)
 
-prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
+# Forecast and evaluate on the held-out horizon
+prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 prediction <- as.vector(prediction)
 output <- as.vector(io_test$output)
 
 ev_test <- evaluate(model, output, prediction)
 ev_test
+}
+\references{
+\itemize{
+\item R. Kohavi (1995). A study of cross-validation and bootstrap for accuracy
+estimation and model selection. IJCAI.
+\item Salles, R., Pacitti, E., Bezerra, E., Marques, C., Pacheco, C., Oliveira,
+C., Porto, F., Ogasawara, E. (2023). TSPredIT: Integrated Tuning of Data
+Preprocessing and Time Series Prediction Models. Lecture Notes in Computer
+Science.
+}
 }

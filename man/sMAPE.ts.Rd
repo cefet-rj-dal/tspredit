@@ -7,13 +7,22 @@
 sMAPE.ts(actual, prediction)
 }
 \arguments{
-\item{actual}{real observations}
+\item{actual}{Numeric vector of observed values.}
 
-\item{prediction}{predicted observations}
+\item{prediction}{Numeric vector of predicted values.}
 }
 \value{
-returns the sMAPE between the actual and prediction vectors
+Numeric scalar with the sMAPE.
 }
 \description{
-Compute the symmetric mean absolute percent error (sMAPE)
+Compute symmetric mean absolute percent error (sMAPE).
+}
+\details{
+sMAPE = mean( |a - p| / ((|a| + |p|)/2) ), excluding zero denominators.
+}
+\references{
+\itemize{
+\item S. Makridakis and M. Hibon (2000). The M3-Competition: results,
+conclusions and implications. International Journal of Forecasting, 16(4).
+}
 }

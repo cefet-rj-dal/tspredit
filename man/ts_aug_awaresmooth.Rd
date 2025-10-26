@@ -2,30 +2,39 @@
 % Please edit documentation in R/ts_aug_awaresmooth.R
 \name{ts_aug_awaresmooth}
 \alias{ts_aug_awaresmooth}
-\title{Augmentation by awareness smooth}
+\title{Augmentation by Awareness Smooth}
 \usage{
 ts_aug_awaresmooth(factor = 1)
 }
 \arguments{
-\item{factor}{increase factor for data augmentation}
+\item{factor}{Numeric factor controlling the recency weighting.}
 }
 \value{
-a \code{ts_aug_awaresmooth} object.
+A \code{ts_aug_awaresmooth} object.
 }
 \description{
-Time series data augmentation is a technique used to increase the size and diversity of a time series dataset by creating new instances of the original data through transformations or modifications. The goal is to improve the performance of machine learning models trained on time series data by reducing overfitting and improving generalization.
-Awareness Smooth reinforce recent data preferably. It also smooths noise data.
+Recency-aware augmentation that also progressively smooths noise
+before applying the weighting, producing cleaner augmented samples.
 }
 \examples{
+# Recency-aware augmentation with progressive smoothing
+# Load package and example dataset
 library(daltoolbox)
 data(tsd)
 
-#convert to sliding windows
+# Convert to 10-lag sliding windows and preview
 xw <- ts_data(tsd$y, 10)
+ts_head(xw)
 
-#data augmentation using awareness
+# Apply awareness+smooth augmentation and inspect result
 augment <- ts_aug_awaresmooth()
 augment <- fit(augment, xw)
 xa <- transform(augment, xw)
 ts_head(xa)
+}
+\references{
+\itemize{
+\item Q. Wen et al. (2021). Time Series Data Augmentation for Deep Learning:
+A Survey. IJCAI Workshop on Time Series.
+}
 }

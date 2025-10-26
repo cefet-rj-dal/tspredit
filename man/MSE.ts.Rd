@@ -7,13 +7,16 @@
 MSE.ts(actual, prediction)
 }
 \arguments{
-\item{actual}{real observations}
+\item{actual}{Numeric vector of observed values.}
 
-\item{prediction}{predicted observations}
+\item{prediction}{Numeric vector of predicted values.}
 }
 \value{
-returns a number, which is the calculated MSE
+Numeric scalar with the MSE.
 }
 \description{
-Compute the mean squared error (MSE) between actual values and forecasts of a time series
+Compute mean squared error (MSE) between actual and predicted values.
+}
+\details{
+MSE = mean((actual - prediction)^2).
 }

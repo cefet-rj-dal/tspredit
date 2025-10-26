@@ -7,16 +7,16 @@
 do_fit(obj, x, y = NULL)
 }
 \arguments{
-\item{obj}{an object representing the model or algorithm to be fitted}
+\item{obj}{Model object to be fitted.}
 
-\item{x}{a matrix or data.frame containing the input features for training the model}
+\item{x}{Matrix or data.frame with input features.}
 
-\item{y}{a vector or matrix containing the output values to be predicted by the model}
+\item{y}{Vector or matrix with target values.}
 }
 \value{
-returns a fitted object
+A fitted object (same class as \code{obj}).
 }
 \description{
-The actual time series model fitting.
-This method should be override by descendants.
+Generic for fitting a time series model.
+Descendants should implement \verb{do_fit.<class>}.
 }

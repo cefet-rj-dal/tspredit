@@ -7,40 +7,61 @@
 ts_elm(preprocess = NA, input_size = NA, nhid = NA, actfun = "purelin")
 }
 \arguments{
-\item{preprocess}{normalization}
+\item{preprocess}{Normalization preprocessor (e.g., \code{ts_norm_gminmax()}).}
 
-\item{input_size}{input size for machine learning model}
+\item{input_size}{Integer. Number of lagged inputs used by the model.}
 
-\item{nhid}{ensemble size}
+\item{nhid}{Integer. Hidden layer size.}
 
-\item{actfun}{defines the type to use, possible values: 'sig',
-'radbas', 'tribas', 'relu', 'purelin' (default).}
+\item{actfun}{Character. One of 'sig', 'radbas', 'tribas', 'relu', 'purelin'.}
 }
 \value{
-returns a \code{ts_elm} object.
+A \code{ts_elm} object (S3) inheriting from \code{ts_regsw}.
 }
 \description{
-Creates a time series prediction object that
-uses the Extreme Learning Machine (ELM).
-It wraps the elmNNRcpp library.
+Create a time series prediction object that uses
+Extreme Learning Machine (ELM) regression.
+
+It wraps the \code{elmNNRcpp} package to train single-hidden-layer networks with
+randomly initialized hidden weights and closed-form output weights.
+}
+\details{
+ELMs are efficient to train and can perform well with appropriate
+hidden size and activation choice. Consider normalizing inputs and tuning
+\code{nhid} and the activation function.
 }
 \examples{
+# Example: ELM with sliding-window inputs
+# Load package and toy dataset
 library(daltoolbox)
 data(tsd)
+
+# Create sliding windows of length 10 (t9 ... t0)
 ts <- ts_data(tsd$y, 10)
 ts_head(ts, 3)
 
+# Split last 5 rows as test set
 samp <- ts_sample(ts, test_size = 5)
+# Project to inputs (X) and outputs (y)
 io_train <- ts_projection(samp$train)
 io_test <- ts_projection(samp$test)
 
-model <- ts_elm(ts_norm_gminmax(), input_size=4, nhid=3, actfun="purelin")
-model <- fit(model, x=io_train$input, y=io_train$output)
+# Define ELM with global min-max normalization and fit
+model <- ts_elm(ts_norm_gminmax(), input_size = 4, nhid = 3, actfun = "purelin")
+model <- fit(model, x = io_train$input, y = io_train$output)
 
-prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
+# Forecast 5 steps ahead starting from the last known window
+prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 prediction <- as.vector(prediction)
 output <- as.vector(io_test$output)
 
+# Evaluate forecast error on the test horizon
 ev_test <- evaluate(model, output, prediction)
 ev_test
+}
+\references{
+\itemize{
+\item G.-B. Huang, Q.-Y. Zhu, and C.-K. Siew (2006). Extreme Learning Machine:
+Theory and Applications. Neurocomputing, 70(1–3), 489–501.
+}
 }

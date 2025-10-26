@@ -14,7 +14,7 @@ This dataset was generated for examples.
 data(tsd)
 }
 \description{
-Synthetic dataset of sine function.
+Synthetic dataset based on a sine function.
 \itemize{
 \item x: correspond time from 0 to 10.
 \item y: dependent variable for time series modeling.

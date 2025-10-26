@@ -7,41 +7,60 @@
 ts_rf(preprocess = NA, input_size = NA, nodesize = 1, ntree = 10, mtry = NULL)
 }
 \arguments{
-\item{preprocess}{normalization}
+\item{preprocess}{Normalization preprocessor (e.g., \code{ts_norm_gminmax()}).}
 
-\item{input_size}{input size for machine learning model}
+\item{input_size}{Integer. Number of lagged inputs used by the model.}
 
-\item{nodesize}{node size}
+\item{nodesize}{Integer. Minimum terminal node size.}
 
-\item{ntree}{number of trees}
+\item{ntree}{Integer. Number of trees in the forest.}
 
-\item{mtry}{number of attributes to build tree}
+\item{mtry}{Integer. Number of variables randomly sampled at each split.}
 }
 \value{
-returns a \code{ts_rf} object.
+A \code{ts_rf} object (S3) inheriting from \code{ts_regsw}.
 }
 \description{
-Creates a time series prediction object that
-uses the Random Forest.
-It wraps the randomForest library.
+Create a time series prediction object that uses
+Random Forest regression on sliding-window inputs.
+
+It wraps the \code{randomForest} package to fit an ensemble of decision trees.
+}
+\details{
+Random Forests reduce variance by averaging many decorrelated trees.
+For tabular sliding-window features, they can capture nonlinearities and
+interactions without heavy feature engineering. Consider normalizing inputs
+for comparability across windows and tuning \code{mtry}, \code{ntree}, and \code{nodesize}.
 }
 \examples{
+# Example: sliding-window Random Forest
+# Load tools and data
 library(daltoolbox)
 data(tsd)
+
+# Turn series into 10-lag windows and preview
 ts <- ts_data(tsd$y, 10)
 ts_head(ts, 3)
 
+# Train/test split and (X, y) projection
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
 io_test <- ts_projection(samp$test)
 
-model <- ts_rf(ts_norm_gminmax(), input_size=4, nodesize=3, ntree=50)
-model <- fit(model, x=io_train$input, y=io_train$output)
+# Define Random Forest and fit (tune ntree/mtry/nodesize as needed)
+model <- ts_rf(ts_norm_gminmax(), input_size = 4, nodesize = 3, ntree = 50)
+model <- fit(model, x = io_train$input, y = io_train$output)
 
-prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
+# Forecast multiple steps and assess error
+prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 prediction <- as.vector(prediction)
 output <- as.vector(io_test$output)
 
 ev_test <- evaluate(model, output, prediction)
 ev_test
+}
+\references{
+\itemize{
+\item L. Breiman (2001). Random forests. Machine Learning, 45(1), 5–32.
+}
 }

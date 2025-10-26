@@ -7,12 +7,17 @@
 ts_reg()
 }
 \value{
-returns \code{ts_reg} object
+A \code{ts_reg} object (S3) to be extended by concrete models.
 }
 \description{
-Time Series Regression directly from time series
-Ancestral class for non-sliding windows implementation.
+Base class for time series regression models that operate
+directly on time series (non-sliding-window specialization).
+}
+\details{
+This class is intended to be subclassed by modeling backends that
+do not require the sliding-window interface. Methods such as \code{fit()},
+\code{predict()}, and \code{evaluate()} dispatch on this class.
 }
 \examples{
-#This is an abstract class.
+# This is an abstract base class; use concrete subclasses.
 }

@@ -7,13 +7,13 @@
 R2.ts(actual, prediction)
 }
 \arguments{
-\item{actual}{real observations}
+\item{actual}{Numeric vector of observed values.}
 
-\item{prediction}{predicted observations}
+\item{prediction}{Numeric vector of predicted values.}
 }
 \value{
-returns a number, which is the calculated R2
+Numeric scalar with R-squared.
 }
 \description{
-Compute the R-squared (R2) between actual values and forecasts of a time series
+Compute coefficient of determination (R-squared).
 }

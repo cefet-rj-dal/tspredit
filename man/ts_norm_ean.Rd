@@ -2,7 +2,7 @@
 % Please edit documentation in R/ts_norm_ean.R
 \name{ts_norm_ean}
 \alias{ts_norm_ean}
-\title{Time Series Adaptive Normalization (Exponential Moving Average - EMA)}
+\title{Adaptive Normalization with EMA}
 \usage{
 ts_norm_ean(outliers = outliers_boxplot(), nw = 0)
 }
@@ -12,11 +12,11 @@ ts_norm_ean(outliers = outliers_boxplot(), nw = 0)
 \item{nw}{windows size}
 }
 \value{
-returns a \code{ts_norm_ean} object.
+A \code{ts_norm_ean} object.
 }
 \description{
-Creates a normalization object for time series data using an Exponential Moving Average (EMA) method.
-This normalization approach adapts to changes in the time series and optionally removes outliers.
+Normalize a time series using exponentially weighted statistics
+that adapt to distributional changes, optionally after outlier mitigation.
 }
 \examples{
 # time series to normalize
@@ -34,4 +34,10 @@ preproc <- fit(preproc, ts)
 tst <- transform(preproc, ts)
 ts_head(tst, 3)
 summary(tst[,10])
+}
+\references{
+Ogasawara, E., Martinez, L. C., De Oliveira, D., Zimbrão, G., Pappa, G. L.,
+Mattoso, M. (2010). Adaptive Normalization: A novel data normalization
+approach for non-stationary time series. Proceedings of the International
+Joint Conference on Neural Networks (IJCNN). doi:10.1109/IJCNN.2010.5596746
 }

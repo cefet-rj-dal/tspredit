@@ -12,11 +12,11 @@ ts_fil_kalman(H = 0.1, Q = 1)
 \item{Q}{variance or covariance matrix of the process noise. This noise follows a zero-mean Gaussian distribution. It is added to the equation to account for uncertainties or unmodeled disturbances in the state evolution. The higher this value, the greater the uncertainty in the state transition process.}
 }
 \value{
-a \code{ts_fil_kalman} object.
+A \code{ts_fil_kalman} object.
 }
 \description{
-The Kalman filter is an estimation algorithm that produces estimates of certain variables based on imprecise measurements to provide a prediction of the future state of the system.
-It wraps KFAS package.
+Estimate a latent trend via a state-space model using the
+Kalman Filter (KF), wrapping the \code{KFAS} package.
 }
 \examples{
 # time series with noise
@@ -31,4 +31,10 @@ y <- transform(filter, tsd$y)
 
 # plot
 plot_ts_pred(y=tsd$y, yadj=y)
+}
+\references{
+\itemize{
+\item R. E. Kalman (1960). A new approach to linear filtering and prediction
+problems. Journal of Basic Engineering, 82(1), 35–45.
+}
 }

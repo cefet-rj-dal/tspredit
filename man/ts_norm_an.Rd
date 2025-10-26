@@ -2,7 +2,7 @@
 % Please edit documentation in R/ts_norm_an.R
 \name{ts_norm_an}
 \alias{ts_norm_an}
-\title{Time Series Adaptive Normalization}
+\title{Adaptive Normalization}
 \usage{
 ts_norm_an(outliers = outliers_boxplot(), nw = 0)
 }
@@ -12,11 +12,11 @@ ts_norm_an(outliers = outliers_boxplot(), nw = 0)
 \item{nw}{integer: window size.}
 }
 \value{
-returns a \code{ts_norm_an} object.
+A \code{ts_norm_an} object.
 }
 \description{
-Transform data to a common scale while taking into account the
-changes in the statistical properties of the data over time.
+Transform data to a common scale while adapting to changes in
+distribution over time (optionally over a trailing window).
 }
 \examples{
 # time series to normalize
@@ -34,4 +34,10 @@ preproc <- fit(preproc, ts)
 tst <- transform(preproc, ts)
 ts_head(tst, 3)
 summary(tst[,10])
+}
+\references{
+Ogasawara, E., Martinez, L. C., De Oliveira, D., Zimbrão, G., Pappa, G. L.,
+Mattoso, M. (2010). Adaptive Normalization: A novel data normalization
+approach for non-stationary time series. Proceedings of the International
+Joint Conference on Neural Networks (IJCNN). doi:10.1109/IJCNN.2010.5596746
 }

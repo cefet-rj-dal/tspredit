@@ -2,30 +2,40 @@
 % Please edit documentation in R/ts_aug_awareness.R
 \name{ts_aug_awareness}
 \alias{ts_aug_awareness}
-\title{Augmentation by awareness}
+\title{Augmentation by Awareness}
 \usage{
 ts_aug_awareness(factor = 1)
 }
 \arguments{
-\item{factor}{increase factor for data augmentation}
+\item{factor}{Numeric factor controlling the recency weighting.}
 }
 \value{
-a \code{ts_aug_awareness} object.
+A \code{ts_aug_awareness} object.
 }
 \description{
-Time series data augmentation is a technique used to increase the size and diversity of a time series dataset by creating new instances of the original data through transformations or modifications. The goal is to improve the performance of machine learning models trained on time series data by reducing overfitting and improving generalization.
-Awareness reinforce recent data preferably.
+Bias the augmentation to emphasize more recent points in each
+window (recency awareness), increasing their contribution to the augmented
+sample.
 }
 \examples{
+# Recency-aware augmentation over sliding windows
+# Load package and example dataset
 library(daltoolbox)
 data(tsd)
 
-#convert to sliding windows
+# Convert to 10-lag sliding windows and preview
 xw <- ts_data(tsd$y, 10)
+ts_head(xw)
 
-#data augmentation using awareness
+# Apply awareness augmentation (bias toward recent rows)
 augment <- ts_aug_awareness()
 augment <- fit(augment, xw)
 xa <- transform(augment, xw)
 ts_head(xa)
+}
+\references{
+\itemize{
+\item Q. Wen et al. (2021). Time Series Data Augmentation for Deep Learning:
+A Survey. IJCAI Workshop on Time Series.
+}
 }

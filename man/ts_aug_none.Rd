@@ -2,24 +2,28 @@
 % Please edit documentation in R/ts_aug_none.R
 \name{ts_aug_none}
 \alias{ts_aug_none}
-\title{no augmentation}
+\title{No Augmentation}
 \usage{
 ts_aug_none()
 }
 \value{
-a \code{ts_aug_none} object.
+A \code{ts_aug_none} object.
 }
 \description{
-Does not make data augmentation.
+Identity augmentation that returns the original windows while
+preserving the augmentation interface and indices.
 }
 \examples{
+# Identity augmentation (no changes to windows)
+# Load package and example dataset
 library(daltoolbox)
 data(tsd)
 
-#convert to sliding windows
+# Convert to sliding windows and preview
 xw <- ts_data(tsd$y, 10)
+ts_head(xw)
 
-#no data augmentation
+# No augmentation; returns the same windows with indices preserved
 augment <- ts_aug_none()
 augment <- fit(augment, xw)
 xa <- transform(augment, xw)

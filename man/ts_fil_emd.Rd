@@ -12,10 +12,12 @@ ts_fil_emd(noise = 0.1, trials = 5)
 \item{trials}{trials}
 }
 \value{
-a \code{ts_fil_emd} object.
+A \code{ts_fil_emd} object.
 }
 \description{
-EMD Filter
+Empirical Mode Decomposition (EMD) filter that decomposes a
+signal into intrinsic mode functions (IMFs) and reconstructs a smoothed
+component.
 }
 \examples{
 # time series with noise
@@ -30,4 +32,11 @@ y <- transform(filter, tsd$y)
 
 # plot
 plot_ts_pred(y=tsd$y, yadj=y)
+}
+\references{
+\itemize{
+\item N. E. Huang et al. (1998). The Empirical Mode Decomposition and the
+Hilbert Spectrum for nonlinear and non-stationary time series analysis.
+Proceedings of the Royal Society A.
+}
 }

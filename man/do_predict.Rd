@@ -7,14 +7,14 @@
 do_predict(obj, x)
 }
 \arguments{
-\item{obj}{an object representing the fitted model or algorithm}
+\item{obj}{Fitted model object.}
 
-\item{x}{a matrix or data.frame containing the input features for making predictions}
+\item{x}{Matrix or data.frame with input features to predict.}
 }
 \value{
-returns the predicted values
+Numeric vector with predicted values.
 }
 \description{
-The actual time series model prediction.
-This method should be override by descendants.
+Generic for predicting with a fitted time series model.
+Descendants should implement \verb{do_predict.<class>}.
 }
