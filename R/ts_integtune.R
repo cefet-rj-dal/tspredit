@@ -22,7 +22,7 @@
 #'
 #'
 #'# Generic model tunning
-#'model <- fit(tune, x=io_train$input, y=io_train$output, ranges)
+#'model <- fit(tune, x=io_train$input, y=io_train$output)
 #'
 #'prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
 #'prediction <- as.vector(prediction)
