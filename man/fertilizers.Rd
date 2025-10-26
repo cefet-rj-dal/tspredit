@@ -23,6 +23,7 @@ All series are numeric and ordered by time.
 }
 }
 \examples{
+# Load dataset and preview one of the series (nitrogen)
 data(fertilizers)
 head(fertilizers$brazil_n)
 }

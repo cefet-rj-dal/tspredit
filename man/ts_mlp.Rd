@@ -35,6 +35,7 @@ weight decay control capacity and regularization respectively.
 }
 \examples{
 # Example: MLP on sliding windows with min–max normalization
+# Load package and dataset
 library(daltoolbox)
 data(tsd)
 ts <- ts_data(tsd$y, 10)

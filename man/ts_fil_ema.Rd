@@ -21,18 +21,21 @@ EMA is related to simple exponential smoothing; it reacts faster
 to level changes than a simple moving average while reducing noise.
 }
 \examples{
-# time series with noise
+# Exponential moving average smoothing on a noisy series
+# Load package and example data
 library(daltoolbox)
 data(tsd)
-tsd$y[9] <- 2*tsd$y[9]
 
-# filter
+# Inject an outlier to illustrate smoothing effect
+tsd$y[9] <- 2 * tsd$y[9]
+
+# Define EMA filter, fit and transform the series
 filter <- ts_fil_ema(ema = 3)
 filter <- fit(filter, tsd$y)
 y <- transform(filter, tsd$y)
 
-# plot
-plot_ts_pred(y=tsd$y, yadj=y)
+# Compare original vs smoothed series
+plot_ts_pred(y = tsd$y, yadj = y)
 }
 \references{
 \itemize{

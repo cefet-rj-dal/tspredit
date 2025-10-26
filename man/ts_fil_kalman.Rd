@@ -19,18 +19,19 @@ Estimate a latent trend via a state-space model using the
 Kalman Filter (KF), wrapping the \code{KFAS} package.
 }
 \examples{
-# time series with noise
+# State-space smoothing with Kalman Filter (KF)
+# Load package and example data
 library(daltoolbox)
 data(tsd)
-tsd$y[9] <- 2*tsd$y[9]
+tsd$y[9] <- 2 * tsd$y[9]  # inject an outlier
 
-# filter
+# Fit KF (H = obs noise, Q = process noise) and transform
 filter <- ts_fil_kalman()
 filter <- fit(filter, tsd$y)
 y <- transform(filter, tsd$y)
 
-# plot
-plot_ts_pred(y=tsd$y, yadj=y)
+# Plot original vs KF-smoothed series
+plot_ts_pred(y = tsd$y, yadj = y)
 }
 \references{
 \itemize{

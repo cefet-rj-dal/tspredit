@@ -25,6 +25,7 @@ is useful to reproduce experiments with different forecast origins.
 }
 \examples{
 # Setting up a ts_data and making a temporal split
+# Load example dataset and build windows
 data(tsd)
 ts <- ts_data(tsd$y, 10)
 

@@ -21,16 +21,17 @@ The same scaling is applied to inputs and inverted on predictions
 via \code{inverse_transform}.
 }
 \examples{
-# time series to normalize
+# Global min–max normalization across the full training set
+# Load package and example data
 library(daltoolbox)
 data(tsd)
 
-# convert to sliding windows
+# Build 10-lag windows and preview raw scale
 ts <- ts_data(tsd$y, 10)
 ts_head(ts, 3)
 summary(ts[,10])
 
-# normalization
+# Fit global min–max and transform; inspect post-scale values
 preproc <- ts_norm_gminmax()
 preproc <- fit(preproc, ts)
 tst <- transform(preproc, ts)

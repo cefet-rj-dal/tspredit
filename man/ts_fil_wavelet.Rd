@@ -17,18 +17,19 @@ Denoise a series using discrete wavelet transforms and selected
 wavelet families.
 }
 \examples{
-# time series with noise
+# Denoising with discrete wavelets (optionally selecting best filter)
+# Load package and example data
 library(daltoolbox)
 data(tsd)
-tsd$y[9] <- 2*tsd$y[9]
+tsd$y[9] <- 2 * tsd$y[9]  # inject an outlier
 
-# filter
+# Fit wavelet filter ("haar" by default; can pass a list to select best)
 filter <- ts_fil_wavelet()
 filter <- fit(filter, tsd$y)
 y <- transform(filter, tsd$y)
 
-# plot
-plot_ts_pred(y=tsd$y, yadj=y)
+# Compare original vs wavelet-denoised series
+plot_ts_pred(y = tsd$y, yadj = y)
 }
 \references{
 \itemize{

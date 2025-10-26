@@ -17,16 +17,17 @@ Transform a series by first differences to remove level and
 highlight changes; normalization is then applied to the differenced series.
 }
 \examples{
-# time series to normalize
+# Differencing + global min–max normalization
+# Load package and example data
 library(daltoolbox)
 data(tsd)
 
-# convert to sliding windows
+# Convert to sliding windows and preview raw last column
 ts <- ts_data(tsd$y, 10)
 ts_head(ts, 3)
 summary(ts[,10])
 
-# normalization
+# Fit differencing preprocessor and transform; note one fewer lag column
 preproc <- ts_norm_diff()
 preproc <- fit(preproc, ts)
 tst <- transform(preproc, ts)

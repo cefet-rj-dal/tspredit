@@ -29,6 +29,7 @@ homoskedastic residuals. Always inspect residual diagnostics for adequacy.
 }
 \examples{
 # Example: rolling-origin evaluation with multi-step prediction
+# Load package and dataset
 library(daltoolbox)
 data(tsd)
 

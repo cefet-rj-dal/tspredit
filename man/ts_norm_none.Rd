@@ -14,13 +14,15 @@ Identity transform that leaves data unchanged but aligns with
 the pre/post-processing interface.
 }
 \examples{
+# Identity normalization (no scaling applied)
+# Load package and example data
 library(daltoolbox)
 data(tsd)
 
-#convert to sliding windows
+# Convert to sliding windows
 xw <- ts_data(tsd$y, 10)
 
-#no data normalization
+# No data normalization — transform returns inputs unchanged
 normalize <- ts_norm_none()
 normalize <- fit(normalize, xw)
 xa <- transform(normalize, xw)

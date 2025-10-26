@@ -24,5 +24,6 @@ input window expected by ML backends and to apply pre/post processing
 (e.g., normalization) consistently during fit and predict.
 }
 \examples{
-# This is an abstract base class; use concrete subclasses like ts_mlp(), ts_rf(), ...
+# Abstract base class for sliding-window regressors
+# Use concrete subclasses such as ts_mlp(), ts_rf(), ts_svm(), ts_elm()
 }

@@ -23,14 +23,15 @@ inputs and the last column as the output. For a single-row matrix, returns
 }
 \examples{
 # Setting up a ts_data and projecting (X, y)
+# Load example dataset and create windows
 data(tsd)
 ts <- ts_data(tsd$y, 10)
 
 io <- ts_projection(ts)
 
-#input data
+# Input data (features)
 ts_head(io$input)
 
-#output data
+# Output data (target)
 ts_head(io$output)
 }

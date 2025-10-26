@@ -21,6 +21,7 @@ Synthetic dataset based on a sine function.
 }
 }
 \examples{
+# Load dataset and preview the first rows
 data(tsd)
 head(tsd)
 }

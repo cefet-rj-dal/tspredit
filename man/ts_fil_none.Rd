@@ -13,16 +13,17 @@ A \code{ts_fil_none} object.
 Identity filter that returns the original series unchanged.
 }
 \examples{
-# time series with noise
+# Identity filter (returns original series)
+# Load package and example series
 library(daltoolbox)
 data(tsd)
-tsd$y[9] <- 2*tsd$y[9]
+tsd$y[9] <- 2 * tsd$y[9]  # inject an outlier for comparison
 
-# filter
+# Fit identity filter and transform (no change expected)
 filter <- ts_fil_none()
 filter <- fit(filter, tsd$y)
 y <- transform(filter, tsd$y)
 
-# plot
-plot_ts_pred(y=tsd$y, yadj=y)
+# Plot original vs (identical) filtered series
+plot_ts_pred(y = tsd$y, yadj = y)
 }

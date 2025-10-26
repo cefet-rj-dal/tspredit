@@ -17,16 +17,17 @@ Create an object for normalizing each window by its own min and
 max, preserving local contrast while standardizing scales.
 }
 \examples{
-# time series to normalize
+# Per-window min–max normalization for sliding windows
+# Load package and example data
 library(daltoolbox)
 data(tsd)
 
-# convert to sliding windows
+# Build 10-lag windows and preview raw scale
 ts <- ts_data(tsd$y, 10)
 ts_head(ts, 3)
 summary(ts[,10])
 
-# normalization
+# Fit per-window min–max and transform; inspect post-scale values
 preproc <- ts_norm_swminmax()
 preproc <- fit(preproc, ts)
 tst <- transform(preproc, ts)

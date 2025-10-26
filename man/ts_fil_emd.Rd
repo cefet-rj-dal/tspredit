@@ -20,18 +20,19 @@ signal into intrinsic mode functions (IMFs) and reconstructs a smoothed
 component.
 }
 \examples{
-# time series with noise
+# EMD-based smoothing: remove first IMF as noise
+# Load package and example data
 library(daltoolbox)
 data(tsd)
-tsd$y[9] <- 2*tsd$y[9]
+tsd$y[9] <- 2 * tsd$y[9]  # inject an outlier
 
-# filter
+# Fit EMD filter and reconstruct without the first (noisiest) IMF
 filter <- ts_fil_emd()
 filter <- fit(filter, tsd$y)
 y <- transform(filter, tsd$y)
 
-# plot
-plot_ts_pred(y=tsd$y, yadj=y)
+# Compare original vs smoothed series
+plot_ts_pred(y = tsd$y, yadj = y)
 }
 \references{
 \itemize{

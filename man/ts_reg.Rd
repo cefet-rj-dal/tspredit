@@ -19,5 +19,6 @@ do not require the sliding-window interface. Methods such as \code{fit()},
 \code{predict()}, and \code{evaluate()} dispatch on this class.
 }
 \examples{
-# This is an abstract base class; use concrete subclasses.
+# Abstract base class — instantiate concrete subclasses instead
+# Examples: ts_mlp(), ts_rf(), ts_svm(), ts_arima()
 }
