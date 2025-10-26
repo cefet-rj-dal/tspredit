@@ -7,25 +7,34 @@
 ts_mlp(preprocess = NA, input_size = NA, size = NA, decay = 0.01, maxit = 1000)
 }
 \arguments{
-\item{preprocess}{normalization}
+\item{preprocess}{Normalization preprocessor (e.g., \code{ts_norm_gminmax()}).}
 
-\item{input_size}{input size for machine learning model}
+\item{input_size}{Integer. Number of lagged inputs used by the model.}
 
-\item{size}{number of neurons inside hidden layer}
+\item{size}{Integer. Number of hidden neurons.}
 
-\item{decay}{decay parameter for MLP}
+\item{decay}{Numeric. L2 weight decay (regularization) parameter.}
 
-\item{maxit}{maximum number of iterations}
+\item{maxit}{Integer. Maximum number of training iterations.}
 }
 \value{
-returns a \code{ts_mlp} object.
+A \code{ts_mlp} object (S3) inheriting from \code{ts_regsw}.
 }
 \description{
-Creates a time series prediction object that
-uses the Multilayer Perceptron (MLP).
-It wraps the nnet library.
+Create a time series prediction object based on a
+Multilayer Perceptron (MLP) regressor.
+
+It wraps the \code{nnet} package to train a single-hidden-layer neural network
+on sliding-window inputs. Use \code{ts_regsw} utilities to project inputs/outputs.
+}
+\details{
+The MLP is a universal function approximator capable of learning
+non-linear mappings from lagged inputs to next-step values. For stability,
+consider normalizing inputs (e.g., \code{ts_norm_gminmax()}). Hidden size and
+weight decay control capacity and regularization respectively.
 }
 \examples{
+# Example: MLP on sliding windows with min–max normalization
 library(daltoolbox)
 data(tsd)
 ts <- ts_data(tsd$y, 10)
@@ -35,13 +44,29 @@ samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
 io_test <- ts_projection(samp$test)
 
-model <- ts_mlp(ts_norm_gminmax(), input_size=4, size=4, decay=0)
+# Prepare projection (X, y)
+samp <- ts_sample(ts, test_size = 5)
+io_train <- ts_projection(samp$train)
+io_test <- ts_projection(samp$test)
+
+# Define and fit the MLP
+model <- ts_mlp(ts_norm_gminmax(), input_size = 4, size = 4, decay = 0)
 model <- fit(model, x=io_train$input, y=io_train$output)
 
-prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
+# Predict 5 steps ahead
+prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 prediction <- as.vector(prediction)
 output <- as.vector(io_test$output)
 
+# Evaluate
 ev_test <- evaluate(model, output, prediction)
 ev_test
+}
+\references{
+\itemize{
+\item D. E. Rumelhart, G. E. Hinton, and R. J. Williams (1986). Learning
+representations by back-propagating errors. Nature 323, 533–536.
+\item W. N. Venables and B. D. Ripley (2002). Modern Applied Statistics with S.
+Fourth Edition. Springer. (for the \code{nnet} package)
+}
 }

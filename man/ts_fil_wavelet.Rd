@@ -7,13 +7,14 @@
 ts_fil_wavelet(filter = "haar")
 }
 \arguments{
-\item{filter}{Availables wavelet filters: haar, d4, la8, bl14, c6}
+\item{filter}{Available wavelet filters: 'haar', 'd4', 'la8', 'bl14', 'c6'.}
 }
 \value{
-a \code{ts_fil_wavelet} object.
+A \code{ts_fil_wavelet} object.
 }
 \description{
-Wavelet Filter
+Denoise a series using discrete wavelet transforms and selected
+wavelet families.
 }
 \examples{
 # time series with noise
@@ -28,4 +29,11 @@ y <- transform(filter, tsd$y)
 
 # plot
 plot_ts_pred(y=tsd$y, yadj=y)
+}
+\references{
+\itemize{
+\item S. Mallat (1989). A Theory for Multiresolution Signal Decomposition:
+The Wavelet Representation. IEEE Transactions on Pattern Analysis and
+Machine Intelligence.
+}
 }

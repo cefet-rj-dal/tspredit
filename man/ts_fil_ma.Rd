@@ -2,7 +2,7 @@
 % Please edit documentation in R/ts_fil_ma.R
 \name{ts_fil_ma}
 \alias{ts_fil_ma}
-\title{Time Series Moving Average}
+\title{Moving Average (MA)}
 \usage{
 ts_fil_ma(ma = 3)
 }
@@ -10,10 +10,14 @@ ts_fil_ma(ma = 3)
 \item{ma}{moving average size}
 }
 \value{
-a \code{ts_fil_ma} object.
+A \code{ts_fil_ma} object.
 }
 \description{
-Used to smooth out fluctuations and reduce noise in a time series.
+Smooth out fluctuations and reduce noise by averaging over a
+fixed-size rolling window.
+}
+\details{
+Larger windows produce smoother series but may lag turning points.
 }
 \examples{
 # time series with noise

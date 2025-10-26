@@ -2,15 +2,16 @@
 % Please edit documentation in R/ts_norm_none.R
 \name{ts_norm_none}
 \alias{ts_norm_none}
-\title{no normalization}
+\title{No Normalization}
 \usage{
 ts_norm_none()
 }
 \value{
-a \code{ts_norm_none} object.
+A \code{ts_norm_none} object.
 }
 \description{
-Does not make data normalization.
+Identity transform that leaves data unchanged but aligns with
+the pre/post-processing interface.
 }
 \examples{
 library(daltoolbox)

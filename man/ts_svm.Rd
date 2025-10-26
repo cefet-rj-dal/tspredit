@@ -13,25 +13,35 @@ ts_svm(
 )
 }
 \arguments{
-\item{preprocess}{normalization}
+\item{preprocess}{Normalization preprocessor (e.g., \code{ts_norm_gminmax()}).}
 
-\item{input_size}{input size for machine learning model}
+\item{input_size}{Integer. Number of lagged inputs used by the model.}
 
-\item{kernel}{SVM kernel (linear, radial, polynomial, sigmoid)}
+\item{kernel}{Character. One of 'linear', 'radial', 'polynomial', 'sigmoid'.}
 
-\item{epsilon}{error threshold}
+\item{epsilon}{Numeric. Epsilon-insensitive loss width.}
 
-\item{cost}{this parameter controls the trade-off between achieving a low error on the training data and minimizing the model complexity}
+\item{cost}{Numeric. Regularization parameter controlling margin violations.}
 }
 \value{
-returns a \code{ts_svm} object.
+A \code{ts_svm} object (S3) inheriting from \code{ts_regsw}.
 }
 \description{
-Creates a time series prediction object that
-uses the Support Vector Machine (SVM).
-It wraps the e1071 library.
+Create a time series prediction object that uses
+Support Vector Regression (SVR) on sliding-window inputs.
+
+It wraps the \code{e1071} package to fit epsilon-insensitive regression with
+linear, radial, polynomial, or sigmoid kernels.
+}
+\details{
+SVR aims to find a function with at most epsilon deviation from
+each training point while being as flat as possible. The \code{cost} parameter
+controls the trade-off between margin width and violations; \code{epsilon}
+controls the insensitivity tube width. RBF kernels often work well for
+nonlinear series; tune \code{cost}, \code{epsilon}, and kernel hyperparameters.
 }
 \examples{
+# Example: SVR with min–max normalization
 library(daltoolbox)
 data(tsd)
 ts <- ts_data(tsd$y, 10)
@@ -41,7 +51,7 @@ samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
 io_test <- ts_projection(samp$test)
 
-model <- ts_svm(ts_norm_gminmax(), input_size=4)
+model <- ts_svm(ts_norm_gminmax(), input_size = 4)
 model <- fit(model, x=io_train$input, y=io_train$output)
 
 prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
@@ -50,4 +60,10 @@ output <- as.vector(io_test$output)
 
 ev_test <- evaluate(model, output, prediction)
 ev_test
+}
+\references{
+\itemize{
+\item C. Cortes and V. Vapnik (1995). Support-Vector Networks. Machine Learning,
+20, 273–297.
+}
 }

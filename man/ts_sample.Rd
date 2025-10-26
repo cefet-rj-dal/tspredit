@@ -7,36 +7,37 @@
 ts_sample(ts, test_size = 1, offset = 0)
 }
 \arguments{
-\item{ts}{time series.}
+\item{ts}{A \code{ts_data} matrix.}
 
-\item{test_size}{integer: size of test data (default = 1).}
+\item{test_size}{Integer. Number of rows in the test split (default = 1).}
 
-\item{offset}{integer: starting point (default = 0).}
+\item{offset}{Integer. Offset from the end before the test split (default = 0).}
 }
 \value{
-returns a list with the two samples
+A list with \verb{$train} and \verb{$test} (both \code{ts_data}).
 }
 \description{
-Separates the \code{ts_data} into training and test.
-It separates the test size from the last observations minus an offset.
-The offset is important to allow replication under different recent origins.
-The data for train uses the number of rows of a \code{ts_data} minus the test size and offset.
+Split a \code{ts_data} into train and test sets.
+
+Extracts \code{test_size} rows from the end (minus an optional \code{offset}) as the
+test set. The remaining initial rows form the training set. The \code{offset}
+is useful to reproduce experiments with different forecast origins.
 }
 \examples{
-#setting up a ts_data
+# Setting up a ts_data and making a temporal split
 data(tsd)
 ts <- ts_data(tsd$y, 10)
 
-#separating into train and test
+# Separating into train and test
 test_size <- 3
 samp <- ts_sample(ts, test_size)
 
-#first five rows from training data
+# First five rows from training data
 ts_head(samp$train, 5)
 
-#last five rows from training data
+# Last five rows from training data
 ts_head(samp$train[-c(1:(nrow(samp$train)-5)),])
 
-#testing data
+# Testing data
 ts_head(samp$test)
 }

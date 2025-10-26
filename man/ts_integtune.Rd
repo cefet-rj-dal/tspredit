@@ -14,23 +14,24 @@ ts_integtune(
 )
 }
 \arguments{
-\item{input_size}{input size for machine learning model}
+\item{input_size}{Integer vector. Candidate input window sizes.}
 
-\item{base_model}{base model for tuning}
+\item{base_model}{Base model object for tuning.}
 
-\item{folds}{number of folds for cross-validation}
+\item{folds}{Integer. Number of cross-validation folds.}
 
-\item{ranges}{a list of hyperparameter ranges to explore}
+\item{ranges}{Named list of hyperparameter ranges to explore.}
 
-\item{preprocess}{list of preprocessing methods}
+\item{preprocess}{List of preprocessing objects to compare.}
 
-\item{augment}{data augmentation method}
+\item{augment}{List of augmentation objects to apply during training.}
 }
 \value{
-a \code{ts_integtune} object.
+A \code{ts_integtune} object.
 }
 \description{
-Time Series Tune
+Integrated tuning over input sizes, preprocessing, augmentation,
+and model hyperparameters for time series.
 }
 \examples{
 library(daltoolbox)
@@ -46,7 +47,7 @@ ranges = list(nhid = 1:5, actfun=c('purelin')),
 preprocess = list(ts_norm_gminmax()))
 
 
-# Generic model tunning
+# Generic model tuning (with augmentation stitched into training data)
 model <- fit(tune, x=io_train$input, y=io_train$output)
 
 prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
@@ -55,4 +56,10 @@ output <- as.vector(io_test$output)
 
 ev_test <- evaluate(model, output, prediction)
 ev_test
+}
+\references{
+Salles, R., Pacitti, E., Bezerra, E., Marques, C., Pacheco, C., Oliveira,
+C., Porto, F., Ogasawara, E. (2023). TSPredIT: Integrated Tuning of Data
+Preprocessing and Time Series Prediction Models. Lecture Notes in Computer
+Science.
 }

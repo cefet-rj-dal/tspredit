@@ -7,17 +7,22 @@
 ts_regsw(preprocess = NA, input_size = NA)
 }
 \arguments{
-\item{preprocess}{normalization}
+\item{preprocess}{Normalization preprocessor (e.g., \code{ts_norm_gminmax()}).}
 
-\item{input_size}{input size for machine learning model}
+\item{input_size}{Integer. Number of lagged inputs per example.}
 }
 \value{
-returns a \code{ts_regsw} object
+A \code{ts_regsw} object (S3) to be extended by concrete models.
 }
 \description{
-Time Series Regression from Sliding Windows.
-Ancestral class for Machine Learning Implementation.
+Base class for time series regression models built on
+sliding-window representations.
+}
+\details{
+This class provides helpers to map \code{ts_data} matrices into the
+input window expected by ML backends and to apply pre/post processing
+(e.g., normalization) consistently during fit and predict.
 }
 \examples{
-#This is an abstract class.
+# This is an abstract base class; use concrete subclasses like ts_mlp(), ts_rf(), ...
 }

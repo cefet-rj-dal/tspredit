@@ -10,12 +10,11 @@ ts_fil_ses(gamma = FALSE)
 \item{gamma}{If TRUE, enables the gamma seasonality component.}
 }
 \value{
-a \code{ts_fil_ses} obj.
+A \code{ts_fil_ses} object.
 }
 \description{
-This code implements simple exponential smoothing on a time series.
-Simple exponential smoothing is a smoothing technique that can include or exclude
-trend and seasonality components in time series forecasting, depending on the specified parameters.
+Exponential smoothing focused on the level component, with
+optional extensions to trend/seasonality via Holt–Winters variants.
 }
 \examples{
 # time series with noise
@@ -30,4 +29,9 @@ y <- transform(filter, tsd$y)
 
 # plot
 plot_ts_pred(y=tsd$y, yadj=y)
+}
+\references{
+\itemize{
+\item R. G. Brown (1959). Statistical Forecasting for Inventory Control.
+}
 }

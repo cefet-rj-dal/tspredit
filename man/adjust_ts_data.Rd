@@ -7,11 +7,12 @@
 adjust_ts_data(data)
 }
 \arguments{
-\item{data}{dataset}
+\item{data}{Matrix or data.frame to adjust.}
 }
 \value{
-returns an adjusted \code{ts_data}
+An adjusted \code{ts_data}.
 }
 \description{
-Converts a dataset to a \code{ts_data} object
+Convert a compatible dataset to a \code{ts_data} object by setting
+column names, class, and the \code{sw} attribute consistently.
 }

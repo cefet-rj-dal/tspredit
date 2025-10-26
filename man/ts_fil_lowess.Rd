@@ -2,7 +2,7 @@
 % Please edit documentation in R/ts_fil_lowess.R
 \name{ts_fil_lowess}
 \alias{ts_fil_lowess}
-\title{Lowess Smoothing}
+\title{LOWESS Smoothing}
 \usage{
 ts_fil_lowess(f = 0.2)
 }
@@ -11,10 +11,11 @@ ts_fil_lowess(f = 0.2)
 This provides the proportion of points on the plot that influence the smoothing.}
 }
 \value{
-a \code{ts_fil_lowess} object.
+A \code{ts_fil_lowess} object.
 }
 \description{
-It is a smoothing method that preserves the primary trend of the original observations and is used to remove noise and spikes in a way that allows data reconstruction and smoothing.
+Locally Weighted Scatterplot Smoothing (LOWESS) fits local
+regressions to capture the primary trend while reducing noise and spikes.
 }
 \examples{
 # time series with noise
@@ -29,4 +30,10 @@ y <- transform(filter, tsd$y)
 
 # plot
 plot_ts_pred(y=tsd$y, yadj=y)
+}
+\references{
+\itemize{
+\item W. S. Cleveland (1979). Robust locally weighted regression and smoothing
+scatterplots. Journal of the American Statistical Association.
+}
 }

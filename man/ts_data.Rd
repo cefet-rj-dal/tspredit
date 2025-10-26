@@ -7,27 +7,32 @@
 ts_data(y, sw = 1)
 }
 \arguments{
-\item{y}{output variable}
+\item{y}{Numeric vector or matrix-like. Time series values or sliding windows.}
 
-\item{sw}{integer: sliding window size.}
+\item{sw}{Integer. Sliding-window size (number of lag columns).}
 }
 \value{
-returns a \code{ts_data} object.
+A \code{ts_data} object (matrix with attributes and column names).
 }
 \description{
-Time series data structure used in DAL Toolbox.
-It receives a vector (representing a time series) or
-a matrix \code{y} (representing a sliding windows).
-Internal ts_data is matrix of sliding windows with size \code{sw}.
-If sw equals to zero, it store a time series as a single matrix column.
+Construct a time series data object used throughout the
+DAL Toolbox.
+
+Accepts either a vector (raw time series) or a matrix/data.frame already
+organized in sliding windows. Internally, a \code{ts_data} is stored as a matrix
+with \code{sw} lag columns named \verb{t\{lag\}} (e.g., \verb{t9, t8, ..., t0}). When \code{sw} is
+zero or one, the series is stored as a single column (\code{t0}).
 }
 \examples{
+# Example: building sliding windows
 data(tsd)
 head(tsd)
 
+# 1) Single-column ts_data (no windows)
 data <- ts_data(tsd$y)
 ts_head(data)
 
+# 2) 10-lag sliding windows (t9 ... t0)
 data10 <- ts_data(tsd$y, 10)
 ts_head(data10)
 }

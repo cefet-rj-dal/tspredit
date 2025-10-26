@@ -16,7 +16,7 @@
 \item{...}{optional arguments}
 }
 \value{
-returns a new ts_data object
+A new \code{ts_data} object with preserved metadata and column names.
 }
 \description{
 Extracts a subset of a time series object based on specified rows and columns.

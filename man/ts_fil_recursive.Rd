@@ -10,10 +10,12 @@ ts_fil_recursive(filter)
 \item{filter}{smoothing parameter. The larger the value, the greater the smoothing. The smaller the value, the less smoothing, and the resulting series shape is more similar to the original series.}
 }
 \value{
-a \code{ts_fil_recursive} object.
+A \code{ts_fil_recursive} object.
 }
 \description{
-Applies linear filtering to a univariate time series or to each series within a multivariate time series. It is useful for outlier detection, and the calculation is done recursively. This recursive calculation has the effect of reducing autocorrelation among observations, so that for each detected outlier, the filter is recalculated until there are no more outliers in the residuals.
+Apply recursive linear filtering (ARMA-style recursion) to a
+univariate series or each column of a multivariate series. Useful for
+smoothing and mitigating autocorrelation.
 }
 \examples{
 # time series with noise

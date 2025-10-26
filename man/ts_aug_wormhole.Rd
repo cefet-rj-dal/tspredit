@@ -2,16 +2,20 @@
 % Please edit documentation in R/ts_aug_wormhole.R
 \name{ts_aug_wormhole}
 \alias{ts_aug_wormhole}
-\title{Augmentation by wormhole}
+\title{Augmentation by Wormhole}
 \usage{
 ts_aug_wormhole()
 }
 \value{
-a \code{ts_aug_wormhole} object.
+A \code{ts_aug_wormhole} object.
 }
 \description{
-Time series data augmentation is a technique used to increase the size and diversity of a time series dataset by creating new instances of the original data through transformations or modifications. The goal is to improve the performance of machine learning models trained on time series data by reducing overfitting and improving generalization.
-Wormhole does data augmentation by removing lagged terms and adding old terms.
+Generate augmented windows by selectively replacing lag terms
+with older lagged values, creating plausible alternative trajectories.
+}
+\details{
+This combinatorial replacement preserves overall scale while
+introducing temporal permutations of lag content.
 }
 \examples{
 library(daltoolbox)
@@ -25,4 +29,10 @@ augment <- ts_aug_wormhole()
 augment <- fit(augment, xw)
 xa <- transform(augment, xw)
 ts_head(xa)
+}
+\references{
+\itemize{
+\item Q. Wen et al. (2021). Time Series Data Augmentation for Deep Learning:
+A Survey. IJCAI Workshop on Time Series.
+}
 }

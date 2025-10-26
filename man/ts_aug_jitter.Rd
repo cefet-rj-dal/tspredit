@@ -2,16 +2,19 @@
 % Please edit documentation in R/ts_aug_jitter.R
 \name{ts_aug_jitter}
 \alias{ts_aug_jitter}
-\title{Augmentation by jitter}
+\title{Augmentation by Jitter}
 \usage{
 ts_aug_jitter()
 }
 \value{
-a \code{ts_aug_jitter} object.
+A \code{ts_aug_jitter} object.
 }
 \description{
-Time series data augmentation is a technique used to increase the size and diversity of a time series dataset by creating new instances of the original data through transformations or modifications. The goal is to improve the performance of machine learning models trained on time series data by reducing overfitting and improving generalization.
-jitter adds random noise to each data point in the time series.
+Time series augmentation by adding low-amplitude random noise to
+each point to increase robustness and reduce overfitting.
+}
+\details{
+Noise scale is estimated from within-window deviations.
 }
 \examples{
 library(daltoolbox)
@@ -25,4 +28,12 @@ augment <- ts_aug_jitter()
 augment <- fit(augment, xw)
 xa <- transform(augment, xw)
 ts_head(xa)
+}
+\references{
+\itemize{
+\item J. T. Um et al. (2017). Data augmentation of wearable sensor data for
+Parkinson’s disease monitoring using convolutional neural networks.
+\item Q. Wen et al. (2021). Time Series Data Augmentation for Deep Learning:
+A Survey. IJCAI Workshop on Time Series.
+}
 }

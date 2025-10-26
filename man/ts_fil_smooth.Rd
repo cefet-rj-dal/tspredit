@@ -7,10 +7,11 @@
 ts_fil_smooth()
 }
 \value{
-a \code{ts_fil_smooth} object.
+A \code{ts_fil_smooth} object.
 }
 \description{
-Used to remove or reduce randomness (noise).
+Remove or reduce randomness (noise) using a robust smoothing
+strategy that first mitigates outliers and then smooths residual variation.
 }
 \examples{
 # time series with noise

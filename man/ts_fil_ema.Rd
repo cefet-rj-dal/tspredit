@@ -2,7 +2,7 @@
 % Please edit documentation in R/ts_fil_ema.R
 \name{ts_fil_ema}
 \alias{ts_fil_ema}
-\title{Time Series Exponential Moving Average}
+\title{Exponential Moving Average (EMA)}
 \usage{
 ts_fil_ema(ema = 3)
 }
@@ -10,12 +10,15 @@ ts_fil_ema(ema = 3)
 \item{ema}{exponential moving average size}
 }
 \value{
-a \code{ts_fil_ema} object.
+A \code{ts_fil_ema} object.
 }
 \description{
-Used to smooth out fluctuations, while giving more weight to
-recent observations. Particularly useful when the data has a trend or
-seasonality component.
+Smooth a series by exponentially decaying weights that give more
+importance to recent observations.
+}
+\details{
+EMA is related to simple exponential smoothing; it reacts faster
+to level changes than a simple moving average while reducing noise.
 }
 \examples{
 # time series with noise
@@ -30,4 +33,10 @@ y <- transform(filter, tsd$y)
 
 # plot
 plot_ts_pred(y=tsd$y, yadj=y)
+}
+\references{
+\itemize{
+\item C. C. Holt (1957). Forecasting trends and seasonals by exponentially
+weighted moving averages. O.N.R. Research Memorandum.
+}
 }

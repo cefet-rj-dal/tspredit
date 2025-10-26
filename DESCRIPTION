@@ -1,6 +1,6 @@
 Package: tspredit
 Title: Time Series Prediction with Integrated Tuning
-Version: 1.2.737
+Version: 1.2.747
 Authors@R: 
   c(    person(given = "Eduardo", family = "Ogasawara", role = c("aut", "ths", "cre"), 
                email = "eogasawara@ieee.org", comment = c(ORCID = "0000-0002-0466-0626")),
@@ -26,7 +26,7 @@ URL: https://cefet-rj-dal.github.io/tspredit/, https://github.com/cefet-rj-dal/t
 BugReports: https://github.com/cefet-rj-dal/tspredit/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends: R (>= 4.1.0)
 Imports: 
   stats,

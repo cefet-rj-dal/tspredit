@@ -10,12 +10,11 @@ ts_fil_qes(gamma = FALSE)
 \item{gamma}{If TRUE, enables the gamma seasonality component.}
 }
 \value{
-a \code{ts_fil_qes} obj.
+A \code{ts_fil_qes} object.
 }
 \description{
-This code implements quadratic exponential smoothing on a time series.
-Quadratic exponential smoothing is a smoothing technique that includes components of
-both trend and seasonality in time series forecasting.
+Double/triple exponential smoothing capturing level, trend,
+and optionally seasonality components.
 }
 \examples{
 # time series with noise
@@ -30,4 +29,10 @@ y <- transform(filter, tsd$y)
 
 # plot
 plot_ts_pred(y=tsd$y, yadj=y)
+}
+\references{
+\itemize{
+\item P. R. Winters (1960). Forecasting sales by exponentially weighted moving
+averages. Management Science.
+}
 }

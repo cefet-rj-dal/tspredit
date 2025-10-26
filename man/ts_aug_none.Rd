@@ -2,15 +2,16 @@
 % Please edit documentation in R/ts_aug_none.R
 \name{ts_aug_none}
 \alias{ts_aug_none}
-\title{no augmentation}
+\title{No Augmentation}
 \usage{
 ts_aug_none()
 }
 \value{
-a \code{ts_aug_none} object.
+A \code{ts_aug_none} object.
 }
 \description{
-Does not make data augmentation.
+Identity augmentation that returns the original windows while
+preserving the augmentation interface and indices.
 }
 \examples{
 library(daltoolbox)
