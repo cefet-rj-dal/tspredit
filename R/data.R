@@ -13,6 +13,7 @@
 #' @references International Fertilizer Association (IFA): https://www.fertilizer.org
 #' @source This dataset was obtained from the MASS library.
 #' @examples
+#' # Load dataset and preview one of the series (nitrogen)
 #' data(fertilizers)
 #' head(fertilizers$brazil_n)
 "fertilizers"
@@ -29,6 +30,7 @@
 #' @keywords datasets
 #' @source This dataset was generated for examples.
 #' @examples
+#' # Load dataset and preview the first rows
 #' data(tsd)
 #' head(tsd)
 "tsd"

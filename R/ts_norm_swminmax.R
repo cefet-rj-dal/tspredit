@@ -9,21 +9,22 @@
 #' cartridges for data mining on time series. Proceedings of the International
 #' Joint Conference on Neural Networks (IJCNN). doi:10.1109/IJCNN.2009.5178615
 #'@examples
-#'# time series to normalize
-#'library(daltoolbox)
-#'data(tsd)
+#'# Per-window min–max normalization for sliding windows
+#' # Load package and example data
+#' library(daltoolbox)
+#' data(tsd)
 #'
-#'# convert to sliding windows
-#'ts <- ts_data(tsd$y, 10)
-#'ts_head(ts, 3)
-#'summary(ts[,10])
+#' # Build 10-lag windows and preview raw scale
+#' ts <- ts_data(tsd$y, 10)
+#' ts_head(ts, 3)
+#' summary(ts[,10])
 #'
-#'# normalization
-#'preproc <- ts_norm_swminmax()
-#'preproc <- fit(preproc, ts)
-#'tst <- transform(preproc, ts)
-#'ts_head(tst, 3)
-#'summary(tst[,10])
+#' # Fit per-window min–max and transform; inspect post-scale values
+#' preproc <- ts_norm_swminmax()
+#' preproc <- fit(preproc, ts)
+#' tst <- transform(preproc, ts)
+#' ts_head(tst, 3)
+#' summary(tst[,10])
 #'@importFrom daltoolbox outliers_boxplot
 #'@export
 ts_norm_swminmax <- function(outliers = outliers_boxplot()) {

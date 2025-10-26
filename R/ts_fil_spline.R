@@ -10,18 +10,19 @@
 #' - P. Craven and G. Wahba (1978). Smoothing noisy data with spline functions.
 #'   Numerische Mathematik.
 #'@examples
-#'# time series with noise
-#'library(daltoolbox)
-#'data(tsd)
-#'tsd$y[9] <- 2*tsd$y[9]
+#'# Smoothing splines with adjustable roughness penalty
+#' # Load package and example data
+#' library(daltoolbox)
+#' data(tsd)
+#' tsd$y[9] <- 2 * tsd$y[9]  # inject an outlier
 #'
-#'# filter
-#'filter <- ts_fil_spline(spar = 0.5)
-#'filter <- fit(filter, tsd$y)
-#'y <- transform(filter, tsd$y)
+#' # Fit spline smoother (spar controls smoothness) and transform
+#' filter <- ts_fil_spline(spar = 0.5)
+#' filter <- fit(filter, tsd$y)
+#' y <- transform(filter, tsd$y)
 #'
-#'# plot
-#'plot_ts_pred(y=tsd$y, yadj=y)
+#' # Compare original vs smoothed series
+#' plot_ts_pred(y = tsd$y, yadj = y)
 #'@importFrom daltoolbox dal_transform
 #'@importFrom daltoolbox fit
 #'@importFrom daltoolbox transform

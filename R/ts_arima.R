@@ -25,8 +25,9 @@
 #'   doi:10.18637/jss.v027.i03
 #'@examples
 #'# Example: rolling-origin evaluation with multi-step prediction
-#'library(daltoolbox)
-#'data(tsd)
+#' # Load package and dataset
+#' library(daltoolbox)
+#' data(tsd)
 #'
 #'# 1) Wrap the raw vector as `ts_data` without sliding windows
 #'ts <- ts_data(tsd$y, 0)

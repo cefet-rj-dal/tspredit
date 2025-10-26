@@ -11,18 +11,19 @@
 #'   Hilbert Spectrum for nonlinear and non-stationary time series analysis.
 #'   Proceedings of the Royal Society A.
 #'@examples
-#'# time series with noise
-#'library(daltoolbox)
-#'data(tsd)
-#'tsd$y[9] <- 2*tsd$y[9]
+#'# EMD-based smoothing: remove first IMF as noise
+#' # Load package and example data
+#' library(daltoolbox)
+#' data(tsd)
+#' tsd$y[9] <- 2 * tsd$y[9]  # inject an outlier
 #'
-#'# filter
-#'filter <- ts_fil_emd()
-#'filter <- fit(filter, tsd$y)
-#'y <- transform(filter, tsd$y)
+#' # Fit EMD filter and reconstruct without the first (noisiest) IMF
+#' filter <- ts_fil_emd()
+#' filter <- fit(filter, tsd$y)
+#' y <- transform(filter, tsd$y)
 #'
-#'# plot
-#'plot_ts_pred(y=tsd$y, yadj=y)
+#' # Compare original vs smoothed series
+#' plot_ts_pred(y = tsd$y, yadj = y)
 #'@importFrom daltoolbox dal_transform
 #'@importFrom daltoolbox fit
 #'@importFrom daltoolbox transform

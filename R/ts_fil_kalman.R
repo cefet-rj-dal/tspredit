@@ -9,18 +9,19 @@
 #' - R. E. Kalman (1960). A new approach to linear filtering and prediction
 #'   problems. Journal of Basic Engineering, 82(1), 35–45.
 #'@examples
-#'# time series with noise
-#'library(daltoolbox)
-#'data(tsd)
-#'tsd$y[9] <- 2*tsd$y[9]
+#'# State-space smoothing with Kalman Filter (KF)
+#' # Load package and example data
+#' library(daltoolbox)
+#' data(tsd)
+#' tsd$y[9] <- 2 * tsd$y[9]  # inject an outlier
 #'
-#'# filter
-#'filter <- ts_fil_kalman()
-#'filter <- fit(filter, tsd$y)
-#'y <- transform(filter, tsd$y)
+#' # Fit KF (H = obs noise, Q = process noise) and transform
+#' filter <- ts_fil_kalman()
+#' filter <- fit(filter, tsd$y)
+#' y <- transform(filter, tsd$y)
 #'
-#'# plot
-#'plot_ts_pred(y=tsd$y, yadj=y)
+#' # Plot original vs KF-smoothed series
+#' plot_ts_pred(y = tsd$y, yadj = y)
 #'@importFrom daltoolbox dal_transform
 #'@importFrom daltoolbox fit
 #'@importFrom daltoolbox transform

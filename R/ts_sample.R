@@ -11,8 +11,9 @@
 #'@return A list with `$train` and `$test` (both `ts_data`).
 #'@examples
 #'# Setting up a ts_data and making a temporal split
-#'data(tsd)
-#'ts <- ts_data(tsd$y, 10)
+#' # Load example dataset and build windows
+#' data(tsd)
+#' ts <- ts_data(tsd$y, 10)
 #'
 #'# Separating into train and test
 #'test_size <- 3

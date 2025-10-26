@@ -8,7 +8,8 @@
 #'
 #'@return A `ts_reg` object (S3) to be extended by concrete models.
 #'@examples
-#'# This is an abstract base class; use concrete subclasses.
+#'# Abstract base class — instantiate concrete subclasses instead
+#' # Examples: ts_mlp(), ts_rf(), ts_svm(), ts_arima()
 #'@importFrom daltoolbox predictor
 #'@export
 ts_reg <- function() {

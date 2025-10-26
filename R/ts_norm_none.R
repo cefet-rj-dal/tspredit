@@ -3,17 +3,19 @@
 #' the pre/post-processing interface.
 #'@return A `ts_norm_none` object.
 #'@examples
-#'library(daltoolbox)
-#'data(tsd)
+#'# Identity normalization (no scaling applied)
+#' # Load package and example data
+#' library(daltoolbox)
+#' data(tsd)
 #'
-#'#convert to sliding windows
-#'xw <- ts_data(tsd$y, 10)
+#'# Convert to sliding windows
+#' xw <- ts_data(tsd$y, 10)
 #'
-#'#no data normalization
-#'normalize <- ts_norm_none()
-#'normalize <- fit(normalize, xw)
-#'xa <- transform(normalize, xw)
-#'ts_head(xa)
+#'# No data normalization — transform returns inputs unchanged
+#' normalize <- ts_norm_none()
+#' normalize <- fit(normalize, xw)
+#' xa <- transform(normalize, xw)
+#' ts_head(xa)
 #'@importFrom daltoolbox dal_transform
 #'@importFrom daltoolbox fit
 #'@importFrom daltoolbox transform

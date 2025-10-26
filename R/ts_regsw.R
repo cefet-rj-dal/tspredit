@@ -10,7 +10,8 @@
 #'@param input_size Integer. Number of lagged inputs per example.
 #'@return A `ts_regsw` object (S3) to be extended by concrete models.
 #'@examples
-#'# This is an abstract base class; use concrete subclasses like ts_mlp(), ts_rf(), ...
+#'# Abstract base class for sliding-window regressors
+#' # Use concrete subclasses such as ts_mlp(), ts_rf(), ts_svm(), ts_elm()
 #'@export
 ts_regsw <- function(preprocess=NA, input_size=NA) {
   obj <- ts_reg()

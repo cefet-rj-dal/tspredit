@@ -11,18 +11,21 @@
 #' - C. C. Holt (1957). Forecasting trends and seasonals by exponentially
 #'   weighted moving averages. O.N.R. Research Memorandum.
 #'@examples
-#'# time series with noise
-#'library(daltoolbox)
-#'data(tsd)
-#'tsd$y[9] <- 2*tsd$y[9]
+#'# Exponential moving average smoothing on a noisy series
+#' # Load package and example data
+#' library(daltoolbox)
+#' data(tsd)
 #'
-#'# filter
-#'filter <- ts_fil_ema(ema = 3)
-#'filter <- fit(filter, tsd$y)
-#'y <- transform(filter, tsd$y)
+#' # Inject an outlier to illustrate smoothing effect
+#' tsd$y[9] <- 2 * tsd$y[9]
 #'
-#'# plot
-#'plot_ts_pred(y=tsd$y, yadj=y)
+#' # Define EMA filter, fit and transform the series
+#' filter <- ts_fil_ema(ema = 3)
+#' filter <- fit(filter, tsd$y)
+#' y <- transform(filter, tsd$y)
+#'
+#' # Compare original vs smoothed series
+#' plot_ts_pred(y = tsd$y, yadj = y)
 #'@importFrom daltoolbox dal_transform
 #'@importFrom daltoolbox fit
 #'@importFrom daltoolbox transform

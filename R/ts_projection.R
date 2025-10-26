@@ -10,16 +10,17 @@
 #'@return A `ts_projection` object with two elements: `$input` and `$output`.
 #'@examples
 #'# Setting up a ts_data and projecting (X, y)
-#'data(tsd)
-#'ts <- ts_data(tsd$y, 10)
+#' # Load example dataset and create windows
+#' data(tsd)
+#' ts <- ts_data(tsd$y, 10)
 #'
 #'io <- ts_projection(ts)
 #'
-#'#input data
-#'ts_head(io$input)
+#'# Input data (features)
+#' ts_head(io$input)
 #'
-#'#output data
-#'ts_head(io$output)
+#'# Output data (target)
+#' ts_head(io$output)
 #'@export
 ts_projection <- function(ts) {
   input <- ts

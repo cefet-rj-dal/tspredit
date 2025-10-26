@@ -24,8 +24,9 @@
 #'   Fourth Edition. Springer. (for the `nnet` package)
 #'@examples
 #'# Example: MLP on sliding windows with min–max normalization
-#'library(daltoolbox)
-#'data(tsd)
+#' # Load package and dataset
+#' library(daltoolbox)
+#' data(tsd)
 #'ts <- ts_data(tsd$y, 10)
 #'ts_head(ts, 3)
 #'

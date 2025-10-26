@@ -9,18 +9,19 @@
 #' - R. J. Hyndman and G. Athanasopoulos (2021). Forecasting: Principles and
 #'   Practice (3rd ed). OTexts. (BATS/seasonal adjustment)
 #'@examples
-#'# time series with noise
-#'library(daltoolbox)
-#'data(tsd)
-#'tsd$y[9] <- 2*tsd$y[9]
+#'# Seasonal adjustment using BATS at known frequency
+#' # Load package and example data
+#' library(daltoolbox)
+#' data(tsd)
+#' tsd$y[9] <- 2 * tsd$y[9]  # inject an outlier (illustrative)
 #'
-#'# filter
-#'filter <- ts_fil_seas_adj(frequency = 26)
-#'filter <- fit(filter, tsd$y)
-#'y <- transform(filter, tsd$y)
+#' # Fit seasonal adjustment (set frequency if known) and transform
+#' filter <- ts_fil_seas_adj(frequency = 26)
+#' filter <- fit(filter, tsd$y)
+#' y <- transform(filter, tsd$y)
 #'
-#'# plot
-#'plot_ts_pred(y=tsd$y, yadj=y)
+#' # Plot original vs seasonally adjusted series
+#' plot_ts_pred(y = tsd$y, yadj = y)
 #'@importFrom daltoolbox dal_transform
 #'@importFrom daltoolbox fit
 #'@importFrom daltoolbox transform
