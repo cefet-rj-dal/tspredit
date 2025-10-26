@@ -18,13 +18,16 @@ This transformation preserves the window mean while flipping the
 deviations, effectively generating a symmetric variant of the local pattern.
 }
 \examples{
+# Flip augmentation around the window mean
+# Load package and example dataset
 library(daltoolbox)
 data(tsd)
 
-#convert to sliding windows
+# Convert to sliding windows and preview
 xw <- ts_data(tsd$y, 10)
+ts_head(xw)
 
-#data augmentation using flip
+# Apply flip augmentation and inspect augmented windows
 augment <- ts_aug_flip()
 augment <- fit(augment, xw)
 xa <- transform(augment, xw)

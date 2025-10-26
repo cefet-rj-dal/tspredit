@@ -17,13 +17,16 @@ Recency-aware augmentation that also progressively smooths noise
 before applying the weighting, producing cleaner augmented samples.
 }
 \examples{
+# Recency-aware augmentation with progressive smoothing
+# Load package and example dataset
 library(daltoolbox)
 data(tsd)
 
-#convert to sliding windows
+# Convert to 10-lag sliding windows and preview
 xw <- ts_data(tsd$y, 10)
+ts_head(xw)
 
-#data augmentation using awareness
+# Apply awareness+smooth augmentation and inspect result
 augment <- ts_aug_awaresmooth()
 augment <- fit(augment, xw)
 xa <- transform(augment, xw)

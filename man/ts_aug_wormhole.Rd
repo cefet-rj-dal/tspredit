@@ -18,13 +18,16 @@ This combinatorial replacement preserves overall scale while
 introducing temporal permutations of lag content.
 }
 \examples{
+# Wormhole augmentation replaces some lags with older values
+# Load package and example dataset
 library(daltoolbox)
 data(tsd)
 
-#convert to sliding windows
+# Convert to sliding windows and preview
 xw <- ts_data(tsd$y, 10)
+ts_head(xw)
 
-#data augmentation using flip
+# Apply wormhole augmentation and inspect augmented windows
 augment <- ts_aug_wormhole()
 augment <- fit(augment, xw)
 xa <- transform(augment, xw)

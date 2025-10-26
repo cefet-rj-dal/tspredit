@@ -34,19 +34,25 @@ for comparability across windows and tuning \code{mtry}, \code{ntree}, and \code
 }
 \examples{
 # Example: sliding-window Random Forest
+# Load tools and data
 library(daltoolbox)
 data(tsd)
+
+# Turn series into 10-lag windows and preview
 ts <- ts_data(tsd$y, 10)
 ts_head(ts, 3)
 
+# Train/test split and (X, y) projection
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
 io_test <- ts_projection(samp$test)
 
+# Define Random Forest and fit (tune ntree/mtry/nodesize as needed)
 model <- ts_rf(ts_norm_gminmax(), input_size = 4, nodesize = 3, ntree = 50)
-model <- fit(model, x=io_train$input, y=io_train$output)
+model <- fit(model, x = io_train$input, y = io_train$output)
 
-prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
+# Forecast multiple steps and assess error
+prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 prediction <- as.vector(prediction)
 output <- as.vector(io_test$output)
 

@@ -42,7 +42,7 @@ data10[,1:2]
 data10[12:13,1:2]
 
 #single line and a range of columns
-#'data10[12,1:2]
+data10[12,1:2]
 
 #range of lines and a single column
 data10[12:13,1]

@@ -18,13 +18,16 @@ window (recency awareness), increasing their contribution to the augmented
 sample.
 }
 \examples{
+# Recency-aware augmentation over sliding windows
+# Load package and example dataset
 library(daltoolbox)
 data(tsd)
 
-#convert to sliding windows
+# Convert to 10-lag sliding windows and preview
 xw <- ts_data(tsd$y, 10)
+ts_head(xw)
 
-#data augmentation using awareness
+# Apply awareness augmentation (bias toward recent rows)
 augment <- ts_aug_awareness()
 augment <- fit(augment, xw)
 xa <- transform(augment, xw)

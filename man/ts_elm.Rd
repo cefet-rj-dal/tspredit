@@ -32,22 +32,30 @@ hidden size and activation choice. Consider normalizing inputs and tuning
 }
 \examples{
 # Example: ELM with sliding-window inputs
+# Load package and toy dataset
 library(daltoolbox)
 data(tsd)
+
+# Create sliding windows of length 10 (t9 ... t0)
 ts <- ts_data(tsd$y, 10)
 ts_head(ts, 3)
 
+# Split last 5 rows as test set
 samp <- ts_sample(ts, test_size = 5)
+# Project to inputs (X) and outputs (y)
 io_train <- ts_projection(samp$train)
 io_test <- ts_projection(samp$test)
 
+# Define ELM with global min-max normalization and fit
 model <- ts_elm(ts_norm_gminmax(), input_size = 4, nhid = 3, actfun = "purelin")
-model <- fit(model, x=io_train$input, y=io_train$output)
+model <- fit(model, x = io_train$input, y = io_train$output)
 
-prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
+# Forecast 5 steps ahead starting from the last known window
+prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 prediction <- as.vector(prediction)
 output <- as.vector(io_test$output)
 
+# Evaluate forecast error on the test horizon
 ev_test <- evaluate(model, output, prediction)
 ev_test
 }

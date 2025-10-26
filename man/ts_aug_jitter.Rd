@@ -17,13 +17,16 @@ each point to increase robustness and reduce overfitting.
 Noise scale is estimated from within-window deviations.
 }
 \examples{
+# Jitter augmentation with noise estimated from windows
+# Load package and example dataset
 library(daltoolbox)
 data(tsd)
 
-#convert to sliding windows
+# Convert to sliding windows and preview
 xw <- ts_data(tsd$y, 10)
+ts_head(xw)
 
-#data augmentation using flip
+# Apply jitter (adds small noise; keeps target column unchanged)
 augment <- ts_aug_jitter()
 augment <- fit(augment, xw)
 xa <- transform(augment, xw)

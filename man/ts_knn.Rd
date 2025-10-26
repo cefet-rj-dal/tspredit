@@ -28,19 +28,25 @@ normalization for distance-based methods.
 }
 \examples{
 # Example: distance-based regression on sliding windows
+# Load tools and example series
 library(daltoolbox)
 data(tsd)
+
+# Build 10-lag windows and preview a few rows
 ts <- ts_data(tsd$y, 10)
 ts_head(ts, 3)
 
+# Split end of series as test and project (X, y)
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
 io_test <- ts_projection(samp$test)
 
+# Define KNN regressor and fit (distance-based; normalization recommended)
 model <- ts_knn(ts_norm_gminmax(), input_size = 4, k = 3)
-model <- fit(model, x=io_train$input, y=io_train$output)
+model <- fit(model, x = io_train$input, y = io_train$output)
 
-prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
+# Predict multiple steps ahead and evaluate
+prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 prediction <- as.vector(prediction)
 output <- as.vector(io_test$output)
 

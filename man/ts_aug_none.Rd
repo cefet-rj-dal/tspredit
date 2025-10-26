@@ -14,13 +14,16 @@ Identity augmentation that returns the original windows while
 preserving the augmentation interface and indices.
 }
 \examples{
+# Identity augmentation (no changes to windows)
+# Load package and example dataset
 library(daltoolbox)
 data(tsd)
 
-#convert to sliding windows
+# Convert to sliding windows and preview
 xw <- ts_data(tsd$y, 10)
+ts_head(xw)
 
-#no data augmentation
+# No augmentation; returns the same windows with indices preserved
 augment <- ts_aug_none()
 augment <- fit(augment, xw)
 xa <- transform(augment, xw)
