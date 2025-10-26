@@ -1,6 +1,6 @@
-#'@title no filter
-#'@description Does not make data filter
-#'@return a `ts_fil_none` object.
+#'@title No Filter
+#'@description Identity filter that returns the original series unchanged.
+#'@return A `ts_fil_none` object.
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)

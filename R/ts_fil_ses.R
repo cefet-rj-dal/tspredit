@@ -1,9 +1,11 @@
 #'@title Simple Exponential Smoothing
-#'@description This code implements simple exponential smoothing on a time series.
-#'Simple exponential smoothing is a smoothing technique that can include or exclude
-#'trend and seasonality components in time series forecasting, depending on the specified parameters.
+#'@description Exponential smoothing focused on the level component, with
+#' optional extensions to trend/seasonality via Holt–Winters variants.
 #'@param gamma If TRUE, enables the gamma seasonality component.
-#'@return a `ts_fil_ses` obj.
+#'@return A `ts_fil_ses` object.
+#'
+#'@references
+#' - R. G. Brown (1959). Statistical Forecasting for Inventory Control.
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)

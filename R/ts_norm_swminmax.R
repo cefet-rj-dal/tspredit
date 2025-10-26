@@ -1,7 +1,8 @@
-#'@title Time Series Sliding Window Min-Max
-#'@description The ts_norm_swminmax function creates an object for normalizing a time series based on the "sliding window min-max scaling" method
+#'@title Sliding-Window Min–Max Normalization
+#'@description Create an object for normalizing each window by its own min and
+#' max, preserving local contrast while standardizing scales.
 #'@param outliers Indicate outliers transformation class. NULL can avoid outliers removal.
-#'@return returns a `ts_norm_swminmax` object.
+#'@return A `ts_norm_swminmax` object.
 #'@examples
 #'# time series to normalize
 #'library(daltoolbox)

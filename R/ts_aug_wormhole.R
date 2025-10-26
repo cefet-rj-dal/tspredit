@@ -1,7 +1,12 @@
-#'@title Augmentation by wormhole
-#'@description Time series data augmentation is a technique used to increase the size and diversity of a time series dataset by creating new instances of the original data through transformations or modifications. The goal is to improve the performance of machine learning models trained on time series data by reducing overfitting and improving generalization.
-#'Wormhole does data augmentation by removing lagged terms and adding old terms.
-#'@return a `ts_aug_wormhole` object.
+#'@title Augmentation by Wormhole
+#'@description Generate augmented windows by selectively replacing lag terms
+#' with older lagged values, creating plausible alternative trajectories.
+#'@return A `ts_aug_wormhole` object.
+#'
+#'@details This combinatorial replacement preserves overall scale while
+#' introducing temporal permutations of lag content.
+#'
+#'@references See general surveys on time series augmentation such as Wen et al. (2021).
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)

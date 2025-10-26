@@ -1,8 +1,9 @@
 #ts_norm_diff
-#'@title Time Series Diff
-#'@description This function calculates the difference between the values of a time series.
+#'@title First Differences
+#'@description Transform a series by first differences to remove level and
+#' highlight changes; normalization is then applied to the differenced series.
 #'@param outliers Indicate outliers transformation class. NULL can avoid outliers removal.
-#'@return returns a `ts_norm_diff` object.
+#'@return A `ts_norm_diff` object.
 #'@examples
 #'# time series to normalize
 #'library(daltoolbox)

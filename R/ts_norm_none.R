@@ -1,6 +1,7 @@
-#'@title no normalization
-#'@description Does not make data normalization.
-#'@return a `ts_norm_none` object.
+#'@title No Normalization
+#'@description Identity transform that leaves data unchanged but aligns with
+#' the pre/post-processing interface.
+#'@return A `ts_norm_none` object.
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)

@@ -1,5 +1,9 @@
 #'@title Hodrick-Prescott Filter
-#'@description This filter eliminates the cyclical component of the series, performs smoothing on it, making it more sensitive to long-term fluctuations. Each observation is decomposed into a cyclical and a growth component.
+#'@description Decompose a series into trend and cyclical components using the
+#' Hodrick–Prescott (HP) filter and optionally blend with the original series.
+#'
+#' This filter removes short-term fluctuations by penalizing changes in the
+#' growth rate of the trend component.
 #'@param lambda It is the smoothing parameter of the Hodrick-Prescott filter.
 #'Lambda = 100*(frequency)^2
 #'Correspondence between frequency and lambda values
@@ -11,7 +15,14 @@
 #'daily (5 days a week) => frequency = 252 // lambda = 6812100
 #'@param preserve value between 0 and 1. Balance the composition of observations and applied filter.
 #'Values close to 1 preserve original values. Values close to 0 adopts HP filter values.
-#'@return a `ts_fil_hp` object.
+#'@return A `ts_fil_hp` object.
+#'
+#'@details The filter strength is governed by `lambda = 100 * frequency^2`.
+#' Use `preserve` in (0, 1] to convex-combine the raw series and the HP trend.
+#'
+#'@references
+#' - R. J. Hodrick and E. C. Prescott (1997). Postwar U.S. business cycles:
+#'   An empirical investigation. Journal of Money, Credit and Banking, 29(1).
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)

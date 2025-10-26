@@ -1,8 +1,11 @@
-#'@title Augmentation by stretch
-#'@description Time series data augmentation is a technique used to increase the size and diversity of a time series dataset by creating new instances of the original data through transformations or modifications. The goal is to improve the performance of machine learning models trained on time series data by reducing overfitting and improving generalization.
-#'stretch does data augmentation by increasing the volatility of the time series.
-#'@param scale_factor for stretch
-#'@return a `ts_aug_stretch` object.
+#'@title Augmentation by Stretch
+#'@description Increase within-window deviation magnitude by a scaling factor
+#' to produce higher-variance variants.
+#'@param scale_factor Numeric factor used to scale deviations.
+#'@return A `ts_aug_stretch` object.
+#'
+#'@references See also the survey by Wen et al. (2021) on time series
+#' augmentation techniques.
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)

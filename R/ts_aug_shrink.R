@@ -1,8 +1,8 @@
-#'@title Augmentation by shrink
-#'@description Time series data augmentation is a technique used to increase the size and diversity of a time series dataset by creating new instances of the original data through transformations or modifications. The goal is to improve the performance of machine learning models trained on time series data by reducing overfitting and improving generalization.
-#'stretch does data augmentation by decreasing the volatility of the time series.
-#'@param scale_factor for shrink
-#'@return a `ts_aug_shrink` object.
+#'@title Augmentation by Shrink
+#'@description Decrease within-window deviation magnitude by a scaling factor
+#' to generate lower-variance variants while preserving the mean.
+#'@param scale_factor Numeric factor used to scale deviations.
+#'@return A `ts_aug_shrink` object.
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)

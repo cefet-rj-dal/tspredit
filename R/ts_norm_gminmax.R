@@ -1,7 +1,10 @@
-#'@title Time Series Global Min-Max
-#'@description Rescales data, so the minimum value is mapped to 0 and the maximum value is mapped to 1.
+#'@title Global Min–Max Normalization
+#'@description Rescale values so the global minimum maps to 0 and the global
+#' maximum maps to 1 over the training set.
 #'@param outliers Indicate outliers transformation class. NULL can avoid outliers removal.
-#'@return returns a `ts_norm_gminmax` object.
+#'@return A `ts_norm_gminmax` object.
+#'@details The same scaling is applied to inputs and inverted on predictions
+#' via `inverse_transform`.
 #'@examples
 #'# time series to normalize
 #'library(daltoolbox)

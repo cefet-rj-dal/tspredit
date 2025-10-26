@@ -1,8 +1,8 @@
-#'@title Augmentation by awareness smooth
-#'@description Time series data augmentation is a technique used to increase the size and diversity of a time series dataset by creating new instances of the original data through transformations or modifications. The goal is to improve the performance of machine learning models trained on time series data by reducing overfitting and improving generalization.
-#'Awareness Smooth reinforce recent data preferably. It also smooths noise data.
-#'@param factor increase factor for data augmentation
-#'@return a `ts_aug_awaresmooth` object.
+#'@title Augmentation by Awareness Smooth
+#'@description Recency-aware augmentation that also progressively smooths noise
+#' before applying the weighting, producing cleaner augmented samples.
+#'@param factor Numeric factor controlling the recency weighting.
+#'@return A `ts_aug_awaresmooth` object.
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)

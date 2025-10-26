@@ -1,8 +1,13 @@
 #'@title Seasonal Adjustment
-#'@description Removes the seasonal component from the time series without affecting the other components.
+#'@description Remove the seasonal component from a time series while preserving
+#' level and trend, using a state-space/BATS approach.
 #'@param frequency Frequency of the time series. It is an optional parameter.
 #' It can be configured when the frequency of the time series is known.
-#'@return a `ts_fil_seas_adj` object.
+#'@return A `ts_fil_seas_adj` object.
+#'
+#'@references
+#' - R. J. Hyndman and G. Athanasopoulos (2021). Forecasting: Principles and
+#'   Practice (3rd ed). OTexts. (BATS/seasonal adjustment)
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)

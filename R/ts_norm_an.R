@@ -1,9 +1,9 @@
-#'@title Time Series Adaptive Normalization
-#'@description Transform data to a common scale while taking into account the
-#' changes in the statistical properties of the data over time.
+#'@title Adaptive Normalization
+#'@description Transform data to a common scale while adapting to changes in
+#' distribution over time (optionally over a trailing window).
 #'@param outliers Indicate outliers transformation class. NULL can avoid outliers removal.
 #'@param nw integer: window size.
-#'@return returns a `ts_norm_an` object.
+#'@return A `ts_norm_an` object.
 #'@examples
 #'# time series to normalize
 #'library(daltoolbox)

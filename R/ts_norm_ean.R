@@ -1,9 +1,9 @@
-#'@title Time Series Adaptive Normalization (Exponential Moving Average - EMA)
-#'@description Creates a normalization object for time series data using an Exponential Moving Average (EMA) method.
-#'This normalization approach adapts to changes in the time series and optionally removes outliers.
+#'@title Adaptive Normalization with EMA
+#'@description Normalize a time series using exponentially weighted statistics
+#' that adapt to distributional changes, optionally after outlier mitigation.
 #'@param outliers Indicate outliers transformation class. NULL can avoid outliers removal.
 #'@param nw windows size
-#'@return returns a `ts_norm_ean` object.
+#'@return A `ts_norm_ean` object.
 #'@examples
 #'# time series to normalize
 #'library(daltoolbox)

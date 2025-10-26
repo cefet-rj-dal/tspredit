@@ -1,6 +1,15 @@
 #'@title FFT Filter
-#'@description FFT Filter
-#'@return a `ts_fil_fft` object.
+#'@description Frequency-domain smoothing using the Fast Fourier Transform
+#' (FFT) to attenuate high-frequency components.
+#'
+#'@return A `ts_fil_fft` object.
+#'
+#'@details The implementation estimates a cutoff based on spectral statistics
+#' and reconstructs the series from dominant frequencies.
+#'
+#'@references
+#' - J. W. Cooley and J. W. Tukey (1965). An algorithm for the machine
+#'   calculation of complex Fourier series. Math. Comput.
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)

@@ -1,7 +1,14 @@
-#'@title Augmentation by flip
-#'@description Time series data augmentation is a technique used to increase the size and diversity of a time series dataset by creating new instances of the original data through transformations or modifications. The goal is to improve the performance of machine learning models trained on time series data by reducing overfitting and improving generalization.
-#'Flip mirror the sliding observations relative to the mean of the sliding windows.
-#'@return a `ts_aug_flip` object.
+#'@title Augmentation by Flip
+#'@description Time series augmentation by mirroring sliding-window observations
+#' around their mean to increase diversity and reduce overfitting.
+#'@return A `ts_aug_flip` object.
+#'
+#'@details This transformation preserves the window mean while flipping the
+#' deviations, effectively generating a symmetric variant of the local pattern.
+#'
+#'@references
+#' - Q. Wen et al. (2021). Time Series Data Augmentation for Deep Learning:
+#'   A Survey. IJCAI Workshop on Time Series.
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)

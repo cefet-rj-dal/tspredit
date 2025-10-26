@@ -1,8 +1,11 @@
 #'@title Winsorization of Time Series
-#'@description This code implements the Winsorization technique on a time series.
-#'Winsorization is a statistical method used to handle extreme values in a time series
-#'by replacing them with values closer to the center of the distribution.
-#'@return a `ts_fil_winsor` obj.
+#'@description Apply Winsorization to limit extreme values by replacing them
+#' with nearer order statistics, reducing the influence of outliers.
+#'@return A `ts_fil_winsor` object.
+#'
+#'@references
+#' - J. W. Tukey (1962). The future of data analysis. Annals of Mathematical
+#'   Statistics. (Winsorization discussed in robust summaries.)
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)

@@ -1,7 +1,9 @@
 #'@title Recursive Filter
-#'@description Applies linear filtering to a univariate time series or to each series within a multivariate time series. It is useful for outlier detection, and the calculation is done recursively. This recursive calculation has the effect of reducing autocorrelation among observations, so that for each detected outlier, the filter is recalculated until there are no more outliers in the residuals.
+#'@description Apply recursive linear filtering (ARMA-style recursion) to a
+#' univariate series or each column of a multivariate series. Useful for
+#' smoothing and mitigating autocorrelation.
 #'@param filter smoothing parameter. The larger the value, the greater the smoothing. The smaller the value, the less smoothing, and the resulting series shape is more similar to the original series.
-#'@return a `ts_fil_recursive` object.
+#'@return A `ts_fil_recursive` object.
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)

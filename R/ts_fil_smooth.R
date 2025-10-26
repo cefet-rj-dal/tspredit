@@ -1,6 +1,7 @@
 #'@title Time Series Smooth
-#'@description Used to remove or reduce randomness (noise).
-#'@return a `ts_fil_smooth` object.
+#'@description Remove or reduce randomness (noise) using a robust smoothing
+#' strategy that first mitigates outliers and then smooths residual variation.
+#'@return A `ts_fil_smooth` object.
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)

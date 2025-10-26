@@ -1,8 +1,15 @@
 #'@title EMD Filter
-#'@description EMD Filter
+#'@description Empirical Mode Decomposition (EMD) filter that decomposes a
+#' signal into intrinsic mode functions (IMFs) and reconstructs a smoothed
+#' component.
 #'@param noise noise
 #'@param trials trials
-#'@return a `ts_fil_emd` object.
+#'@return A `ts_fil_emd` object.
+#'
+#'@references
+#' - N. E. Huang et al. (1998). The Empirical Mode Decomposition and the
+#'   Hilbert Spectrum for nonlinear and non-stationary time series analysis.
+#'   Proceedings of the Royal Society A.
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)

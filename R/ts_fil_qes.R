@@ -1,9 +1,12 @@
 #'@title Quadratic Exponential Smoothing
-#'@description This code implements quadratic exponential smoothing on a time series.
-#'Quadratic exponential smoothing is a smoothing technique that includes components of
-#'both trend and seasonality in time series forecasting.
+#'@description Double/triple exponential smoothing capturing level, trend,
+#' and optionally seasonality components.
 #'@param gamma If TRUE, enables the gamma seasonality component.
-#'@return a `ts_fil_qes` obj.
+#'@return A `ts_fil_qes` object.
+#'
+#'@references
+#' - P. R. Winters (1960). Forecasting sales by exponentially weighted moving
+#'   averages. Management Science.
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)

@@ -1,9 +1,15 @@
-#'@title Time Series Exponential Moving Average
-#'@description Used to smooth out fluctuations, while giving more weight to
-#' recent observations. Particularly useful when the data has a trend or
-#' seasonality component.
+#'@title Exponential Moving Average (EMA)
+#'@description Smooth a series by exponentially decaying weights that give more
+#' importance to recent observations.
 #'@param ema exponential moving average size
-#'@return a `ts_fil_ema` object.
+#'@return A `ts_fil_ema` object.
+#'
+#'@details EMA is related to simple exponential smoothing; it reacts faster
+#' to level changes than a simple moving average while reducing noise.
+#'
+#'@references
+#' - C. C. Holt (1957). Forecasting trends and seasonals by exponentially
+#'   weighted moving averages. O.N.R. Research Memorandum.
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)

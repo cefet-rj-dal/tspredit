@@ -1,8 +1,13 @@
-#'@title EMD Filter
-#'@description EMD Filter
+#'@title Robust EMD Filter
+#'@description Ensemble/robust EMD-based denoising using CEEMD to separate
+#' noise-dominated IMFs and reconstruct the signal.
 #'@param noise noise
 #'@param trials trials
-#'@return a `ts_fil_remd` object.
+#'@return A `ts_fil_remd` object.
+#'
+#'@references
+#' - Z. Wu and N. E. Huang (2009). Ensemble Empirical Mode Decomposition: a
+#'   noise-assisted data analysis method. Advances in Adaptive Data Analysis.
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)

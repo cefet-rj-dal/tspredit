@@ -1,28 +1,30 @@
 #'@title Time Series Sample
-#'@description Separates the `ts_data` into training and test.
-#'It separates the test size from the last observations minus an offset.
-#'The offset is important to allow replication under different recent origins.
-#'The data for train uses the number of rows of a `ts_data` minus the test size and offset.
-#'@param ts time series.
-#'@param test_size integer: size of test data (default = 1).
-#'@param offset integer: starting point (default = 0).
-#'@return returns a list with the two samples
+#'@description Split a `ts_data` into train and test sets.
+#'
+#' Extracts `test_size` rows from the end (minus an optional `offset`) as the
+#' test set. The remaining initial rows form the training set. The `offset`
+#' is useful to reproduce experiments with different forecast origins.
+#'
+#'@param ts A `ts_data` matrix.
+#'@param test_size Integer. Number of rows in the test split (default = 1).
+#'@param offset Integer. Offset from the end before the test split (default = 0).
+#'@return A list with `$train` and `$test` (both `ts_data`).
 #'@examples
-#'#setting up a ts_data
+#'# Setting up a ts_data and making a temporal split
 #'data(tsd)
 #'ts <- ts_data(tsd$y, 10)
 #'
-#'#separating into train and test
+#'# Separating into train and test
 #'test_size <- 3
 #'samp <- ts_sample(ts, test_size)
 #'
-#'#first five rows from training data
+#'# First five rows from training data
 #'ts_head(samp$train, 5)
 #'
-#'#last five rows from training data
+#'# Last five rows from training data
 #'ts_head(samp$train[-c(1:(nrow(samp$train)-5)),])
 #'
-#'#testing data
+#'# Testing data
 #'ts_head(samp$test)
 #'@export
 ts_sample <- function(ts, test_size=1, offset=0) {

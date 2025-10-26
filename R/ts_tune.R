@@ -1,13 +1,22 @@
 #'@title Time Series Tune
-#'@description Creates a `ts_tune` object for tuning hyperparameters of a time series model.
-#'This function sets up a tuning process for the specified base model by exploring different
-#'configurations of hyperparameters using cross-validation.
-#'@param input_size input size for machine learning model
-#'@param base_model base model for tuning
-#'@param folds number of folds for cross-validation
-#'@param ranges a list of hyperparameter ranges to explore
-#'@return returns a `ts_tune` object
+#'@description Create a `ts_tune` object for hyperparameter tuning of a
+#' time series model.
+#'
+#' Sets up a cross-validated search over hyperparameter ranges and input sizes
+#' for a base model. Results include the evaluated configurations and the
+#' selected best configuration.
+#'
+#'@param input_size Integer vector. Candidate input window sizes.
+#'@param base_model Base model object to tune (e.g., `ts_mlp()`).
+#'@param folds Integer. Number of cross-validation folds.
+#'@param ranges Named list of hyperparameter ranges to explore.
+#'@return A `ts_tune` object.
+#'
+#'@references
+#' - R. Kohavi (1995). A study of cross-validation and bootstrap for accuracy
+#'   estimation and model selection. IJCAI.
 #'@examples
+#'# Example: grid search over input_size and ELM hyperparameters
 #'library(daltoolbox)
 #'data(tsd)
 #'ts <- ts_data(tsd$y, 10)
@@ -20,7 +29,7 @@
 #'tune <- ts_tune(input_size=c(3:5), base_model = ts_elm(ts_norm_gminmax()),
 #'     ranges = list(nhid = 1:5, actfun=c('purelin')))
 #'
-#'# Generic model tunning
+#'# Generic model tuning
 #'model <- fit(tune, x=io_train$input, y=io_train$output)
 #'
 #'prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)

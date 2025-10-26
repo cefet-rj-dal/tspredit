@@ -1,10 +1,15 @@
 #'@title Time Series Projection
-#'@description Separates a `ts_data` object into input and output components for time series analysis.
-#' This function is useful for preparing data for modeling, where the input and output variables are extracted from a time series dataset.
-#'@param ts matrix or data.frame containing the time series.
-#'@return returns a `ts_projection` object.
+#'@description Split a `ts_data` (sliding windows) into input features and
+#' output targets for modeling.
+#'
+#'@details For a multi-column `ts_data`, returns all but the last column as
+#' inputs and the last column as the output. For a single-row matrix, returns
+#' `ts_data`-wrapped inputs/outputs preserving names and window size.
+#'
+#'@param ts Matrix or data.frame containing a `ts_data` representation.
+#'@return A `ts_projection` object with two elements: `$input` and `$output`.
 #'@examples
-#'#setting up a ts_data
+#'# Setting up a ts_data and projecting (X, y)
 #'data(tsd)
 #'ts <- ts_data(tsd$y, 10)
 #'

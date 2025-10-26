@@ -1,9 +1,14 @@
 #'@title TSReg
-#'@description Time Series Regression directly from time series
-#'Ancestral class for non-sliding windows implementation.
-#'@return returns `ts_reg` object
+#'@description Base class for time series regression models that operate
+#' directly on time series (non-sliding-window specialization).
+#'
+#'@details This class is intended to be subclassed by modeling backends that
+#' do not require the sliding-window interface. Methods such as `fit()`,
+#' `predict()`, and `evaluate()` dispatch on this class.
+#'
+#'@return A `ts_reg` object (S3) to be extended by concrete models.
 #'@examples
-#'#This is an abstract class.
+#'# This is an abstract base class; use concrete subclasses.
 #'@importFrom daltoolbox predictor
 #'@export
 ts_reg <- function() {
@@ -22,38 +27,41 @@ action.ts_reg <- function(obj, ...) {
 }
 
 #'@exportS3Method predict ts_reg
+#'@inheritParams do_predict
+#'@return The last column of `x` (baseline predictor).
 predict.ts_reg <- function(object, x, ...) {
   return(x[,ncol(x)])
 }
 
 #'@title Fit Time Series Model
-#'@description The actual time series model fitting.
-#'This method should be override by descendants.
-#'@param obj an object representing the model or algorithm to be fitted
-#'@param x a matrix or data.frame containing the input features for training the model
-#'@param y a vector or matrix containing the output values to be predicted by the model
-#'@return returns a fitted object
+#'@description Generic for fitting a time series model.
+#' Descendants should implement `do_fit.<class>`.
+#'@param obj Model object to be fitted.
+#'@param x Matrix or data.frame with input features.
+#'@param y Vector or matrix with target values.
+#'@return A fitted object (same class as `obj`).
 #'@export
 do_fit <- function(obj, x, y = NULL) {
   UseMethod("do_fit")
 }
 
 #'@title Predict Time Series Model
-#'@description The actual time series model prediction.
-#'This method should be override by descendants.
-#'@param obj an object representing the fitted model or algorithm
-#'@param x a matrix or data.frame containing the input features for making predictions
-#'@return returns the predicted values
+#'@description Generic for predicting with a fitted time series model.
+#' Descendants should implement `do_predict.<class>`.
+#'@param obj Fitted model object.
+#'@param x Matrix or data.frame with input features to predict.
+#'@return Numeric vector with predicted values.
 #'@export
 do_predict <- function(obj, x) {
   UseMethod("do_predict")
 }
 
 #'@title MSE
-#'@description Compute the mean squared error (MSE) between actual values and forecasts of a time series
-#'@param actual real observations
-#'@param prediction predicted observations
-#'@return returns a number, which is the calculated MSE
+#'@description Compute mean squared error (MSE) between actual and predicted values.
+#'@param actual Numeric vector of observed values.
+#'@param prediction Numeric vector of predicted values.
+#'@return Numeric scalar with the MSE.
+#'@details MSE = mean((actual - prediction)^2).
 #'@export
 MSE.ts <- function (actual, prediction) {
   if (length(actual) != length(prediction))
@@ -64,10 +72,14 @@ MSE.ts <- function (actual, prediction) {
 }
 
 #'@title sMAPE
-#'@description Compute the symmetric mean absolute percent error (sMAPE)
-#'@param actual real observations
-#'@param prediction predicted observations
-#'@return returns the sMAPE between the actual and prediction vectors
+#'@description Compute symmetric mean absolute percent error (sMAPE).
+#'@param actual Numeric vector of observed values.
+#'@param prediction Numeric vector of predicted values.
+#'@return Numeric scalar with the sMAPE.
+#'@details sMAPE = mean( |a - p| / ((|a| + |p|)/2) ), excluding zero denominators.
+#'@references
+#' - S. Makridakis and M. Hibon (2000). The M3-Competition: results,
+#'   conclusions and implications. International Journal of Forecasting, 16(4).
 #'@export
 sMAPE.ts <- function (actual, prediction) {
   if (length(actual) != length(prediction))
@@ -83,10 +95,10 @@ sMAPE.ts <- function (actual, prediction) {
 }
 
 #'@title R2
-#'@description Compute the R-squared (R2) between actual values and forecasts of a time series
-#'@param actual real observations
-#'@param prediction predicted observations
-#'@return returns a number, which is the calculated R2
+#'@description Compute coefficient of determination (R-squared).
+#'@param actual Numeric vector of observed values.
+#'@param prediction Numeric vector of predicted values.
+#'@return Numeric scalar with R-squared.
 #'@export
 R2.ts <- function (actual, prediction) {
   if (length(actual) != length(prediction))

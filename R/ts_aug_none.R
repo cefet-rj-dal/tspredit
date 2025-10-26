@@ -1,6 +1,7 @@
-#'@title no augmentation
-#'@description Does not make data augmentation.
-#'@return a `ts_aug_none` object.
+#'@title No Augmentation
+#'@description Identity augmentation that returns the original windows while
+#' preserving the augmentation interface and indices.
+#'@return A `ts_aug_none` object.
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)

@@ -1,19 +1,25 @@
 #'@title ts_data
-#'@description Time series data structure used in DAL Toolbox.
-#'It receives a vector (representing a time series) or
-#'a matrix `y` (representing a sliding windows).
-#'Internal ts_data is matrix of sliding windows with size `sw`.
-#'If sw equals to zero, it store a time series as a single matrix column.
-#'@param y output variable
-#'@param sw integer: sliding window size.
-#'@return returns a `ts_data` object.
+#'@description Construct a time series data object used throughout the
+#' DAL Toolbox.
+#'
+#' Accepts either a vector (raw time series) or a matrix/data.frame already
+#' organized in sliding windows. Internally, a `ts_data` is stored as a matrix
+#' with `sw` lag columns named `t{lag}` (e.g., `t9, t8, ..., t0`). When `sw` is
+#' zero or one, the series is stored as a single column (`t0`).
+#'
+#'@param y Numeric vector or matrix-like. Time series values or sliding windows.
+#'@param sw Integer. Sliding-window size (number of lag columns).
+#'@return A `ts_data` object (matrix with attributes and column names).
 #'@examples
+#'# Example: building sliding windows
 #'data(tsd)
 #'head(tsd)
 #'
+#'# 1) Single-column ts_data (no windows)
 #'data <- ts_data(tsd$y)
 #'ts_head(data)
 #'
+#'# 2) 10-lag sliding windows (t9 ... t0)
 #'data10 <- ts_data(tsd$y, 10)
 #'ts_head(data10)
 #'@export
@@ -58,7 +64,7 @@ ts_data <- function(y, sw=1) {
 #'@param i row i
 #'@param j column j
 #'@param ... optional arguments
-#'@return returns a new ts_data object
+#'@return A new `ts_data` object with preserved metadata and column names.
 #'@examples
 #'data(tsd)
 #'data10 <- ts_data(tsd$y, 10)
@@ -95,11 +101,11 @@ ts_data <- function(y, sw=1) {
 }
 
 #'@title Extract the First Observations from a `ts_data` Object
-#'@description Returns the first n observations from a `ts_data`
+#'@description Return the first n observations from a `ts_data`.
 #'@param x `ts_data` object
 #'@param n number of rows to return
 #'@param ... optional arguments
-#'@return returns the first n observations of a `ts_data`
+#'@return The first n observations of a `ts_data` (as a matrix/data.frame).
 #'@examples
 #'data(tsd)
 #'data10 <- ts_data(tsd$y, 10)
@@ -111,9 +117,10 @@ ts_head <- function(x, n = 6L, ...) {
 }
 
 #'@title Adjust `ts_data`
-#'@description Converts a dataset to a `ts_data` object
-#'@param data dataset
-#'@return returns an adjusted `ts_data`
+#'@description Convert a compatible dataset to a `ts_data` object by setting
+#' column names, class, and the `sw` attribute consistently.
+#'@param data Matrix or data.frame to adjust.
+#'@return An adjusted `ts_data`.
 #'@export
 adjust_ts_data <- function(data) {
   if (!is.matrix(data))

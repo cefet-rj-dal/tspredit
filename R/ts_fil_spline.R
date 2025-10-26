@@ -1,9 +1,14 @@
 #'@title Smoothing Splines
-#'@description Fits a cubic smoothing spline to a time series.
+#'@description Fit a cubic smoothing spline to a time series for smooth trend
+#' extraction with a tunable roughness penalty.
 #'@param spar smoothing parameter. When spar is specified, the coefficient
 #'            of the integral of the squared second derivative in the fitting criterion (penalized log-likelihood)
 #'            is a monotone function of spar.
-#'#'@return a `ts_fil_spline` object.
+#'@return A `ts_fil_spline` object.
+#'
+#'@references
+#' - P. Craven and G. Wahba (1978). Smoothing noisy data with spline functions.
+#'   Numerische Mathematik.
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)

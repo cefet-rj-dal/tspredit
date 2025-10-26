@@ -1,8 +1,13 @@
-#'@title Lowess Smoothing
-#'@description It is a smoothing method that preserves the primary trend of the original observations and is used to remove noise and spikes in a way that allows data reconstruction and smoothing.
+#'@title LOWESS Smoothing
+#'@description Locally Weighted Scatterplot Smoothing (LOWESS) fits local
+#' regressions to capture the primary trend while reducing noise and spikes.
 #'@param f smoothing parameter. The larger this value, the smoother the series will be.
 #'         This provides the proportion of points on the plot that influence the smoothing.
-#'@return a `ts_fil_lowess` object.
+#'@return A `ts_fil_lowess` object.
+#'
+#'@references
+#' - W. S. Cleveland (1979). Robust locally weighted regression and smoothing
+#'   scatterplots. Journal of the American Statistical Association.
 #'@examples
 #'# time series with noise
 #'library(daltoolbox)

@@ -1,8 +1,9 @@
-#'@title Augmentation by awareness
-#'@description Time series data augmentation is a technique used to increase the size and diversity of a time series dataset by creating new instances of the original data through transformations or modifications. The goal is to improve the performance of machine learning models trained on time series data by reducing overfitting and improving generalization.
-#'Awareness reinforce recent data preferably.
-#'@param factor increase factor for data augmentation
-#'@return a `ts_aug_awareness` object.
+#'@title Augmentation by Awareness
+#'@description Bias the augmentation to emphasize more recent points in each
+#' window (recency awareness), increasing their contribution to the augmented
+#' sample.
+#'@param factor Numeric factor controlling the recency weighting.
+#'@return A `ts_aug_awareness` object.
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)

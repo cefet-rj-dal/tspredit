@@ -1,12 +1,14 @@
 #'@title Time Series Integrated Tune
-#'@description Time Series Tune
-#'@param input_size input size for machine learning model
-#'@param base_model base model for tuning
-#'@param folds number of folds for cross-validation
-#'@param ranges a list of hyperparameter ranges to explore
-#'@param preprocess list of preprocessing methods
-#'@param augment data augmentation method
-#'@return a `ts_integtune` object.
+#'@description Integrated tuning over input sizes, preprocessing, augmentation,
+#' and model hyperparameters for time series.
+#'
+#'@param input_size Integer vector. Candidate input window sizes.
+#'@param base_model Base model object for tuning.
+#'@param folds Integer. Number of cross-validation folds.
+#'@param ranges Named list of hyperparameter ranges to explore.
+#'@param preprocess List of preprocessing objects to compare.
+#'@param augment List of augmentation objects to apply during training.
+#'@return A `ts_integtune` object.
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)
@@ -21,7 +23,7 @@
 #' preprocess = list(ts_norm_gminmax()))
 #'
 #'
-#'# Generic model tunning
+#'# Generic model tuning (with augmentation stitched into training data)
 #'model <- fit(tune, x=io_train$input, y=io_train$output)
 #'
 #'prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)

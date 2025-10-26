@@ -1,7 +1,13 @@
-#'@title Augmentation by jitter
-#'@description Time series data augmentation is a technique used to increase the size and diversity of a time series dataset by creating new instances of the original data through transformations or modifications. The goal is to improve the performance of machine learning models trained on time series data by reducing overfitting and improving generalization.
-#'jitter adds random noise to each data point in the time series.
-#'@return a `ts_aug_jitter` object.
+#'@title Augmentation by Jitter
+#'@description Time series augmentation by adding low-amplitude random noise to
+#' each point to increase robustness and reduce overfitting.
+#'@return A `ts_aug_jitter` object.
+#'
+#'@details Noise scale is estimated from within-window deviations.
+#'
+#'@references
+#' - J. T. Um et al. (2017). Data augmentation of wearable sensor data for
+#'   Parkinson’s disease monitoring using convolutional neural networks.
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)
