@@ -4,6 +4,13 @@
 #' highlight changes; normalization is then applied to the differenced series.
 #'@param outliers Indicate outliers transformation class. NULL can avoid outliers removal.
 #'@return A `ts_norm_diff` object.
+#'
+#'@references
+#' Salles, R., Assis, L., Guedes, G., Bezerra, E., Porto, F., Ogasawara, E.
+#' (2017). A framework for benchmarking machine learning methods using linear
+#' models for univariate time series prediction. Proceedings of the
+#' International Joint Conference on Neural Networks (IJCNN).
+#' doi:10.1109/IJCNN.2017.7966139
 #'@examples
 #'# time series to normalize
 #'library(daltoolbox)

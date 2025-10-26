@@ -54,6 +54,7 @@ ts_fil_hp <- function(lambda = 100, preserve = 0.9) {
 #'@importFrom daltoolbox transform
 #'@exportS3Method transform ts_fil_hp
 transform.ts_fil_hp <- function(obj, data, ...) {
+  # Extract HP trend component and blend with original series
   ts_filter <- mFilter::hpfilter(data, freq = obj$lambda, type = "lambda")$trend
   result = as.vector(obj$preserve * data + (1 - obj$preserve) * ts_filter)
   return(result)

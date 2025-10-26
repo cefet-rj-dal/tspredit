@@ -35,7 +35,9 @@ ts_fil_qes <- function(gamma = FALSE) {
 #'@importFrom stats HoltWinters
 #'@exportS3Method transform ts_fil_qes
 transform.ts_fil_qes <- function(obj, data, ...) {
+  # Quadratic smoothing via Holt-Winters with beta (trend) and optional gamma (seasonality)
   adjust <- stats::HoltWinters(data, beta=TRUE, gamma=obj$gamma)
+  # Return fitted level component as smoothed series
   result <- as.vector(adjust$fitted[,1])
   return(result)
 }

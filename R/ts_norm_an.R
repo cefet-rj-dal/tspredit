@@ -4,6 +4,12 @@
 #'@param outliers Indicate outliers transformation class. NULL can avoid outliers removal.
 #'@param nw integer: window size.
 #'@return A `ts_norm_an` object.
+#'
+#'@references
+#' Ogasawara, E., Martinez, L. C., De Oliveira, D., Zimbrão, G., Pappa, G. L.,
+#' Mattoso, M. (2010). Adaptive Normalization: A novel data normalization
+#' approach for non-stationary time series. Proceedings of the International
+#' Joint Conference on Neural Networks (IJCNN). doi:10.1109/IJCNN.2010.5596746
 #'@examples
 #'# time series to normalize
 #'library(daltoolbox)
@@ -41,9 +47,10 @@ ts_norm_an <- function(outliers = outliers_boxplot(), nw = 0) {
 
 #'@exportS3Method fit ts_norm_an
 fit.ts_norm_an <- function(obj, data, ...) {
+  # Subtract moving average (adaptive) from inputs to center windows
   input <- data[,1:(ncol(data)-1)]
   an <- obj$ma(obj, input, obj$an_mean)
-  data <- data - an #
+  data <- data - an
 
   if (!is.null(obj$outliers)) {
     out <- obj$outliers
@@ -61,14 +68,16 @@ fit.ts_norm_an <- function(obj, data, ...) {
 #'@exportS3Method transform ts_norm_an
 transform.ts_norm_an <- function(obj, data, x=NULL, ...) {
   if (!is.null(x)) {
+    # Apply stored moving average then global min-max scaling
     an <- attr(data, "an")
-    x <- x - an #
+    x <- x - an
     x <- (x - obj$gmin) / (obj$gmax-obj$gmin)
     return(x)
   }
   else {
+    # Recompute moving average for these windows
     an <- obj$ma(obj, data, obj$an_mean)
-    data <- data - an #
+    data <- data - an
     data <- (data - obj$gmin) / (obj$gmax-obj$gmin)
     attr(data, "an") <- an
     return (data)
@@ -80,13 +89,14 @@ transform.ts_norm_an <- function(obj, data, x=NULL, ...) {
 inverse_transform.ts_norm_an <- function(obj, data, x=NULL, ...) {
   an <- attr(data, "an")
   if (!is.null(x)) {
+    # Reverse global scaling and add back the moving average component
     x <- x * (obj$gmax-obj$gmin) + obj$gmin
-    x <- x + an #
+    x <- x + an
     return(x)
   }
   else {
     data <- data * (obj$gmax-obj$gmin) + obj$gmin
-    data <- data + an #
+    data <- data + an
     attr(data, "an") <- an
     return (data)
   }

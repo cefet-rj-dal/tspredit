@@ -57,7 +57,8 @@ ts_rf <- function(preprocess=NA, input_size=NA, nodesize = 1, ntree = 10, mtry =
 #'@return A fitted `ts_rf` object with a trained forest.
 do_fit.ts_rf <- function(obj, x, y) {
   if (is.null(obj$mtry))
-    obj$mtry <- ceiling(obj$input_size/3)
+    obj$mtry <- ceiling(obj$input_size/3)  # default to ~1/3 of features
+  # Cast to data.frame for randomForest API and fit ensemble
   obj$model <- randomForest::randomForest(x = as.data.frame(x), y = as.vector(y), mtry=obj$mtry, nodesize = obj$nodesize, ntree=obj$ntree)
   return(obj)
 }
@@ -67,6 +68,7 @@ do_fit.ts_rf <- function(obj, x, y) {
 #'@inheritParams do_predict
 #'@return Numeric vector with predictions.
 do_predict.ts_rf <- function(obj, x) {
+  # randomForest expects data.frame at predict time
   prediction <- stats::predict(obj$model, as.data.frame(x))
   return(prediction)
 }

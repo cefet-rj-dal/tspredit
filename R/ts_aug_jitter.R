@@ -8,6 +8,8 @@
 #'@references
 #' - J. T. Um et al. (2017). Data augmentation of wearable sensor data for
 #'   Parkinson’s disease monitoring using convolutional neural networks.
+#' - Q. Wen et al. (2021). Time Series Data Augmentation for Deep Learning:
+#'   A Survey. IJCAI Workshop on Time Series.
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)
@@ -35,6 +37,7 @@ ts_aug_jitter <- function() {
 #'@importFrom daltoolbox fit
 #'@exportS3Method fit ts_aug_jitter
 fit.ts_aug_jitter <- function(obj, data, ...) {
+  # Estimate noise scale from within-window deviations
   an <- apply(data, 1, mean)
   x <- data - an
   obj$sd <- stats::sd(x)
@@ -46,6 +49,7 @@ fit.ts_aug_jitter <- function(obj, data, ...) {
 #'@exportS3Method transform ts_aug_jitter
 transform.ts_aug_jitter <- function(obj, data, ...) {
   add.ts_aug_jitter <- function(obj, data) {
+    # Draw i.i.d. Gaussian noise and avoid perturbing target column
     x <- stats::rnorm(length(data), mean = 0, sd = obj$sd)
     x <- matrix(x, nrow=nrow(data), ncol=ncol(data))
     x[,ncol(data)] <- 0
@@ -55,6 +59,7 @@ transform.ts_aug_jitter <- function(obj, data, ...) {
   }
   result <- add.ts_aug_jitter(obj, data)
   if (obj$preserve_data) {
+    # Keep original + jittered rows together
     idx <- c(1:nrow(data), attr(result, "idx"))
     result <- rbind(data, result)
     result <- adjust_ts_data(result)

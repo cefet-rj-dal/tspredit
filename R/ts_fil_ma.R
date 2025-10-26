@@ -32,8 +32,10 @@ ts_fil_ma <- function(ma = 3) {
 #'@importFrom daltoolbox transform
 #'@exportS3Method transform ts_fil_ma
 transform.ts_fil_ma <- function(obj, data, ...) {
+  # Convert to windows of size `ma` then take row means
   data <- ts_data(data, obj$ma)
   ma <- apply(data, 1, mean)
+  # Left-pad NAs to match original length
   result <- c(rep(NA, obj$ma-1), ma)
   return(result)
 }

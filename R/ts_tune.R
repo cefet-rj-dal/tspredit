@@ -15,6 +15,10 @@
 #'@references
 #' - R. Kohavi (1995). A study of cross-validation and bootstrap for accuracy
 #'   estimation and model selection. IJCAI.
+#' - Salles, R., Pacitti, E., Bezerra, E., Marques, C., Pacheco, C., Oliveira,
+#'   C., Porto, F., Ogasawara, E. (2023). TSPredIT: Integrated Tuning of Data
+#'   Preprocessing and Time Series Prediction Models. Lecture Notes in Computer
+#'   Science.
 #'@examples
 #'# Example: grid search over input_size and ELM hyperparameters
 #'library(daltoolbox)
@@ -55,6 +59,7 @@ fit.ts_tune <- function(obj, x, y, ...) {
     model <- obj$base_model
     model$input_size <- ranges$input_size
     model <- set_params(model, ranges)
+    # Fit candidate model on training split
     model <- fit(model, x, y)
     return(model)
   }
@@ -67,6 +72,7 @@ fit.ts_tune <- function(obj, x, y, ...) {
   }
 
   evaluate_error <- function(model, i, x, y) {
+    # Compute MSE on held-out fold indices
     x <- x[i,]
     y <- as.vector(y[i,])
     prediction <- as.vector(stats::predict(model, x))
@@ -91,6 +97,7 @@ fit.ts_tune <- function(obj, x, y, ...) {
       for (i in 1:n) {
         err <- tryCatch(
           {
+            # Fit and evaluate one configuration
             model <- build_model(obj, ranges[i,], x[tt$train$i,], y[tt$train$i,])
             error[i] <- evaluate_error(model, tt$test$i, x, y)
             ""

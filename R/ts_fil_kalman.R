@@ -39,8 +39,10 @@ ts_fil_kalman <- function(H = 0.1, Q = 1) {
 #'@importFrom KFAS SSMtrend
 #'@exportS3Method transform ts_fil_kalman
 transform.ts_fil_kalman <- function(obj, data, ...) {
+  # Local-level state-space model with process noise Q and measurement noise H
   logmodel <- KFAS::SSModel(data ~ SSMtrend(1, Q = obj$Q), H = obj$H)
   ajuste <- KFAS::KFS(logmodel)
+  # Extract filtered state estimates as smoothed signal
   result <- as.vector(ajuste$att)
   return(result)
 }

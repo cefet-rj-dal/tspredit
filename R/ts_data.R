@@ -28,8 +28,10 @@ ts_data <- function(y, sw=1) {
   ts_sw <- function(x, sw) {
     ts_lag <- function(x, k)
     {
+      # Left-pad with NA and truncate to original length to create lag k
       c(rep(NA, k), x)[1 : length(x)]
     }
+    # Build sliding windows as columns from t{sw-1} ... t0
     n <- length(x)-sw+1
     window <- NULL
     for(c in (sw-1):0){
@@ -52,6 +54,7 @@ ts_data <- function(y, sw=1) {
   col <- paste("t",(ncol(y)-1):0, sep="")
   colnames(y) <- col
 
+  # Tag as ts_data and store window size `sw`
   class(y) <- append("ts_data", class(y))
   attr(y, "sw") <- sw
   return(y)
@@ -94,6 +97,7 @@ ts_data <- function(y, sw=1) {
 #'data10[12,1]
 #'@export
 `[.ts_data` <- function(x, i, j, ...) {
+  # Subset while preserving class and sliding-window metadata
   y <- unclass(x)[i, j, drop = FALSE, ...]
   class(y) <- append("ts_data", class(y))
   attr(y, "sw") <- ncol(y)
@@ -126,6 +130,7 @@ adjust_ts_data <- function(data) {
   if (!is.matrix(data))
     data <- as.matrix(data)
   colnames(data) <- paste("t",c((ncol(data)-1):0), sep="")
+  # Ensure consistent class and `sw` attribute for downstream functions
   class(data) <- append("ts_data", class(data))
   attr(data, "sw") <- ncol(data)
   return(data)

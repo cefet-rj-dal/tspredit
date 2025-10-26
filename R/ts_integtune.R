@@ -9,6 +9,12 @@
 #'@param preprocess List of preprocessing objects to compare.
 #'@param augment List of augmentation objects to apply during training.
 #'@return A `ts_integtune` object.
+#'
+#'@references
+#' Salles, R., Pacitti, E., Bezerra, E., Marques, C., Pacheco, C., Oliveira,
+#' C., Porto, F., Ogasawara, E. (2023). TSPredIT: Integrated Tuning of Data
+#' Preprocessing and Time Series Prediction Models. Lecture Notes in Computer
+#' Science.
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)
@@ -57,6 +63,7 @@ fit.ts_integtune <- function(obj, x, y, ...) {
   obj <- prepare_ranges(obj, obj$ranges)
   ranges <- obj$ranges
 
+  # Pre-fit augmentation operators on full data for reproducibility
   obj <- fit_augment(obj, x, y)
 
   n <- nrow(ranges)
@@ -73,6 +80,7 @@ fit.ts_integtune <- function(obj, x, y, ...) {
       for (i in 1:n) {
         err <- tryCatch(
           {
+            # Build, fit, and score an integrated pipeline (preprocess + augment + model)
             model <- build_model(obj, ranges[i,], x[tt$train$i,], y[tt$train$i,])
             error[i] <- evaluate_error(model, tt$test$i, x, y)
             ""
@@ -161,6 +169,7 @@ build_model <- function(obj, ranges, x, y) {
   model <- daltoolbox::set_params(model, ranges)
   model$preprocess <- get_preprocess(obj, ranges$preprocess)
   augment <- get_augment(obj, ranges$augment)
+  # Augment training data before fitting model
   data <- augment_data(augment, x, y)
   model <- fit(model, data$x, data$y)
   attr(model, "augment") <- augment
@@ -188,6 +197,7 @@ evaluate_error <- function(model, i, x, y) {
   x <- x[i,]
   y <- as.vector(y[i,])
   prediction <- as.vector(stats::predict(model, x))
+  # Score MSE on held-out fold
   error <- daltoolbox::evaluate(model, y, prediction)$mse
   return(error)
 }

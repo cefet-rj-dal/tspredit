@@ -42,7 +42,7 @@
 ts_elm <- function(preprocess=NA, input_size=NA, nhid=NA, actfun='purelin') {
   obj <- ts_regsw(preprocess, input_size)
   if (is.na(nhid))
-    nhid <- input_size/3
+    nhid <- input_size/3  # heuristic hidden size
   obj$nhid <- nhid
   obj$actfun <- as.character(actfun)
 
@@ -55,6 +55,7 @@ ts_elm <- function(preprocess=NA, input_size=NA, nhid=NA, actfun='purelin') {
 #'@inheritParams do_fit
 #'@return A fitted `ts_elm` object with trained ELM model.
 do_fit.ts_elm <- function(obj, x, y) {
+  # Train ELM with random hidden layer and closed-form output weights
   obj$model <- elmNNRcpp::elm_train(x, y, nhid = obj$nhid, actfun = obj$actfun, init_weights = "uniform_positive", bias = FALSE, verbose = FALSE)
   return(obj)
 }
@@ -65,7 +66,7 @@ do_fit.ts_elm <- function(obj, x, y) {
 #'@return Numeric vector with predictions.
 do_predict.ts_elm <- function(obj, x) {
   if (is.data.frame(x))
-    x <- as.matrix(x)
+    x <- as.matrix(x)  # elm_predict expects a matrix
   prediction <- elmNNRcpp::elm_predict(obj$model, x)
   return(prediction)
 }

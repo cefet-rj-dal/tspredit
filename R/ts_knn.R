@@ -52,9 +52,11 @@ ts_knn <- function(preprocess=NA, input_size=NA, k=NA) {
 #'@inheritParams do_fit
 #'@return A fitted `ts_knn` object storing training data for prediction.
 do_fit.ts_knn <- function(obj, x, y) {
+  # Ensure inputs/targets are data.frames for FNN API
   x <- adjust_data.frame(x)
   y <- adjust_data.frame(y)
 
+  # Store training data for lazy KNN predictions
   obj$model <- list(x=x, y=y, k=obj$k)
 
   return(obj)

@@ -45,9 +45,10 @@
 ts_svm <- function(preprocess=NA, input_size=NA, kernel="radial", epsilon=0, cost=10) {
   obj <- ts_regsw(preprocess, input_size)
 
-  obj$kernel <- kernel #c("radial", "poly", "linear", "sigmoid")
-  obj$epsilon <- epsilon #seq(0, 1, 0.1)
-  obj$cost <- cost #=seq(10, 100, 10)
+  # Kernel and hyperparameters for epsilon-SVR
+  obj$kernel <- kernel # c("radial", "poly", "linear", "sigmoid")
+  obj$epsilon <- epsilon # width of epsilon-insensitive tube
+  obj$cost <- cost      # regularization strength
 
   class(obj) <- append("ts_svm", class(obj))
   return(obj)
@@ -58,6 +59,7 @@ ts_svm <- function(preprocess=NA, input_size=NA, kernel="radial", epsilon=0, cos
 #'@inheritParams do_fit
 #'@return A fitted `ts_svm` object with trained SVR model.
 do_fit.ts_svm <- function(obj, x, y) {
+  # e1071::svm expects data.frame for x
   obj$model <- e1071::svm(x = as.data.frame(x), y = y, epsilon=obj$epsilon, cost=obj$cost, kernel=obj$kernel)
   return(obj)
 }
@@ -67,6 +69,7 @@ do_fit.ts_svm <- function(obj, x, y) {
 #'@inheritParams do_predict
 #'@return Numeric vector with predictions.
 do_predict.ts_svm <- function(obj, x) {
+  # Predict with same data.frame interface
   prediction <- stats::predict(obj$model, as.data.frame(x))
   return(prediction)
 }

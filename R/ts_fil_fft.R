@@ -34,6 +34,7 @@ ts_fil_fft <- function() {
 }
 
 compute_cut_index <- function(freqs) {
+  # Initial cutoff at dominant frequency; adjust by threshold if spectrum varies
   cutindex <- which.max(freqs)
   if (min(freqs) != max(freqs)) {
     threshold <- mean(freqs) + 2.968 * sd(freqs)

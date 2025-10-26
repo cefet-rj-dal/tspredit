@@ -4,6 +4,12 @@
 #'@param outliers Indicate outliers transformation class. NULL can avoid outliers removal.
 #'@param nw windows size
 #'@return A `ts_norm_ean` object.
+#'
+#'@references
+#' Ogasawara, E., Martinez, L. C., De Oliveira, D., Zimbrão, G., Pappa, G. L.,
+#' Mattoso, M. (2010). Adaptive Normalization: A novel data normalization
+#' approach for non-stationary time series. Proceedings of the International
+#' Joint Conference on Neural Networks (IJCNN). doi:10.1109/IJCNN.2010.5596746
 #'@examples
 #'# time series to normalize
 #'library(daltoolbox)
@@ -29,12 +35,15 @@ ts_norm_ean <- function(outliers = outliers_boxplot(), nw = 0) {
     y <- rep(0, n)
     alfa <- 1 - 2.0 / (n + 1);
     for (i in 0:(n-1)) {
+      # Exponentially decaying weights favoring recent values
       y[n-i] <- alfa^i
     }
 
+    # Compute exponentially weighted mean
     m <- sum(y * data, na.rm = na.rm)/sum(y, na.rm = na.rm)
     return(m)
   }
+  # Reuse adaptive normalization pipeline, overriding the mean with EMA
   obj <- ts_norm_an(outliers, nw = nw)
   obj$an_mean <- emean
   class(obj) <- append("ts_norm_ean", class(obj))

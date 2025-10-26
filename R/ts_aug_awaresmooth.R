@@ -3,6 +3,10 @@
 #' before applying the weighting, producing cleaner augmented samples.
 #'@param factor Numeric factor controlling the recency weighting.
 #'@return A `ts_aug_awaresmooth` object.
+#'
+#'@references
+#' - Q. Wen et al. (2021). Time Series Data Augmentation for Deep Learning:
+#'   A Survey. IJCAI Workshop on Time Series.
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)
@@ -40,6 +44,7 @@ transform.ts_aug_awaresmooth <- function(obj, data, ...) {
       diff <- serie[2:n] - serie[1:(n-1)]
 
       names(diff) <- 1:length(diff)
+      # Detect large jumps via boxplot (IQR) and iteratively smooth
       bp <- graphics::boxplot(diff, plot = FALSE)
       j <- as.integer(names(bp$out))
 
@@ -69,6 +74,7 @@ transform.ts_aug_awaresmooth <- function(obj, data, ...) {
     }
 
     add_noise <- function(input, data) {
+      # Estimate noise scale from original data, not the smoothed input
       an <- apply(data, 1, mean)
       x <- data - an
       xsd <- stats::sd(x)
@@ -90,6 +96,7 @@ transform.ts_aug_awaresmooth <- function(obj, data, ...) {
     return(result)
   }
 
+  # Smooth each sliding window serialized as a single timeline
   n <- ncol(data)
   x <- c(as.vector(data[1,1:(n-1)]), as.vector(data[,n]))
   xd <- progressive_smoothing(x)
@@ -97,6 +104,7 @@ transform.ts_aug_awaresmooth <- function(obj, data, ...) {
 
   result <- transform_ts_aug_awareness(result, obj$factor)
 
+  # Keep indices of augmented samples for traceability
   idx <- attr(result, "idx")
   return(result)
 }

@@ -34,6 +34,7 @@ ts_fil_remd <- function(noise = 0.1, trials = 5) {
 }
 
 fc_roughness <- function(x) {
+  # Roughness metric based on normalized first differences
   firstD = diff(x)
   normFirstD = (firstD - mean(firstD)) / sd(firstD)
   roughness = (diff(normFirstD) ** 2) / 4
@@ -48,6 +49,7 @@ transform.ts_fil_remd <- function(obj, data, ...) {
 
   id <- 1:length(data)
 
+  # Perform CEEMD to decompose into IMFs under noise trials
   suppressWarnings(ceemd.result <- hht::CEEMD(data, id, verbose = FALSE, obj$noise, obj$trials))
 
   obj$model <- ceemd.result
@@ -62,7 +64,7 @@ transform.ts_fil_remd <- function(obj, data, ...) {
   ## Maximum curvature
   res <- transform(daltoolbox::fit_curvature_min(), vec)
   div <- res$x
-  noise <- obj$model[["imf"]][, 1]
+  noise <- obj$model[["imf"]][, 1]  # start with the highest-frequency IMF
 
   if (div > 1) {
     for (k in 2:div) {
@@ -70,6 +72,7 @@ transform.ts_fil_remd <- function(obj, data, ...) {
     }
   }
 
+  # Remove accumulated noisy IMFs from the original signal
   result <- data - noise
 
   return(result)

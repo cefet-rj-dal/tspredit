@@ -36,6 +36,7 @@ ts_aug_flip <- function() {
 #'@exportS3Method transform ts_aug_flip
 transform.ts_aug_flip <- function(obj, data, ...) {
   add.ts_aug_flip <- function(obj, data) {
+    # Mirror around row mean: (mean - (x - mean))
     an <- apply(data, 1, mean)
     x <- data - an
     data <- an - x
@@ -44,6 +45,7 @@ transform.ts_aug_flip <- function(obj, data, ...) {
   }
   result <- add.ts_aug_flip(obj, data)
   if (obj$preserve_data) {
+    # Stack original and augmented rows; preserve indices for traceability
     idx <- c(1:nrow(data), attr(result, "idx"))
     result <- rbind(data, result)
     result <- adjust_ts_data(result)

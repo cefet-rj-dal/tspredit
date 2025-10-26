@@ -88,21 +88,24 @@ fit.ts_arima <- function(obj, x, y = NULL, ...) {
 #'@return A numeric vector of forecasts.
 predict.ts_arima <- function(object, x, y = NULL, steps_ahead=NULL, ...) {
   if (!is.null(x) && (length(object$model$x) == length(x)) && (sum(object$model$x-x) == 0)){
-    #get adjusted data
+    # If x equals the training series, return the in-sample fit (yhat = x - residuals)
     pred <- object$model$x - object$model$residuals
   }
   else {
     if (is.null(steps_ahead))
       steps_ahead <- length(x)
     if ((steps_ahead == 1) && (length(x) != 1)) {
+      # Rolling one-step-ahead forecast across the horizon
       pred <- NULL
       model <- object$model
       i <- 1
       y <- model$x
       while (i <= length(x)) {
+        # Forecast next point
         pred <- c(pred, forecast::forecast(model, h = 1)$mean)
         y <- c(y, x[i])
 
+        # Refit quickly using known orders; if that fails, fall back to auto.arima
         model <- tryCatch(
           {
             forecast::Arima(y, order=c(object$p, object$d, object$q), include.drift = object$drift)
@@ -115,6 +118,7 @@ predict.ts_arima <- function(object, x, y = NULL, steps_ahead=NULL, ...) {
       }
     }
     else {
+      # Direct h-step forecast from the fitted model
       pred <- forecast::forecast(object$model, h = steps_ahead)$mean
     }
   }

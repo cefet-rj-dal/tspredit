@@ -31,6 +31,7 @@ ts_fil_recursive <- function(filter){
 #'@importFrom daltoolbox transform
 #'@exportS3Method transform ts_fil_recursive
 transform.ts_fil_recursive <- function(obj, data, ...){
+  # Apply recursive linear filter with coefficient `filter`
   ts_final <- stats::filter(x = data, filter = obj$filter, method = "recursive")
   return(ts_final)
 }

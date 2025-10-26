@@ -28,9 +28,11 @@
 #'ts_head(samp$test)
 #'@export
 ts_sample <- function(ts, test_size=1, offset=0) {
+  # Compute split index counting back from the end minus optional offset
   offset <- nrow(ts) - test_size - offset
   train <- ts[1:offset, ]
   test <- ts[(offset+1):(offset+test_size),]
+  # Keep column names consistent across splits
   colnames(test) <- colnames(train)
   samp <- list(train = train, test = test)
   attr(samp, "class") <- "ts_sample"

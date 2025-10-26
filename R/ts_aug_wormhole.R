@@ -6,7 +6,9 @@
 #'@details This combinatorial replacement preserves overall scale while
 #' introducing temporal permutations of lag content.
 #'
-#'@references See general surveys on time series augmentation such as Wen et al. (2021).
+#'@references
+#' - Q. Wen et al. (2021). Time Series Data Augmentation for Deep Learning:
+#'   A Survey. IJCAI Workshop on Time Series.
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)

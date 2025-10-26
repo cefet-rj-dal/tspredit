@@ -30,6 +30,7 @@ action.ts_reg <- function(obj, ...) {
 #'@inheritParams do_predict
 #'@return The last column of `x` (baseline predictor).
 predict.ts_reg <- function(object, x, ...) {
+  # Default baseline: predict last column (t0) as-is
   return(x[,ncol(x)])
 }
 
@@ -67,6 +68,7 @@ MSE.ts <- function (actual, prediction) {
   if (length(actual) != length(prediction))
     stop("actual and prediction have different lengths")
   n <- length(actual)
+  # Mean of squared residuals
   res <- mean((actual - prediction)^2)
   res
 }
@@ -85,6 +87,7 @@ sMAPE.ts <- function (actual, prediction) {
   if (length(actual) != length(prediction))
     stop("actual and prediction have different lengths")
   n <- length(actual)
+  # Symmetric absolute percentage error (averaged)
   num <- abs(actual - prediction)
   denom <- (abs(actual) + abs(prediction))/2
   i <- denom != 0
@@ -103,6 +106,7 @@ sMAPE.ts <- function (actual, prediction) {
 R2.ts <- function (actual, prediction) {
   if (length(actual) != length(prediction))
     stop("actual and prediction have different lengths")
+  # 1 - SSE/SST
   res <-  1 - sum((prediction - actual)^2)/sum((mean(actual) - actual)^2)
   res
 }

@@ -3,6 +3,10 @@
 #' to generate lower-variance variants while preserving the mean.
 #'@param scale_factor Numeric factor used to scale deviations.
 #'@return A `ts_aug_shrink` object.
+#'
+#'@references
+#' - Q. Wen et al. (2021). Time Series Data Augmentation for Deep Learning:
+#'   A Survey. IJCAI Workshop on Time Series.
 #'@examples
 #'library(daltoolbox)
 #'data(tsd)
@@ -31,6 +35,7 @@ ts_aug_shrink <- function(scale_factor = 0.8) {
 #'@exportS3Method transform ts_aug_shrink
 transform.ts_aug_shrink <- function(obj, data, ...) {
   add.ts_aug_shrink <- function(obj, data) {
+    # Reduce deviations from the mean by `scale_factor`
     an <- apply(data, 1, mean)
     x <- data - an
     x <- x * obj$scale_factor
@@ -41,6 +46,7 @@ transform.ts_aug_shrink <- function(obj, data, ...) {
   }
   result <- add.ts_aug_shrink(obj, data)
   if (obj$preserve_data) {
+    # Concatenate original and augmented samples, preserving indices
     idx <- c(1:nrow(data), attr(result, "idx"))
     result <- rbind(data, result)
     result <- adjust_ts_data(result)

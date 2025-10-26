@@ -34,6 +34,7 @@ ts_fil_ses <- function(gamma = FALSE) {
 #'@importFrom stats HoltWinters
 #'@exportS3Method transform ts_fil_ses
 transform.ts_fil_ses <- function(obj, data, ...) {
+  # Simple exponential smoothing (no trend), optional seasonality via gamma
   adjust <- stats::HoltWinters(data, beta=FALSE, gamma=obj$gamma)
   result <- as.vector(adjust$fitted[,1])
   return(result)
