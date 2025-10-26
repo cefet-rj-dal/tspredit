@@ -16,28 +16,34 @@
 #' Preprocessing and Time Series Prediction Models. Lecture Notes in Computer
 #' Science.
 #'@examples
-#'library(daltoolbox)
-#'data(tsd)
-#'ts <- ts_data(tsd$y, 10)
+#' # Integrated search over input size, preprocessing and model hyperparameters
+#' library(daltoolbox)
+#' data(tsd)
 #'
-#'samp <- ts_sample(ts, test_size = 5)
-#'io_train <- ts_projection(samp$train)
-#'io_test <- ts_projection(samp$test)
+#' # Build windows and split into train/test, then project to (X, y)
+#' ts <- ts_data(tsd$y, 10)
+#' samp <- ts_sample(ts, test_size = 5)
+#' io_train <- ts_projection(samp$train)
+#' io_test <- ts_projection(samp$test)
 #'
-#'tune <- ts_integtune(input_size=c(3:5), base_model = ts_elm(),
-#' ranges = list(nhid = 1:5, actfun=c('purelin')),
-#' preprocess = list(ts_norm_gminmax()))
+#' # Configure integrated tuning: ranges for input_size, ELM (nhid, actfun), and preprocessors
+#' tune <- ts_integtune(
+#'   input_size = 3:5,
+#'   base_model = ts_elm(),
+#'   ranges = list(nhid = 1:5, actfun = c('purelin')),
+#'   preprocess = list(ts_norm_gminmax())
+#' )
 #'
+#' # Run search; augmentation (if provided) is applied during training internally
+#' model <- fit(tune, x = io_train$input, y = io_train$output)
 #'
-#'# Generic model tuning (with augmentation stitched into training data)
-#'model <- fit(tune, x=io_train$input, y=io_train$output)
+#' # Forecast and evaluate on the held-out window
+#' prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
+#' prediction <- as.vector(prediction)
+#' output <- as.vector(io_test$output)
 #'
-#'prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
-#'prediction <- as.vector(prediction)
-#'output <- as.vector(io_test$output)
-#'
-#'ev_test <- evaluate(model, output, prediction)
-#'ev_test
+#' ev_test <- evaluate(model, output, prediction)
+#' ev_test
 #'@importFrom daltoolbox dal_tune
 #'@importFrom daltoolbox fit
 #'@importFrom daltoolbox select_hyper

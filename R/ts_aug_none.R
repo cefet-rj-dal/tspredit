@@ -3,17 +3,20 @@
 #' preserving the augmentation interface and indices.
 #'@return A `ts_aug_none` object.
 #'@examples
-#'library(daltoolbox)
-#'data(tsd)
+#'# Identity augmentation (no changes to windows)
+#' # Load package and example dataset
+#' library(daltoolbox)
+#' data(tsd)
 #'
-#'#convert to sliding windows
-#'xw <- ts_data(tsd$y, 10)
+#' # Convert to sliding windows and preview
+#' xw <- ts_data(tsd$y, 10)
+#' ts_head(xw)
 #'
-#'#no data augmentation
-#'augment <- ts_aug_none()
-#'augment <- fit(augment, xw)
-#'xa <- transform(augment, xw)
-#'ts_head(xa)
+#' # No augmentation; returns the same windows with indices preserved
+#' augment <- ts_aug_none()
+#' augment <- fit(augment, xw)
+#' xa <- transform(augment, xw)
+#' ts_head(xa)
 #'@importFrom daltoolbox dal_transform
 #'@importFrom daltoolbox fit
 #'@importFrom daltoolbox transform

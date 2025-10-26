@@ -23,24 +23,30 @@
 #'   20, 273–297.
 #'@examples
 #'# Example: SVR with min–max normalization
-#'library(daltoolbox)
-#'data(tsd)
-#'ts <- ts_data(tsd$y, 10)
-#'ts_head(ts, 3)
+#' # Load package and dataset
+#' library(daltoolbox)
+#' data(tsd)
 #'
-#'samp <- ts_sample(ts, test_size = 5)
-#'io_train <- ts_projection(samp$train)
-#'io_test <- ts_projection(samp$test)
+#' # Create sliding windows and preview
+#' ts <- ts_data(tsd$y, 10)
+#' ts_head(ts, 3)
 #'
-#'model <- ts_svm(ts_norm_gminmax(), input_size = 4)
-#'model <- fit(model, x=io_train$input, y=io_train$output)
+#' # Temporal split and (X, y) projection
+#' samp <- ts_sample(ts, test_size = 5)
+#' io_train <- ts_projection(samp$train)
+#' io_test <- ts_projection(samp$test)
 #'
-#'prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
-#'prediction <- as.vector(prediction)
-#'output <- as.vector(io_test$output)
+#' # Define SVM regressor and fit to training data
+#' model <- ts_svm(ts_norm_gminmax(), input_size = 4)
+#' model <- fit(model, x = io_train$input, y = io_train$output)
 #'
-#'ev_test <- evaluate(model, output, prediction)
-#'ev_test
+#' # Multi-step forecast and evaluation
+#' prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
+#' prediction <- as.vector(prediction)
+#' output <- as.vector(io_test$output)
+#'
+#' ev_test <- evaluate(model, output, prediction)
+#' ev_test
 #'@export
 ts_svm <- function(preprocess=NA, input_size=NA, kernel="radial", epsilon=0, cost=10) {
   obj <- ts_regsw(preprocess, input_size)

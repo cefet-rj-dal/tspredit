@@ -20,24 +20,32 @@
 #'   Theory and Applications. Neurocomputing, 70(1–3), 489–501.
 #'@examples
 #'# Example: ELM with sliding-window inputs
-#'library(daltoolbox)
-#'data(tsd)
-#'ts <- ts_data(tsd$y, 10)
-#'ts_head(ts, 3)
+#' # Load package and toy dataset
+#' library(daltoolbox)
+#' data(tsd)
 #'
-#'samp <- ts_sample(ts, test_size = 5)
-#'io_train <- ts_projection(samp$train)
-#'io_test <- ts_projection(samp$test)
+#' # Create sliding windows of length 10 (t9 ... t0)
+#' ts <- ts_data(tsd$y, 10)
+#' ts_head(ts, 3)
 #'
-#'model <- ts_elm(ts_norm_gminmax(), input_size = 4, nhid = 3, actfun = "purelin")
-#'model <- fit(model, x=io_train$input, y=io_train$output)
+#' # Split last 5 rows as test set
+#' samp <- ts_sample(ts, test_size = 5)
+#' # Project to inputs (X) and outputs (y)
+#' io_train <- ts_projection(samp$train)
+#' io_test <- ts_projection(samp$test)
 #'
-#'prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
-#'prediction <- as.vector(prediction)
-#'output <- as.vector(io_test$output)
+#' # Define ELM with global min-max normalization and fit
+#' model <- ts_elm(ts_norm_gminmax(), input_size = 4, nhid = 3, actfun = "purelin")
+#' model <- fit(model, x = io_train$input, y = io_train$output)
 #'
-#'ev_test <- evaluate(model, output, prediction)
-#'ev_test
+#' # Forecast 5 steps ahead starting from the last known window
+#' prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
+#' prediction <- as.vector(prediction)
+#' output <- as.vector(io_test$output)
+#'
+#' # Evaluate forecast error on the test horizon
+#' ev_test <- evaluate(model, output, prediction)
+#' ev_test
 #'@export
 ts_elm <- function(preprocess=NA, input_size=NA, nhid=NA, actfun='purelin') {
   obj <- ts_regsw(preprocess, input_size)

@@ -21,27 +21,34 @@
 #'   Science.
 #'@examples
 #'# Example: grid search over input_size and ELM hyperparameters
-#'library(daltoolbox)
-#'data(tsd)
-#'ts <- ts_data(tsd$y, 10)
-#'ts_head(ts, 3)
+#' # Load library and example data
+#' library(daltoolbox)
+#' data(tsd)
 #'
-#'samp <- ts_sample(ts, test_size = 5)
-#'io_train <- ts_projection(samp$train)
-#'io_test <- ts_projection(samp$test)
+#' # Prepare 10-lag windows and split into train/test
+#' ts <- ts_data(tsd$y, 10)
+#' ts_head(ts, 3)
+#' samp <- ts_sample(ts, test_size = 5)
+#' io_train <- ts_projection(samp$train)
+#' io_test <- ts_projection(samp$test)
 #'
-#'tune <- ts_tune(input_size=c(3:5), base_model = ts_elm(ts_norm_gminmax()),
-#'     ranges = list(nhid = 1:5, actfun=c('purelin')))
+#' # Define tuning: vary input_size and ELM hyperparameters (nhid, actfun)
+#' tune <- ts_tune(
+#'   input_size = 3:5,
+#'   base_model = ts_elm(ts_norm_gminmax()),
+#'   ranges = list(nhid = 1:5, actfun = c('purelin'))
+#' )
 #'
-#'# Generic model tuning
-#'model <- fit(tune, x=io_train$input, y=io_train$output)
+#' # Run CV-based search and get the best fitted model
+#' model <- fit(tune, x = io_train$input, y = io_train$output)
 #'
-#'prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
-#'prediction <- as.vector(prediction)
-#'output <- as.vector(io_test$output)
+#' # Forecast and evaluate on the held-out horizon
+#' prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
+#' prediction <- as.vector(prediction)
+#' output <- as.vector(io_test$output)
 #'
-#'ev_test <- evaluate(model, output, prediction)
-#'ev_test
+#' ev_test <- evaluate(model, output, prediction)
+#' ev_test
 #'@export
 ts_tune <- function(input_size, base_model, folds=10, ranges=NULL) {
   obj <- dal_tune(base_model, folds, ranges)
