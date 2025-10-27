@@ -1,19 +1,21 @@
-```{r}
-# Time series augmentation - shrink
+Objetivo: Aumentar dados reduzindo as variações dentro da janela (shrink), gerando versões mais suaves dos padrões.
 
-# Installing tspredit
+```{r}
+# Aumentação de séries temporais - shrink
+
+# Instalando o pacote (se necessário)
 install.packages("tspredit")
 ```
 
 ```{r}
-# Loading tspredit
+# Carregando os pacotes
 library(daltoolbox)
 library(tspredit) 
 ```
 
 
 ```{r}
-# Series for studying
+# Série para estudo
 
 data(tsd)
 library(ggplot2)
@@ -21,14 +23,14 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 
 ```{r}
-# Sliding windows
+# Janelas deslizantes
 
 sw_size <- 10
 xw <- ts_data(tsd$y, sw_size)
 ```
 
 ```{r}
-# Augment
+# Aumentação (shrink)
 
 augment <- ts_aug_shrink()
 augment <- fit(augment, xw)
@@ -38,7 +40,7 @@ ts_head(xa)
 ```
 
 ```{r}
-# Plot
+# Gráfico (original vs janelas aumentadas)
 
 i <- 1:nrow(xw)
 y <- xw[,sw_size]
@@ -48,4 +50,3 @@ for (j in 1:nrow(xa)) {
   lines(x = (idx[j]-sw_size+1):idx[j], y = xa[j,1:sw_size], col="green")
 }
 ```
-

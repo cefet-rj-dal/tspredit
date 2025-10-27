@@ -1,23 +1,25 @@
+Objetivo: Dividir um ts_data em conjuntos de treino e teste respeitando a ordem temporal, definindo o tamanho do teste e visualizando as partes.
+
 ```{r}
 install.packages("tspredit")
 
-# loading tspredit
+# Carregando o pacote
 library(tspredit) 
 ```
 
 ```{r}
-# Series for studying
+# Série para estudo
 
 data(tsd)
 ```
 
 ```{r}
 library(ggplot2)
-plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
+plot_ts(x = tsd$x, y = tsd$y) + theme(text = element_text(size=16))
 ```
 
 ```{r}
-# sliding windows
+# Janelas deslizantes
 
 sw_size <- 10
 ts <- ts_data(tsd$y, sw_size)
@@ -25,24 +27,23 @@ ts_head(ts, 3)
 ```
 
 ```{r}
-# data sampling
+# Amostragem (treino e teste)
 
 test_size <- 3
 samp <- ts_sample(ts, test_size)
 ```
 
 ```{r}
-# first five rows from training data
+# Cinco primeiras linhas do treino
 ts_head(samp$train, 5)
 ```
 
 ```{r}
-# last five rows from training data
+# Cinco últimas linhas do treino
 ts_head(samp$train[-c(1:(nrow(samp$train)-5)),])
 ```
 
 ```{r}
-# testing data
+# Dados de teste
 ts_head(samp$test)
 ```
-
