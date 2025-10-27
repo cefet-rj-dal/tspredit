@@ -1,13 +1,15 @@
-```{r}
-# Time Series regression - Long short-term memory (LSTM)
+Objetivo: Treinar e avaliar um modelo LSTM para previsão de séries temporais com janelas deslizantes, incluindo normalização, ajuste e avaliação no teste.
 
-# installing packages
+```{r}
+# Regressão de Série Temporal - LSTM
+
+# Instalando pacotes (se necessário)
 
 install.packages("tspredit")
 ```
 
 ```{r}
-# loading DAL
+# Carregando os pacotes
 library(daltoolbox)
 library(daltoolboxdp)
 library(tspredit)
@@ -15,7 +17,7 @@ library(tspredit)
 
 
 ```{r}
-# Series for studying
+# Série para estudo e janelas deslizantes
 
 data(tsd)
 ts <- ts_data(tsd$y, 10)
@@ -23,12 +25,13 @@ ts_head(ts, 3)
 ```
 
 ```{r}
+# Visualização da série
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 
 ```{r}
-# data sampling
+# Separação treino-teste e projeção (X, y)
 
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
@@ -36,14 +39,14 @@ io_test <- ts_projection(samp$test)
 ```
 
 ```{r}
-# Model training
+# Treinando o modelo LSTM
 
 model <- ts_lstm(ts_norm_gminmax(), input_size=4, epochs=10000)
 model <- fit(model, x=io_train$input, y=io_train$output)
 ```
 
 ```{r}
-# Evaluation of adjustment
+# Avaliação do ajuste (treino)
 
 adjust <- predict(model, io_train$input)
 adjust <- as.vector(adjust)
@@ -53,7 +56,7 @@ ev_adjust$mse
 ```
 
 ```{r}
-# Prediction of test
+# Previsão no conjunto de teste
 
 steps_ahead <- 1
 io_test <- ts_projection(samp$test)
@@ -68,7 +71,7 @@ print(sprintf("%.2f, %.2f", output, prediction))
 ```
 
 ```{r}
-# Evaluation of test data
+# Avaliação no conjunto de teste
 
 ev_test <- evaluate(model, output, prediction)
 print(head(ev_test$metrics))
@@ -76,7 +79,7 @@ print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
 ```
 
 ```{r}
-# Plot results
+# Gráfico dos resultados
 
 yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))

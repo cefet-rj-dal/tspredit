@@ -1,23 +1,26 @@
+Objetivo: Projetar um objeto ts_data nas componentes de entrada (X) e saída (y), separando as colunas de atributos e o alvo para modelagem.
+
 ```{r}
 install.packages("tspredit")
 
-# loading tspredit
+# Carregando o pacote
 library(tspredit) 
 ```
 
 ```{r}
-# Series for studying
+# Série para estudo
 
 data(tsd)
 ```
 
 ```{r}
+# Visualização da série
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 
 ```{r}
-# sliding windows
+# Janelas deslizantes
 
 sw_size <- 5
 ts <- ts_data(tsd$y, sw_size)
@@ -25,18 +28,18 @@ ts_head(ts, 3)
 ```
 
 ```{r}
-# projection
+# Projeção (X, y)
 
 io <- ts_projection(ts)
 ```
 
 ```{r}
-# input data
+# Dados de entrada (X)
 ts_head(io$input)
 ```
 
 ```{r}
-# output data
+# Dados de saída (y)
 ts_head(io$output)
 ```
 
