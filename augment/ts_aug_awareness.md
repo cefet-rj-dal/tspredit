@@ -10,20 +10,6 @@ install.packages("tspredit")
 ``` r
 # Carregando os pacotes
 library(daltoolbox)
-```
-
-```
-## 
-## Attaching package: 'daltoolbox'
-```
-
-```
-## The following object is masked from 'package:base':
-## 
-##     transform
-```
-
-``` r
 library(tspredit) 
 ```
 
