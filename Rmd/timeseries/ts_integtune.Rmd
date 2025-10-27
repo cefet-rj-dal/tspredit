@@ -1,25 +1,34 @@
+Overview
+
+Integrated tuning automates hyperparameter search for time-series learners in a single pipeline. It handles preprocessing, window size, and model hyperparameters, then evaluates and returns the best configuration for your training data.
+
+What you will learn
+- Create sliding windows suitable for supervised learning
+- Split the data into train/test respecting time order
+- Define a search space and run integrated tuning
+- Inspect evaluation metrics and visualize predictions
+
 ```{r}
-# Installing tspredit
+# Install tspredit if needed
 install.packages("tspredit")
 ```
 
 ```{r}
-# Loading tspredit
+# Load packages
 library(daltoolbox)
 library(tspredit) 
 ```
 
 
 ```{r}
-# Cosine time series for studying
+# Create a simple cosine series for demonstration
 
 i <- seq(0, 25, 0.25)
 x <- cos(i)
 ```
 
 ```{r}
-# plot the time series
-
+# Visualize the time series
 plot_ts(x=i, y=x) + theme(text = element_text(size=16))
 ```
 
@@ -28,46 +37,45 @@ plot_ts(x=i, y=x) + theme(text = element_text(size=16))
 ```{r}
 # Sliding windows
 
-# Creates a matrix representing a sliding window to be used in the process of training the model. Each row of the matrix represents one moment of the sliding window, with 10 (ten) elements as attributes (t9, t8, t7, ..., t0).
-
+# Create a sliding-window matrix for supervised learning.
+# Each row contains 10 attributes (t9..t0) representing the last 10 observations.
 sw_size <- 10
 ts <- ts_data(x, sw_size)
 ts_head(ts, 3)
 ```
 
 ```{r}
-# Data sampling
+# Data sampling (train/test split)
 
-# Samples data into train and test.
-
-test_size <- 1
+test_size <- 1                  # keep last step for testing
 samp <- ts_sample(ts, test_size)
 ts_head(samp$train, 3)
 ts_head(samp$test)
 ```
 
 ```{r}
-# Model training
+# Define integrated tuning
 
-# Tune optimizes a learner hyperparameter, no matter which one. This way, in this example, an ELM is used in the hyperparameters tuning using an appropriate range. The result of tunning is an ELM model for the training set.
+# We will:
+# - search over input window sizes (3..5)
+# - use ELM as the base model
+# - apply global min-max normalization as preprocessing
+# - explore ranges for hidden units and activation function
 
-# Setup for tunning using ELM
 tune <- ts_integtune(input_size=c(3:5), base_model = ts_elm(), preprocess = list(ts_norm_gminmax()),
-                    ranges = list(nhid = 1:5, actfun=c('sig', 'radbas', 'tribas', 'relu', 'purelin')))
+                     ranges = list(nhid = 1:5, actfun=c('sig', 'radbas', 'tribas', 'relu', 'purelin')))
 
 ```
 
 ```{r}
-# The prediction output using the training set can be used to evaluate the model's adjustment level to the training data:
+# Fit the tuned pipeline on training data
 
 io_train <- ts_projection(samp$train)
-
-# Generic model tunning
 model <- fit(tune, x=io_train$input, y=io_train$output)
 ```
 
 ```{r}
-# Evaluation of adjustment
+# Evaluate training adjustment (in-sample)
 
 adjust <- predict(model, io_train$input)
 ev_adjust <- evaluate(model, io_train$output, adjust)
@@ -75,7 +83,7 @@ print(head(ev_adjust$metrics))
 ```
 
 ```{r}
-# Prediction of test
+# Forecast on the test segment
 
 steps_ahead <- 1
 io_test <- ts_projection(samp$test)
@@ -90,7 +98,7 @@ print(sprintf("%.2f, %.2f", output, prediction))
 ```
 
 ```{r}
-# Evaluation of test data
+# Evaluate test performance
 
 ev_test <- evaluate(model, output, prediction)
 print(head(ev_test$metrics))
@@ -100,33 +108,29 @@ print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
 ```{r}
 # Plot results
 
-# The plot shows results of the prediction. 
-
 yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))
 ```
 
 ```{r}
-# Otions for machine learning
+# Example hyperparameter ranges by model
 
-# Options of ranges for all time series models:
-
-# Ranges for ELM
+# ELM
 ranges_elm <- list(nhid = 1:20, actfun=c('sig', 'radbas', 'tribas', 'relu', 'purelin'))
 
-# Ranges for MLP
+# MLP
 ranges_mlp <- list(size = 1:10, decay = seq(0, 1, 1/9), maxit=10000)
 
-# Ranges for RF
+# RF
 ranges_rf <- list(nodesize=1:10, ntree=1:10)
 
-# Ranges for SVM
+# SVM
 ranges_svm <- list(kernel=c("radial", "poly", "linear", "sigmoid"), epsilon=seq(0, 1, 0.1), cost=seq(20, 100, 20))
 
-# Ranges for LSTM
+# LSTM
 ranges_lstm <- list(input_size = 1:10, epochs=10000)
 
-# Ranges for CNN
+# CNN
 ranges_cnn <- list(input_size = 1:10, epochs=10000)
 ```
 
