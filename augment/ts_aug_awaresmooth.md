@@ -1,12 +1,14 @@
+Objetivo: Aumentar dados com consciência temporal e suavização progressiva, reduzindo ruído e priorizando amostras recentes.
+
 
 ``` r
-# Installing tspredit
+# Instalando o pacote (se necessário)
 install.packages("tspredit")
 ```
 
 
 ``` r
-# Loading tspredit
+# Carregando os pacotes
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -14,7 +16,7 @@ library(tspredit)
 
 
 ``` r
-# Noise cosine series for studying
+# Série cosseno com ruído para estudo
 
 i <- seq(0, 2*pi+8*pi/50, pi/50)
 x <- cos(i)
@@ -38,7 +40,7 @@ lines(i, x)
 
 
 ``` r
-# sliding windows
+# Janelas deslizantes
 
 sw_size <- 10
 xw <- ts_data(x, sw_size)
@@ -53,7 +55,7 @@ lines(i, y)
 
 
 ``` r
-# augment
+# Aumentação (awareness + smoothing)
 
 filter <- tspredit::ts_aug_awaresmooth(0.25)
 xa <- transform(filter, xw)
@@ -62,7 +64,7 @@ idx <- attr(xa, "idx")
 
 
 ``` r
-# Plot
+# Gráfico (original vs janelas aumentadas)
 
 plot(x = i, y = y, main = "cosine")
 lines(x = i, y = y, col="black")
@@ -72,4 +74,3 @@ lines(x = (idx[j]-sw_size+1):idx[j], y = xa[j,1:sw_size], col="green")
 ```
 
 ![plot of chunk unnamed-chunk-6](fig/ts_aug_awaresmooth/unnamed-chunk-6-1.png)
-

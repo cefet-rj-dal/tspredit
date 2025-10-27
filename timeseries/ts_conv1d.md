@@ -1,15 +1,17 @@
+Objetivo: Treinar e avaliar uma CNN 1D (Conv1D) para previsão de séries temporais com janelas deslizantes, incluindo normalização, ajuste e avaliação.
+
 
 ``` r
-# Time Series regression - 1D Convolutional Neural Networks (Conv1D)
+# Regressão de Série Temporal - CNN 1D (Conv1D)
 
-# installing packages
+# Instalando pacotes (se necessário)
 
 install.packages("tspredit")
 ```
 
 
 ``` r
-# loading DAL
+# Carregando os pacotes
 library(daltoolbox)
 library(daltoolboxdp)
 library(tspredit)
@@ -17,7 +19,7 @@ library(tspredit)
 
 
 ``` r
-# Series for studying
+# Série para estudo e janelas deslizantes
 
 data(tsd)
 ts <- ts_data(tsd$y, 10)
@@ -33,6 +35,7 @@ ts_head(ts, 3)
 
 
 ``` r
+# Visualização da série
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
@@ -41,7 +44,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# data sampling
+# Separação treino-teste e projeção (X, y)
 
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
@@ -50,7 +53,7 @@ io_test <- ts_projection(samp$test)
 
 
 ``` r
-# Model training
+# Treinando a CNN 1D
 
 model <- ts_conv1d(ts_norm_gminmax(), input_size=4, epochs=10000)
 model <- fit(model, x=io_train$input, y=io_train$output)
@@ -58,7 +61,7 @@ model <- fit(model, x=io_train$input, y=io_train$output)
 
 
 ``` r
-# Evaluation of adjustment
+# Avaliação do ajuste (treino)
 
 adjust <- predict(model, io_train$input)
 adjust <- as.vector(adjust)
@@ -68,12 +71,12 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 2.67917e-06
+## [1] 9.231487e-06
 ```
 
 
 ``` r
-# Prediction of test
+# Previsão no conjunto de teste
 
 prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
 prediction <- as.vector(prediction)
@@ -87,25 +90,25 @@ ev_test
 ## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
 ## 
 ## $prediction
-## [1]  0.41087207  0.17111173 -0.08228758 -0.32581530 -0.55060460
+## [1]  0.41806122  0.18028717 -0.06478005 -0.30520332 -0.52701812
 ## 
 ## $smape
-## [1] 0.02826605
+## [1] 0.05525128
 ## 
 ## $mse
-## [1] 2.863636e-05
+## [1] 0.0001355703
 ## 
 ## $R2
-## [1] 0.9997527
+## [1] 0.9988291
 ## 
 ## $metrics
 ##            mse      smape        R2
-## 1 2.863636e-05 0.02826605 0.9997527
+## 1 0.0001355703 0.05525128 0.9988291
 ```
 
 
 ``` r
-# Plot results
+# Gráfico dos resultados
 
 yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))

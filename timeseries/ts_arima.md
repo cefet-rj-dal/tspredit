@@ -1,14 +1,16 @@
+Objetivo: Ajustar e avaliar um modelo ARIMA (AutoRegressive Integrated Moving Average) para previsão de séries temporais, realizando a separação treino-teste, o ajuste com seleção automática de ordens e a avaliação com métricas e visualização.
+
 
 ``` r
 install.packages("tspredit")
 
-# loading tspredit
+# Carregando o pacote
 library(tspredit) 
 ```
 
 
 ``` r
-# Series for studying
+# Série para estudo (sem janela deslizante)
 
 data(tsd)
 ts <- ts_data(tsd$y, 0)
@@ -24,6 +26,7 @@ ts_head(ts, 3)
 
 
 ``` r
+# Visualização da série
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
@@ -32,7 +35,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# data sampling
+# Separação treino-teste e projeção (X, y)
 
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
@@ -41,7 +44,7 @@ io_test <- ts_projection(samp$test)
 
 
 ``` r
-# Model training
+# Treinando o modelo ARIMA (ordens selecionadas automaticamente)
 
 model <- ts_arima()
 model <- fit(model, x=io_train$input, y=io_train$output)
@@ -49,7 +52,7 @@ model <- fit(model, x=io_train$input, y=io_train$output)
 
 
 ``` r
-# Evaluation of adjustment
+# Avaliação do ajuste (treino)
 
 adjust <- predict(model, io_train$input)
 adjust <- as.vector(adjust)
@@ -64,7 +67,7 @@ ev_adjust$mse
 
 
 ``` r
-# Prediction of test
+# Previsão no conjunto de teste (5 passos à frente)
 
 prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
 prediction <- as.vector(prediction)
@@ -96,7 +99,7 @@ ev_test
 
 
 ``` r
-# Plot results
+# Gráfico comparando real vs ajuste (treino) e previsão (teste)
 
 yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))

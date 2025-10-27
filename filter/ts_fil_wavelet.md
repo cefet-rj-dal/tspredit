@@ -1,14 +1,16 @@
+Objetivo: Aplicar denoising com wavelets discretas (MODWT), removendo detalhes de alta frequência para suavizar a série.
+
 
 ``` r
-# Filter - Wavelets
+# Filtro - Wavelets
 
-# Installing tspredit
+# Instalando o pacote (se necessário)
 install.packages("tspredit")
 ```
 
 
 ``` r
-# Loading tspredit
+# Carregando os pacotes
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -16,7 +18,7 @@ library(tspredit)
 
 
 ``` r
-# Series for studying with added noise
+# Série para estudo com ruído artificial e picos
 
 data(tsd)
 y <- tsd$y
@@ -31,6 +33,7 @@ tsd$y[30] <- tsd$y[30] + spike
 
 ``` r
 library(ggplot2)
+# Visualização da série ruidosa
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 
@@ -38,7 +41,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# filtering
+# Aplicando o filtro Wavelet
 
 filter <- ts_fil_wavelet()
 filter <- fit(filter, tsd$y)
@@ -47,4 +50,3 @@ plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 ```
 
 ![plot of chunk unnamed-chunk-5](fig/ts_fil_wavelet/unnamed-chunk-5-1.png)
-

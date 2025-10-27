@@ -1,12 +1,14 @@
+Objetivo: Realizar a busca de hiperparâmetros (tamanho da janela e parâmetros do modelo base) com validação cruzada para melhorar a previsão da série temporal, e avaliar o resultado encontrado.
+
 
 ``` r
-# Installing tspredit
+# Instalando o pacote (se necessário)
 install.packages("tspredit")
 ```
 
 
 ``` r
-# Loading tspredit
+# Carregando os pacotes
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -14,7 +16,7 @@ library(tspredit)
 
 
 ``` r
-# Cosine time series for studying
+# Série cosseno para estudo
 
 i <- seq(0, 25, 0.25)
 x <- cos(i)
@@ -22,7 +24,7 @@ x <- cos(i)
 
 
 ``` r
-# Plot the time series
+# Plotar a série
 
 plot_ts(x=i, y=x) + theme(text = element_text(size=16))
 ```
@@ -31,8 +33,8 @@ plot_ts(x=i, y=x) + theme(text = element_text(size=16))
 
 
 ``` r
-# Sliding windows
-# Creates a matrix representing a sliding window to be used in the process of training the model. Each row of the matrix represents one moment of the sliding window, with 10 (ten) elements as attributes (t9, t8, t7, ..., t0).
+# Janelas deslizantes
+# Cria uma matriz de janelas (t9..t0) a partir da série para uso no treino.
 
 sw_size <- 10
 ts <- ts_data(x, sw_size)
@@ -48,8 +50,8 @@ ts_head(ts, 3)
 
 
 ``` r
-# Data sampling
-# Samples data into train and test.
+# Amostragem (treino e teste)
+# Separa os dados em treino e teste.
 
 test_size <- 1
 samp <- ts_sample(ts, test_size)
@@ -74,11 +76,9 @@ ts_head(samp$test)
 
 
 ``` r
-# Model training
-
-# Tune optimizes a learner hyperparameter, no matter which one. 
-
-# In this example, an ELM is used in the hyperparameters tuning using an appropriate range. The result of tunning is an ELM model for the training set.
+# Ajuste de hiperparâmetros
+# O ts_tune otimiza hiperparâmetros do modelo base.
+# Neste exemplo, usamos ELM com faixas para nhid e função de ativação.
 
 tune <- ts_tune(input_size=c(3:5), base_model = ts_elm(ts_norm_gminmax()), 
                 ranges = list(nhid = 1:5, actfun=c('sig', 'radbas', 'tribas', 'relu', 'purelin')))
@@ -88,17 +88,17 @@ tune <- ts_tune(input_size=c(3:5), base_model = ts_elm(ts_norm_gminmax()),
 
 
 ``` r
-# The prediction output using the training set can be used to evaluate the model's adjustment level to the training data
+# Projeção de treino e ajuste do melhor modelo
 
 io_train <- ts_projection(samp$train)
 
-# Generic model tunning
+# Ajuste genérico do modelo escolhido
 model <- fit(tune, x=io_train$input, y=io_train$output)
 ```
 
 
 ``` r
-# Evaluation of adjustment
+# Avaliação do ajuste (treino)
 
 adjust <- predict(model, io_train$input)
 ev_adjust <- evaluate(model, io_train$output, adjust)
@@ -112,7 +112,7 @@ print(head(ev_adjust$metrics))
 
 
 ``` r
-# Prediction of test
+# Previsão no conjunto de teste
 
 steps_ahead <- 1
 io_test <- ts_projection(samp$test)
@@ -132,7 +132,7 @@ print(sprintf("%.2f, %.2f", output, prediction))
 
 
 ``` r
-# Evaluation of test data
+# Avaliação no conjunto de teste
 
 ev_test <- evaluate(model, output, prediction)
 print(head(ev_test$metrics))
@@ -153,7 +153,7 @@ print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
 
 
 ``` r
-# Plot results
+# Gráfico dos resultados
 
 yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))
@@ -163,9 +163,7 @@ plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_tex
 
 
 ``` r
-# Otions for machine learning
-
-# Options of ranges for all time series models:
+# Opções de faixas de hiperparâmetros por modelo
 
 # Ranges for ELM
 ranges_elm <- list(nhid = 1:20, actfun=c('sig', 'radbas', 'tribas', 'relu', 'purelin'))

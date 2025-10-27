@@ -1,14 +1,16 @@
+Objetivo: Dividir um ts_data em conjuntos de treino e teste respeitando a ordem temporal, definindo o tamanho do teste e visualizando as partes.
+
 
 ``` r
 install.packages("tspredit")
 
-# loading tspredit
+# Carregando o pacote
 library(tspredit) 
 ```
 
 
 ``` r
-# Series for studying
+# Série para estudo
 
 data(tsd)
 ```
@@ -16,14 +18,14 @@ data(tsd)
 
 ``` r
 library(ggplot2)
-plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
+plot_ts(x = tsd$x, y = tsd$y) + theme(text = element_text(size=16))
 ```
 
 ![plot of chunk unnamed-chunk-3](fig/ts_sample/unnamed-chunk-3-1.png)
 
 
 ``` r
-# sliding windows
+# Janelas deslizantes
 
 sw_size <- 10
 ts <- ts_data(tsd$y, sw_size)
@@ -39,7 +41,7 @@ ts_head(ts, 3)
 
 
 ``` r
-# data sampling
+# Amostragem (treino e teste)
 
 test_size <- 3
 samp <- ts_sample(ts, test_size)
@@ -47,7 +49,7 @@ samp <- ts_sample(ts, test_size)
 
 
 ``` r
-# first five rows from training data
+# Cinco primeiras linhas do treino
 ts_head(samp$train, 5)
 ```
 
@@ -62,7 +64,7 @@ ts_head(samp$train, 5)
 
 
 ``` r
-# last five rows from training data
+# Cinco últimas linhas do treino
 ts_head(samp$train[-c(1:(nrow(samp$train)-5)),])
 ```
 
@@ -77,7 +79,7 @@ ts_head(samp$train[-c(1:(nrow(samp$train)-5)),])
 
 
 ``` r
-# testing data
+# Dados de teste
 ts_head(samp$test)
 ```
 
@@ -87,4 +89,3 @@ ts_head(samp$test)
 ## [2,] 0.9380000 0.9945988 0.9893582 0.9226042 0.7984871 0.6247240 0.4121185  0.17388949 -0.07515112 -0.31951919
 ## [3,] 0.9945988 0.9893582 0.9226042 0.7984871 0.6247240 0.4121185 0.1738895 -0.07515112 -0.31951919 -0.54402111
 ```
-

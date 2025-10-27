@@ -1,14 +1,16 @@
+Objetivo: Ajustar e avaliar um modelo ELM (Extreme Learning Machine) para previsão de séries temporais com janelas deslizantes, incluindo preparação de dados, normalização, ajuste e visualização.
+
 
 ``` r
-# Time Series regression - ELM
+# Regressão de Série Temporal - ELM
 
-# Installing tspredit
+# Instalando o pacote (se necessário)
 install.packages("tspredit")
 ```
 
 
 ``` r
-# Loading tspredit
+# Carregando os pacotes
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -16,7 +18,7 @@ library(tspredit)
 
 
 ``` r
-# Series for studying
+# Série para estudo e janelas deslizantes
 
 data(tsd)
 ts <- ts_data(tsd$y, 10)
@@ -32,6 +34,7 @@ ts_head(ts, 3)
 
 
 ``` r
+# Visualização da série
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
@@ -40,7 +43,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# data sampling
+# Separação treino-teste e projeção (X, y)
 
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
@@ -49,14 +52,14 @@ io_test <- ts_projection(samp$test)
 
 
 ``` r
-# data preprocessing
+# Pré-processamento (normalização min–max global)
 
 preproc <- ts_norm_gminmax()
 ```
 
 
 ``` r
-# Model training
+# Treinando o modelo ELM
 
 model <- ts_elm(ts_norm_gminmax(), input_size=4, nhid=3, actfun="purelin")
 model <- fit(model, x=io_train$input, y=io_train$output)
@@ -64,7 +67,7 @@ model <- fit(model, x=io_train$input, y=io_train$output)
 
 
 ``` r
-# Evaluation of adjustment
+# Avaliação do ajuste (treino)
 
 adjust <- predict(model, io_train$input)
 adjust <- as.vector(adjust)
@@ -79,7 +82,7 @@ ev_adjust$mse
 
 
 ``` r
-# Prediction of test
+# Previsão no conjunto de teste
 
 prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
 prediction <- as.vector(prediction)

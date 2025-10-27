@@ -1,13 +1,16 @@
+Objetivo: Construir um objeto ts_data a partir de vetor ou data.frame e entender sua estrutura de janelas deslizantes (colunas t{k}).
+
 
 ``` r
 install.packages("tspredit")
 
-# loading tspredit
+# Carregando o pacote
 library(tspredit) 
 ```
 
 
 ``` r
+# Carregar dados e separar eixos/valores
 data(tsd)
 x <- tsd$x
 y <- tsd$y
@@ -16,13 +19,15 @@ y <- tsd$y
 
 ``` r
 library(ggplot2)
-plot_ts(x=x, y=y) + theme(text = element_text(size=16))
+# Visualizar a série original
+plot_ts(x = x, y = y) + theme(text = element_text(size=16))
 ```
 
 ![plot of chunk unnamed-chunk-3](fig/ts_data/unnamed-chunk-3-1.png)
 
 
 ``` r
+# ts_data sem janela (apenas t0)
 data <- ts_data(y)
 ts_head(data)
 ```
@@ -45,6 +50,7 @@ plot_ts(y=data[,1]) + theme(text = element_text(size=16))
 
 
 ``` r
+# ts_data com janela de tamanho 10 (t9..t0)
 data10 <- ts_data(y, 10)
 ts_head(data10)
 ```
@@ -61,6 +67,7 @@ ts_head(data10)
 
 
 ``` r
+# Selecionar uma linha
 r1 <- data10[12,]
 r1
 ```
@@ -76,6 +83,7 @@ r1
 
 
 ``` r
+# Selecionar um intervalo de linhas
 r2 <- data10[12:13,]
 r2
 ```
@@ -92,6 +100,7 @@ r2
 
 
 ``` r
+# Selecionar uma coluna
 c1 <- data10[,1]
 ts_head(c1)
 ```
@@ -108,6 +117,7 @@ ts_head(c1)
 
 
 ``` r
+# Selecionar intervalo de colunas
 c2 <- data10[,1:2]
 ts_head(c2)
 ```
@@ -124,6 +134,7 @@ ts_head(c2)
 
 
 ``` r
+# Selecionar intervalo de linhas e colunas
 rc1 <- data10[12:13,1:2]
 rc1
 ```
@@ -140,6 +151,7 @@ rc1
 
 
 ``` r
+# Selecionar uma linha e intervalo de colunas
 rc2 <- data10[12,1:2]
 rc2
 ```
@@ -155,6 +167,7 @@ rc2
 
 
 ``` r
+# Selecionar intervalo de linhas e uma coluna
 rc3 <- data10[12:13,1]
 rc3
 ```
@@ -171,6 +184,7 @@ rc3
 
 
 ``` r
+# Selecionar uma única observação
 rc4 <- data10[12,1]
 rc4
 ```
@@ -183,4 +197,3 @@ rc4
 ## attr(,"sw")
 ## [1] 1
 ```
-

@@ -1,15 +1,17 @@
+Objetivo: Treinar e avaliar um modelo LSTM para previsão de séries temporais com janelas deslizantes, incluindo normalização, ajuste e avaliação no teste.
+
 
 ``` r
-# Time Series regression - Long short-term memory (LSTM)
+# Regressão de Série Temporal - LSTM
 
-# installing packages
+# Instalando pacotes (se necessário)
 
 install.packages("tspredit")
 ```
 
 
 ``` r
-# loading DAL
+# Carregando os pacotes
 library(daltoolbox)
 library(daltoolboxdp)
 library(tspredit)
@@ -18,7 +20,7 @@ library(tspredit)
 
 
 ``` r
-# Series for studying
+# Série para estudo e janelas deslizantes
 
 data(tsd)
 ts <- ts_data(tsd$y, 10)
@@ -34,6 +36,7 @@ ts_head(ts, 3)
 
 
 ``` r
+# Visualização da série
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
@@ -42,7 +45,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# data sampling
+# Separação treino-teste e projeção (X, y)
 
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
@@ -51,7 +54,7 @@ io_test <- ts_projection(samp$test)
 
 
 ``` r
-# Model training
+# Treinando o modelo LSTM
 
 model <- ts_lstm(ts_norm_gminmax(), input_size=4, epochs=10000)
 model <- fit(model, x=io_train$input, y=io_train$output)
@@ -59,7 +62,7 @@ model <- fit(model, x=io_train$input, y=io_train$output)
 
 
 ``` r
-# Evaluation of adjustment
+# Avaliação do ajuste (treino)
 
 adjust <- predict(model, io_train$input)
 adjust <- as.vector(adjust)
@@ -69,12 +72,12 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 0.0002068997
+## [1] 0.0001906662
 ```
 
 
 ``` r
-# Prediction of test
+# Previsão no conjunto de teste
 
 steps_ahead <- 1
 io_test <- ts_projection(samp$test)
@@ -89,20 +92,20 @@ print(sprintf("%.2f, %.2f", output, prediction))
 ```
 
 ```
-## [1] "0.41, 0.41"   "0.17, 0.18"   "-0.08, -0.08" "-0.32, -0.33" "-0.54, -0.56"
+## [1] "0.41, 0.41"   "0.17, 0.17"   "-0.08, -0.08" "-0.32, -0.33" "-0.54, -0.55"
 ```
 
 
 ``` r
-# Evaluation of test data
+# Avaliação no conjunto de teste
 
 ev_test <- evaluate(model, output, prediction)
 print(head(ev_test$metrics))
 ```
 
 ```
-##            mse     smape        R2
-## 1 4.037657e-05 0.0166221 0.9996513
+##            mse      smape        R2
+## 1 4.972363e-05 0.02483062 0.9995705
 ```
 
 ``` r
@@ -110,12 +113,12 @@ print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
 ```
 
 ```
-## [1] "smape: 1.66"
+## [1] "smape: 2.48"
 ```
 
 
 ``` r
-# Plot results
+# Gráfico dos resultados
 
 yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))

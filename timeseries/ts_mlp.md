@@ -1,14 +1,16 @@
+Objetivo: Demonstrar como treinar, validar e avaliar um modelo MLP (Multilayer Perceptron) para previsão de séries temporais com janelas deslizantes, incluindo a preparação dos dados, normalização, ajuste do modelo e avaliação com métricas e gráficos.
+
 
 ``` r
-# Time Series regression - MLP
+# Regressão de Série Temporal - MLP
 
-# Installing tspredit
+# Instalando o pacote (se necessário)
 install.packages("tspredit")
 ```
 
 
 ``` r
-# Loading tspredit
+# Carregando os pacotes
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -16,7 +18,7 @@ library(tspredit)
 
 
 ``` r
-# Series for studying
+# Série para estudo (gera janelas deslizantes t9..t0)
 
 data(tsd)
 ts <- ts_data(tsd$y, 10)
@@ -32,6 +34,7 @@ ts_head(ts, 3)
 
 
 ``` r
+# Visualização da série original
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
@@ -40,7 +43,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# data sampling
+# Separação treino-teste e projeção (X, y)
 
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
@@ -49,14 +52,14 @@ io_test <- ts_projection(samp$test)
 
 
 ``` r
-# data preprocessing
+# Pré-processamento (normalização min–max global)
 
 preproc <- ts_norm_gminmax()
 ```
 
 
 ``` r
-# Model training
+# Treinando o modelo MLP
 
 model <- ts_mlp(ts_norm_gminmax(), input_size=4, size=4, decay=0)
 model <- fit(model, x=io_train$input, y=io_train$output)
@@ -64,7 +67,7 @@ model <- fit(model, x=io_train$input, y=io_train$output)
 
 
 ``` r
-# Evaluation of adjustment
+# Avaliação do ajuste (treino)
 
 adjust <- predict(model, io_train$input)
 adjust <- as.vector(adjust)
@@ -79,7 +82,7 @@ ev_adjust$mse
 
 
 ``` r
-# Prediction of test
+# Previsão no conjunto de teste (5 passos à frente)
 
 prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
 prediction <- as.vector(prediction)
@@ -111,7 +114,7 @@ ev_test
 
 
 ``` r
-# Plot results
+# Gráfico comparando real vs ajuste (treino) e previsão (teste)
 
 yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))

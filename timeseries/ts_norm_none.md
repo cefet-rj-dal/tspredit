@@ -1,14 +1,16 @@
+Objetivo: Exibir o fluxo com normalização nula (sem alterar os dados), útil como baseline e para demonstrar a interface de pré-processamento.
+
 
 ``` r
-# Normalization none
+# Sem normalização
 
-# Installing tspredit
+# Instalando o pacote (se necessário)
 install.packages("tspredit")
 ```
 
 
 ``` r
-# Loading tspredit
+# Carregando os pacotes
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -16,7 +18,7 @@ library(tspredit)
 
 
 ``` r
-# Series for studying
+# Série para estudo
 
 data(tsd)
 ```

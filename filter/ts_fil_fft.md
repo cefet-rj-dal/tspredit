@@ -1,14 +1,16 @@
+Objetivo: Aplicar suavização no domínio da frequência (FFT) removendo componentes de alta frequência para reduzir ruído.
+
 
 ``` r
-# Filter - FFT
+# Filtro - FFT
 
-# Installing tspredit
+# Instalando o pacote (se necessário)
 install.packages("tspredit")
 ```
 
 
 ``` r
-# Loading tspredit
+# Carregando os pacotes
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -16,7 +18,7 @@ library(tspredit)
 
 
 ``` r
-# Series for studying with added noise
+# Série para estudo com ruído artificial e picos
 
 data(tsd)
 y <- tsd$y
@@ -30,6 +32,7 @@ tsd$y[30] <- tsd$y[30] + spike
 
 
 ``` r
+# Visualização da série ruidosa
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
@@ -38,7 +41,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# filtering
+# Aplicando o filtro FFT
 
 filter <- ts_fil_fft()
 filter <- fit(filter, tsd$y)

@@ -1,15 +1,16 @@
+Objetivo: Demonstrar o fluxo de aumentação nula (sem alterações), mantendo a interface e índices para comparações.
+
 
 ``` r
-# Time series augmentation - none
+# Aumentação de séries temporais - none (identidade)
 
-# Installing tspredit
+# Instalando o pacote (se necessário)
 install.packages("tspredit")
 ```
 
 
 ``` r
-# Loading tspredit
-
+# Carregando os pacotes
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -17,7 +18,7 @@ library(tspredit)
 
 
 ``` r
-# Series for studying
+# Série para estudo
 
 data(tsd)
 library(ggplot2)
@@ -28,7 +29,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# Sliding windows
+# Janelas deslizantes
 
 sw_size <- 10
 xw <- ts_data(tsd$y, sw_size)
@@ -36,7 +37,7 @@ xw <- ts_data(tsd$y, sw_size)
 
 
 ``` r
-# Augment
+# Aumentação (none)
 
 augment <- ts_aug_none()
 augment <- fit(augment, xw)
@@ -57,7 +58,7 @@ ts_head(xa)
 
 
 ``` r
-# Plot
+# Gráfico (original vs janelas aumentadas)
 
 i <- 1:nrow(xw)
 y <- xw[,sw_size]
@@ -69,4 +70,3 @@ for (j in 1:nrow(xa)) {
 ```
 
 ![plot of chunk unnamed-chunk-6](fig/ts_aug_none/unnamed-chunk-6-1.png)
-
