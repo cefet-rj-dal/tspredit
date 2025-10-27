@@ -1,33 +1,33 @@
-Objetivo: Aplicar normalização min–max por janela (cada linha escala pelos seus próprios mínimos e máximos) e visualizar o efeito da escala.
+Objective: Apply per-window min-max normalization (each row scaled by its own minima and maxima) and visualize the effect of scaling.
 
 ```{r}
-# Normalização por Janela (Min–Max)
+# Window-based Normalization (Min-Max)
 
-# Instalando o pacote (se necessário)
+# Installing the package (if needed)
 install.packages("tspredit")
 ```
 
 ```{r}
-# Carregando os pacotes
+# Loading the packages
 library(daltoolbox)
 library(tspredit) 
 ```
 
 
 ```{r}
-# Série para estudo
+# Series for study
 
 data(tsd)
 ```
 
 ```{r}
-# Visualização da série
+# Series visualization
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 
 ```{r}
-# Janelas deslizantes
+# Sliding windows
 
 sw_size <- 10
 ts <- ts_data(tsd$y, sw_size)
@@ -36,13 +36,13 @@ summary(ts[,10])
 ```
 
 ```{r}
-# Visualização do alvo (t0) após janelamento
+# Target (t0) visualization after windowing
 library(ggplot2)
 plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ```
 
 ```{r}
-# Normalização (ajustar e transformar)
+# Normalization (fit and transform)
 
 preproc <- ts_norm_swminmax()
 preproc <- fit(preproc, ts)
