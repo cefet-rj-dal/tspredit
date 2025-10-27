@@ -41,5 +41,3 @@ filter <- fit(filter, tsd$y)
 y <- transform(filter, tsd$y)
 plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 ```
-
-Objetivo: Aplicar splines cúbicos de suavização para reduzir ruído controlando a rugosidade via parâmetro spar.
