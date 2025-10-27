@@ -62,5 +62,3 @@ for (j in 1:nrow(xa)) {
 lines(x = (idx[j]-sw_size+1):idx[j], y = xa[j,1:sw_size], col="green")
 }
 ```
-
-Objetivo: Aumentar dados com consciência temporal e suavização progressiva, reduzindo ruído e priorizando amostras recentes.
