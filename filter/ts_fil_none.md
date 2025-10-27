@@ -1,16 +1,16 @@
-Objetivo: Exibir o fluxo do filtro identidade (sem alteração), útil para comparar com outros filtros e validar a interface.
+Objective: Show the identity filter pipeline (no change), useful to compare with other filters and validate the interface.
 
 
 ``` r
-# Filtro - none (identidade)
+# Filter - none (identity)
 
-# Instalando o pacote (se necessário)
-install.packages("tspredit")
+# Installing the package (if needed)
+#install.packages("tspredit")
 ```
 
 
 ``` r
-# Carregando os pacotes
+# Loading the packages
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -18,7 +18,7 @@ library(tspredit)
 
 
 ``` r
-# Série para estudo com ruído artificial e picos
+# Series for study with artificial noise and spikes
 
 data(tsd)
 y <- tsd$y
@@ -33,7 +33,7 @@ tsd$y[30] <- tsd$y[30] + spike
 
 ``` r
 library(ggplot2)
-# Visualização da série ruidosa
+# Noisy series visualization
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 
@@ -41,7 +41,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# Aplicando o filtro identidade
+# Applying the identity filter
 
 filter <- ts_fil_none()
 filter <- fit(filter, tsd$y)
@@ -50,3 +50,4 @@ plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 ```
 
 ![plot of chunk unnamed-chunk-5](fig/ts_fil_none/unnamed-chunk-5-1.png)
+

@@ -9,7 +9,7 @@ Key parameter
 # Exponential Adaptive Normalization
 
 # Install tspredit if needed
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

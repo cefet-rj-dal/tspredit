@@ -1,16 +1,16 @@
-Objetivo: Exibir o fluxo com normalização nula (sem alterar os dados), útil como baseline e para demonstrar a interface de pré-processamento.
+Objective: Show the pipeline with no normalization (without changing the data), useful as a baseline and to demonstrate the preprocessing interface.
 
 
 ``` r
-# Sem normalização
+# No normalization
 
-# Instalando o pacote (se necessário)
-install.packages("tspredit")
+# Installing the package (if needed)
+#install.packages("tspredit")
 ```
 
 
 ``` r
-# Carregando os pacotes
+# Loading the packages
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -18,7 +18,7 @@ library(tspredit)
 
 
 ``` r
-# Série para estudo
+# Series for study
 
 data(tsd)
 ```
@@ -33,7 +33,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# sliding windows
+# Sliding windows
 
 sw_size <- 10
 ts <- ts_data(tsd$y, sw_size)
@@ -71,7 +71,7 @@ plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 
 
 ``` r
-# normalization
+# Normalization
 
 preproc <- ts_norm_none()
 preproc <- fit(preproc, ts)

@@ -5,7 +5,7 @@ Objective: Train and evaluate an LSTM model for time-series forecasting with sli
 
 # Installing packages (if needed)
 
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

@@ -1,14 +1,22 @@
+Overview
+
+Robust Empirical Mode Decomposition (REMD) decomposes a signal into intrinsic mode functions (IMFs) in a way that is less sensitive to noise and outliers than standard EMD. Reconstructing the series from selected IMFs yields a denoised version while preserving nonstationary and nonlinear characteristics.
+
+When to use
+- Nonlinear/nonstationary series where frequency content changes over time
+- You want a data-driven decomposition without fixed bases (e.g., unlike wavelets/Fourier)
+
 
 ``` r
 # Filter - REMD
 
-# Installing tspredit
-install.packages("tspredit")
+# Install tspredit if needed
+#install.packages("tspredit")
 ```
 
 
 ``` r
-# Loading tspredit
+# Load packages
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -16,8 +24,7 @@ library(tspredit)
 
 
 ``` r
-# Series for studying with added noise
-
+# Prepare a noisy series with spikes
 data(tsd)
 y <- tsd$y
 noise <- rnorm(length(y), 0, sd(y)/10)
@@ -31,6 +38,7 @@ tsd$y[30] <- tsd$y[30] + spike
 
 ``` r
 library(ggplot2)
+# Visualize the noisy input
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 
@@ -38,11 +46,13 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# filtering
+# Apply REMD (robust EMD)
 
-filter <- ts_fil_remd()
+filter <- ts_fil_remd()         # data-driven decomposition into IMFs (robust)
 filter <- fit(filter, tsd$y)
-y <- transform(filter, tsd$y)
+y <- transform(filter, tsd$y)   # reconstruction after robust decomposition
+
+# Compare original vs denoised
 plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 ```
 

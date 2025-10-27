@@ -1,14 +1,21 @@
+Overview
+
+Exponential Adaptive Normalization (EAN) rescales each sliding window using exponentially weighted statistics so that the model focuses on shape rather than absolute level. This is helpful when the series level drifts over time (non-stationary mean/variance).
+
+Key parameter
+- `nw`: the effective window span for the exponential averages; smaller values adapt faster to recent changes.
+
 
 ``` r
-# Normalization Exponential Adaptive Normalization
+# Exponential Adaptive Normalization
 
-# Installing tspredit
-install.packages("tspredit")
+# Install tspredit if needed
+#install.packages("tspredit")
 ```
 
 
 ``` r
-# Loading tspredit
+# Load packages
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -16,7 +23,7 @@ library(tspredit)
 
 
 ``` r
-# Series for studying
+# Load a sample series
 
 data(tsd)
 ```
@@ -24,6 +31,7 @@ data(tsd)
 
 ``` r
 library(ggplot2)
+# Visualize original series
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 
@@ -31,7 +39,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# sliding windows
+# Build sliding windows for supervised learning
 
 sw_size <- 10
 ts <- ts_data(tsd$y, sw_size)
@@ -62,6 +70,7 @@ summary(ts[,10])
 
 ``` r
 library(ggplot2)
+# Visualize the target column (t0) after windowing
 plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ```
 
@@ -69,9 +78,9 @@ plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 
 
 ``` r
-# normalization
+# Apply Exponential Adaptive Normalization
 
-preproc <- ts_norm_ean(nw = 3)
+preproc <- ts_norm_ean(nw = 3)   # faster adaptation with smaller nw
 preproc <- fit(preproc, ts)
 tst <- transform(preproc, ts)
 ts_head(tst, 3)
@@ -99,6 +108,7 @@ summary(tst[,10])
 ```
 
 ``` r
+# Inspect one normalized window (shape emphasized)
 plot_ts(y=ts[1,]) + theme(text = element_text(size=16))
 ```
 

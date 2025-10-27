@@ -1,16 +1,16 @@
-Objetivo: Demonstrar a aumentação de dados do tipo jitter (adição de ruído de baixa amplitude) em janelas deslizantes para aumentar a robustez do modelo.
+Objective: Demonstrate jitter augmentation (adding low-amplitude noise) on sliding windows to increase model robustness.
 
 
 ``` r
-# Aumentação de séries temporais - jitter
+# Time series augmentation - jitter
 
-# Instalando o pacote (se necessário)
-install.packages("tspredit")
+# Installing the package (if needed)
+#install.packages("tspredit")
 ```
 
 
 ``` r
-# Carregando os pacotes
+# Loading the packages
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -18,7 +18,7 @@ library(tspredit)
 
 
 ``` r
-# Série para estudo
+# Series for study
 
 data(tsd)
 library(ggplot2)
@@ -29,7 +29,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# Janelas deslizantes
+# Sliding windows
 
 sw_size <- 10
 xw <- ts_data(tsd$y, sw_size)
@@ -37,7 +37,7 @@ xw <- ts_data(tsd$y, sw_size)
 
 
 ``` r
-# Aumentação (jitter)
+# Augmentation (jitter)
 
 augment <- ts_aug_jitter()
 augment <- fit(augment, xw)
@@ -58,7 +58,7 @@ ts_head(xa)
 
 
 ``` r
-# Gráfico (original vs janelas aumentadas)
+# Plot (original vs augmented windows)
 
 i <- 1:nrow(xw)
 y <- xw[,sw_size]

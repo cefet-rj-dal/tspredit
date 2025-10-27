@@ -1,7 +1,7 @@
 Objective: Build a ts_data object from a vector or data.frame and understand its sliding-window structure (columns t{k}).
 
 ```{r}
-install.packages("tspredit")
+#install.packages("tspredit")
 
 # Loading the package
 library(tspredit) 

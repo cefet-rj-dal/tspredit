@@ -1,16 +1,16 @@
-Objetivo: Aumentar dados ampliando as variações dentro da janela (stretch), útil para tornar o modelo mais robusto à variabilidade.
+Objective: Augment data by stretching variations within the window (stretch), useful to make the model more robust to variability.
 
 
 ``` r
-# Aumentação de séries temporais - stretch
+# Time series augmentation - stretch
 
-# Instalando o pacote (se necessário)
-install.packages("tspredit")
+# Installing the package (if needed)
+#install.packages("tspredit")
 ```
 
 
 ``` r
-# Carregando os pacotes
+# Loading the packages
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -18,7 +18,7 @@ library(tspredit)
 
 
 ``` r
-# Série para estudo
+# Series for study
 
 data(tsd)
 library(ggplot2)
@@ -29,7 +29,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# Janelas deslizantes
+# Sliding windows
 
 sw_size <- 10
 xw <- ts_data(tsd$y, sw_size)
@@ -37,7 +37,7 @@ xw <- ts_data(tsd$y, sw_size)
 
 
 ``` r
-# Aumentação (stretch)
+# Augmentation (stretch)
 
 augment <- ts_aug_stretch()
 augment <- fit(augment, xw)
@@ -58,7 +58,7 @@ ts_head(xa)
 
 
 ``` r
-# Gráfico (original vs janelas aumentadas)
+# Plot (original vs augmented windows)
 
 i <- 1:nrow(xw)
 y <- xw[,sw_size]
@@ -70,3 +70,4 @@ for (j in 1:nrow(xa)) {
 ```
 
 ![plot of chunk unnamed-chunk-6](fig/ts_aug_stretch/unnamed-chunk-6-1.png)
+

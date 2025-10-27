@@ -4,7 +4,7 @@ Objective: Apply global min-max normalization (0 to 1) over the training series,
 # Global Min-Max Normalization
 
 # Installing the package (if needed)
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

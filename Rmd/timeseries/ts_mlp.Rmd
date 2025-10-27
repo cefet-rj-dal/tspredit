@@ -4,7 +4,7 @@ Objective: Demonstrate how to train, validate, and evaluate an MLP (Multilayer P
 # Time Series Regression - MLP
 
 # Installing the package (if needed)
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

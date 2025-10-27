@@ -4,7 +4,7 @@ Objective: Apply Winsorization to limit extreme values and reduce the influence 
 # Filter - Winsorization
 
 # Installing the package (if needed)
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

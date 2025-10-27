@@ -10,7 +10,7 @@ Notes
 # Filter - seasonal adjustment
 
 # Install tspredit if needed
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

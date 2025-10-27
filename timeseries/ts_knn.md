@@ -1,16 +1,16 @@
-Objetivo: Usar KNN (K-Nearest Neighbors) para prever séries temporais a partir de janelas deslizantes, com normalização, ajuste do modelo e avaliação.
+Objective: Use KNN (K-Nearest Neighbors) to forecast time series from sliding windows, with normalization, model fitting, and evaluation.
 
 
 ``` r
-# Regressão de Série Temporal - KNN
+# Time Series Regression - KNN
 
-# Instalando o pacote (se necessário)
-install.packages("tspredit")
+# Installing the package (if needed)
+#install.packages("tspredit")
 ```
 
 
 ``` r
-# Carregando os pacotes
+# Loading the packages
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -18,7 +18,7 @@ library(tspredit)
 
 
 ``` r
-# Série para estudo e janelas deslizantes
+# Series for study and sliding windows
 
 data(tsd)
 ts <- ts_data(tsd$y, 10)
@@ -34,7 +34,7 @@ ts_head(ts, 3)
 
 
 ``` r
-# Visualização da série
+# Series visualization
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
@@ -43,7 +43,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# Separação treino-teste e projeção (X, y)
+# Train-test split and projection (X, y)
 
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
@@ -52,14 +52,14 @@ io_test <- ts_projection(samp$test)
 
 
 ``` r
-# Pré-processamento (normalização min–max global)
+# Preprocessing (global min-max normalization)
 
 preproc <- ts_norm_gminmax()
 ```
 
 
 ``` r
-# Treinando o modelo KNN
+# Training the KNN model
 
 model <- ts_knn(ts_norm_gminmax(), input_size=4, k=3)
 model <- fit(model, x=io_train$input, y=io_train$output)
@@ -67,7 +67,7 @@ model <- fit(model, x=io_train$input, y=io_train$output)
 
 
 ``` r
-# Avaliação do ajuste (treino)
+# Fit evaluation (train)
 
 adjust <- predict(model, io_train$input)
 adjust <- as.vector(adjust)
@@ -82,7 +82,7 @@ ev_adjust$mse
 
 
 ``` r
-# Previsão no conjunto de teste (5 passos à frente)
+# Forecast on test set (5 steps ahead)
 
 prediction <- predict(model, x=io_test$input[1,], steps_ahead=5)
 prediction <- as.vector(prediction)
@@ -114,7 +114,7 @@ ev_test
 
 
 ``` r
-# Gráfico comparando real vs ajuste (treino) e previsão (teste)
+# Plot comparing actual vs fit (train) and forecast (test)
 
 yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))

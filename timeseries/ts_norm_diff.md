@@ -1,16 +1,16 @@
-Objetivo: Diferenciar a série (primeiras diferenças) e aplicar normalização min–max, observando a redução de nível e o efeito na escala.
+Objective: Difference the series (first differences) and apply min-max normalization, observing level reduction and the effect on scale.
 
 
 ``` r
-# Normalização por Diferenças (Diff)
+# Normalization by Differences (Diff)
 
-# Instalando o pacote (se necessário)
-install.packages("tspredit")
+# Installing the package (if needed)
+#install.packages("tspredit")
 ```
 
 
 ``` r
-# Carregando os pacotes
+# Loading the packages
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -18,14 +18,14 @@ library(tspredit)
 
 
 ``` r
-# Série para estudo
+# Series for study
 
 data(tsd)
 ```
 
 
 ``` r
-# Visualização da série
+# Series visualization
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
@@ -34,7 +34,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# Janelas deslizantes
+# Sliding windows
 
 sw_size <- 10
 ts <- ts_data(tsd$y, sw_size)
@@ -64,7 +64,7 @@ summary(ts[,10])
 
 
 ``` r
-# Visualização do alvo (t0) após janelamento
+# Target (t0) visualization after windowing
 library(ggplot2)
 plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ```
@@ -73,7 +73,7 @@ plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 
 
 ``` r
-# Normalização (ajustar e transformar)
+# Normalization (fit and transform)
 
 preproc <- ts_norm_diff()
 preproc <- fit(preproc, ts)

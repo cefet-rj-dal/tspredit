@@ -9,7 +9,7 @@ Key parameter
 # Filter - Quadratic Exponential Smoothing
 
 # Install tspredit if needed
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

@@ -10,7 +10,7 @@ When to use
 # Filter - REMD
 
 # Install tspredit if needed
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

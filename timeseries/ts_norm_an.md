@@ -1,16 +1,16 @@
-Objetivo: Aplicar normalização adaptativa (média móvel/EMA) para lidar com mudanças de distribuição ao longo do tempo e observar o efeito no alvo.
+Objective: Apply adaptive normalization (moving average/EMA) to handle distribution shifts over time and observe the effect on the target.
 
 
 ``` r
-# Normalização Adaptativa Exponencial
+# Exponential Adaptive Normalization
 
-# Instalando o pacote (se necessário)
-install.packages("tspredit")
+# Installing the package (if needed)
+#install.packages("tspredit")
 ```
 
 
 ``` r
-# Carregando os pacotes
+# Loading the packages
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -18,14 +18,14 @@ library(tspredit)
 
 
 ``` r
-# Série para estudo
+# Series for study
 
 data(tsd)
 ```
 
 
 ``` r
-# Visualização da série
+# Series visualization
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
@@ -34,7 +34,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# Janelas deslizantes
+# Sliding windows
 
 sw_size <- 10
 ts <- ts_data(tsd$y, sw_size)
@@ -64,7 +64,7 @@ summary(ts[,10])
 
 
 ``` r
-# Visualização do alvo (t0) após janelamento
+# Target (t0) visualization after windowing
 library(ggplot2)
 plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ```
@@ -73,7 +73,7 @@ plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 
 
 ``` r
-# normalization
+# Normalization
 
 preproc <- ts_norm_an()
 preproc <- fit(preproc, ts)
@@ -108,4 +108,3 @@ plot_ts(y=ts[1,]) + theme(text = element_text(size=16))
 
 ![plot of chunk unnamed-chunk-7](fig/ts_norm_an/unnamed-chunk-7-1.png)
 
-Objetivo: Aplicar normalização adaptativa (média móvel/EMA) para lidar com mudanças de distribuição ao longo do tempo e observar o efeito no alvo.

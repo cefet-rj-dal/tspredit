@@ -4,7 +4,7 @@ Objective: Difference the series (first differences) and apply min-max normaliza
 # Normalization by Differences (Diff)
 
 # Installing the package (if needed)
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

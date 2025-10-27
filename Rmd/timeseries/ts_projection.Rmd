@@ -1,7 +1,7 @@
 Objective: Project a ts_data object into input components (X) and output (y), separating attribute columns and the target for modeling.
 
 ```{r}
-install.packages("tspredit")
+#install.packages("tspredit")
 
 # Loading the package
 library(tspredit) 

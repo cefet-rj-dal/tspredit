@@ -4,7 +4,7 @@ Objective: Smooth the series using a state-space model with a Kalman Filter, con
 # Filter - Kalman
 
 # Installing the package (if needed)
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

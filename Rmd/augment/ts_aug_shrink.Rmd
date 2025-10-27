@@ -4,7 +4,7 @@ Objective: Augment data by shrinking variations within the window (shrink), gene
 # Time series augmentation - shrink
 
 # Installing the package (if needed)
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

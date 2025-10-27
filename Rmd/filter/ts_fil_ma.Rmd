@@ -13,7 +13,7 @@ Key parameter
 # Filter - Moving Average
 
 # Install tspredit if needed
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

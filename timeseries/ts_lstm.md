@@ -1,17 +1,17 @@
-Objetivo: Treinar e avaliar um modelo LSTM para previsão de séries temporais com janelas deslizantes, incluindo normalização, ajuste e avaliação no teste.
+Objective: Train and evaluate an LSTM model for time-series forecasting with sliding windows, including normalization, fitting, and test evaluation.
 
 
 ``` r
-# Regressão de Série Temporal - LSTM
+# Time Series Regression - LSTM
 
-# Instalando pacotes (se necessário)
+# Installing packages (if needed)
 
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 
 ``` r
-# Carregando os pacotes
+# Loading the packages
 library(daltoolbox)
 library(daltoolboxdp)
 library(tspredit)
@@ -20,7 +20,7 @@ library(tspredit)
 
 
 ``` r
-# Série para estudo e janelas deslizantes
+# Series for study and sliding windows
 
 data(tsd)
 ts <- ts_data(tsd$y, 10)
@@ -36,7 +36,7 @@ ts_head(ts, 3)
 
 
 ``` r
-# Visualização da série
+# Series visualization
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
@@ -45,7 +45,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# Separação treino-teste e projeção (X, y)
+# Train-test split and projection (X, y)
 
 samp <- ts_sample(ts, test_size = 5)
 io_train <- ts_projection(samp$train)
@@ -54,7 +54,7 @@ io_test <- ts_projection(samp$test)
 
 
 ``` r
-# Treinando o modelo LSTM
+# Training the LSTM model
 
 model <- ts_lstm(ts_norm_gminmax(), input_size=4, epochs=10000)
 model <- fit(model, x=io_train$input, y=io_train$output)
@@ -62,7 +62,7 @@ model <- fit(model, x=io_train$input, y=io_train$output)
 
 
 ``` r
-# Avaliação do ajuste (treino)
+# Fit evaluation (train)
 
 adjust <- predict(model, io_train$input)
 adjust <- as.vector(adjust)
@@ -72,12 +72,12 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 0.0001579601
+## [1] 0.0004067928
 ```
 
 
 ``` r
-# Previsão no conjunto de teste
+# Forecast on test set
 
 steps_ahead <- 1
 io_test <- ts_projection(samp$test)
@@ -92,20 +92,20 @@ print(sprintf("%.2f, %.2f", output, prediction))
 ```
 
 ```
-## [1] "0.41, 0.41"   "0.17, 0.17"   "-0.08, -0.08" "-0.32, -0.33" "-0.54, -0.55"
+## [1] "0.41, 0.44"   "0.17, 0.18"   "-0.08, -0.09" "-0.32, -0.35" "-0.54, -0.58"
 ```
 
 
 ``` r
-# Avaliação no conjunto de teste
+# Test evaluation
 
 ev_test <- evaluate(model, output, prediction)
 print(head(ev_test$metrics))
 ```
 
 ```
-##            mse      smape        R2
-## 1 3.213562e-05 0.01412925 0.9997224
+##          mse      smape        R2
+## 1 0.00074873 0.09357678 0.9935332
 ```
 
 ``` r
@@ -113,12 +113,12 @@ print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
 ```
 
 ```
-## [1] "smape: 1.41"
+## [1] "smape: 9.36"
 ```
 
 
 ``` r
-# Gráfico dos resultados
+# Plot results
 
 yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))

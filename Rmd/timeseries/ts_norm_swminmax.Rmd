@@ -4,7 +4,7 @@ Objective: Apply per-window min-max normalization (each row scaled by its own mi
 # Window-based Normalization (Min-Max)
 
 # Installing the package (if needed)
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

@@ -1,14 +1,14 @@
-Objetivo: Realizar a busca de hiperparâmetros (tamanho da janela e parâmetros do modelo base) com validação cruzada para melhorar a previsão da série temporal, e avaliar o resultado encontrado.
+Objective: Perform hyperparameter search (window size and base model parameters) with cross-validation to improve time-series forecasting, and evaluate the result.
 
 
 ``` r
-# Instalando o pacote (se necessário)
-install.packages("tspredit")
+# Installing the package (if needed)
+#install.packages("tspredit")
 ```
 
 
 ``` r
-# Carregando os pacotes
+# Loading the packages
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -16,7 +16,7 @@ library(tspredit)
 
 
 ``` r
-# Série cosseno para estudo
+# Cosine series for study
 
 i <- seq(0, 25, 0.25)
 x <- cos(i)
@@ -24,7 +24,7 @@ x <- cos(i)
 
 
 ``` r
-# Plotar a série
+# Plot the series
 
 plot_ts(x=i, y=x) + theme(text = element_text(size=16))
 ```
@@ -33,8 +33,8 @@ plot_ts(x=i, y=x) + theme(text = element_text(size=16))
 
 
 ``` r
-# Janelas deslizantes
-# Cria uma matriz de janelas (t9..t0) a partir da série para uso no treino.
+# Sliding windows
+# Create a matrix of windows (t9..t0) from the series for training.
 
 sw_size <- 10
 ts <- ts_data(x, sw_size)
@@ -50,8 +50,8 @@ ts_head(ts, 3)
 
 
 ``` r
-# Amostragem (treino e teste)
-# Separa os dados em treino e teste.
+# Sampling (train and test)
+# Split the data into train and test.
 
 test_size <- 1
 samp <- ts_sample(ts, test_size)
@@ -76,9 +76,9 @@ ts_head(samp$test)
 
 
 ``` r
-# Ajuste de hiperparâmetros
-# O ts_tune otimiza hiperparâmetros do modelo base.
-# Neste exemplo, usamos ELM com faixas para nhid e função de ativação.
+# Hyperparameter tuning
+# ts_tune optimizes base model hyperparameters.
+# In this example, we use ELM with ranges for nhid and activation function.
 
 tune <- ts_tune(input_size=c(3:5), base_model = ts_elm(ts_norm_gminmax()), 
                 ranges = list(nhid = 1:5, actfun=c('sig', 'radbas', 'tribas', 'relu', 'purelin')))
@@ -88,17 +88,17 @@ tune <- ts_tune(input_size=c(3:5), base_model = ts_elm(ts_norm_gminmax()),
 
 
 ``` r
-# Projeção de treino e ajuste do melhor modelo
+# Train projection and fit the best model
 
 io_train <- ts_projection(samp$train)
 
-# Ajuste genérico do modelo escolhido
+# Generic fit of the chosen model
 model <- fit(tune, x=io_train$input, y=io_train$output)
 ```
 
 
 ``` r
-# Avaliação do ajuste (treino)
+# Fit evaluation (train)
 
 adjust <- predict(model, io_train$input)
 ev_adjust <- evaluate(model, io_train$output, adjust)
@@ -106,13 +106,13 @@ print(head(ev_adjust$metrics))
 ```
 
 ```
-##            mse        smape R2
-## 1 3.235577e-30 7.125308e-15  1
+##           mse        smape R2
+## 1 7.56133e-30 1.014266e-14  1
 ```
 
 
 ``` r
-# Previsão no conjunto de teste
+# Forecast on test set
 
 steps_ahead <- 1
 io_test <- ts_projection(samp$test)
@@ -132,15 +132,15 @@ print(sprintf("%.2f, %.2f", output, prediction))
 
 
 ``` r
-# Avaliação no conjunto de teste
+# Test evaluation
 
 ev_test <- evaluate(model, output, prediction)
 print(head(ev_test$metrics))
 ```
 
 ```
-##           mse        smape   R2
-## 1 1.49144e-30 1.232084e-15 -Inf
+##            mse        smape   R2
+## 1 2.496005e-29 5.040344e-15 -Inf
 ```
 
 ``` r
@@ -153,7 +153,7 @@ print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
 
 
 ``` r
-# Gráfico dos resultados
+# Plot results
 
 yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))
@@ -163,7 +163,7 @@ plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_tex
 
 
 ``` r
-# Opções de faixas de hiperparâmetros por modelo
+# Options of hyperparameter ranges by model
 
 # Ranges for ELM
 ranges_elm <- list(nhid = 1:20, actfun=c('sig', 'radbas', 'tribas', 'relu', 'purelin'))

@@ -1,23 +1,23 @@
-Objetivo: Projetar um objeto ts_data nas componentes de entrada (X) e saída (y), separando as colunas de atributos e o alvo para modelagem.
+Objective: Project a ts_data object into input components (X) and output (y), separating attribute columns and the target for modeling.
 
 
 ``` r
-install.packages("tspredit")
+#install.packages("tspredit")
 
-# Carregando o pacote
+# Loading the package
 library(tspredit) 
 ```
 
 
 ``` r
-# Série para estudo
+# Series for study
 
 data(tsd)
 ```
 
 
 ``` r
-# Visualização da série
+# Series visualization
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
@@ -26,7 +26,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# Janelas deslizantes
+# Sliding windows
 
 sw_size <- 5
 ts <- ts_data(tsd$y, sw_size)
@@ -42,14 +42,14 @@ ts_head(ts, 3)
 
 
 ``` r
-# Projeção (X, y)
+# Projection (X, y)
 
 io <- ts_projection(ts)
 ```
 
 
 ``` r
-# Dados de entrada (X)
+# Input data (X)
 ts_head(io$input)
 ```
 
@@ -65,7 +65,7 @@ ts_head(io$input)
 
 
 ``` r
-# Dados de saída (y)
+# Output data (y)
 ts_head(io$output)
 ```
 

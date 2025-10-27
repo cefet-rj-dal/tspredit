@@ -4,7 +4,7 @@ Objective: Demonstrate time-series forecasting with SVM (Support Vector Regressi
 # Time Series Regression - SVM
 
 # Installing the package (if needed)
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

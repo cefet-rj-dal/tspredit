@@ -1,16 +1,16 @@
-Objetivo: Dividir um ts_data em conjuntos de treino e teste respeitando a ordem temporal, definindo o tamanho do teste e visualizando as partes.
+Objective: Split a ts_data into training and test sets while preserving time order, defining the test size, and visualizing the parts.
 
 
 ``` r
-install.packages("tspredit")
+#install.packages("tspredit")
 
-# Carregando o pacote
+# Loading the package
 library(tspredit) 
 ```
 
 
 ``` r
-# Série para estudo
+# Series for study
 
 data(tsd)
 ```
@@ -25,7 +25,7 @@ plot_ts(x = tsd$x, y = tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# Janelas deslizantes
+# Sliding windows
 
 sw_size <- 10
 ts <- ts_data(tsd$y, sw_size)
@@ -41,7 +41,7 @@ ts_head(ts, 3)
 
 
 ``` r
-# Amostragem (treino e teste)
+# Sampling (train and test)
 
 test_size <- 3
 samp <- ts_sample(ts, test_size)
@@ -49,7 +49,7 @@ samp <- ts_sample(ts, test_size)
 
 
 ``` r
-# Cinco primeiras linhas do treino
+# First five rows of the train set
 ts_head(samp$train, 5)
 ```
 
@@ -64,7 +64,7 @@ ts_head(samp$train, 5)
 
 
 ``` r
-# Cinco últimas linhas do treino
+# Last five rows of the train set
 ts_head(samp$train[-c(1:(nrow(samp$train)-5)),])
 ```
 
@@ -79,7 +79,7 @@ ts_head(samp$train[-c(1:(nrow(samp$train)-5)),])
 
 
 ``` r
-# Dados de teste
+# Test data
 ts_head(samp$test)
 ```
 
@@ -89,3 +89,4 @@ ts_head(samp$test)
 ## [2,] 0.9380000 0.9945988 0.9893582 0.9226042 0.7984871 0.6247240 0.4121185  0.17388949 -0.07515112 -0.31951919
 ## [3,] 0.9945988 0.9893582 0.9226042 0.7984871 0.6247240 0.4121185 0.1738895 -0.07515112 -0.31951919 -0.54402111
 ```
+

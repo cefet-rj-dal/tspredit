@@ -1,16 +1,16 @@
-Objetivo: Aplicar o filtro LOWESS (suavização local) para reduzir ruído e picos preservando a tendência da série.
+Objective: Apply the LOWESS filter (local smoothing) to reduce noise and spikes while preserving the series trend.
 
 
 ``` r
-# Filtro - LOWESS
+# Filter - LOWESS
 
-# Instalando o pacote (se necessário)
-install.packages("tspredit")
+# Installing the package (if needed)
+#install.packages("tspredit")
 ```
 
 
 ``` r
-# Carregando os pacotes
+# Loading the packages
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -18,7 +18,7 @@ library(tspredit)
 
 
 ``` r
-# Série para estudo com ruído artificial e spikes
+# Series for study with artificial noise and spikes
 
 data(tsd)
 y <- tsd$y
@@ -32,7 +32,7 @@ tsd$y[30] <- tsd$y[30] + spike
 
 
 ``` r
-# Visualização da série ruidosa
+# Noisy series visualization
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
@@ -41,7 +41,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# Aplicando o filtro LOWESS
+# Applying the LOWESS filter
 
 filter <- ts_fil_lowess(f = 0.2)
 filter <- fit(filter, tsd$y)

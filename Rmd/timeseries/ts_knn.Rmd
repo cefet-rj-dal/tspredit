@@ -4,7 +4,7 @@ Objective: Use KNN (K-Nearest Neighbors) to forecast time series from sliding wi
 # Time Series Regression - KNN
 
 # Installing the package (if needed)
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

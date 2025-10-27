@@ -1,7 +1,7 @@
 Objective: Split a ts_data into training and test sets while preserving time order, defining the test size, and visualizing the parts.
 
 ```{r}
-install.packages("tspredit")
+#install.packages("tspredit")
 
 # Loading the package
 library(tspredit) 

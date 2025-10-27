@@ -4,7 +4,7 @@ Objective: Augment data by stretching variations within the window (stretch), us
 # Time series augmentation - stretch
 
 # Installing the package (if needed)
-install.packages("tspredit")
+#install.packages("tspredit")
 ```
 
 ```{r}

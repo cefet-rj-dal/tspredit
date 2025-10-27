@@ -1,14 +1,22 @@
+Overview
+
+Seasonal adjustment aims to remove periodic seasonal components from a series, making the underlying trend and cycle easier to analyze. After adjustment, remaining variation should reflect non-seasonal dynamics.
+
+Notes
+- Ensure the frequency/periodicity in your data is appropriate for seasonal estimation.
+- Seasonal adjustment methods can differ in how they model trend and irregular components.
+
 
 ``` r
 # Filter - seasonal adjustment
 
-# Installing tspredit
-install.packages("tspredit")
+# Install tspredit if needed
+#install.packages("tspredit")
 ```
 
 
 ``` r
-# Loading tspredit
+# Load packages
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -16,8 +24,7 @@ library(tspredit)
 
 
 ``` r
-# Series for studying with added noise
-
+# Prepare a series (with added noise/spikes for illustration)
 data(tsd)
 y <- tsd$y
 noise <- rnorm(length(y), 0, sd(y)/10)
@@ -31,6 +38,7 @@ tsd$y[30] <- tsd$y[30] + spike
 
 ``` r
 library(ggplot2)
+# Visualize original (noisy) series
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 
@@ -38,11 +46,13 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# seasonal adjustment
+# Apply seasonal adjustment
 
-filter <- ts_fil_seas_adj()
+filter <- ts_fil_seas_adj()     # adjust for seasonal effects
 filter <- fit(filter, tsd$y)
 y <- transform(filter, tsd$y)
+
+# Compare original vs seasonally adjusted
 plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 ```
 

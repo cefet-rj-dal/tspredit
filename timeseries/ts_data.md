@@ -1,16 +1,16 @@
-Objetivo: Construir um objeto ts_data a partir de vetor ou data.frame e entender sua estrutura de janelas deslizantes (colunas t{k}).
+Objective: Build a ts_data object from a vector or data.frame and understand its sliding-window structure (columns t{k}).
 
 
 ``` r
-install.packages("tspredit")
+#install.packages("tspredit")
 
-# Carregando o pacote
+# Loading the package
 library(tspredit) 
 ```
 
 
 ``` r
-# Carregar dados e separar eixos/valores
+# Load data and split axis/value
 data(tsd)
 x <- tsd$x
 y <- tsd$y
@@ -19,7 +19,7 @@ y <- tsd$y
 
 ``` r
 library(ggplot2)
-# Visualizar a série original
+# Visualize the original series
 plot_ts(x = x, y = y) + theme(text = element_text(size=16))
 ```
 
@@ -27,7 +27,7 @@ plot_ts(x = x, y = y) + theme(text = element_text(size=16))
 
 
 ``` r
-# ts_data sem janela (apenas t0)
+# ts_data without window (only t0)
 data <- ts_data(y)
 ts_head(data)
 ```
@@ -50,7 +50,7 @@ plot_ts(y=data[,1]) + theme(text = element_text(size=16))
 
 
 ``` r
-# ts_data com janela de tamanho 10 (t9..t0)
+# ts_data with window size 10 (t9..t0)
 data10 <- ts_data(y, 10)
 ts_head(data10)
 ```
@@ -67,7 +67,7 @@ ts_head(data10)
 
 
 ``` r
-# Selecionar uma linha
+# Select a row
 r1 <- data10[12,]
 r1
 ```
@@ -83,7 +83,7 @@ r1
 
 
 ``` r
-# Selecionar um intervalo de linhas
+# Select a range of rows
 r2 <- data10[12:13,]
 r2
 ```
@@ -100,7 +100,7 @@ r2
 
 
 ``` r
-# Selecionar uma coluna
+# Select a column
 c1 <- data10[,1]
 ts_head(c1)
 ```
@@ -117,7 +117,7 @@ ts_head(c1)
 
 
 ``` r
-# Selecionar intervalo de colunas
+# Select a range of columns
 c2 <- data10[,1:2]
 ts_head(c2)
 ```
@@ -134,7 +134,7 @@ ts_head(c2)
 
 
 ``` r
-# Selecionar intervalo de linhas e colunas
+# Select a range of rows and columns
 rc1 <- data10[12:13,1:2]
 rc1
 ```
@@ -151,7 +151,7 @@ rc1
 
 
 ``` r
-# Selecionar uma linha e intervalo de colunas
+# Select one row and a range of columns
 rc2 <- data10[12,1:2]
 rc2
 ```
@@ -167,7 +167,7 @@ rc2
 
 
 ``` r
-# Selecionar intervalo de linhas e uma coluna
+# Select a range of rows and one column
 rc3 <- data10[12:13,1]
 rc3
 ```
@@ -184,7 +184,7 @@ rc3
 
 
 ``` r
-# Selecionar uma única observação
+# Select a single observation
 rc4 <- data10[12,1]
 rc4
 ```
@@ -197,3 +197,4 @@ rc4
 ## attr(,"sw")
 ## [1] 1
 ```
+

@@ -1,7 +1,7 @@
 Objective: Fit and evaluate an ARIMA (AutoRegressive Integrated Moving Average) model for time-series forecasting, performing a train-test split, automatic order selection, and evaluation with metrics and visualization.
 
 ```{r}
-install.packages("tspredit")
+#install.packages("tspredit")
 
 # Loading the package
 library(tspredit) 

@@ -1,16 +1,16 @@
-Objetivo: Aplicar normalização min–max global (0 a 1) sobre a série de treino, transformar os dados e visualizar o efeito da escala.
+Objective: Apply global min-max normalization (0 to 1) over the training series, transform the data, and visualize the effect of scaling.
 
 
 ``` r
-# Normalização Global Min–Max
+# Global Min-Max Normalization
 
-# Instalando o pacote (se necessário)
-install.packages("tspredit")
+# Installing the package (if needed)
+#install.packages("tspredit")
 ```
 
 
 ``` r
-# Carregando os pacotes
+# Loading the packages
 library(daltoolbox)
 library(tspredit) 
 ```
@@ -18,14 +18,14 @@ library(tspredit)
 
 
 ``` r
-# Série para estudo
+# Series for study
 
 data(tsd)
 ```
 
 
 ``` r
-# Visualização da série
+# Series visualization
 library(ggplot2)
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
@@ -34,7 +34,7 @@ plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 
 
 ``` r
-# Janelas deslizantes
+# Sliding windows
 
 sw_size <- 10
 ts <- ts_data(tsd$y, sw_size)
@@ -64,7 +64,7 @@ summary(ts[,10])
 
 
 ``` r
-# Visualização do alvo (t0) após janelamento
+# Target (t0) visualization after windowing
 library(ggplot2)
 plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ```
@@ -73,7 +73,7 @@ plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 
 
 ``` r
-# Normalização (ajustar e transformar)
+# Normalization (fit and transform)
 
 preproc <- ts_norm_gminmax()
 preproc <- fit(preproc, ts)
