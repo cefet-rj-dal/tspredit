@@ -1,0 +1,95 @@
+# Installing the package (if needed)
+#install.packages("tspredit")
+
+# Loading the packages
+library(daltoolbox)
+library(tspredit) 
+
+# Cosine series for study
+
+i <- seq(0, 25, 0.25)
+x <- cos(i)
+
+# Plot the series
+
+plot_ts(x=i, y=x) + theme(text = element_text(size=16))
+
+# Sliding windows
+# Create a matrix of windows (t9..t0) from the series for training.
+
+sw_size <- 10
+ts <- ts_data(x, sw_size)
+ts_head(ts, 3)
+
+# Sampling (train and test)
+# Split the data into train and test.
+
+test_size <- 1
+samp <- ts_sample(ts, test_size)
+ts_head(samp$train, 3)
+ts_head(samp$test)
+
+# Hyperparameter tuning
+# ts_tune optimizes base model hyperparameters.
+# In this example, we use ELM with ranges for nhid and activation function.
+
+tune <- ts_tune(input_size=c(3:5), base_model = ts_elm(ts_norm_gminmax()), 
+                ranges = list(nhid = 1:5, actfun=c('sig', 'radbas', 'tribas', 'relu', 'purelin')))
+
+
+# Train projection and fit the best model
+
+io_train <- ts_projection(samp$train)
+
+# Generic fit of the chosen model
+model <- fit(tune, x=io_train$input, y=io_train$output)
+
+# Fit evaluation (train)
+
+adjust <- predict(model, io_train$input)
+ev_adjust <- evaluate(model, io_train$output, adjust)
+print(head(ev_adjust$metrics))
+
+# Forecast on test set
+
+steps_ahead <- 1
+io_test <- ts_projection(samp$test)
+prediction <- predict(model, x=io_test$input, steps_ahead=steps_ahead)
+prediction <- as.vector(prediction)
+
+output <- as.vector(io_test$output)
+if (steps_ahead > 1)
+    output <- output[1:steps_ahead]
+
+print(sprintf("%.2f, %.2f", output, prediction))
+
+# Test evaluation
+
+ev_test <- evaluate(model, output, prediction)
+print(head(ev_test$metrics))
+print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
+
+# Plot results
+
+yvalues <- c(io_train$output, io_test$output)
+plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))
+
+# Options of hyperparameter ranges by model
+
+# Ranges for ELM
+ranges_elm <- list(nhid = 1:20, actfun=c('sig', 'radbas', 'tribas', 'relu', 'purelin'))
+
+# Ranges for MLP
+ranges_mlp <- list(size = 1:10, decay = seq(0, 1, 1/9), maxit=10000)
+
+# Ranges for RF
+ranges_rf <- list(nodesize=1:10, ntree=1:10)
+
+# Ranges for SVM
+ranges_svm <- list(kernel=c("radial", "poly", "linear", "sigmoid"), epsilon=seq(0, 1, 0.1), cost=seq(20, 100, 20))
+
+# Ranges for LSTM
+ranges_lstm <- list(input_size = 1:10, epochs=10000)
+
+# Ranges for CNN
+ranges_cnn <- list(input_size = 1:10, epochs=10000)

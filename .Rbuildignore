@@ -10,6 +10,9 @@
 ^filter$
 ^timeseries$
 ^develop$
+^examples$
+^examples-r$
+^examples-word$
 ^Rmd$
 package.R
 jupyter.R

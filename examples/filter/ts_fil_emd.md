@@ -1,0 +1,60 @@
+Overview
+
+Empirical Mode Decomposition (EMD) decomposes a signal into a finite set of intrinsic mode functions (IMFs) derived directly from the data. By reconstructing the series from selected IMFs, you can suppress high-frequency noise and preserve meaningful structure.
+
+Considerations
+- EMD is adaptive and data-driven (no fixed basis), suitable for nonlinear and nonstationary signals.
+- End effects can occur; visual checks are recommended near boundaries.
+
+
+``` r
+# Filter - EMD
+
+# Install tspredit if needed
+#install.packages("tspredit")
+```
+
+
+``` r
+# Load packages
+library(daltoolbox)
+library(tspredit) 
+```
+
+
+
+``` r
+# Prepare a noisy series example
+data(tsd)
+y <- tsd$y
+noise <- rnorm(length(y), 0, sd(y)/10)
+spike <- rnorm(1, 0, sd(y))
+tsd$y <- tsd$y + noise
+tsd$y[10] <- tsd$y[10] + spike
+tsd$y[20] <- tsd$y[20] + spike
+tsd$y[30] <- tsd$y[30] + spike
+```
+
+
+``` r
+library(ggplot2)
+# Visualize the noisy input
+plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
+```
+
+![plot of chunk unnamed-chunk-4](fig/ts_fil_emd/unnamed-chunk-4-1.png)
+
+
+``` r
+# Apply EMD-based filtering (IMF reconstruction)
+
+filter <- ts_fil_emd()          # decompose into IMFs
+filter <- fit(filter, tsd$y)    # compute decomposition
+y <- transform(filter, tsd$y)   # reconstruct a denoised version
+
+# Compare original vs reconstructed
+plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
+```
+
+![plot of chunk unnamed-chunk-5](fig/ts_fil_emd/unnamed-chunk-5-1.png)
+
