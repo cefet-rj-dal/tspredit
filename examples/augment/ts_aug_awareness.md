@@ -33,13 +33,6 @@ library(tspredit)
 ##   as.zoo.data.frame zoo
 ```
 
-```
-## Registered S3 methods overwritten by 'forecast':
-##   method  from 
-##   head.ts stats
-##   tail.ts stats
-```
-
 
 ``` r
 # Cosine series with noise for study
