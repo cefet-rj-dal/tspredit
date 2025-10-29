@@ -1,3 +1,5 @@
+LSTM: Long Short-Term Memory (LSTM) networks are recurrent neural networks that incorporate gating mechanisms to mitigate vanishing/exploding gradients and capture long-range temporal dependencies. In a sliding-window setup, the sequence of lagged inputs is processed to output the next-step forecast. Key hyperparameters include the input window length, hidden size, and number of training epochs.
+
 Objective: Train and evaluate an LSTM model for time-series forecasting with sliding windows, including normalization, fitting, and test evaluation.
 
 ```{r}
@@ -85,3 +87,5 @@ yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))
 ```
 
+References
+- S. Hochreiter and J. Schmidhuber (1997). Long short-term memory. Neural Computation, 9(8), 1735–1780.

@@ -1,4 +1,7 @@
+No filter: The identity filter simply forwards the input series without modification. It serves as a baseline to quantify the marginal effect of any smoothing step in a pipeline.
+
 Objective: Show the identity filter pipeline (no change), useful to compare with other filters and validate the interface.
+
 
 
 ``` r
@@ -51,3 +54,5 @@ plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 
 ![plot of chunk unnamed-chunk-5](fig/ts_fil_none/unnamed-chunk-5-1.png)
 
+References
+- C. M. Bishop (2006). Pattern Recognition and Machine Learning. Springer.

@@ -1,3 +1,5 @@
+k-NN regression: k-NN regression predicts the next value by averaging (or weighting) the targets of the k most similar historical windows according to a distance measure (e.g., Euclidean). In the sliding-window setup, each row encodes the most recent lags of the series; neighbors with similar local patterns contribute to the forecast. The method is nonparametric and relies on appropriate scaling and a sensible choice of k.
+
 Objective: Use KNN (K-Nearest Neighbors) to forecast time series from sliding windows, with normalization, model fitting, and evaluation.
 
 
@@ -26,10 +28,14 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3        t2        t1
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
+##             t0
+## [1,] 0.7780732
+## [2,] 0.5984721
+## [3,] 0.3816610
 ```
 
 
@@ -122,3 +128,5 @@ plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_tex
 
 ![plot of chunk unnamed-chunk-10](fig/ts_knn/unnamed-chunk-10-1.png)
 
+References
+- T. Cover and P. Hart (1967). Nearest neighbor pattern classification. IEEE Transactions on Information Theory, 13(1), 21–27.

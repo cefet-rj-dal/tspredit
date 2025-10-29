@@ -1,3 +1,5 @@
+Splines filter: Smoothing splines minimize a penalized least squares criterion that trades fidelity to the data against curvature of the function. The smoothing parameter controls the penalty on the integrated squared second derivative, yielding a flexible nonparametric smoother.
+
 Objective: Apply cubic smoothing splines to reduce noise by controlling roughness via the spar parameter.
 
 
@@ -51,3 +53,5 @@ plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 
 ![plot of chunk unnamed-chunk-5](fig/ts_fil_spline/unnamed-chunk-5-1.png)
 
+References
+- G. Wahba (1990). Spline Models for Observational Data. SIAM.

@@ -1,4 +1,12 @@
+ARIMA(p, d, q): ARIMA models represent a univariate time series as a combination of autoregressive (AR) terms, differencing for integration (I), and moving-average (MA) terms. An ARIMA(p, d, q) is built by:
+- differencing the series d times to achieve approximate stationarity;
+- modeling the differenced series with p autoregressive lags and q moving-average terms;
+- estimating parameters by maximum likelihood and selecting orders using an information criterion (e.g., AICc) and residual diagnostics.
+
+In the example below, the function `ts_arima()` performs automatic order selection and fitting. Forecasts are generated recursively for the desired number of steps ahead.
+
 Objective: Fit and evaluate an ARIMA (AutoRegressive Integrated Moving Average) model for time-series forecasting, performing a train-test split, automatic order selection, and evaluation with metrics and visualization.
+
 
 
 ``` r
@@ -107,3 +115,6 @@ plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_tex
 
 ![plot of chunk unnamed-chunk-8](fig/ts_arima/unnamed-chunk-8-1.png)
 
+References
+- G. E. P. Box, G. M. Jenkins, G. C. Reinsel, and G. M. Ljung (2015). Time Series Analysis: Forecasting and Control. Wiley.
+- R. J. Hyndman and Y. Khandakar (2008). Automatic time series forecasting: The forecast package for R. Journal of Statistical Software, 27(3), 1–22. doi:10.18637/jss.v027.i03

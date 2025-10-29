@@ -1,4 +1,7 @@
+Global Min-max: Compute the global minimum and maximum on the training data and rescale each value as (x − min) / (max − min). Apply the same parameters to validation/test to avoid leakage. This preserves relative ordering and maps all features to a common range.
+
 Objective: Apply global min-max normalization (0 to 1) over the training series, transform the data, and visualize the effect of scaling.
+
 
 ```{r}
 # Global Min-Max Normalization
@@ -52,3 +55,5 @@ summary(tst[,10])
 plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ```
 
+References
+- C. M. Bishop (2006). Pattern Recognition and Machine Learning. Springer.

@@ -1,4 +1,7 @@
+Flip: Mirrors each window around its local mean (or another central tendency), creating symmetric counterparts of patterns. This expands variability while preserving general energy and timing.
+
 Objective: Demonstrate flip augmentation (mirror windows around the mean), generating symmetric variations of local patterns.
+
 
 ```{r}
 # Time series augmentation - flip
@@ -51,3 +54,5 @@ for (j in 1:nrow(xa)) {
 }
 ```
 
+References
+- H. I. Fawaz, G. Forestier, J. Weber, L. Idoumghar, and P.-A. Muller (2019). Deep learning for time series classification: A review. Data Mining and Knowledge Discovery, 33, 917–963.

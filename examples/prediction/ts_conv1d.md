@@ -1,3 +1,5 @@
+Conv1D: One-dimensional Convolutional Neural Networks (1D CNNs) extract local temporal patterns by convolving learnable filters across the input window. Stacked convolution and pooling layers can capture increasingly abstract features before a regression head maps to the next-step forecast. CNNs are effective when short- to mid-range motifs repeat over time and benefit from normalized inputs.
+
 Objective: Train and evaluate a 1D CNN (Conv1D) for time-series forecasting with sliding windows, including normalization, fitting, and evaluation.
 
 
@@ -27,14 +29,14 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
-##             t2        t1        t0
-## [1,] 0.9839859 0.9092974 0.7780732
-## [2,] 0.9092974 0.7780732 0.5984721
-## [3,] 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3        t2        t1
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
+##             t0
+## [1,] 0.7780732
+## [2,] 0.5984721
+## [3,] 0.3816610
 ```
 
 
@@ -75,7 +77,7 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 1.606828e-05
+## [1] 2.131092e-06
 ```
 
 
@@ -94,20 +96,20 @@ ev_test
 ## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
 ## 
 ## $prediction
-## [1]  0.41656160  0.17748133 -0.07710518 -0.32579591 -0.55799213
+## [1]  0.41403937  0.17845549 -0.07170368 -0.31753762 -0.54023413
 ## 
 ## $smape
-## [1] 0.02032895
+## [1] 0.01814496
 ## 
 ## $mse
-## [1] 5.420946e-05
+## [1] 1.093818e-05
 ## 
 ## $R2
-## [1] 0.9995318
+## [1] 0.9999055
 ## 
 ## $metrics
 ##            mse      smape        R2
-## 1 5.420946e-05 0.02032895 0.9995318
+## 1 1.093818e-05 0.01814496 0.9999055
 ```
 
 
@@ -120,3 +122,5 @@ plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_tex
 
 ![plot of chunk unnamed-chunk-9](fig/ts_conv1d/unnamed-chunk-9-1.png)
 
+References
+- Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner (1998). Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11), 2278–2324.

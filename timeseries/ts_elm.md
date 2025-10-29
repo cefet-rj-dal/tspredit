@@ -1,3 +1,5 @@
+ELM: Extreme Learning Machines are single-hidden-layer feedforward networks where the input-to-hidden weights are randomly assigned and fixed; only the hidden-to-output weights are learned in closed form. This yields very fast training while retaining nonlinear modeling capacity via the hidden activation function. In time series, the lagged window acts as the input vector.
+
 Objective: Fit and evaluate an ELM (Extreme Learning Machine) model for time-series forecasting with sliding windows, including data preparation, normalization, fitting, and visualization.
 
 
@@ -26,10 +28,14 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3        t2        t1
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
+##             t0
+## [1,] 0.7780732
+## [2,] 0.5984721
+## [3,] 0.3816610
 ```
 
 
@@ -122,3 +128,5 @@ plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_tex
 
 ![plot of chunk unnamed-chunk-10](fig/ts_elm/unnamed-chunk-10-1.png)
 
+References
+- G.-B. Huang, Q.-Y. Zhu, and C.-K. Siew (2006). Extreme learning machine: Theory and applications. Neurocomputing, 70(1–3), 489–501.

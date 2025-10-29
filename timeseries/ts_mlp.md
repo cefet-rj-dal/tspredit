@@ -1,3 +1,5 @@
+MLP: An MLP is a feedforward neural network that maps the lagged inputs (sliding-window features) to the next-step target via one or more hidden layers with nonlinear activations. With sufficient hidden units, MLPs approximate complex nonlinear dynamics. Important hyperparameters include the hidden size (`size`), regularization (`decay`), and the input window length.
+
 Objective: Demonstrate how to train, validate, and evaluate an MLP (Multilayer Perceptron) model for time-series forecasting with sliding windows, including data preparation, normalization, model fitting, and evaluation with metrics and plots.
 
 
@@ -26,10 +28,14 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3        t2        t1
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
+##             t0
+## [1,] 0.7780732
+## [2,] 0.5984721
+## [3,] 0.3816610
 ```
 
 
@@ -77,7 +83,7 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 1.470195e-05
+## [1] 1.433958e-05
 ```
 
 
@@ -96,20 +102,20 @@ ev_test
 ## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
 ## 
 ## $prediction
-## [1]  0.41665837  0.18028546 -0.06822382 -0.31458423 -0.54381924
+## [1]  0.41346700  0.17447608 -0.07724201 -0.32518290 -0.55250420
 ## 
 ## $smape
-## [1] 0.03192829
+## [1] 0.01342357
 ## 
 ## $mse
-## [1] 2.678022e-05
+## [1] 2.211495e-05
 ## 
 ## $R2
-## [1] 0.9997687
+## [1] 0.999809
 ## 
 ## $metrics
-##            mse      smape        R2
-## 1 2.678022e-05 0.03192829 0.9997687
+##            mse      smape       R2
+## 1 2.211495e-05 0.01342357 0.999809
 ```
 
 
@@ -122,3 +128,5 @@ plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_tex
 
 ![plot of chunk unnamed-chunk-10](fig/ts_mlp/unnamed-chunk-10-1.png)
 
+References
+- D. E. Rumelhart, G. E. Hinton, and R. J. Williams (1986). Learning representations by back-propagating errors. Nature, 323, 533–536.

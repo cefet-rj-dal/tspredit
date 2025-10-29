@@ -1,4 +1,7 @@
+Stretch: Scales deviations from the local mean by a factor greater than 1, amplifying intra‑window variability while preserving overall shape and timing. This challenges models to generalize across larger amplitude variations.
+
 Objective: Augment data by stretching variations within the window (stretch), useful to make the model more robust to variability.
+
 
 ```{r}
 # Time series augmentation - stretch
@@ -51,3 +54,5 @@ for (j in 1:nrow(xa)) {
 }
 ```
 
+References
+- H. I. Fawaz, G. Forestier, J. Weber, L. Idoumghar, and P.-A. Muller (2019). Deep learning for time series classification: A review. Data Mining and Knowledge Discovery, 33, 917–963.

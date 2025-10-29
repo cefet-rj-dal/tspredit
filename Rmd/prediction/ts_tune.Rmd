@@ -1,3 +1,5 @@
+Time series tuning: Hyperparameter optimization explores a predefined search space to identify configurations that generalize well, typically assessed via cross-validation on the training segment without leaking future information. Searching can be grid- or random-based; for many problems, random search is competitive and simpler. Here, tuning spans both the input window length and the base learner’s key parameters.
+
 Objective: Perform hyperparameter search (window size and base model parameters) with cross-validation to improve time-series forecasting, and evaluate the result.
 
 ```{r}
@@ -125,3 +127,5 @@ ranges_lstm <- list(input_size = 1:10, epochs=10000)
 ranges_cnn <- list(input_size = 1:10, epochs=10000)
 ```
 
+References
+- J. Bergstra and Y. Bengio (2012). Random search for hyper-parameter optimization. Journal of Machine Learning Research, 13, 281–305.

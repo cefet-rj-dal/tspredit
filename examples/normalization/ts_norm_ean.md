@@ -1,9 +1,9 @@
-Overview
-
-Exponential Adaptive Normalization (EAN) rescales each sliding window using exponentially weighted statistics so that the model focuses on shape rather than absolute level. This is helpful when the series level drifts over time (non-stationary mean/variance).
+Exponential Adaptive Normalization: EAN computes exponentially weighted means and (optionally) variances within each window using a decay factor. Each window is then centered and scaled by these adaptive statistics, enabling fast adaptation to local changes while smoothing out transient noise.
 
 Key parameter
 - `nw`: the effective window span for the exponential averages; smaller values adapt faster to recent changes.
+
+Objectives: EAN rescales each sliding window using exponentially weighted statistics so that the model focuses on shape rather than absolute level. This is helpful when the series level drifts over time (non-stationary mean/variance).
 
 
 ``` r
@@ -47,14 +47,14 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
-##             t2        t1        t0
-## [1,] 0.9839859 0.9092974 0.7780732
-## [2,] 0.9092974 0.7780732 0.5984721
-## [3,] 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3        t2        t1
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
+##             t0
+## [1,] 0.7780732
+## [2,] 0.5984721
+## [3,] 0.3816610
 ```
 
 ``` r
@@ -91,14 +91,14 @@ ts_head(tst, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3
-## [1,] 0.2323665 0.3104452 0.3836695 0.4474864 0.4979282 0.5318587 0.5471682
-## [2,] 0.3580339 0.4312581 0.4950750 0.5455169 0.5794473 0.5947568 0.5904935
-## [3,] 0.4924682 0.5562851 0.6067269 0.6406574 0.6559669 0.6517035 0.6281324
-##             t2        t1        t0
-## [1,] 0.5429048 0.5193337 0.4779203
-## [2,] 0.5669224 0.5255090 0.4688283
-## [3,] 0.5867191 0.5300384 0.4616144
+##             t9        t8        t7        t6        t5        t4        t3        t2        t1
+## [1,] 0.2323665 0.3104452 0.3836695 0.4474864 0.4979282 0.5318587 0.5471682 0.5429048 0.5193337
+## [2,] 0.3580339 0.4312581 0.4950750 0.5455169 0.5794473 0.5947568 0.5904935 0.5669224 0.5255090
+## [3,] 0.4924682 0.5562851 0.6067269 0.6406574 0.6559669 0.6517035 0.6281324 0.5867191 0.5300384
+##             t0
+## [1,] 0.4779203
+## [2,] 0.4688283
+## [3,] 0.4616144
 ```
 
 ``` r
@@ -121,4 +121,10 @@ plot_ts(y=ts[1,]) + theme(text = element_text(size=16))
 ```
 
 ![plot of chunk unnamed-chunk-7](fig/ts_norm_ean/unnamed-chunk-7-1.png)
+
+References
+- Ogasawara, E., Martinez, L. C., De Oliveira, D., Zimbrão, G., Pappa, G. L., Mattoso, M. (2010).
+Adaptive Normalization: A novel data normalization approach for non-stationary time series.
+Proceedings of the International Joint Conference on Neural Networks (IJCNN).
+doi:10.1109/IJCNN.2010.5596746
 

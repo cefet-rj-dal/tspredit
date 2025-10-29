@@ -1,4 +1,7 @@
+Awareness: Applies time‑decay weighting or sampling so that windows closer to the present are selected more often. This focuses learning on up‑to‑date dynamics while retaining historical variability.
+
 Objective: Augment data by prioritizing more recent samples (recency awareness) to give more weight to recent patterns in the windows.
+
 
 
 ``` r
@@ -10,7 +13,27 @@ Objective: Augment data by prioritizing more recent samples (recency awareness) 
 ``` r
 # Loading the packages
 library(daltoolbox)
+```
+
+```
+## 
+## Attaching package: 'daltoolbox'
+```
+
+```
+## The following object is masked from 'package:base':
+## 
+##     transform
+```
+
+``` r
 library(tspredit) 
+```
+
+```
+## Registered S3 method overwritten by 'quantmod':
+##   method            from
+##   as.zoo.data.frame zoo
 ```
 
 
@@ -73,3 +96,5 @@ for (j in 1:nrow(xa)) {
 
 ![plot of chunk unnamed-chunk-6](fig/ts_aug_awareness/unnamed-chunk-6-1.png)
 
+References
+- H. I. Fawaz, G. Forestier, J. Weber, L. Idoumghar, and P.-A. Muller (2019). Deep learning for time series classification: A review. Data Mining and Knowledge Discovery, 33, 917–963.

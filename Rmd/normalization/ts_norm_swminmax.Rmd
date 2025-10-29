@@ -1,3 +1,5 @@
+Sliding window min-max normalization: For each sliding window (row), compute its local min and max and rescale that window to [0,1]. This emphasizes local shape and pattern while removing level and amplitude differences across windows.
+
 Objective: Apply per-window min-max normalization (each row scaled by its own minima and maxima) and visualize the effect of scaling.
 
 ```{r}
@@ -52,3 +54,5 @@ summary(tst[,10])
 plot_ts(y=ts[1,]) + theme(text = element_text(size=16))
 ```
 
+References
+- C. M. Bishop (2006). Pattern Recognition and Machine Learning. Springer.

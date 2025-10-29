@@ -1,3 +1,5 @@
+LSTM: Long Short-Term Memory (LSTM) networks are recurrent neural networks that incorporate gating mechanisms to mitigate vanishing/exploding gradients and capture long-range temporal dependencies. In a sliding-window setup, the sequence of lagged inputs is processed to output the next-step forecast. Key hyperparameters include the input window length, hidden size, and number of training epochs.
+
 Objective: Train and evaluate an LSTM model for time-series forecasting with sliding windows, including normalization, fitting, and test evaluation.
 
 
@@ -28,10 +30,14 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3        t2        t1
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
+##             t0
+## [1,] 0.7780732
+## [2,] 0.5984721
+## [3,] 0.3816610
 ```
 
 
@@ -72,7 +78,7 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 0.0004500827
+## [1] 0.0003107065
 ```
 
 
@@ -92,7 +98,7 @@ print(sprintf("%.2f, %.2f", output, prediction))
 ```
 
 ```
-## [1] "0.41, 0.43"   "0.17, 0.19"   "-0.08, -0.08" "-0.32, -0.34" "-0.54, -0.57"
+## [1] "0.41, 0.40"   "0.17, 0.16"   "-0.08, -0.09" "-0.32, -0.33" "-0.54, -0.55"
 ```
 
 
@@ -104,8 +110,8 @@ print(head(ev_test$metrics))
 ```
 
 ```
-##            mse      smape        R2
-## 1 0.0002922216 0.04307498 0.9974761
+##            mse     smape        R2
+## 1 0.0001353923 0.0639785 0.9988306
 ```
 
 ``` r
@@ -113,7 +119,7 @@ print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
 ```
 
 ```
-## [1] "smape: 4.31"
+## [1] "smape: 6.40"
 ```
 
 
@@ -126,3 +132,5 @@ plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_tex
 
 ![plot of chunk unnamed-chunk-10](fig/ts_lstm/unnamed-chunk-10-1.png)
 
+References
+- S. Hochreiter and J. Schmidhuber (1997). Long short-term memory. Neural Computation, 9(8), 1735–1780.

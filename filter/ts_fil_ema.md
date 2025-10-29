@@ -1,4 +1,7 @@
+EMA filter: EMA is a recursive smoother that applies exponentially decaying weights to past observations. Given a smoothing factor α in (0,1], the estimate updates as s_t = α y_t + (1−α) s_{t−1}. Smaller α emphasizes longer-term history (stronger smoothing); larger α reacts faster to recent changes.
+
 Objective: Apply Exponential Moving Average (EMA) to smooth the series, reducing fast fluctuations while keeping the trend.
+
 
 
 ``` r
@@ -55,3 +58,5 @@ plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 
 ![plot of chunk unnamed-chunk-5](fig/ts_fil_ema/unnamed-chunk-5-1.png)
 
+References
+- R. G. Brown (1959). Exponential Smoothing for Predicting Demand. Addison-Wesley.

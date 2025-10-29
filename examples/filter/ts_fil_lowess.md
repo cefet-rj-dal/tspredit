@@ -1,3 +1,5 @@
+LOWESS filter: LOWESS (LOESS) performs locally weighted polynomial regression around each target point, down‑weighting distant observations with a kernel and iteratively reducing the effect of outliers with robust weights. The span controls the degree of smoothing.
+
 Objective: Apply the LOWESS filter (local smoothing) to reduce noise and spikes while preserving the series trend.
 
 
@@ -51,3 +53,5 @@ plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 
 ![plot of chunk unnamed-chunk-5](fig/ts_fil_lowess/unnamed-chunk-5-1.png)
 
+References
+- W. S. Cleveland (1979). Robust locally weighted regression and smoothing scatterplots. Journal of the American Statistical Association, 74(368), 829–836.

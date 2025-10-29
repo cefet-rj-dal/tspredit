@@ -1,3 +1,5 @@
+k-NN regression: k-NN regression predicts the next value by averaging (or weighting) the targets of the k most similar historical windows according to a distance measure (e.g., Euclidean). In the sliding-window setup, each row encodes the most recent lags of the series; neighbors with similar local patterns contribute to the forecast. The method is nonparametric and relies on appropriate scaling and a sensible choice of k.
+
 Objective: Use KNN (K-Nearest Neighbors) to forecast time series from sliding windows, with normalization, model fitting, and evaluation.
 
 ```{r}
@@ -76,3 +78,5 @@ yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))
 ```
 
+References
+- T. Cover and P. Hart (1967). Nearest neighbor pattern classification. IEEE Transactions on Information Theory, 13(1), 21–27.

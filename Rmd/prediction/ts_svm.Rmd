@@ -1,3 +1,5 @@
+Support Vector Regression: SVR fits a function that balances flatness with tolerance to errors using the ε-insensitive loss. Kernel functions (e.g., radial basis function) enable nonlinear regression in the sliding-window feature space, where each row encodes the latest lags of the series. Important hyperparameters include the kernel, cost (C), epsilon (ε), and kernel-specific parameters. SVR is robust to outliers and works well with properly scaled inputs.
+
 Objective: Demonstrate time-series forecasting with SVM (Support Vector Regression) using sliding windows, normalization, model fitting, and evaluation with metrics and plots.
 
 ```{r}
@@ -75,3 +77,5 @@ yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))
 ```
 
+References
+- A. J. Smola and B. Schölkopf (2004). A tutorial on support vector regression. Statistics and Computing, 14(3), 199–222.

@@ -1,3 +1,5 @@
+No normalization: No transformation is applied; the data flows unchanged. Use to isolate the effect of normalization by comparison with scaled alternatives.
+
 Objective: Show the pipeline with no normalization (without changing the data), useful as a baseline and to demonstrate the preprocessing interface.
 
 ```{r}
@@ -50,3 +52,5 @@ summary(tst[,10])
 plot_ts(y=ts[,10]) + theme(text = element_text(size=16))
 ```
 
+References
+- C. M. Bishop (2006). Pattern Recognition and Machine Learning. Springer.

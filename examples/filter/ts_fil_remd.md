@@ -1,10 +1,10 @@
-Overview
+REMD filter: REMD adopts robustness enhancements to EMD, such as noise‑assisted ensemble strategies (e.g., EEMD/CEEMDAN), to stabilize the decomposition under noise and reduce mode mixing. After decomposition, high‑frequency IMFs are attenuated and the remaining components are summed to form the denoised signal.
 
-Robust Empirical Mode Decomposition (REMD) decomposes a signal into intrinsic mode functions (IMFs) in a way that is less sensitive to noise and outliers than standard EMD. Reconstructing the series from selected IMFs yields a denoised version while preserving nonstationary and nonlinear characteristics.
-
-When to use
+When to use:
 - Nonlinear/nonstationary series where frequency content changes over time
 - You want a data-driven decomposition without fixed bases (e.g., unlike wavelets/Fourier)
+
+Objectives: Robust Empirical Mode Decomposition (REMD) decomposes a signal into intrinsic mode functions (IMFs) in a way that is less sensitive to noise and outliers than standard EMD. Reconstructing the series from selected IMFs yields a denoised version while preserving nonstationary and nonlinear characteristics.
 
 
 ``` r
@@ -57,4 +57,7 @@ plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 ```
 
 ![plot of chunk unnamed-chunk-5](fig/ts_fil_remd/unnamed-chunk-5-1.png)
+
+References
+- Souza, J., et al. REMD: A Novel Hybrid Anomaly Detection Method Based on EMD and ARIMA. IJCNN, 2024. doi:10.1109/IJCNN60899.2024.10651192
 

@@ -1,6 +1,7 @@
-Overview
+Moving Average filter: The Moving Average (MA) filter smooths short-term fluctuations by replacing each point with the average of its neighbors. It is a simple and fast baseline to reduce random noise and highlight the underlying trend.
 
-The Moving Average (MA) filter smooths short-term fluctuations by replacing each point with the average of its neighbors. It is a simple and fast baseline to reduce random noise and highlight the underlying trend.
+Method
+A centered or trailing window of fixed width is slid across the series; each output value is the arithmetic mean of the values inside the window. As the window size grows, variance decreases but bias (lag and peak attenuation) increases. The MA filter corresponds to a finite impulse response (FIR) low‑pass filter in the time domain.
 
 When to use
 - As a first pass to denoise a mildly noisy series
@@ -64,9 +65,10 @@ plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 ```
 
 ```
-## Warning: Removed 2 rows containing missing values or values outside the scale range
-## (`geom_line()`).
+## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_line()`).
 ```
 
 ![plot of chunk unnamed-chunk-5](fig/ts_fil_ma/unnamed-chunk-5-1.png)
 
+References
+- A. V. Oppenheim and R. W. Schafer (2010). Discrete-Time Signal Processing. Prentice Hall.

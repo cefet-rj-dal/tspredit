@@ -1,3 +1,5 @@
+Time series tuning: Hyperparameter optimization explores a predefined search space to identify configurations that generalize well, typically assessed via cross-validation on the training segment without leaking future information. Searching can be grid- or random-based; for many problems, random search is competitive and simpler. Here, tuning spans both the input window length and the base learner’s key parameters.
+
 Objective: Perform hyperparameter search (window size and base model parameters) with cross-validation to improve time-series forecasting, and evaluate the result.
 
 
@@ -42,10 +44,14 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5         t4         t3         t2         t1         t0
-## [1,] 1.0000000 0.9689124 0.8775826 0.7316889 0.5403023  0.3153224  0.0707372 -0.1782461 -0.4161468 -0.6281736
-## [2,] 0.9689124 0.8775826 0.7316889 0.5403023 0.3153224  0.0707372 -0.1782461 -0.4161468 -0.6281736 -0.8011436
-## [3,] 0.8775826 0.7316889 0.5403023 0.3153224 0.0707372 -0.1782461 -0.4161468 -0.6281736 -0.8011436 -0.9243024
+##             t9        t8        t7        t6        t5         t4         t3         t2         t1
+## [1,] 1.0000000 0.9689124 0.8775826 0.7316889 0.5403023  0.3153224  0.0707372 -0.1782461 -0.4161468
+## [2,] 0.9689124 0.8775826 0.7316889 0.5403023 0.3153224  0.0707372 -0.1782461 -0.4161468 -0.6281736
+## [3,] 0.8775826 0.7316889 0.5403023 0.3153224 0.0707372 -0.1782461 -0.4161468 -0.6281736 -0.8011436
+##              t0
+## [1,] -0.6281736
+## [2,] -0.8011436
+## [3,] -0.9243024
 ```
 
 
@@ -59,10 +65,14 @@ ts_head(samp$train, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5         t4         t3         t2         t1         t0
-## [1,] 1.0000000 0.9689124 0.8775826 0.7316889 0.5403023  0.3153224  0.0707372 -0.1782461 -0.4161468 -0.6281736
-## [2,] 0.9689124 0.8775826 0.7316889 0.5403023 0.3153224  0.0707372 -0.1782461 -0.4161468 -0.6281736 -0.8011436
-## [3,] 0.8775826 0.7316889 0.5403023 0.3153224 0.0707372 -0.1782461 -0.4161468 -0.6281736 -0.8011436 -0.9243024
+##             t9        t8        t7        t6        t5         t4         t3         t2         t1
+## [1,] 1.0000000 0.9689124 0.8775826 0.7316889 0.5403023  0.3153224  0.0707372 -0.1782461 -0.4161468
+## [2,] 0.9689124 0.8775826 0.7316889 0.5403023 0.3153224  0.0707372 -0.1782461 -0.4161468 -0.6281736
+## [3,] 0.8775826 0.7316889 0.5403023 0.3153224 0.0707372 -0.1782461 -0.4161468 -0.6281736 -0.8011436
+##              t0
+## [1,] -0.6281736
+## [2,] -0.8011436
+## [3,] -0.9243024
 ```
 
 ``` r
@@ -70,8 +80,10 @@ ts_head(samp$test)
 ```
 
 ```
-##              t9        t8         t7          t6        t5       t4       t3        t2        t1        t0
-## [1,] -0.7256268 -0.532833 -0.3069103 -0.06190529 0.1869486 0.424179 0.635036 0.8064095 0.9276444 0.9912028
+##              t9        t8         t7          t6        t5       t4       t3        t2        t1
+## [1,] -0.7256268 -0.532833 -0.3069103 -0.06190529 0.1869486 0.424179 0.635036 0.8064095 0.9276444
+##             t0
+## [1,] 0.9912028
 ```
 
 
@@ -106,8 +118,8 @@ print(head(ev_adjust$metrics))
 ```
 
 ```
-##           mse        smape R2
-## 1 7.56133e-30 1.014266e-14  1
+##            mse        smape R2
+## 1 1.438579e-29 9.327241e-15  1
 ```
 
 
@@ -140,7 +152,7 @@ print(head(ev_test$metrics))
 
 ```
 ##            mse        smape   R2
-## 1 2.496005e-29 5.040344e-15 -Inf
+## 1 1.687423e-29 4.144283e-15 -Inf
 ```
 
 ``` r
@@ -184,3 +196,5 @@ ranges_lstm <- list(input_size = 1:10, epochs=10000)
 ranges_cnn <- list(input_size = 1:10, epochs=10000)
 ```
 
+References
+- J. Bergstra and Y. Bengio (2012). Random search for hyper-parameter optimization. Journal of Machine Learning Research, 13, 281–305.

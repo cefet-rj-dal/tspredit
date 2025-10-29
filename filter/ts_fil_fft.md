@@ -1,3 +1,5 @@
+FFT filter: The signal is transformed to the frequency domain via the discrete Fourier transform (DFT). A low‑pass filter attenuates components above a cutoff, and the inverse DFT reconstructs a smoothed signal. This approach cleanly separates trend/low‑frequency content from high‑frequency noise.
+
 Objective: Apply frequency-domain smoothing (FFT) by removing high-frequency components to reduce noise.
 
 
@@ -51,3 +53,5 @@ plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 
 ![plot of chunk unnamed-chunk-5](fig/ts_fil_fft/unnamed-chunk-5-1.png)
 
+References
+- A. V. Oppenheim and R. W. Schafer (2010). Discrete-Time Signal Processing. Prentice Hall.

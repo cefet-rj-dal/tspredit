@@ -1,5 +1,8 @@
 Objective: Difference the series (first differences) and apply min-max normalization, observing level reduction and the effect on scale.
 
+Method
+First differencing transforms y_t to y_t − y_{t−1}, removing a unit‑root trend to stabilize the mean. After differencing, optional scaling (e.g., min‑max) standardizes the range for learning algorithms. Always compute scaling parameters on the training segment only.
+
 ```{r}
 # Normalization by Differences (Diff)
 
@@ -52,3 +55,5 @@ summary(tst[,9])
 plot_ts(y=ts[,9]) + theme(text = element_text(size=16))
 ```
 
+References
+- G. E. P. Box, G. M. Jenkins, G. C. Reinsel, and G. M. Ljung (2015). Time Series Analysis: Forecasting and Control. Wiley.

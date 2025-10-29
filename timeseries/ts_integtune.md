@@ -1,12 +1,13 @@
-Overview
-
-Integrated tuning automates hyperparameter search for time-series learners in a single pipeline. It handles preprocessing, window size, and model hyperparameters, then evaluates and returns the best configuration for your training data.
+Integrated time series tuning: The integrated tuner composes preprocessing, windowing, and a base learner, then searches over their hyperparameters jointly. Evaluation uses time-aware resampling to avoid look-ahead bias. This unified approach simplifies model selection by returning a fitted pipeline configured with the best-scoring setting on the training data.
 
 What you will learn
 - Create sliding windows suitable for supervised learning
 - Split the data into train/test respecting time order
 - Define a search space and run integrated tuning
 - Inspect evaluation metrics and visualize predictions
+
+
+Objectives: Integrated tuning automates hyperparameter search for time-series learners in a single pipeline. It handles preprocessing, window size, and model hyperparameters, then evaluates and returns the best configuration for your training data.
 
 
 ``` r
@@ -52,10 +53,14 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5         t4         t3         t2         t1         t0
-## [1,] 1.0000000 0.9689124 0.8775826 0.7316889 0.5403023  0.3153224  0.0707372 -0.1782461 -0.4161468 -0.6281736
-## [2,] 0.9689124 0.8775826 0.7316889 0.5403023 0.3153224  0.0707372 -0.1782461 -0.4161468 -0.6281736 -0.8011436
-## [3,] 0.8775826 0.7316889 0.5403023 0.3153224 0.0707372 -0.1782461 -0.4161468 -0.6281736 -0.8011436 -0.9243024
+##             t9        t8        t7        t6        t5         t4         t3         t2         t1
+## [1,] 1.0000000 0.9689124 0.8775826 0.7316889 0.5403023  0.3153224  0.0707372 -0.1782461 -0.4161468
+## [2,] 0.9689124 0.8775826 0.7316889 0.5403023 0.3153224  0.0707372 -0.1782461 -0.4161468 -0.6281736
+## [3,] 0.8775826 0.7316889 0.5403023 0.3153224 0.0707372 -0.1782461 -0.4161468 -0.6281736 -0.8011436
+##              t0
+## [1,] -0.6281736
+## [2,] -0.8011436
+## [3,] -0.9243024
 ```
 
 
@@ -68,10 +73,14 @@ ts_head(samp$train, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5         t4         t3         t2         t1         t0
-## [1,] 1.0000000 0.9689124 0.8775826 0.7316889 0.5403023  0.3153224  0.0707372 -0.1782461 -0.4161468 -0.6281736
-## [2,] 0.9689124 0.8775826 0.7316889 0.5403023 0.3153224  0.0707372 -0.1782461 -0.4161468 -0.6281736 -0.8011436
-## [3,] 0.8775826 0.7316889 0.5403023 0.3153224 0.0707372 -0.1782461 -0.4161468 -0.6281736 -0.8011436 -0.9243024
+##             t9        t8        t7        t6        t5         t4         t3         t2         t1
+## [1,] 1.0000000 0.9689124 0.8775826 0.7316889 0.5403023  0.3153224  0.0707372 -0.1782461 -0.4161468
+## [2,] 0.9689124 0.8775826 0.7316889 0.5403023 0.3153224  0.0707372 -0.1782461 -0.4161468 -0.6281736
+## [3,] 0.8775826 0.7316889 0.5403023 0.3153224 0.0707372 -0.1782461 -0.4161468 -0.6281736 -0.8011436
+##              t0
+## [1,] -0.6281736
+## [2,] -0.8011436
+## [3,] -0.9243024
 ```
 
 ``` r
@@ -79,8 +88,10 @@ ts_head(samp$test)
 ```
 
 ```
-##              t9        t8         t7          t6        t5       t4       t3        t2        t1        t0
-## [1,] -0.7256268 -0.532833 -0.3069103 -0.06190529 0.1869486 0.424179 0.635036 0.8064095 0.9276444 0.9912028
+##              t9        t8         t7          t6        t5       t4       t3        t2        t1
+## [1,] -0.7256268 -0.532833 -0.3069103 -0.06190529 0.1869486 0.424179 0.635036 0.8064095 0.9276444
+##             t0
+## [1,] 0.9912028
 ```
 
 
@@ -193,3 +204,7 @@ ranges_lstm <- list(input_size = 1:10, epochs=10000)
 ranges_cnn <- list(input_size = 1:10, epochs=10000)
 ```
 
+References
+- Salles, R., Pacitti, E., Bezerra, E., Marques, C., Pacheco, C., Oliveira,
+C., Porto, F., Ogasawara, E. (2023). TSPredIT: Integrated Tuning of Data
+Preprocessing and Time Series Prediction Models. Lecture Notes in Computer Science.

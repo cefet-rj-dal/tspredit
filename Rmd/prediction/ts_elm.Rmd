@@ -1,3 +1,5 @@
+ELM: Extreme Learning Machines are single-hidden-layer feedforward networks where the input-to-hidden weights are randomly assigned and fixed; only the hidden-to-output weights are learned in closed form. This yields very fast training while retaining nonlinear modeling capacity via the hidden activation function. In time series, the lagged window acts as the input vector.
+
 Objective: Fit and evaluate an ELM (Extreme Learning Machine) model for time-series forecasting with sliding windows, including data preparation, normalization, fitting, and visualization.
 
 ```{r}
@@ -76,3 +78,5 @@ yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))
 ```
 
+References
+- G.-B. Huang, Q.-Y. Zhu, and C.-K. Siew (2006). Extreme learning machine: Theory and applications. Neurocomputing, 70(1–3), 489–501.

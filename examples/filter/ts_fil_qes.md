@@ -1,9 +1,8 @@
-Overview
-
-Quadratic Exponential Smoothing (QES) models level and trend using exponentially weighted averages with a quadratic form. It is useful for trend-dominated series where you want a smooth estimate that adapts to gradual changes.
-
+QES Filter: QES extends exponential smoothing by incorporating higher‑order trend components through recursively updated equations. It generalizes single and double exponential smoothing (Holt/Brown) with additional curvature terms to better track accelerating or decelerating trends.
 Key parameter
 - `gamma`: controls whether seasonal/trend gain is adapted (package-specific); set to `FALSE` to keep default behavior.
+
+Objectives: Quadratic Exponential Smoothing (QES) models level and trend using exponentially weighted averages with a quadratic form. It is useful for trend-dominated series where you want a smooth estimate that adapts to gradual changes.
 
 
 ``` r
@@ -57,3 +56,6 @@ plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 
 ![plot of chunk unnamed-chunk-5](fig/ts_fil_qes/unnamed-chunk-5-1.png)
 
+References
+- E. S. Gardner Jr. (1985). Exponential smoothing: The state of the art. Journal of Forecasting, 4(1), 1–28.
+- E. S. Gardner Jr. (2006). Exponential smoothing: The state of the art—Part II. International Journal of Forecasting, 22(4), 637–666.

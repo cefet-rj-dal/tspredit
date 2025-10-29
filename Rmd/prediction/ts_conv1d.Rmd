@@ -1,3 +1,5 @@
+Conv1D: One-dimensional Convolutional Neural Networks (1D CNNs) extract local temporal patterns by convolving learnable filters across the input window. Stacked convolution and pooling layers can capture increasingly abstract features before a regression head maps to the next-step forecast. CNNs are effective when short- to mid-range motifs repeat over time and benefit from normalized inputs.
+
 Objective: Train and evaluate a 1D CNN (Conv1D) for time-series forecasting with sliding windows, including normalization, fitting, and evaluation.
 
 ```{r}
@@ -71,3 +73,5 @@ yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))
 ```
 
+References
+- Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner (1998). Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11), 2278–2324.

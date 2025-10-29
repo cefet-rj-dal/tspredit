@@ -1,3 +1,5 @@
+No augmentation: The identity augmentation passes windows through unchanged. Use it to benchmark the incremental benefit of augmentation strategies.
+
 Objective: Demonstrate a no-augmentation flow (no changes), keeping the interface and indices for comparisons.
 
 ```{r}
@@ -51,3 +53,5 @@ for (j in 1:nrow(xa)) {
 }
 ```
 
+References
+- H. I. Fawaz, G. Forestier, J. Weber, L. Idoumghar, and P.-A. Muller (2019). Deep learning for time series classification: A review. Data Mining and Knowledge Discovery, 33, 917–963.

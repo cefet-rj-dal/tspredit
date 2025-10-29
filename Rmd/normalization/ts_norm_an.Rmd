@@ -1,4 +1,7 @@
+Adaptive normalization: AN centers and scales each window or time point using time‑varying statistics, typically computed via moving averages or exponentially weighted averages. This mitigates slow level/scale drift so models focus on local shape rather than absolute magnitude.
+
 Objective: Apply adaptive normalization (moving average/EMA) to handle distribution shifts over time and observe the effect on the target.
+
 
 ```{r}
 # Exponential Adaptive Normalization
@@ -52,3 +55,8 @@ summary(tst[,10])
 plot_ts(y=ts[1,]) + theme(text = element_text(size=16))
 ```
 
+References
+- Ogasawara, E., Martinez, L. C., De Oliveira, D., Zimbrão, G., Pappa, G. L., Mattoso, M. (2010).
+Adaptive Normalization: A novel data normalization approach for non-stationary time series.
+Proceedings of the International Joint Conference on Neural Networks (IJCNN).
+doi:10.1109/IJCNN.2010.5596746

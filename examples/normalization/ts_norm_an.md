@@ -1,4 +1,7 @@
+Adaptive normalization: AN centers and scales each window or time point using time‑varying statistics, typically computed via moving averages or exponentially weighted averages. This mitigates slow level/scale drift so models focus on local shape rather than absolute magnitude.
+
 Objective: Apply adaptive normalization (moving average/EMA) to handle distribution shifts over time and observe the effect on the target.
+
 
 
 ``` r
@@ -42,14 +45,14 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
-##             t2        t1        t0
-## [1,] 0.9839859 0.9092974 0.7780732
-## [2,] 0.9092974 0.7780732 0.5984721
-## [3,] 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3        t2        t1
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
+##             t0
+## [1,] 0.7780732
+## [2,] 0.5984721
+## [3,] 0.3816610
 ```
 
 ``` r
@@ -86,14 +89,14 @@ ts_head(tst, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3
-## [1,] 0.1770086 0.2931936 0.4021548 0.4971174 0.5721773 0.6226675 0.6454487
-## [2,] 0.2650884 0.3740495 0.4690122 0.5440720 0.5945622 0.6173435 0.6109994
-## [3,] 0.3677446 0.4627073 0.5377671 0.5882573 0.6110386 0.6046945 0.5696195
-##             t2        t1        t0
-## [1,] 0.6391047 0.6040297 0.5424046
-## [2,] 0.5759245 0.5142994 0.4299558
-## [3,] 0.5079945 0.4236508 0.3218327
+##             t9        t8        t7        t6        t5        t4        t3        t2        t1
+## [1,] 0.1770086 0.2931936 0.4021548 0.4971174 0.5721773 0.6226675 0.6454487 0.6391047 0.6040297
+## [2,] 0.2650884 0.3740495 0.4690122 0.5440720 0.5945622 0.6173435 0.6109994 0.5759245 0.5142994
+## [3,] 0.3677446 0.4627073 0.5377671 0.5882573 0.6110386 0.6046945 0.5696195 0.5079945 0.4236508
+##             t0
+## [1,] 0.5424046
+## [2,] 0.4299558
+## [3,] 0.3218327
 ```
 
 ``` r
@@ -116,3 +119,8 @@ plot_ts(y=ts[1,]) + theme(text = element_text(size=16))
 
 ![plot of chunk unnamed-chunk-7](fig/ts_norm_an/unnamed-chunk-7-1.png)
 
+References
+- Ogasawara, E., Martinez, L. C., De Oliveira, D., Zimbrão, G., Pappa, G. L., Mattoso, M. (2010).
+Adaptive Normalization: A novel data normalization approach for non-stationary time series.
+Proceedings of the International Joint Conference on Neural Networks (IJCNN).
+doi:10.1109/IJCNN.2010.5596746

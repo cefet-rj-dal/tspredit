@@ -1,4 +1,7 @@
+Jitter: Adds small random perturbations (e.g., Gaussian noise) to windows, encouraging the model to be invariant to minor measurement errors and sensor noise. The noise level should be small relative to the signal.
+
 Objective: Demonstrate jitter augmentation (adding low-amplitude noise) on sliding windows to increase model robustness.
+
 
 ```{r}
 # Time series augmentation - jitter
@@ -51,3 +54,6 @@ for (j in 1:nrow(xa)) {
 }
 ```
 
+References
+- T. T. Um et al. (2017). Data augmentation of wearable sensor data for Parkinson’s disease monitoring using convolutional neural networks. ACM ICMI.
+- H. I. Fawaz, G. Forestier, J. Weber, L. Idoumghar, and P.-A. Muller (2019). Deep learning for time series classification: A review. Data Mining and Knowledge Discovery, 33, 917–963.

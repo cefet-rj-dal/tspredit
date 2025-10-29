@@ -1,4 +1,7 @@
+Kalman filter: A linear Gaussian state-space model represents the latent state evolution and observations. The Kalman filter recursively computes the optimal (minimum variance) state estimate by alternating prediction and update steps weighted by the Kalman gain. Tuning process/observation noise controls smoothness versus responsiveness.
+
 Objective: Smooth the series using a state-space model with a Kalman Filter, controlling observation noise (H) and process noise (Q).
+
 
 
 ``` r
@@ -51,3 +54,5 @@ plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 
 ![plot of chunk unnamed-chunk-5](fig/ts_fil_kalman/unnamed-chunk-5-1.png)
 
+References
+- R. E. Kalman (1960). A New Approach to Linear Filtering and Prediction Problems. Journal of Basic Engineering, 82(1), 35–45.

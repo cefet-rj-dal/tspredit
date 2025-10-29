@@ -1,3 +1,5 @@
+Wavelet filter: Wavelet denoising decomposes the signal into multi‑resolution detail and approximation coefficients. By thresholding high‑frequency detail coefficients and reconstructing, it suppresses noise while retaining sharp features better than many global smoothers.
+
 Objective: Apply denoising with discrete wavelets (MODWT), removing high-frequency details to smooth the series.
 
 ```{r}
@@ -42,3 +44,5 @@ y <- transform(filter, tsd$y)
 plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 ```
 
+References
+- D. L. Donoho and I. M. Johnstone (1994). Ideal spatial adaptation by wavelet shrinkage. Biometrika, 81(3), 425–455.

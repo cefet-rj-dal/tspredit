@@ -1,3 +1,5 @@
+MLP: An MLP is a feedforward neural network that maps the lagged inputs (sliding-window features) to the next-step target via one or more hidden layers with nonlinear activations. With sufficient hidden units, MLPs approximate complex nonlinear dynamics. Important hyperparameters include the hidden size (`size`), regularization (`decay`), and the input window length.
+
 Objective: Demonstrate how to train, validate, and evaluate an MLP (Multilayer Perceptron) model for time-series forecasting with sliding windows, including data preparation, normalization, model fitting, and evaluation with metrics and plots.
 
 ```{r}
@@ -76,3 +78,5 @@ yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))
 ```
 
+References
+- D. E. Rumelhart, G. E. Hinton, and R. J. Williams (1986). Learning representations by back-propagating errors. Nature, 323, 533–536.

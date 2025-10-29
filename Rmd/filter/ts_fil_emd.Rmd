@@ -1,10 +1,11 @@
-Overview
-
-Empirical Mode Decomposition (EMD) decomposes a signal into a finite set of intrinsic mode functions (IMFs) derived directly from the data. By reconstructing the series from selected IMFs, you can suppress high-frequency noise and preserve meaningful structure.
+EMD filter: EMD iteratively extracts IMFs by sifting: local extrema define upper and lower envelopes whose mean is subtracted from the signal until the residual becomes an IMF; the process repeats on the remainder. Denoising is obtained by summing low‑frequency IMFs and the residual while attenuating high‑frequency IMFs.
 
 Considerations
 - EMD is adaptive and data-driven (no fixed basis), suitable for nonlinear and nonstationary signals.
 - End effects can occur; visual checks are recommended near boundaries.
+
+Objective: Empirical Mode Decomposition (EMD) decomposes a signal into a finite set of intrinsic mode functions (IMFs) derived directly from the data. By reconstructing the series from selected IMFs, you can suppress high-frequency noise and preserve meaningful structure.
+
 
 ```{r}
 # Filter - EMD
@@ -49,3 +50,5 @@ y <- transform(filter, tsd$y)   # reconstruct a denoised version
 plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 ```
 
+References
+- N. E. Huang et al. (1998). The empirical mode decomposition and the Hilbert spectrum for nonlinear and non-stationary time series analysis. Proceedings of the Royal Society A, 454(1971), 903–995.

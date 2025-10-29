@@ -1,3 +1,5 @@
+Random Forest regression: Random Forest is an ensemble of decision trees trained on bootstrapped samples with random feature selection at each split. For time-series regression in a sliding-window setup, each row of the input matrix represents recent lags, and the target is the next value. The forest reduces variance via bagging and captures nonlinear relationships without strong parametric assumptions. Key hyperparameters include the number of trees (`ntree`) and terminal node size (`nodesize`).
+
 Objective: Train and evaluate a Random Forest model for time-series forecasting with sliding windows, including normalization, fitting, and results visualization.
 
 ```{r}
@@ -76,3 +78,5 @@ yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction) + theme(text = element_text(size=16))
 ```
 
+References
+- L. Breiman (2001). Random Forests. Machine Learning, 45(1), 5–32.

@@ -1,4 +1,7 @@
+Wormhole: Randomly replaces a subset of lag positions with values drawn from earlier indices in the series, preserving marginal statistics while altering local context. This simulates alternative but plausible histories and improves robustness to temporal perturbations.
+
 Objective: Augment data by replacing some lags with older values (wormhole), creating plausible alternative trajectories.
+
 
 ```{r}
 # Time series augmentation - wormhole
@@ -51,3 +54,5 @@ for (j in 1:nrow(xa)) {
 }
 ```
 
+References
+- H. I. Fawaz, G. Forestier, J. Weber, L. Idoumghar, and P.-A. Muller (2019). Deep learning for time series classification: A review. Data Mining and Knowledge Discovery, 33, 917–963.

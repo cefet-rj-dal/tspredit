@@ -1,4 +1,7 @@
+AwareSmooth: Combines recency‑aware sampling with window smoothing so recent segments are emphasized and noise is reduced. This yields augmented windows that better reflect current regimes while remaining plausible.
+
 Objective: Augment data with temporal awareness and progressive smoothing, reducing noise and prioritizing recent samples.
+
 
 
 ``` r
@@ -75,3 +78,5 @@ for (j in 1:nrow(xa)) {
 
 ![plot of chunk unnamed-chunk-6](fig/ts_aug_awaresmooth/unnamed-chunk-6-1.png)
 
+References
+- H. I. Fawaz, G. Forestier, J. Weber, L. Idoumghar, and P.-A. Muller (2019). Deep learning for time series classification: A review. Data Mining and Knowledge Discovery, 33, 917–963.

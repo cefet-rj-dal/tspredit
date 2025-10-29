@@ -1,3 +1,5 @@
+Winsorization filter: Winsorization limits extreme values to specified quantiles (e.g., 5th and 95th), reducing the influence of spikes without fully discarding observations. It is a simple robustification step prior to smoothing or modeling.
+
 Objective: Apply Winsorization to limit extreme values and reduce the influence of outliers in the series.
 
 
@@ -51,3 +53,5 @@ plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 
 ![plot of chunk unnamed-chunk-5](fig/ts_fil_winsor/unnamed-chunk-5-1.png)
 
+References
+- R. R. Wilcox (2012). Introduction to Robust Estimation and Hypothesis Testing. Academic Press.

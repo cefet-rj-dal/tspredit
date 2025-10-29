@@ -1,8 +1,8 @@
-Overview
+Seasonal adjustment filter: Seasonal adjustment estimates and removes recurring seasonal effects to produce a seasonally adjusted series. Common approaches include STL (Seasonal-Trend decomposition using Loess) and X‑13ARIMA‑SEATS. This example applies an STL‑based adjustment.
 
-Seasonal adjustment aims to remove periodic seasonal components from a series, making the underlying trend and cycle easier to analyze. After adjustment, remaining variation should reflect non-seasonal dynamics.
+Objectives: Seasonal adjustment aims to remove periodic seasonal components from a series, making the underlying trend and cycle easier to analyze. After adjustment, remaining variation should reflect non-seasonal dynamics.
 
-Notes
+Notes:
 - Ensure the frequency/periodicity in your data is appropriate for seasonal estimation.
 - Seasonal adjustment methods can differ in how they model trend and irregular components.
 
@@ -49,3 +49,5 @@ y <- transform(filter, tsd$y)
 plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 ```
 
+References
+- R. B. Cleveland, W. S. Cleveland, J. E. McRae, and I. Terpenning (1990). STL: A seasonal-trend decomposition procedure based on loess. Journal of Official Statistics, 6(1), 3–73.
