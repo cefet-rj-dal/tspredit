@@ -31,15 +31,11 @@ easier to compare alternatives and automate repetitive tasks.
 
 ## Examples
 
-Examples of TSPredIT usage are available in the official GitHub
-repository:
-
-- [Time Series
-  examples](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/timeseries)
-- [Augmentation
-  examples](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/augment)
-- [Filter
-  examples](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/filter)
+- [Data
+  manipulation](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/data)
+- [Prediction](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/prediction)
+- [Augmentation](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/augment)
+- [Filtering](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/filter)
 
 Additional documentation and tutorials for the underlying DAL Toolbox
 can be found at:
