@@ -53,8 +53,7 @@ plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
 ```
 
 ```
-## Warning: Removed 2 rows containing missing values or values outside the
-## scale range (`geom_line()`).
+## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_line()`).
 ```
 
 ![plot of chunk unnamed-chunk-5](fig/ts_fil_ema/unnamed-chunk-5-1.png)

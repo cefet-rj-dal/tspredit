@@ -116,8 +116,8 @@ print(head(ev_adjust$metrics))
 ```
 
 ```
-##           mse        smape R2
-## 1 7.56133e-30 1.014266e-14  1
+##            mse        smape R2
+## 1 3.235577e-30 7.125308e-15  1
 ```
 
 
@@ -149,8 +149,8 @@ print(head(ev_test$metrics))
 ```
 
 ```
-##            mse        smape   R2
-## 1 2.496005e-29 5.040344e-15 -Inf
+##           mse        smape   R2
+## 1 1.49144e-30 1.232084e-15 -Inf
 ```
 
 ``` r
