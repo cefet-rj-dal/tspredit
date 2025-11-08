@@ -1,4 +1,4 @@
-# Rmd Examples Index
+# Examples
 
 This directory collects runnable examples for time series data preparation, filtering, normalization, and prediction. Use the category readmes below to navigate to specific examples.
 
