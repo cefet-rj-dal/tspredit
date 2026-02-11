@@ -32,4 +32,3 @@ ts.plot(series, main = "M3 monthly series: M1")
 Makridakis and Hibon (2000). The M3-Competition: Results, conclusions and implications. International Journal of Forecasting, 16(4), 451–476.
 }
 \keyword{datasets}
-

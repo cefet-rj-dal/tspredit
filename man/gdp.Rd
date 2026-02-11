@@ -29,4 +29,3 @@ FAO. 2024. Gross domestic product and agriculture value added 2013–2022 – Gl
 FAOSTAT Analytical Briefs, No. 85. Rome. \doi{10.4060/cd0763en}
 }
 \keyword{datasets}
-

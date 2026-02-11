@@ -42,4 +42,3 @@ Chen, B.-J., Chang, M.-W., & Lin, C.-J. (2004). \emph{Load forecasting using sup
 }
 \keyword{benchmark}
 \keyword{datasets}
-

@@ -32,4 +32,3 @@ FAO. 2024. FAOSTAT: Pesticides Use. RP_e_README_Domain_Information_2024.
 \href{https://www.fao.org/faostat/en/#data/RP}{FAOSTAT Pesticides Use Database}
 }
 \keyword{datasets}
-
