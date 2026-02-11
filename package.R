@@ -59,8 +59,8 @@ if (FALSE) { #build package for cran
 
 
   #run in terminal
-  #R CMD check tspredit_1.2.747.tar.gz
-  #R CMD check tspredit_1.2.747.tar.gz --as-cran
+  #R CMD check tspredit_1.2.767.tar.gz
+  #R CMD check tspredit_1.2.767.tar.gz --as-cran
 
   #upload package
   #https://cran.r-project.org/submit.html
