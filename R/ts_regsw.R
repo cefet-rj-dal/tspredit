@@ -30,6 +30,7 @@ ts_regsw <- function(preprocess=NA, input_size=NA) {
 #'@exportS3Method fit ts_regsw
 #'@inheritParams do_fit
 #'@return A fitted object with learned backend model and fitted preprocessor.
+#'@noRd
 fit.ts_regsw <- function(obj, x, y, ...) {
   # Fit preprocessor on input windows
   obj$preprocess <- fit(obj$preprocess, x)
@@ -51,6 +52,7 @@ fit.ts_regsw <- function(obj, x, y, ...) {
 #'@param steps_ahead Integer. If 1, predicts per row; if > 1, performs
 #' iterative forecasting starting from a single last row of `x`.
 #'@return Numeric vector with predictions.
+#'@noRd
 predict.ts_regsw <- function(object, x, steps_ahead=1, ...) {
   if (steps_ahead == 1) {
     # One-step ahead per row
@@ -90,6 +92,7 @@ predict.ts_regsw <- function(object, x, steps_ahead=1, ...) {
 #'@exportS3Method do_predict ts_regsw
 #'@inheritParams do_predict
 #'@return Numeric vector with predictions using the backend's `predict`.
+#'@noRd
 do_predict.ts_regsw <- function(obj, x) {
   prediction <- stats::predict(obj$model, x)
   return(prediction)

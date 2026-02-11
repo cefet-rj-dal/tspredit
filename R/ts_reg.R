@@ -30,6 +30,7 @@ action.ts_reg <- function(obj, ...) {
 #'@exportS3Method predict ts_reg
 #'@inheritParams do_predict
 #'@return The last column of `x` (baseline predictor).
+#'@noRd
 predict.ts_reg <- function(object, x, ...) {
   # Default baseline: predict last column (t0) as-is
   return(x[,ncol(x)])

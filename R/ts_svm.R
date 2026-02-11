@@ -64,6 +64,7 @@ ts_svm <- function(preprocess=NA, input_size=NA, kernel="radial", epsilon=0, cos
 #'@exportS3Method do_fit ts_svm
 #'@inheritParams do_fit
 #'@return A fitted `ts_svm` object with trained SVR model.
+#'@noRd
 do_fit.ts_svm <- function(obj, x, y) {
   # e1071::svm expects data.frame for x
   obj$model <- e1071::svm(x = as.data.frame(x), y = y, epsilon=obj$epsilon, cost=obj$cost, kernel=obj$kernel)
@@ -74,6 +75,7 @@ do_fit.ts_svm <- function(obj, x, y) {
 #'@exportS3Method do_predict ts_svm
 #'@inheritParams do_predict
 #'@return Numeric vector with predictions.
+#'@noRd
 do_predict.ts_svm <- function(obj, x) {
   # Predict with same data.frame interface
   prediction <- stats::predict(obj$model, as.data.frame(x))

@@ -57,6 +57,7 @@ ts_knn <- function(preprocess=NA, input_size=NA, k=NA) {
 #'@exportS3Method do_fit ts_knn
 #'@inheritParams do_fit
 #'@return A fitted `ts_knn` object storing training data for prediction.
+#'@noRd
 do_fit.ts_knn <- function(obj, x, y) {
   # Ensure inputs/targets are data.frames for FNN API
   x <- adjust_data.frame(x)
@@ -73,6 +74,7 @@ do_fit.ts_knn <- function(obj, x, y) {
 #'@exportS3Method do_predict ts_knn
 #'@inheritParams do_predict
 #'@return Numeric vector with predictions.
+#'@noRd
 do_predict.ts_knn <- function(obj, x) {
   #develop from FNN https://daviddalpiaz.github.io/r4sl/knn-reg.html
   x <- adjust_data.frame(x)

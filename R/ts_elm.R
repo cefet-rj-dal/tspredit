@@ -62,6 +62,7 @@ ts_elm <- function(preprocess=NA, input_size=NA, nhid=NA, actfun='purelin') {
 #'@exportS3Method do_fit ts_elm
 #'@inheritParams do_fit
 #'@return A fitted `ts_elm` object with trained ELM model.
+#'@noRd
 do_fit.ts_elm <- function(obj, x, y) {
   # Train ELM with random hidden layer and closed-form output weights
   obj$model <- elmNNRcpp::elm_train(x, y, nhid = obj$nhid, actfun = obj$actfun, init_weights = "uniform_positive", bias = FALSE, verbose = FALSE)
@@ -72,6 +73,7 @@ do_fit.ts_elm <- function(obj, x, y) {
 #'@exportS3Method do_predict ts_elm
 #'@inheritParams do_predict
 #'@return Numeric vector with predictions.
+#'@noRd
 do_predict.ts_elm <- function(obj, x) {
   if (is.data.frame(x))
     x <- as.matrix(x)  # elm_predict expects a matrix

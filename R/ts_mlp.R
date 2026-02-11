@@ -70,6 +70,7 @@ ts_mlp <- function(preprocess=NA, input_size=NA, size=NA, decay=0.01, maxit=1000
 #'@exportS3Method do_fit ts_mlp
 #'@inheritParams do_fit
 #'@return A fitted `ts_mlp` object with trained `nnet` model.
+#'@noRd
 do_fit.ts_mlp <- function(obj, x, y) {
   # Train single-hidden-layer MLP with linear output for regression
   obj$model <- nnet::nnet(x = x, y = y, size = obj$size, decay=obj$decay, maxit = obj$maxit, linout=TRUE, trace = FALSE)

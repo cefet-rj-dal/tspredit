@@ -61,6 +61,7 @@ ts_rf <- function(preprocess=NA, input_size=NA, nodesize = 1, ntree = 10, mtry =
 #'@exportS3Method do_fit ts_rf
 #'@inheritParams do_fit
 #'@return A fitted `ts_rf` object with a trained forest.
+#'@noRd
 do_fit.ts_rf <- function(obj, x, y) {
   if (is.null(obj$mtry))
     obj$mtry <- ceiling(obj$input_size/3)  # default to ~1/3 of features
@@ -73,6 +74,7 @@ do_fit.ts_rf <- function(obj, x, y) {
 #'@exportS3Method do_predict ts_rf
 #'@inheritParams do_predict
 #'@return Numeric vector with predictions.
+#'@noRd
 do_predict.ts_rf <- function(obj, x) {
   # randomForest expects data.frame at predict time
   prediction <- stats::predict(obj$model, as.data.frame(x))
