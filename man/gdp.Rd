@@ -8,7 +8,7 @@
 list of time series.
 }
 \source{
-\href{http://www.fao.org/faostat/en/#data/MK}{FAOSTAT Macro Indicators Database}
+\href{https://www.fao.org/faostat/en/#data/MK}{FAOSTAT Macro Indicators Database}
 }
 \usage{
 data(gdp)
@@ -26,6 +26,7 @@ ts.plot(series, ylab = "US$", xlab = "Year", main = "GDP example")
 }
 \references{
 FAO. 2024. Gross domestic product and agriculture value added 2013–2022 – Global and regional trends.
-FAOSTAT Analytical Briefs, No. 85. Rome. \href{https://doi.org/10.4060/cd0763en}{https://doi.org/10.4060/cd0763en}
+FAOSTAT Analytical Briefs, No. 85. Rome. \doi{10.4060/cd0763en}
 }
 \keyword{datasets}
+

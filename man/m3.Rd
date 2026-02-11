@@ -8,7 +8,7 @@
 A list of lists containing time series.
 }
 \source{
-\href{https://www.sciencedirect.com/science/article/abs/pii/S0169207000000571?via\%3Dihub}{The M3-Competition: results, conclusions and implications}
+\doi{10.1016/S0169-2070(00)00057-1}
 }
 \usage{
 data(m3)
@@ -32,3 +32,4 @@ ts.plot(series, main = "M3 monthly series: M1")
 Makridakis and Hibon (2000). The M3-Competition: Results, conclusions and implications. International Journal of Forecasting, 16(4), 451–476.
 }
 \keyword{datasets}
+

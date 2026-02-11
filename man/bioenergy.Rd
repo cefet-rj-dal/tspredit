@@ -8,7 +8,7 @@
 A list of time series.
 }
 \source{
-\href{http://www.fao.org/faostat/en/#data/BE}{FAOSTAT Bioenergy Database}
+\href{https://www.fao.org/faostat/en/#data/BE}{FAOSTAT Bioenergy Database}
 }
 \usage{
 data(bioenergy)
@@ -31,3 +31,4 @@ ts.plot(series, ylab = "TJ", xlab = "Year", main = "Bioenergy example")
 FAO 2024. FAOSTAT Bioenergy, FAO, Rome, Italy.  ; United Nations Statistics Division (UNSD), 2011; International Recommendations for Energy Statistics (IRES).
 }
 \keyword{datasets}
+

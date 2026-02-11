@@ -13,7 +13,7 @@ A data frame with 730 rows and 3 columns:
 }
 }
 \source{
-\href{http://www.eunite.org/knowledge/Competitions/1st_competition/1st_competition.htm}{EUNITE Competition – Electricity Load Forecasting}
+EUNITE Competition 2001 dataset (original competition website currently unavailable).
 }
 \usage{
 data(EUNITE.Reg)
@@ -38,7 +38,8 @@ data(EUNITE.Reg)
 head(EUNITE.Reg)
 }
 \references{
-Chen, B.-J., Chang, M.-W., & Lin, C.-J. (2004). \emph{Load forecasting using support vector machines: a study on EUNITE competition 2001}. IEEE Transactions on Power Systems, 19(4), 1821‑1830.
+Chen, B.-J., Chang, M.-W., & Lin, C.-J. (2004). \emph{Load forecasting using support vector machines: a study on EUNITE competition 2001}. IEEE Transactions on Power Systems, 19(4), 1821-1830.
 }
 \keyword{benchmark}
 \keyword{datasets}
+

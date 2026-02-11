@@ -8,7 +8,7 @@
 A data frame with five columns and 980 rows. Each column represents a known segment of the time series.
 }
 \source{
-\href{https://archive.ics.uci.edu/ml/datasets/CATS+Time+Series+Prediction}{CATS Time Series Competition}
+\href{https://archive.ics.uci.edu/dataset/204/cats}{CATS Time Series Competition}
 }
 \usage{
 data(CATS)
@@ -33,3 +33,4 @@ Lendasse, A., Oja, E., Simula, O., Verleysen, M. (2007). \emph{Time Series Predi
 }
 \keyword{benchmark}
 \keyword{datasets}
+

@@ -8,15 +8,15 @@
 A data frame with one numeric column and 1,461 rows (average daily temperature).
 }
 \source{
-\href{http://www.eunite.org/knowledge/Competitions/1st_competition/1st_competition.htm}{EUNITE Competition – Electricity Load Forecasting}
+EUNITE Competition 2001 dataset (original competition website currently unavailable).
 }
 \usage{
 data(EUNITE.Temp)
 }
 \description{
-Average daily temperatures collected for the EUNITE load‑forecasting competition.
+Average daily temperatures collected for the EUNITE load-forecasting competition.
 Data Type: Meteorological measurements. Category: Benchmark. Observations: 1,461.
-The series covers 1995‑1998 and was used as an exogenous regressor for predicting maximum daily electrical loads.
+The series covers 1995-1998 and was used as an exogenous regressor for predicting maximum daily electrical loads.
 Participants were asked to forecast January 1999 values.
 }
 \details{
@@ -33,7 +33,8 @@ ts.plot(EUNITE.Temp$Temperature, ylab = "Temperature (°C)", xlab = "Day",
         main = "EUNITE: Daily Temperature")
 }
 \references{
-Chen, B.-J., Chang, M.-W., & Lin, C.-J. (2004). \emph{Load forecasting using support vector machines: a study on EUNITE competition 2001}. IEEE Transactions on Power Systems, 19(4), 1821‑1830.
+Chen, B.-J., Chang, M.-W., & Lin, C.-J. (2004). \emph{Load forecasting using support vector machines: a study on EUNITE competition 2001}. IEEE Transactions on Power Systems, 19(4), 1821-1830.
 }
 \keyword{benchmark}
 \keyword{datasets}
+

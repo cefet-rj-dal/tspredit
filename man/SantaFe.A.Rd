@@ -8,7 +8,7 @@
 A data frame with one column and 1,100 rows, containing numeric time series values.
 }
 \source{
-\href{https://archive.physionet.org/physiobank/database/SantaFe.A/}{Santa Fe Time Series Competition}
+Santa Fe Time Series Competition dataset (original archive URL unavailable).
 }
 \usage{
 data(SantaFe.A)
@@ -34,3 +34,4 @@ Weigend, A.S. (1993). \emph{Time Series Prediction: Forecasting the Future and U
 }
 \keyword{benchmark}
 \keyword{datasets}
+

@@ -8,7 +8,7 @@
 A data frame with 730 rows and 48 numeric columns. Each column corresponds to one half-hour interval, from 00:00 to 24:00.
 }
 \source{
-\href{http://www.eunite.org/knowledge/Competitions/1st_competition/1st_competition.htm}{EUNITE Competition – Electricity Load Forecasting}
+EUNITE Competition 2001 dataset (original competition website currently unavailable).
 }
 \usage{
 data(EUNITE.Loads)
@@ -37,7 +37,8 @@ ts.plot(EUNITE.Loads[["X24.00"]], ylab = "Load (MW)", xlab = "Day",
         main = "EUNITE: Half-hour interval 24:00")
 }
 \references{
-Chen, B.-J., Chang, M.-W., & Lin, C.-J. (2004). \emph{Load forecasting using support vector machines: a study on EUNITE competition 2001}. IEEE Transactions on Power Systems, 19(4), 1821‑1830.
+Chen, B.-J., Chang, M.-W., & Lin, C.-J. (2004). \emph{Load forecasting using support vector machines: a study on EUNITE competition 2001}. IEEE Transactions on Power Systems, 19(4), 1821-1830.
 }
 \keyword{benchmark}
 \keyword{datasets}
+

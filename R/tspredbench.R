@@ -10,8 +10,8 @@
 #' @format A data frame with 730 rows and 48 numeric columns. Each column corresponds to one half-hour interval, from 00:00 to 24:00.
 #' @keywords datasets benchmark
 #' @references
-#' Chen, B.-J., Chang, M.-W., & Lin, C.-J. (2004). *Load forecasting using support vector machines: a study on EUNITE competition 2001*. IEEE Transactions on Power Systems, 19(4), 1821‑1830.
-#' @source \href{http://www.eunite.org/knowledge/Competitions/1st_competition/1st_competition.htm}{EUNITE Competition – Electricity Load Forecasting}
+#' Chen, B.-J., Chang, M.-W., & Lin, C.-J. (2004). *Load forecasting using support vector machines: a study on EUNITE competition 2001*. IEEE Transactions on Power Systems, 19(4), 1821-1830.
+#' @source EUNITE Competition 2001 dataset (original competition website currently unavailable).
 #' @import daltoolbox
 #' @details
 #' The EUNITE competition focused on forecasting maximum daily electrical loads for January 1999 using
@@ -50,8 +50,8 @@
 #' }
 #' @keywords datasets benchmark
 #' @references
-#' Chen, B.-J., Chang, M.-W., & Lin, C.-J. (2004). *Load forecasting using support vector machines: a study on EUNITE competition 2001*. IEEE Transactions on Power Systems, 19(4), 1821‑1830.
-#' @source \href{http://www.eunite.org/knowledge/Competitions/1st_competition/1st_competition.htm}{EUNITE Competition – Electricity Load Forecasting}
+#' Chen, B.-J., Chang, M.-W., & Lin, C.-J. (2004). *Load forecasting using support vector machines: a study on EUNITE competition 2001*. IEEE Transactions on Power Systems, 19(4), 1821-1830.
+#' @source EUNITE Competition 2001 dataset (original competition website currently unavailable).
 #' @import daltoolbox
 #' @details
 #' Regressors complement the load profiles by providing daily-level covariates (e.g., holidays and weekdays),
@@ -70,17 +70,17 @@
 #' @name EUNITE.Temp
 #' @title EUNITE Competition – Average Daily Temperatures
 #' @description
-#' Average daily temperatures collected for the EUNITE load‑forecasting competition.
+#' Average daily temperatures collected for the EUNITE load-forecasting competition.
 #' Data Type: Meteorological measurements. Category: Benchmark. Observations: 1,461.
-#' The series covers 1995‑1998 and was used as an exogenous regressor for predicting maximum daily electrical loads.
+#' The series covers 1995-1998 and was used as an exogenous regressor for predicting maximum daily electrical loads.
 #' Participants were asked to forecast January 1999 values.
 #' @docType data
 #' @usage data(EUNITE.Temp)
 #' @format A data frame with one numeric column and 1,461 rows (average daily temperature).
 #' @keywords datasets benchmark
 #' @references
-#' Chen, B.-J., Chang, M.-W., & Lin, C.-J. (2004). *Load forecasting using support vector machines: a study on EUNITE competition 2001*. IEEE Transactions on Power Systems, 19(4), 1821‑1830.
-#' @source \href{http://www.eunite.org/knowledge/Competitions/1st_competition/1st_competition.htm}{EUNITE Competition – Electricity Load Forecasting}
+#' Chen, B.-J., Chang, M.-W., & Lin, C.-J. (2004). *Load forecasting using support vector machines: a study on EUNITE competition 2001*. IEEE Transactions on Power Systems, 19(4), 1821-1830.
+#' @source EUNITE Competition 2001 dataset (original competition website currently unavailable).
 #' @import daltoolbox
 #' @details
 #' Daily temperatures are commonly used as exogenous variables for load forecasting due to strong weather dependence.
@@ -228,7 +228,7 @@
 #' @references
 #' Lendasse, A., Oja, E., Simula, O., Verleysen, M., et al. (2004). *Time Series Prediction Competition: The CATS Benchmark*. In IJCNN'2004 - International Joint Conference on Neural Networks.
 #' Lendasse, A., Oja, E., Simula, O., Verleysen, M. (2007). *Time Series Prediction Competition: The CATS Benchmark*. Neurocomputing, 70(13-15), 2325–2329.
-#' @source \href{https://archive.ics.uci.edu/ml/datasets/CATS+Time+Series+Prediction}{CATS Time Series Competition}
+#' @source \href{https://archive.ics.uci.edu/dataset/204/cats}{CATS Time Series Competition}
 #' @import daltoolbox
 #' @details
 #' The CATS benchmark contains artificial series with five nonconsecutive missing blocks of 20 points each.
@@ -253,7 +253,7 @@
 #' @keywords datasets benchmark
 #' @references
 #' Weigend, A.S. (1993). *Time Series Prediction: Forecasting the Future and Understanding the Past*. Reading, MA: Westview Press.
-#' @source \href{https://archive.physionet.org/physiobank/database/SantaFe.A/}{Santa Fe Time Series Competition}
+#' @source Santa Fe Time Series Competition dataset (original archive URL unavailable).
 #' @import daltoolbox
 #' @details
 #' Series A is a classic nonlinear laser dataset used to assess forecasting methods under chaotic dynamics.
@@ -280,7 +280,7 @@
 #' @keywords datasets benchmark
 #' @references
 #' Weigend, A.S. (1993). *Time Series Prediction: Forecasting the Future and Understanding the Past*. Reading, MA: Westview Press.
-#' @source \href{https://archive.physionet.org/physiobank/database/SantaFe.D/}{Santa Fe Time Series Competition}
+#' @source Santa Fe Time Series Competition dataset (original archive URL unavailable).
 #' @import daltoolbox
 #' @examples
 #' # Load Santa Fe D series and plot a subset
@@ -301,7 +301,7 @@
 #' @keywords datasets
 #' @references
 #' FAO 2024. FAOSTAT Bioenergy, FAO, Rome, Italy.  ; United Nations Statistics Division (UNSD), 2011; International Recommendations for Energy Statistics (IRES).
-#' @source \href{http://www.fao.org/faostat/en/#data/BE}{FAOSTAT Bioenergy Database}
+#' @source \href{https://www.fao.org/faostat/en/#data/BE}{FAOSTAT Bioenergy Database}
 #' @import daltoolbox
 #' @details
 #' Series are named as `<country>_<bio_consumption|bio_production>` and contain annual values.
@@ -397,8 +397,8 @@
 #' @keywords datasets
 #' @references
 #' FAO. 2024. Gross domestic product and agriculture value added 2013–2022 – Global and regional trends.
-#' FAOSTAT Analytical Briefs, No. 85. Rome. \href{https://doi.org/10.4060/cd0763en}{https://doi.org/10.4060/cd0763en}
-#' @source \href{http://www.fao.org/faostat/en/#data/MK}{FAOSTAT Macro Indicators Database}
+#' FAOSTAT Analytical Briefs, No. 85. Rome. \doi{10.4060/cd0763en}
+#' @source \href{https://www.fao.org/faostat/en/#data/MK}{FAOSTAT Macro Indicators Database}
 #' @import daltoolbox
 #' @examples
 #' # Load GDP list and plot one series
@@ -449,7 +449,7 @@
  #' @keywords datasets
  #' @references
  #' Makridakis and Hibon (2000). The M3-Competition: Results, conclusions and implications. International Journal of Forecasting, 16(4), 451–476.
- #' @source \href{https://www.sciencedirect.com/science/article/abs/pii/S0169207000000571?via%3Dihub}{The M3-Competition: results, conclusions and implications}
+ #' @source \doi{10.1016/S0169-2070(00)00057-1}
  #' @import daltoolbox
  #' @details
  #' Consolidated list keyed by frequency (e.g., `monthly`, `other`, `quarterly`, `yearly`). Each holds a list of numeric vectors.
@@ -501,8 +501,8 @@
 #' @keywords datasets
 #' @references
 #' FAO. 2024. FAOSTAT: Pesticides Use. RP_e_README_Domain_Information_2024.
-#' \href{http://www.fao.org/faostat/en/#data/RP}{FAOSTAT Pesticides Use Database}
-#' @source \href{http://www.fao.org/faostat/en/#data/RP}{Pesticides Use Database}
+#' \href{https://www.fao.org/faostat/en/#data/RP}{FAOSTAT Pesticides Use Database}
+#' @source \href{https://www.fao.org/faostat/en/#data/RP}{Pesticides Use Database}
 #' @import daltoolbox
 #' @details
 #' Series are named by country with `_pesticides` suffix; values are annual usage amounts.
@@ -542,6 +542,4 @@
 #'   ts.plot(series, ylab = "Close", xlab = "Index", main = "VALE3 close price")
 #' }
 "stocks"
-
-
 

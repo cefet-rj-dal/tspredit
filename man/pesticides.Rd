@@ -8,7 +8,7 @@
 A list of time series.
 }
 \source{
-\href{http://www.fao.org/faostat/en/#data/RP}{Pesticides Use Database}
+\href{https://www.fao.org/faostat/en/#data/RP}{Pesticides Use Database}
 }
 \usage{
 data(pesticides)
@@ -29,6 +29,7 @@ ts.plot(series, ylab = "tonnes", xlab = "Year", main = "Pesticides example")
 }
 \references{
 FAO. 2024. FAOSTAT: Pesticides Use. RP_e_README_Domain_Information_2024.
-\href{http://www.fao.org/faostat/en/#data/RP}{FAOSTAT Pesticides Use Database}
+\href{https://www.fao.org/faostat/en/#data/RP}{FAOSTAT Pesticides Use Database}
 }
 \keyword{datasets}
+
