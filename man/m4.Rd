@@ -22,11 +22,13 @@ Consolidated list keyed by frequency (e.g., \code{daily}, \code{hourly}, \code{m
 See Makridakis et al. (2020) for an overview of M4 findings.
 }
 \examples{
-# Load consolidated M4 list and plot one monthly series
+# Load consolidated M4 list and plot one available series
 data(m4)
 # m4 <- loadfulldata(m4)
-series <- m4$monthly$M1
-ts.plot(series, main = "M4 monthly series: M1")
+freq_name <- names(m4)[1]
+series_name <- names(m4[[freq_name]])[1]
+series <- m4[[freq_name]][[series_name]]
+ts.plot(series, main = paste("M4", freq_name, "series:", series_name))
 }
 \references{
 Makridakis et al. (2020). The M4 Competition: Results, findings, conclusion and way forward. International Journal of Forecasting, 36(1), 54–74.
