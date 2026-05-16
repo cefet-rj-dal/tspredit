@@ -1,0 +1,43 @@
+## Objective
+
+This notebook introduces `CATS`, the artificial time-series benchmark with missing blocks.
+
+## Method at a glance
+
+The notebook inspects the data-frame structure used to package the known segments of the benchmark.
+
+## What you will do
+
+- load `CATS`
+- inspect dimensions and columns
+- preview the first rows
+- plot the first available segment
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+library(tspredit)
+```
+
+```{r}
+expand_dataset <- function(x) {
+  url <- attr(x, "url")
+  if (is.null(url) || !nzchar(url)) x else loadfulldata(x)
+}
+```
+
+```{r}
+data(CATS)
+CATS <- expand_dataset(CATS)
+cat("Dataset: CATS\n")
+cat("Rows:", nrow(CATS), "\n")
+cat("Columns:", ncol(CATS), "\n")
+head(CATS)
+```
+
+```{r}
+ts.plot(CATS[[1]], ylab = "Value", xlab = "Index", main = names(CATS)[1])
+```
+
+## References
+
+- Lendasse, A. et al. (2004, 2007). The CATS benchmark.

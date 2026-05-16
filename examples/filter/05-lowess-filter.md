@@ -1,0 +1,72 @@
+## LOWESS Filter
+
+About the method
+- LOWESS fits local regressions along the series to estimate a smooth curve.
+- It is useful when the trend is nonlinear and a single global form would be too restrictive.
+
+Didactic goal: see how local regression can smooth noise while preserving flexible trend behavior.
+
+
+``` r
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Filter - LOWESS
+
+# Installing the package (if needed)
+#install.packages("tspredit")
+```
+
+We start by loading the packages used throughout this example.
+
+
+``` r
+# Loading the packages
+library(daltoolbox)
+library(tspredit) 
+```
+
+
+We load the example series that will be used throughout the demonstration.
+
+
+``` r
+# Series for study with artificial noise and spikes
+
+data(tsd)
+y <- tsd$y
+noise <- rnorm(length(y), 0, sd(y)/10)
+spike <- rnorm(1, 0, sd(y))
+tsd$y <- tsd$y + noise
+tsd$y[10] <- tsd$y[10] + spike
+tsd$y[20] <- tsd$y[20] + spike
+tsd$y[30] <- tsd$y[30] + spike
+```
+
+Before moving on, we visualize the series so the effect of the next transformation can be compared against the original signal.
+
+
+``` r
+# Noisy series visualization
+library(ggplot2)
+plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
+```
+
+![plot of chunk unnamed-chunk-4](fig/05-lowess-filter/unnamed-chunk-4-1.png)
+
+Now we applying the lowess filter.
+
+
+``` r
+# Applying the LOWESS filter
+
+filter <- ts_fil_lowess(f = 0.2)
+set_example_seed()
+filter <- fit(filter, tsd$y)
+y <- transform(filter, tsd$y)
+plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
+```
+
+![plot of chunk unnamed-chunk-5](fig/05-lowess-filter/unnamed-chunk-5-1.png)
+
+References
+- W. S. Cleveland (1979). Robust locally weighted regression and smoothing scatterplots. Journal of the American Statistical Association, 74(368), 829–836.
+

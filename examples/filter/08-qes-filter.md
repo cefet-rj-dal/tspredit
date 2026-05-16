@@ -1,0 +1,78 @@
+QES Filter: QES extends exponential smoothing by incorporating higher‑order trend components through recursively updated equations. It generalizes single and double exponential smoothing (Holt/Brown) with additional curvature terms to better track accelerating or decelerating trends.
+Key parameter
+- `gamma`: controls whether seasonal/trend gain is adapted (package-specific); set to `FALSE` to keep default behavior.
+
+Objectives: Quadratic Exponential Smoothing (QES) models level and trend using exponentially weighted averages with a quadratic form. It is useful for trend-dominated series where you want a smooth estimate that adapts to gradual changes.
+
+
+``` r
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Filter - Quadratic Exponential Smoothing
+
+# Install tspredit if needed
+#install.packages("tspredit")
+```
+
+We load the packages required by this example.
+
+
+``` r
+# Load packages
+library(daltoolbox)
+library(tspredit) 
+```
+
+
+This chunk prepare a noisy series with injected spikes.
+
+
+``` r
+# Prepare a noisy series with injected spikes
+data(tsd)
+y <- tsd$y
+noise <- rnorm(length(y), 0, sd(y)/10)
+spike <- rnorm(1, 0, sd(y))
+tsd$y <- tsd$y + noise
+tsd$y[10] <- tsd$y[10] + spike
+tsd$y[20] <- tsd$y[20] + spike
+tsd$y[30] <- tsd$y[30] + spike
+```
+
+We plot the data here so the effect of the next transformation can be compared visually.
+
+
+``` r
+library(ggplot2)
+# Visualize the noisy input
+plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
+```
+
+![plot of chunk unnamed-chunk-4](fig/08-qes-filter/unnamed-chunk-4-1.png)
+
+We now apply quadratic exponential smoothing so its effect on the series can be inspected directly.
+
+
+``` r
+# Apply Quadratic Exponential Smoothing
+
+filter <- ts_fil_qes(gamma = FALSE)  # default behavior without gamma adaptation
+set_example_seed()
+filter <- fit(filter, tsd$y)
+y <- transform(filter, tsd$y)
+
+# Compare original vs smoothed
+plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
+```
+
+```
+## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_line()`).
+```
+
+![plot of chunk unnamed-chunk-5](fig/08-qes-filter/unnamed-chunk-5-1.png)
+
+The first fitted points depend on Holt-Winters initialization, so the adjusted
+series can start with leading `NA` values while the internal state warms up.
+
+References
+- E. S. Gardner Jr. (1985). Exponential smoothing: The state of the art. Journal of Forecasting, 4(1), 1–28.
+- E. S. Gardner Jr. (2006). Exponential smoothing: The state of the art—Part II. International Journal of Forecasting, 22(4), 637–666.

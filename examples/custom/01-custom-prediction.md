@@ -1,0 +1,122 @@
+## Custom Prediction
+
+The goal of this example is to show how to create a custom forecasting model that plugs into the same `tspredit` workflow used by the built-in predictors.
+
+The integration contract is intentionally small. We define a constructor based on `ts_regsw`, store the hyperparameters in the object, implement `do_fit()` and `do_predict()`, and then reuse the usual windowing, sampling, prediction, and evaluation steps.
+
+To make the example concrete, the custom predictor uses the same `RSNNS::mlp` idea shown in the `daltoolbox` custom regression example, but adapted to the time-series interface of `tspredit`.
+
+
+``` r
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# installation
+# install.packages(c("tspredit", "daltoolbox", "RSNNS"))
+
+library(daltoolbox)
+library(tspredit)
+```
+
+This chunk defines the custom class and the S3 methods needed to integrate it with the `tspredit` workflow.
+
+
+``` r
+ts_mlp_rsnns_custom <- function(preprocess = ts_norm_gminmax(),
+                                input_size = 4,
+                                size = 5,
+                                learn_rate = 0.1,
+                                maxit = 200) {
+  obj <- ts_regsw(preprocess = preprocess, input_size = input_size)
+  obj$size <- size
+  obj$learn_rate <- learn_rate
+  obj$maxit <- maxit
+  class(obj) <- append("ts_mlp_rsnns_custom", class(obj))
+  obj
+}
+
+do_fit.ts_mlp_rsnns_custom <- function(obj, x, y) {
+  if (!requireNamespace("RSNNS", quietly = TRUE)) {
+    stop("This example requires the 'RSNNS' package.")
+  }
+
+  obj$model <- RSNNS::mlp(
+    x = as.matrix(x),
+    y = as.matrix(y),
+    size = obj$size,
+    learnFuncParams = c(obj$learn_rate),
+    maxit = obj$maxit,
+    linOut = TRUE
+  )
+
+  obj
+}
+
+do_predict.ts_mlp_rsnns_custom <- function(obj, x) {
+  as.numeric(predict(obj$model, as.matrix(x)))
+}
+
+registerS3method("do_fit", "ts_mlp_rsnns_custom", do_fit.ts_mlp_rsnns_custom)
+registerS3method("do_predict", "ts_mlp_rsnns_custom", do_predict.ts_mlp_rsnns_custom)
+```
+
+We now use the custom predictor exactly as we would use any other sliding-window model in the package.
+
+
+``` r
+set_example_seed(123L)
+data(tsd)
+
+ts <- ts_data(tsd$y, 10)
+samp <- ts_sample(ts, test_size = 5)
+io_train <- ts_projection(samp$train)
+io_test <- ts_projection(samp$test)
+```
+
+This chunk configures the model and fits it on the training data prepared earlier.
+
+
+``` r
+model <- ts_mlp_rsnns_custom(
+  preprocess = ts_norm_gminmax(),
+  input_size = 4,
+  size = 5,
+  learn_rate = 0.05,
+  maxit = 300
+)
+
+set_example_seed()
+model <- fit(model, x = io_train$input, y = io_train$output)
+```
+
+This chunk generates predictions and evaluates how well the fitted model reproduces the corresponding targets.
+
+
+``` r
+adjust <- as.vector(predict(model, io_train$input))
+train_eval <- evaluate(model, as.vector(io_train$output), adjust)
+train_eval$metrics
+```
+
+```
+##            mse      smape        R2
+## 1 7.327578e-05 0.02382606 0.9998527
+```
+
+We now forecast the test horizon and evaluate the predictions against the observed values.
+
+
+``` r
+prediction <- as.vector(predict(model, x = io_test$input[1:1, ], steps_ahead = 5))
+test_eval <- evaluate(model, as.vector(io_test$output), prediction)
+test_eval$metrics
+```
+
+```
+##           mse     smape        R2
+## 1 0.002143518 0.2234372 0.9814863
+```
+
+This example shows that a custom predictor does not need to reimplement the whole forecasting pipeline. It only needs to respect the expected `tspredit` contract.
+
+References
+- Bergmeir, C., and Benitez, J. M. (2012). Neural Networks in R Using the Stuttgart Neural Network Simulator: RSNNS.
+- Bishop, C. M. (1995). Neural Networks for Pattern Recognition.

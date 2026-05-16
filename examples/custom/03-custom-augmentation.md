@@ -1,0 +1,123 @@
+## Custom Augmentation
+
+The goal of this example is to show how to create a custom augmentation operator for sliding windows used in time-series prediction.
+
+The augmentation implemented here is magnitude warping, a common technique in the time-series augmentation literature. It multiplies each lag profile by a smooth random curve, creating local amplitude variations while preserving the temporal ordering of the window. This operator is not currently part of the built-in `tspredit` augmentations.
+
+
+``` r
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# installation
+# install.packages(c("tspredit", "daltoolbox"))
+
+library(daltoolbox)
+library(tspredit)
+```
+
+This chunk implements the custom component so it can be reused like any built-in object from the package.
+
+
+``` r
+ts_aug_magwarp_custom <- function(sigma = 0.2, knots = 4, preserve_data = TRUE) {
+  obj <- daltoolbox::dal_transform()
+  obj$sigma <- sigma
+  obj$knots <- knots
+  obj$preserve_data <- preserve_data
+  class(obj) <- append("ts_aug_magwarp_custom", class(obj))
+  obj
+}
+
+transform.ts_aug_magwarp_custom <- function(obj, data, ...) {
+  warp_one <- function(row) {
+    p <- length(row) - 1
+    if (p < 2) {
+      return(row)
+    }
+
+    anchor_x <- seq(1, p, length.out = obj$knots)
+    anchor_y <- stats::rnorm(obj$knots, mean = 1, sd = obj$sigma)
+    curve <- stats::spline(anchor_x, anchor_y, xout = 1:p, method = "natural")$y
+
+    result <- row
+    result[1:p] <- row[1:p] * curve
+    result
+  }
+
+  augmented <- t(apply(data, 1, warp_one))
+  augmented <- adjust_ts_data(augmented)
+  attr(augmented, "idx") <- 1:nrow(data)
+
+  if (obj$preserve_data) {
+    idx <- c(1:nrow(data), attr(augmented, "idx"))
+    augmented <- rbind(data, augmented)
+    augmented <- adjust_ts_data(augmented)
+    attr(augmented, "idx") <- idx
+  }
+
+  augmented
+}
+```
+
+We start from windowed data and inspect how the augmentation changes the number of training rows.
+
+
+``` r
+set_example_seed(123L)
+data(tsd)
+
+train_windows <- ts_data(tsd$y, 10)
+augment_custom <- ts_aug_magwarp_custom(sigma = 0.15, knots = 4)
+train_aug <- transform(augment_custom, train_windows)
+```
+
+This chunk executes the next practical step of the workflow so the following result can be interpreted in context.
+
+
+``` r
+data.frame(
+  original_rows = nrow(train_windows),
+  augmented_rows = nrow(train_aug)
+)
+```
+
+```
+##   original_rows augmented_rows
+## 1            32             64
+```
+
+The augmented windows can then be projected and consumed by the standard prediction pipeline.
+
+
+``` r
+samp <- ts_sample(train_windows, test_size = 5)
+train_ts <- samp$train
+test_ts <- samp$test
+
+train_aug <- transform(augment_custom, train_ts)
+train_aug <- adjust_ts_data(train_aug)
+
+io_train <- ts_projection(train_aug)
+io_test <- ts_projection(test_ts)
+```
+
+This chunk configures the model and fits it on the training data prepared earlier.
+
+
+``` r
+model <- ts_mlp(ts_norm_gminmax(), input_size = 4, size = 4, decay = 0, maxit = 1000)
+set_example_seed()
+model <- fit(model, x = io_train$input, y = io_train$output)
+
+prediction <- as.vector(predict(model, x = io_test$input[1:1, ], steps_ahead = 5))
+evaluate(model, as.vector(io_test$output), prediction)$metrics
+```
+
+```
+##         mse    smape         R2
+## 1 0.1826307 1.366659 -0.5773911
+```
+
+This example shows the role of a custom augmentation inside `tspredit`: enrich the training windows without changing the rest of the forecasting interface.
+
+References
+- Wen, Q., Sun, L., Yang, F., Song, X., Gao, J., Wang, X., Xu, H. (2021). Time Series Data Augmentation for Deep Learning: A Survey.

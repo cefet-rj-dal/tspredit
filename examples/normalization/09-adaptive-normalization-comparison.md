@@ -1,0 +1,236 @@
+## Adaptive Normalization Visual Comparison
+
+This notebook compares the main adaptive normalization operators on synthetic
+series designed to stress different theoretical axes of the method.
+
+What you will learn
+
+- How divisive normalization reacts when the adaptive level is close to zero
+- How subtractive normalization behaves under changing amplitude
+- How `softdivide` interpolates between additive and relative behavior
+- How `asinh` changes the geometry of local deviations
+
+
+``` r
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Adaptive Normalization Visual Comparison
+
+# Installing the package (if needed)
+#install.packages("tspredit")
+```
+
+We load the packages required by this example.
+
+
+``` r
+library(daltoolbox)
+library(tspredit)
+library(ggplot2)
+```
+
+We build four synthetic series, each emphasizing one regime where the
+normalizers behave differently.
+
+
+``` r
+set_example_seed()
+
+n <- 200
+t <- seq_len(n)
+
+synthetic <- list(
+  near_zero = 0.03 * sin(t / 5) + rnorm(n, sd = 0.01),
+  level_shift = c(rep(0.3, 70), rep(1.2, 60), rep(0.6, 70)) + 0.08 * sin(t / 7),
+  heteroscedastic = sin(t / 6) * seq(0.2, 2.2, length.out = n),
+  mixed = 0.2 * sin(t / 8) + seq(-0.4, 1.8, length.out = n) + rnorm(n, sd = seq(0.02, 0.25, length.out = n))
+)
+```
+
+## Comparison Strategy
+
+To keep the comparison fair, every operator uses the same sliding-window view.
+We inspect the operators in two complementary ways:
+
+- a fixed anchor window, so we can compare the transformed lag profile directly
+- the transformed target dimension (`t0`) across time, which is the signal most
+  directly consumed by the supervised pipeline
+
+This separation matters. If we only plot the transformed target across time,
+the comparison becomes hard to read because each operator is reacting to a
+different local window at each time step. The anchor-window plot removes this
+confounding factor and answers a simpler question: how do the operators
+transform the same local pattern?
+
+
+``` r
+ops <- list(
+  divide = ts_norm_an(operation = "divide"),
+  subtract = ts_norm_an(operation = "subtract"),
+  softdivide = ts_norm_an(operation = "softdivide", scale = "sd", lambda = 1),
+  asinh = ts_norm_an(operation = "asinh", scale = "sd", lambda = 1)
+)
+
+compute_reference <- getFromNamespace("compute_adaptive_reference", "tspredit")
+apply_operation <- getFromNamespace("apply_adaptive_operation", "tspredit")
+
+anchor_row <- function(series_name, tsw) {
+  if (series_name == "level_shift") {
+    return(min(70, nrow(tsw)))
+  }
+
+  nrow(tsw)
+}
+
+collect_window_profiles <- function(y, series_name) {
+  tsw <- ts_data(y, 12)
+  anchor <- anchor_row(series_name, tsw)
+  out <- data.frame()
+
+  for (op_name in names(ops)) {
+    preproc <- fit(ops[[op_name]], tsw)
+    window_ref <- compute_reference(preproc, tsw[anchor, , drop = FALSE])
+    yw <- apply_operation(
+      preproc,
+      tsw[anchor, , drop = FALSE],
+      window_ref$center,
+      window_ref$scale
+    )
+
+    out <- rbind(
+      out,
+      data.frame(
+        lag = factor(colnames(tsw), levels = colnames(tsw)),
+        value = as.vector(yw),
+        operator = op_name,
+        series = series_name
+      )
+    )
+  }
+
+  out
+}
+
+collect_t0_transforms <- function(y, series_name) {
+  tsw <- ts_data(y, 12)
+  out <- data.frame()
+
+  for (op_name in names(ops)) {
+    preproc <- ops[[op_name]]
+    preproc <- fit(preproc, tsw)
+    yt <- transform(preproc, tsw)
+    out <- rbind(
+      out,
+      data.frame(
+        idx = seq_len(nrow(yt)),
+        value = as.vector(yt[, ncol(yt)]),
+        operator = op_name,
+        series = series_name
+      )
+    )
+  }
+
+  out
+}
+
+window_profiles <- do.call(
+  rbind,
+  Map(collect_window_profiles, synthetic, names(synthetic))
+)
+
+comparison_t0 <- do.call(
+  rbind,
+  Map(collect_t0_transforms, synthetic, names(synthetic))
+)
+```
+
+This plot compares one fixed window per series. It is the clearest way to see
+how each operator transforms the same lag profile.
+
+
+``` r
+ggplot(window_profiles, aes(x = lag, y = value, color = operator, group = operator)) +
+  geom_line(linewidth = 0.7) +
+  geom_point(size = 1.2) +
+  facet_wrap(~ series, scales = "free_y", ncol = 2) +
+  theme_minimal(base_size = 14)
+```
+
+![plot of chunk unnamed-chunk-5](fig/09-adaptive-normalization-comparison/unnamed-chunk-5-1.png)
+
+### What To Look For In The Fixed-Window Plot
+
+**Near-zero regime**
+
+- `divide` can become very aggressive because small adaptive levels amplify the ratio
+- `subtract` stays stable because it only removes the local level
+- `softdivide` should stay closer to `subtract` here than to `divide`
+
+**Level-shift regime**
+
+- the main question is how the operators encode an abrupt change in local level
+- `divide` and `softdivide` can look similar if the level term dominates the reference scale
+
+**Heteroscedastic regime**
+
+- the key question is whether similar oscillations at different amplitudes become more comparable
+- `subtract` removes level but does not directly normalize scale
+- `divide` and `softdivide` should compress amplitude differences more strongly
+
+**Mixed regime**
+
+- this combines drift, oscillation, and changing variance
+- it is the best block to inspect overall trade-offs rather than a single ideal behavior
+
+This second plot compares the transformed target dimension (`t0`) across time.
+It is still useful, but it becomes easier to read after seeing the fixed-window
+comparison above.
+
+
+``` r
+ggplot(comparison_t0, aes(x = idx, y = value, color = operator)) +
+  geom_line(linewidth = 0.5) +
+  facet_wrap(~ series, scales = "free_y", ncol = 2) +
+  theme_minimal(base_size = 14)
+```
+
+![plot of chunk unnamed-chunk-6](fig/09-adaptive-normalization-comparison/unnamed-chunk-6-1.png)
+
+### What To Look For In The `t0` Plot
+
+- This plot shows how the final supervised target changes over time after normalization.
+- It is useful for understanding temporal stability, but it is less direct than the fixed-window comparison.
+- If two operators look close here, that does not necessarily mean they are identical. It may only mean that, for that series and that time range, both induce similar transformed targets.
+
+### Why Some Curves Can Look Similar
+
+- `divide` and `softdivide` can look close when the adaptive level dominates the local scale term. In that regime, `softdivide` approaches divisive behavior.
+- `softdivide` and `asinh` can also look close when the normalized deviations stay in a moderate range, because `asinh(z)` behaves almost linearly around the origin.
+- The `near_zero` and `heteroscedastic` blocks are usually the most informative ones for separating the four operators visually.
+
+## Reading Summary
+
+If you want a quick reading of the comparison, focus on these questions:
+
+1. Which operator stays stable when the local level is close to zero?
+2. Which operator best preserves comparability across changing amplitudes?
+3. Which operator produces the smoothest compromise between additive and relative behavior?
+
+In most practical cases:
+
+- `subtract` is the safest additive baseline
+- `divide` is the strongest relative normalizer, but it is fragile near zero
+- `softdivide` is the main compromise operator
+- `asinh` is the smooth nonlinear alternative when you want a bridge between additive and multiplicative interpretations
+
+References
+
+- Ogasawara, E., Martinez, L. C., De Oliveira, D., Zimbrão, G., Pappa, G. L., Mattoso, M. (2010).
+Adaptive Normalization: A novel data normalization approach for non-stationary time series.
+Proceedings of the International Joint Conference on Neural Networks (IJCNN).
+doi:10.1109/IJCNN.2010.5596746
+
+- Huber, P. J. (1964). Robust Estimation of a Location Parameter.
+Annals of Mathematical Statistics, 35(1), 73-101. doi:10.1214/aoms/1177703732
+
+- Burbidge, J. B., Magee, L., Robb, A. L. (1988). Alternative Transformations to Handle Extreme Values of the Dependent Variable.
+Journal of the American Statistical Association, 83(401), 123-127.

@@ -1,0 +1,50 @@
+## Blocks Lag Mapping
+
+About the technique
+- `blocks` detects strong correlation centers and expands them into small neighborhoods.
+- It is useful when the relevant dependency is not a single lag, but a short region around a dominant timescale.
+
+Didactic goal: select contiguous lag neighborhoods around important correlation landmarks.
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Blocks lag mapping
+```
+
+```{r}
+library(daltoolbox)
+library(tspredit)
+```
+
+```{r}
+data(tsd)
+plot_ts(x = tsd$x, y = tsd$y)
+```
+
+```{r}
+sw_size <- 10
+ts <- ts_data(tsd$y, sw_size)
+samp <- ts_sample(ts, test_size = 5)
+io_train <- ts_projection(samp$train)
+io_test <- ts_projection(samp$test)
+```
+
+```{r}
+mapper <- ts_lagmap(method = "blocks", peak_basis = "acf", block_radius = 1)
+mapper <- fit(mapper, io_train$input, io_train$output, input_size = 4)
+mapper$lags
+mapper$columns
+```
+
+```{r}
+model <- ts_knn(
+  preprocess = ts_norm_gminmax(),
+  input_size = 4,
+  input_map = ts_lagmap(method = "blocks", peak_basis = "acf", block_radius = 1),
+  k = 3
+)
+set_example_seed()
+model <- fit(model, io_train$input, io_train$output)
+prediction <- predict(model, io_test$input[1, ], steps_ahead = 5)
+evaluate(model, as.vector(io_test$output), as.vector(prediction))
+```

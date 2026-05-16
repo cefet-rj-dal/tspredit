@@ -1,0 +1,63 @@
+## Winsor Filter
+
+About the method
+- Winsorization limits extreme values by capping them at less extreme thresholds.
+- It does not smooth the whole series; instead, it reduces the leverage of outliers before later modeling steps.
+
+Didactic goal: understand an outlier-focused filter that protects the pipeline from spikes without redesigning the whole signal.
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Filter - Winsorization
+
+# Installing the package (if needed)
+#install.packages("tspredit")
+```
+
+We start by loading the packages used throughout this example.
+
+```{r}
+# Loading the packages
+library(daltoolbox)
+library(tspredit) 
+```
+
+
+We load the example series that will be used throughout the demonstration.
+
+```{r}
+# Series for study with artificial noise and spikes
+
+data(tsd)
+y <- tsd$y
+noise <- rnorm(length(y), 0, sd(y)/10)
+spike <- rnorm(1, 0, sd(y))
+tsd$y <- tsd$y + noise
+tsd$y[10] <- tsd$y[10] + spike
+tsd$y[20] <- tsd$y[20] + spike
+tsd$y[30] <- tsd$y[30] + spike
+```
+
+We plot the data here so the effect of the next transformation can be compared visually.
+
+```{r}
+library(ggplot2)
+# Noisy series visualization
+plot_ts(x = tsd$x, y = tsd$y) + theme(text = element_text(size=16))
+```
+
+Now we applying the winsor filter.
+
+```{r}
+# Applying the Winsor filter
+
+filter <- ts_fil_winsor()
+set_example_seed()
+filter <- fit(filter, tsd$y)
+y <- transform(filter, tsd$y)
+plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
+```
+
+References
+- R. R. Wilcox (2012). Introduction to Robust Estimation and Hypothesis Testing. Academic Press.
+

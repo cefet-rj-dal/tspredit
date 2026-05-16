@@ -1,0 +1,44 @@
+## Objective
+
+This notebook introduces `NN5`, the daily forecasting competition archive based on ATM withdrawals.
+
+## Method at a glance
+
+The notebook inspects the wide data-frame layout and previews one representative series.
+
+## What you will do
+
+- load `NN5`
+- inspect dimensions and column names
+- preview the first rows
+- plot one representative series
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+library(tspredit)
+```
+
+```{r}
+expand_dataset <- function(x) {
+  url <- attr(x, "url")
+  if (is.null(url) || !nzchar(url)) x else loadfulldata(x)
+}
+```
+
+```{r}
+data(NN5)
+NN5 <- expand_dataset(NN5)
+cat("Dataset: NN5\n")
+cat("Rows:", nrow(NN5), "\n")
+cat("Columns:", ncol(NN5), "\n")
+head(names(NN5))
+head(NN5[, 1:4])
+```
+
+```{r}
+ts.plot(NN5[[1]], ylab = "Withdrawals", xlab = "Day", main = names(NN5)[1])
+```
+
+## References
+
+- Crone, S. F. (2008). Results of the NN5 Time Series Forecasting Competition.

@@ -1,0 +1,44 @@
+## Objective
+
+This notebook introduces `NN3`, the monthly forecasting competition archive.
+
+## Method at a glance
+
+The notebook inspects the wide data-frame representation, where each column corresponds to one series in the archive.
+
+## What you will do
+
+- load `NN3`
+- inspect dimensions and column names
+- preview the first rows
+- plot one representative series
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+library(tspredit)
+```
+
+```{r}
+expand_dataset <- function(x) {
+  url <- attr(x, "url")
+  if (is.null(url) || !nzchar(url)) x else loadfulldata(x)
+}
+```
+
+```{r}
+data(NN3)
+NN3 <- expand_dataset(NN3)
+cat("Dataset: NN3\n")
+cat("Rows:", nrow(NN3), "\n")
+cat("Columns:", ncol(NN3), "\n")
+head(names(NN3))
+head(NN3[, 1:4])
+```
+
+```{r}
+ts.plot(NN3[[1]], ylab = "Value", xlab = "Month", main = names(NN3)[1])
+```
+
+## References
+
+- Crone, S. F., Hibon, M., and Nikolopoulos, K. (2011). Advances in forecasting with neural networks? Empirical evidence from the NN3 competition on time series prediction.

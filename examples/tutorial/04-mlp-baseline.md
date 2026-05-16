@@ -1,0 +1,178 @@
+# Tutorial 04 - Baseline MLP Pipeline
+
+After learning the forecasting protocols with ARIMA, we now move to a machine-learning pipeline.
+
+Unlike ARIMA, an MLP consumes lagged inputs arranged as sliding windows. This tutorial introduces that representation and builds the baseline neural workflow that the next tutorials will progressively enrich.
+
+## Goal
+
+Train a baseline MLP model with sliding windows and global min-max normalization.
+
+
+``` r
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Load packages and example series.
+library(daltoolbox)
+library(tspredit)
+library(ggplot2)
+
+set_example_seed(123L)
+data(tsd)
+```
+
+We begin by plotting the original series, because every later transformation will still be derived from this same signal.
+
+
+``` r
+# Inspect the original series.
+plot_ts(x = tsd$x, y = tsd$y) + theme(text = element_text(size = 16))
+```
+
+![plot of chunk unnamed-chunk-2](fig/04-mlp-baseline/unnamed-chunk-2-1.png)
+
+For the MLP, we first transform the time series into overlapping windows. Each row stores the recent past that will be used to predict the next value.
+
+
+``` r
+# Create sliding windows with 10 lagged values per row.
+sw_size <- 10
+ts <- ts_data(tsd$y, sw_size)
+ts_head(ts, 3)
+```
+
+```
+##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
+```
+
+We now create a train/test split that preserves time order, then project the windowed data into input and output components.
+
+
+``` r
+# Split the windows in time order and project them into X and y.
+samp <- ts_sample(ts, test_size = 5)
+io_train <- ts_projection(samp$train)
+io_test <- ts_projection(samp$test)
+```
+
+Before training the network, we define the normalization strategy. Here we use global min-max scaling, which is the most common starting point for neural models in this package.
+
+
+``` r
+# Define the preprocessing object used by the model.
+preproc <- ts_norm_gminmax()
+preproc
+```
+
+```
+## $outliers
+## $alpha
+## [1] 1.5
+## 
+## attr(,"class")
+## [1] "outliers_boxplot" "dal_transform"    "dal_base"        
+## 
+## attr(,"class")
+## [1] "ts_norm_gminmax" "dal_transform"   "dal_base"
+```
+
+Now we create the MLP itself. The argument `input_size = 4` tells the model to use the four most recent lags from each window.
+
+
+``` r
+# Configure and fit the baseline MLP model.
+model <- ts_mlp(
+  preprocess = ts_norm_gminmax(),
+  input_size = 4,
+  size = 4,
+  decay = 0,
+  maxit = 1000
+)
+
+set_example_seed()
+model <- fit(model, x = io_train$input, y = io_train$output)
+```
+
+Before forecasting the test block, we inspect the in-sample fit on the training data.
+
+
+``` r
+# Evaluate the fitted values on the training portion.
+adjust <- predict(model, io_train$input)
+adjust <- as.vector(adjust)
+
+ev_adjust <- evaluate(model, as.vector(io_train$output), adjust)
+ev_adjust$metrics
+```
+
+```
+##            mse       smape        R2
+## 1 1.432577e-05 0.008313728 0.9999712
+```
+
+The evaluation helper reports the same three metrics used throughout the tutorials:
+
+- `mse`: mean squared error;
+- `smape`: symmetric mean absolute percentage error;
+- `R2`: coefficient of determination relative to the mean baseline.
+
+The most important reading rule for `R2` is simple: values closer to `1` are better, `0` means “equivalent to predicting the mean”, and values below `0` mean the model is worse than that constant baseline.
+
+We now forecast the next five values from the first test window, using recursive prediction.
+
+
+``` r
+# Forecast the five-point test horizon.
+prediction <- predict(model, x = io_test$input[1:1, ], steps_ahead = 5)
+prediction <- as.vector(prediction)
+
+output <- as.vector(io_test$output)
+ev_test <- evaluate(model, output, prediction)
+ev_test
+```
+
+```
+## $values
+## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
+## 
+## $prediction
+## [1]  0.41787725  0.18362848 -0.06273766 -0.30699150 -0.53616730
+## 
+## $smape
+## [1] 0.06058831
+## 
+## $mse
+## [1] 0.0001001462
+## 
+## $R2
+## [1] 0.999135
+## 
+## $metrics
+##            mse      smape       R2
+## 1 0.0001001462 0.06058831 0.999135
+```
+
+The final plot shows the observed series, the training adjustment, and the forecasted test horizon.
+
+
+``` r
+# Plot the baseline MLP fit and forecast.
+yvalues <- c(io_train$output, io_test$output)
+plot_ts_pred(y = yvalues, yadj = adjust, ypre = prediction, color_prediction = "orange") +
+  theme(text = element_text(size = 16))
+```
+
+![plot of chunk unnamed-chunk-9](fig/04-mlp-baseline/unnamed-chunk-9-1.png)
+
+## Interpretation
+
+This is the baseline machine-learning pipeline that the next tutorials will evolve:
+
+- create sliding windows;
+- split train and test in time order;
+- normalize the inputs;
+- fit the model;
+- forecast and evaluate.
+

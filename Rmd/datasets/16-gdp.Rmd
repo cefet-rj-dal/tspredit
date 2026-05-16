@@ -1,0 +1,43 @@
+## Objective
+
+This notebook introduces `gdp`, the GDP and agriculture value-added collection.
+
+## Method at a glance
+
+The notebook inspects the list-based structure and previews one annual series from the collection.
+
+## What you will do
+
+- load `gdp`
+- inspect the number of available series
+- preview the first keys
+- plot one representative series
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+library(tspredit)
+```
+
+```{r}
+expand_dataset <- function(x) {
+  url <- attr(x, "url")
+  if (is.null(url) || !nzchar(url)) x else loadfulldata(x)
+}
+```
+
+```{r}
+data(gdp)
+gdp <- expand_dataset(gdp)
+cat("Dataset: gdp\n")
+cat("Series available:", length(gdp), "\n")
+head(names(gdp))
+head(gdp[[1]])
+```
+
+```{r}
+ts.plot(gdp[[1]], ylab = "Value", xlab = "Year", main = names(gdp)[1])
+```
+
+## References
+
+- FAOSTAT Macro Indicators Database.

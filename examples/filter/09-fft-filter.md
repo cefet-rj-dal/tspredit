@@ -1,0 +1,67 @@
+## FFT Filter
+
+About the method
+- FFT filtering moves the series to the frequency domain, suppresses selected high-frequency components, and reconstructs the signal.
+- It is useful when noise is better understood as unwanted rapid oscillation rather than isolated spikes.
+
+Didactic goal: connect denoising with frequency analysis instead of only local smoothing.
+
+
+``` r
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Filter - FFT
+
+# Installing the package (if needed)
+#install.packages("tspredit")
+```
+
+We start by loading the packages used throughout this example.
+
+
+``` r
+# Loading the packages
+library(daltoolbox)
+library(tspredit) 
+```
+
+
+We build a signal with a smooth low-frequency structure plus a faster oscillatory component. This matches the kind of noise that FFT low-pass filtering is meant to attenuate.
+
+
+``` r
+# Series for study with high-frequency oscillatory noise
+x <- seq(0, 4 * pi, length.out = 128)
+signal <- sin(x)
+hf_noise <- 0.25 * sin(12 * x)
+y <- signal + hf_noise
+```
+
+Before moving on, we visualize the series so the effect of the next transformation can be compared against the original signal.
+
+
+``` r
+# Noisy series visualization
+library(ggplot2)
+plot_ts(x = x, y = y) + theme(text = element_text(size=16))
+```
+
+![plot of chunk unnamed-chunk-4](fig/09-fft-filter/unnamed-chunk-4-1.png)
+
+Now we apply the FFT low-pass filter.
+
+
+``` r
+# Applying the FFT filter
+
+filter <- ts_fil_fft()
+set_example_seed()
+filter <- fit(filter, y)
+yhat <- transform(filter, y)
+plot_ts_pred(x = x, y = y, yadj = yhat) + theme(text = element_text(size=16))
+```
+
+![plot of chunk unnamed-chunk-5](fig/09-fft-filter/unnamed-chunk-5-1.png)
+
+References
+- A. V. Oppenheim and R. W. Schafer (2010). Discrete-Time Signal Processing. Prentice Hall.
+

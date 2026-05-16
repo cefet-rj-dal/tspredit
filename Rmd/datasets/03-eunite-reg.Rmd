@@ -1,0 +1,43 @@
+## Objective
+
+This notebook introduces `EUNITE.Reg`, the regressor table packaged with the EUNITE competition data.
+
+## Method at a glance
+
+The goal is to inspect the categorical and calendar-style variables that complement the load and temperature series.
+
+## What you will do
+
+- load `EUNITE.Reg`
+- inspect dimensions and column names
+- preview the first rows
+- summarize the regressors
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+library(tspredit)
+```
+
+```{r}
+expand_dataset <- function(x) {
+  url <- attr(x, "url")
+  if (is.null(url) || !nzchar(url)) x else loadfulldata(x)
+}
+```
+
+```{r}
+data(EUNITE.Reg)
+EUNITE.Reg <- expand_dataset(EUNITE.Reg)
+cat("Dataset: EUNITE.Reg\n")
+cat("Rows:", nrow(EUNITE.Reg), "\n")
+cat("Columns:", paste(names(EUNITE.Reg), collapse = ", "), "\n")
+head(EUNITE.Reg)
+```
+
+```{r}
+summary(EUNITE.Reg)
+```
+
+## References
+
+- Chen, B.-J., Chang, M.-W., and Lin, C.-J. (2004). Load forecasting using support vector machines: a study on EUNITE competition 2001.

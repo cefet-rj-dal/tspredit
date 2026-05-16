@@ -1,0 +1,43 @@
+## Objective
+
+This notebook introduces `SantaFe.A`, the nonlinear laser series from the Santa Fe competition.
+
+## Method at a glance
+
+The notebook inspects the single-series structure and plots the full available signal.
+
+## What you will do
+
+- load `SantaFe.A`
+- inspect dimensions and columns
+- preview the first rows
+- plot the series
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+library(tspredit)
+```
+
+```{r}
+expand_dataset <- function(x) {
+  url <- attr(x, "url")
+  if (is.null(url) || !nzchar(url)) x else loadfulldata(x)
+}
+```
+
+```{r}
+data(SantaFe.A)
+SantaFe.A <- expand_dataset(SantaFe.A)
+cat("Dataset: SantaFe.A\n")
+cat("Rows:", nrow(SantaFe.A), "\n")
+cat("Columns:", paste(names(SantaFe.A), collapse = ", "), "\n")
+head(SantaFe.A)
+```
+
+```{r}
+ts.plot(SantaFe.A[[1]], ylab = "Value", xlab = "Index", main = "SantaFe.A")
+```
+
+## References
+
+- Weigend, A. S. (1993). Time Series Prediction: Forecasting the Future and Understanding the Past.

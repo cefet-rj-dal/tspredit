@@ -1,0 +1,40 @@
+## Objective
+
+This notebook introduces `tsd`, the smallest dataset distributed with `tspredit`. The goal is to inspect its structure and plot the synthetic target series used throughout the introductory examples.
+
+## Method at a glance
+
+This is a dataset-orientation notebook. It does not fit a model. Instead, it inspects the packaged object so the reader understands why `tsd` is the didactic entry point of the package.
+
+## What you will do
+
+- load `tsd`
+- inspect its dimensions and columns
+- summarize the variables
+- plot the target series
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+library(tspredit)
+library(ggplot2)
+```
+
+```{r}
+data(tsd)
+cat("Dataset: tsd\n")
+cat("Rows:", nrow(tsd), "\n")
+cat("Columns:", paste(names(tsd), collapse = ", "), "\n")
+head(tsd)
+```
+
+```{r}
+summary(tsd)
+```
+
+```{r}
+plot_ts(x = tsd$x, y = tsd$y) + theme(text = element_text(size = 16))
+```
+
+## References
+
+- Generated for package examples and documentation.

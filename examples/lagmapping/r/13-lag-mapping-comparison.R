@@ -1,0 +1,59 @@
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Lag mapping comparison
+
+library(daltoolbox)
+library(tspredit)
+library(ggplot2)
+
+set_example_seed()
+
+n <- 120
+x <- 1:n
+
+series_short <- sin(x / 5) + rnorm(n, sd = 0.15)
+series_seasonal <- sin(2 * pi * x / 12) + 0.4 * sin(2 * pi * x / 6) + rnorm(n, sd = 0.1)
+series_multiscale <- 0.6 * sin(x / 4) + 0.3 * sin(x / 13) + 0.01 * x + rnorm(n, sd = 0.12)
+
+synthetic <- list(
+  short = series_short,
+  seasonal = series_seasonal,
+  multiscale = series_multiscale
+)
+
+plot_ts(y = synthetic$short)
+plot_ts(y = synthetic$seasonal)
+plot_ts(y = synthetic$multiscale)
+
+methods <- c("recent", "even", "geom", "acf", "pacf", "seasonal", "mi", "mrmr")
+
+describe_map <- function(series_name, series_values) {
+  ts <- ts_data(series_values, 13)
+  io <- ts_projection(ts)
+
+  do.call(rbind, lapply(methods, function(method_name) {
+    mapper <- ts_lagmap(method = method_name, seasonality = 12)
+    mapper <- fit(mapper, io$input, io$output, input_size = 5)
+    data.frame(
+      series = series_name,
+      method = method_name,
+      lag = mapper$lags
+    )
+  }))
+}
+
+mapping_df <- do.call(
+  rbind,
+  Map(describe_map, names(synthetic), synthetic)
+)
+
+mapping_df
+
+ggplot(mapping_df, aes(x = lag, y = method, color = series)) +
+  geom_point(size = 3) +
+  facet_wrap(~series, ncol = 1) +
+  scale_x_reverse() +
+  labs(
+    title = "Lag subsets chosen by different mapping rules",
+    x = "Lag",
+    y = "Mapping method"
+  )

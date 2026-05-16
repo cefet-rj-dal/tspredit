@@ -1,0 +1,72 @@
+## Kalman Filter
+
+About the method
+- The Kalman filter models the series through a latent state-space system and updates the hidden state as new observations arrive.
+- It is useful when you want smoothing that explicitly separates observation noise from underlying state dynamics.
+
+Didactic goal: understand filtering from a state-space perspective rather than from windowed smoothing alone.
+
+
+``` r
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Filter - Kalman
+
+# Installing the package (if needed)
+#install.packages("tspredit")
+```
+
+We start by loading the packages used throughout this example.
+
+
+``` r
+# Loading the packages
+library(daltoolbox)
+library(tspredit) 
+```
+
+
+We load the example series that will be used throughout the demonstration.
+
+
+``` r
+# Series for study with artificial noise and spikes
+
+data(tsd)
+y <- tsd$y
+noise <- rnorm(length(y), 0, sd(y)/10)
+spike <- rnorm(1, 0, sd(y))
+tsd$y <- tsd$y + noise
+tsd$y[10] <- tsd$y[10] + spike
+tsd$y[20] <- tsd$y[20] + spike
+tsd$y[30] <- tsd$y[30] + spike
+```
+
+We plot the data here so the effect of the next transformation can be compared visually.
+
+
+``` r
+library(ggplot2)
+# Noisy series visualization
+plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
+```
+
+![plot of chunk unnamed-chunk-4](fig/14-kalman-filter/unnamed-chunk-4-1.png)
+
+Now we applying the kalman filter.
+
+
+``` r
+# Applying the Kalman filter
+
+filter <- ts_fil_kalman(H = 0.1, Q = 1)
+set_example_seed()
+filter <- fit(filter, tsd$y)
+y <- transform(filter, tsd$y)
+plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))
+```
+
+![plot of chunk unnamed-chunk-5](fig/14-kalman-filter/unnamed-chunk-5-1.png)
+
+References
+- R. E. Kalman (1960). A New Approach to Linear Filtering and Prediction Problems. Journal of Basic Engineering, 82(1), 35–45.
+

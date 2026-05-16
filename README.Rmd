@@ -1,0 +1,88 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# <img src='https://raw.githubusercontent.com/cefet-rj-dal/tspredit/master/inst/logo.png' alt='Logo do pacote TSPredIT' align='centre' height='125' width='125'/> TSPredIT
+
+<!-- badges: start -->
+![GitHub Stars](https://img.shields.io/github/stars/cefet-rj-dal/tspredit?logo=Github)
+![CRAN Downloads](https://cranlogs.r-pkg.org/badges/tspredit)
+<!-- badges: end -->
+
+**TSPredIT** (Time Series Prediction with Integrated Tuning) is a framework for time series forecasting that keeps the predictive workflow modular while expanding what can be tuned around it. Built on top of [DAL Toolbox](https://github.com/cefet-rj-dal/daltoolbox), it helps the reader move from a raw series to a complete forecasting pipeline that may include temporal sampling, filtering, augmentation, normalization, prediction, comparison, and integrated tuning.
+
+The package is not only a collection of forecasters. Its main didactic value is to show that time-series prediction benefits from treating the whole pipeline as a sequence of explicit decisions: how to represent the series, how to split it in time order, whether to smooth noise, whether to enrich the windows, how to scale values, which model family to use, and which protocol should be used for evaluation.
+
+---
+
+## Documentation
+
+The documentation was reorganized to support two complementary entry points:
+
+- a guided tutorial track for readers who want to learn the workflow step by step
+- thematic example collections for readers who want to inspect one stage of the forecasting pipeline at a time
+
+If you are new to `tspredit`, start with the tutorials. If you already know the package structure, the thematic collections remain available and were rewritten with a more didactic order and clearer grouping.
+
+### Guided tutorial track
+
+- [Tutorials](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/tutorial/) - a 10-part sequence that starts with ARIMA forecasting protocols, then builds the sliding-window MLP pipeline piece by piece, and ends with model comparison and integrated tuning.
+
+### Thematic example collections
+
+- [Time-series data utilities](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/tsdata/) - build `ts_data`, project windows into inputs and targets, and create train/test splits that preserve temporal order.
+- [Datasets](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/datasets/) - inspect the packaged datasets documented in `R/data.R` and `R/tspredbench.R`, one dataset at a time.
+- [Filtering](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/filter/) - compare identity baselines, smoothing methods, robust filters, decomposition methods, and state-space or seasonal adjustments.
+- [Augmentation](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/augment/) - study when synthetic windows help, from simple perturbations to recency-aware transformations.
+- [Normalization](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/normalization/) - inspect how scale, drift, and differencing affect the signal seen by the predictor.
+- [Prediction](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/prediction/) - move from classical baselines to machine-learning and neural forecasting models, then to tuning.
+- [Custom extensions](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/custom/) - learn how to add your own predictors, filters, augmentations, and normalization methods without breaking the package contract.
+
+### Documentation design
+
+The examples were revised to be more useful for learning:
+
+- files inside each collection follow a suggested reading order
+- category `README` files explain why each group exists before listing files
+- examples now open by explaining the method or technique before jumping into code
+- tutorial files no longer expose `output` front matter at the top of the document
+
+Additional documentation for the underlying DAL Toolbox is available at:
+
+- [DAL Toolbox documentation](https://cefet-rj-dal.github.io/daltoolbox/)
+
+---
+
+## Installation
+
+The latest version of TSPredIT is available on CRAN:
+
+```r
+install.packages("tspredit")
+```
+
+You can install the development version from GitHub:
+
+```r
+library(devtools)
+devtools::install_github("cefet-rj-dal/tspredit", force = TRUE, upgrade = "never")
+```
+
+---
+
+## Bug reports and feature requests
+
+To report issues or suggest improvements, please open a ticket here:
+
+<https://github.com/cefet-rj-dal/tspredit/issues>

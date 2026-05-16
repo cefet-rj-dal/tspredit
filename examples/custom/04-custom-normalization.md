@@ -1,0 +1,155 @@
+## Custom Normalization
+
+The goal of this example is to show how to create a custom normalization strategy that remains compatible with the `tspredit` forecasting pipeline.
+
+The built-in adaptive normalization in the package centers each window by subtracting a moving average and then applies global rescaling. Here we implement a didactic variant inspired by the original adaptive-normalization idea: divide by the moving average first, then apply global min-max scaling. This is useful when we want the model to focus on relative level instead of absolute magnitude.
+
+Because divisive normalization is easier to interpret on strictly positive series, this example uses the GDP benchmark data.
+
+
+``` r
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# installation
+# install.packages(c("tspredit", "daltoolbox"))
+
+library(daltoolbox)
+library(tspredit)
+```
+
+This chunk defines the custom class and the S3 methods needed to integrate it with the `tspredit` workflow.
+
+
+``` r
+ts_norm_an_div_custom <- function(outliers = daltoolbox::outliers_boxplot(),
+                                  nw = 0,
+                                  eps = 1e-8) {
+  obj <- daltoolbox::dal_transform()
+  obj$outliers <- outliers
+  obj$nw <- nw
+  obj$eps <- eps
+  obj$an_mean <- mean
+  obj$ma <- function(obj, data, func) {
+    data <- unclass(as.matrix(data))
+    if (obj$nw != 0) {
+      cols <- ncol(data) - ((obj$nw - 1):0)
+      data <- data[, cols, drop = FALSE]
+    }
+    apply(data, 1, func, na.rm = TRUE)
+  }
+  class(obj) <- append("ts_norm_an_div_custom", class(obj))
+  obj
+}
+
+fit.ts_norm_an_div_custom <- function(obj, data, ...) {
+  input <- data[, 1:(ncol(data) - 1)]
+  an <- obj$ma(obj, input, obj$an_mean)
+  denom <- ifelse(abs(an) < obj$eps, obj$eps, an)
+  data <- sweep(data, 1, denom, "/")
+
+  if (!is.null(obj$outliers)) {
+set_example_seed()
+    out <- fit(obj$outliers, data)
+    data <- transform(out, data)
+  }
+
+  obj$gmin <- min(data)
+  obj$gmax <- max(data)
+  obj
+}
+
+transform.ts_norm_an_div_custom <- function(obj, data, x = NULL, ...) {
+  if (!is.null(x)) {
+    denom <- attr(data, "an_denom")
+    x <- x / denom
+    x <- (x - obj$gmin) / (obj$gmax - obj$gmin)
+    return(x)
+  }
+
+  an <- obj$ma(obj, data, obj$an_mean)
+  denom <- ifelse(abs(an) < obj$eps, obj$eps, an)
+  data <- sweep(data, 1, denom, "/")
+  data <- (data - obj$gmin) / (obj$gmax - obj$gmin)
+  attr(data, "an_mean") <- an
+  attr(data, "an_denom") <- denom
+  data
+}
+
+inverse_transform.ts_norm_an_div_custom <- function(obj, data, x = NULL, ...) {
+  denom <- attr(data, "an_denom")
+
+  if (!is.null(x)) {
+    x <- x * (obj$gmax - obj$gmin) + obj$gmin
+    x <- x * denom
+    return(x)
+  }
+
+  data <- data * (obj$gmax - obj$gmin) + obj$gmin
+  data <- data * denom
+  attr(data, "an_denom") <- denom
+  data
+}
+
+registerS3method("fit", "ts_norm_an_div_custom", fit.ts_norm_an_div_custom)
+registerS3method("transform", "ts_norm_an_div_custom", transform.ts_norm_an_div_custom)
+registerS3method("inverse_transform", "ts_norm_an_div_custom", inverse_transform.ts_norm_an_div_custom)
+```
+
+We first inspect the transformed windows to see how the custom normalizer changes scale.
+
+
+``` r
+data(gdp)
+series <- gdp$usa_gdp
+
+ts <- ts_data(series, 10)
+normalizer <- ts_norm_an_div_custom(nw = 3)
+set_example_seed()
+normalizer <- fit(normalizer, ts)
+tst <- transform(normalizer, ts)
+
+ts_head(tst, 3)
+```
+
+```
+##               t9           t8         t7        t6        t5        t4        t3        t2        t1        t0
+## [1,] -0.05810591 -0.001977853 0.06807569 0.1577523 0.2312435 0.3168706 0.4324461 0.5602260 0.7256256 0.8946799
+## [2,] -0.07265343 -0.009532448 0.07126970 0.1374882 0.2146415 0.3187795 0.4339143 0.5829457 0.7352703 0.8623155
+## [3,] -0.07907878 -0.006229238 0.05347196 0.1230318 0.2169205 0.3207236 0.4550872 0.5924199 0.7069612 0.8811504
+```
+
+The next step shows that the custom normalizer can be plugged directly into a predictive model.
+
+
+``` r
+samp <- ts_sample(ts, test_size = 5)
+io_train <- ts_projection(samp$train)
+io_test <- ts_projection(samp$test)
+```
+
+This chunk configures the model and fits it on the training data prepared earlier.
+
+
+``` r
+model <- ts_mlp(
+  preprocess = ts_norm_an_div_custom(nw = 3),
+  input_size = 4,
+  size = 4,
+  decay = 0,
+  maxit = 1000
+)
+
+set_example_seed()
+model <- fit(model, x = io_train$input, y = io_train$output)
+prediction <- as.vector(predict(model, x = io_test$input[1:1, ], steps_ahead = 5))
+evaluate(model, as.vector(io_test$output), prediction)$metrics
+```
+
+```
+##           mse      smape        R2
+## 1 6.66291e+11 0.02841737 0.8735525
+```
+
+This example shows that a custom normalizer in `tspredit` needs to provide the same practical contract as the built-in preprocessors: a fitted state, a forward transformation, and an inverse transformation for predictions.
+
+References
+- Ogasawara, E., Martinez, L. C., De Oliveira, D., Zimbrão, G., Pappa, G. L., Mattoso, M. (2010). Adaptive Normalization: A novel data normalization approach for non-stationary time series.

@@ -1,0 +1,79 @@
+## Custom Filter
+
+The goal of this example is to show how to add a custom filter that can be applied before the prediction workflow starts.
+
+The filter implemented here is a median filter. It is widely used to attenuate impulse-like spikes, but it is not currently part of the built-in `tspredit` filter collection. The implementation is small because a filter only needs a constructor and a `transform()` method when no fitted state is required.
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# installation
+# install.packages(c("tspredit", "daltoolbox"))
+
+library(daltoolbox)
+library(tspredit)
+library(ggplot2)
+```
+
+This chunk implements the custom component so it can be reused like any built-in object from the package.
+
+```{r}
+ts_fil_median_custom <- function(k = 5) {
+  if (k %% 2 == 0) {
+    k <- k + 1
+  }
+
+  obj <- daltoolbox::dal_transform()
+  obj$k <- k
+  class(obj) <- append("ts_fil_median_custom", class(obj))
+  obj
+}
+
+transform.ts_fil_median_custom <- function(obj, data, ...) {
+  result <- stats::runmed(as.numeric(data), k = obj$k, endrule = "keep")
+  result[is.na(result)] <- as.numeric(data)[is.na(result)]
+  result
+}
+```
+
+To make the filtering effect visible, we inject a few spikes into the example series before applying the custom filter.
+
+```{r}
+data(tsd)
+y_noisy <- tsd$y
+y_noisy[c(10, 20, 30)] <- y_noisy[c(10, 20, 30)] + c(1, -1.2, 1.1)
+```
+
+This chunk executes the next practical step of the workflow so the following result can be interpreted in context.
+
+```{r}
+filter_custom <- ts_fil_median_custom(k = 5)
+y_filtered <- transform(filter_custom, y_noisy)
+```
+
+This visualization helps compare the original data with the transformed or predicted values produced in the previous step.
+
+```{r}
+plot_ts_pred(y = y_noisy, yadj = y_filtered) + theme(text = element_text(size = 16))
+```
+
+Once the filter is defined, it can be used upstream from the usual forecasting pipeline.
+
+```{r}
+ts_filtered <- ts_data(y_filtered, 10)
+samp <- ts_sample(ts_filtered, test_size = 5)
+io_train <- ts_projection(samp$train)
+io_test <- ts_projection(samp$test)
+```
+
+This chunk configures the model and fits it on the training data prepared earlier.
+
+```{r}
+model <- ts_mlp(ts_norm_gminmax(), input_size = 4, size = 4, decay = 0, maxit = 1000)
+set_example_seed()
+model <- fit(model, x = io_train$input, y = io_train$output)
+
+prediction <- as.vector(predict(model, x = io_test$input[1:1, ], steps_ahead = 5))
+evaluate(model, as.vector(io_test$output), prediction)$metrics
+```
+
+This example highlights the usual role of a filter extension in `tspredit`: transform the signal first, and then feed the filtered series into the downstream predictive workflow.

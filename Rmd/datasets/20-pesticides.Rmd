@@ -1,0 +1,43 @@
+## Objective
+
+This notebook introduces `pesticides`, the FAOSTAT pesticides-use collection.
+
+## Method at a glance
+
+The notebook inspects the list-based structure and previews one annual series from the collection.
+
+## What you will do
+
+- load `pesticides`
+- inspect the number of available series
+- preview the first keys
+- plot one representative series
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+library(tspredit)
+```
+
+```{r}
+expand_dataset <- function(x) {
+  url <- attr(x, "url")
+  if (is.null(url) || !nzchar(url)) x else loadfulldata(x)
+}
+```
+
+```{r}
+data(pesticides)
+pesticides <- expand_dataset(pesticides)
+cat("Dataset: pesticides\n")
+cat("Series available:", length(pesticides), "\n")
+head(names(pesticides))
+head(pesticides[[1]])
+```
+
+```{r}
+ts.plot(pesticides[[1]], ylab = "Value", xlab = "Year", main = names(pesticides)[1])
+```
+
+## References
+
+- FAOSTAT Pesticides Use Database.

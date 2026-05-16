@@ -1,0 +1,43 @@
+## Objective
+
+This notebook introduces `emissions`, the greenhouse-gas emissions collection distributed with `tspredit`.
+
+## Method at a glance
+
+The notebook inspects the list-based structure and previews one annual series from the collection.
+
+## What you will do
+
+- load `emissions`
+- inspect the number of available series
+- preview the first keys
+- plot one representative series
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+library(tspredit)
+```
+
+```{r}
+expand_dataset <- function(x) {
+  url <- attr(x, "url")
+  if (is.null(url) || !nzchar(url)) x else loadfulldata(x)
+}
+```
+
+```{r}
+data(emissions)
+emissions <- expand_dataset(emissions)
+cat("Dataset: emissions\n")
+cat("Series available:", length(emissions), "\n")
+head(names(emissions))
+head(emissions[[1]])
+```
+
+```{r}
+ts.plot(emissions[[1]], ylab = "Emissions", xlab = "Year", main = names(emissions)[1])
+```
+
+## References
+
+- FAOSTAT Emissions Totals.

@@ -1,0 +1,44 @@
+## Objective
+
+This notebook introduces `EUNITE.Loads`, the half-hourly electrical load dataset from the EUNITE forecasting competition.
+
+## Method at a glance
+
+The notebook focuses on inspection. It loads the packaged object, expands it with `loadfulldata()` when necessary, and previews the structure used in later forecasting experiments.
+
+## What you will do
+
+- load `EUNITE.Loads`
+- inspect dimensions and column names
+- preview the first rows
+- plot one representative half-hour interval across days
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+library(tspredit)
+```
+
+```{r}
+expand_dataset <- function(x) {
+  url <- attr(x, "url")
+  if (is.null(url) || !nzchar(url)) x else loadfulldata(x)
+}
+```
+
+```{r}
+data(EUNITE.Loads)
+EUNITE.Loads <- expand_dataset(EUNITE.Loads)
+cat("Dataset: EUNITE.Loads\n")
+cat("Rows:", nrow(EUNITE.Loads), "\n")
+cat("Columns:", ncol(EUNITE.Loads), "\n")
+head(names(EUNITE.Loads))
+head(EUNITE.Loads[, 1:6])
+```
+
+```{r}
+ts.plot(EUNITE.Loads[[1]], ylab = "Load", xlab = "Day", main = names(EUNITE.Loads)[1])
+```
+
+## References
+
+- Chen, B.-J., Chang, M.-W., and Lin, C.-J. (2004). Load forecasting using support vector machines: a study on EUNITE competition 2001.

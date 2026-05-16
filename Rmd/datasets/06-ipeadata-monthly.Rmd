@@ -1,0 +1,44 @@
+## Objective
+
+This notebook introduces `ipeadata.m`, the monthly macroeconomic dataset from Ipea.
+
+## Method at a glance
+
+The focus is on the wide-table representation used to package multiple monthly univariate series.
+
+## What you will do
+
+- load `ipeadata.m`
+- inspect dimensions and column names
+- preview the first rows
+- plot the first available series
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+library(tspredit)
+```
+
+```{r}
+expand_dataset <- function(x) {
+  url <- attr(x, "url")
+  if (is.null(url) || !nzchar(url)) x else loadfulldata(x)
+}
+```
+
+```{r}
+data(ipeadata.m)
+ipeadata.m <- expand_dataset(ipeadata.m)
+cat("Dataset: ipeadata.m\n")
+cat("Rows:", nrow(ipeadata.m), "\n")
+cat("Columns:", ncol(ipeadata.m), "\n")
+head(names(ipeadata.m))
+head(ipeadata.m[, 1:4])
+```
+
+```{r}
+ts.plot(ipeadata.m[[1]], ylab = "Value", xlab = "Month", main = names(ipeadata.m)[1])
+```
+
+## References
+
+- Ipea. Ipeadata portal.

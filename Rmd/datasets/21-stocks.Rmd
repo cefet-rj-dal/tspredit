@@ -1,0 +1,45 @@
+## Objective
+
+This notebook introduces `stocks`, the packaged B3 stock-market collection.
+
+## Method at a glance
+
+The notebook inspects the list-of-data-frames structure and previews one ticker entry with its OHLCV fields.
+
+## What you will do
+
+- load `stocks`
+- inspect the available tickers
+- preview the structure of the first ticker
+- plot the closing-price series
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+library(tspredit)
+```
+
+```{r}
+expand_dataset <- function(x) {
+  url <- attr(x, "url")
+  if (is.null(url) || !nzchar(url)) x else loadfulldata(x)
+}
+```
+
+```{r}
+data(stocks)
+stocks <- expand_dataset(stocks)
+cat("Dataset: stocks\n")
+cat("Tickers available:", length(stocks), "\n")
+head(names(stocks))
+first_ticker <- names(stocks)[1]
+first_series <- stocks[[first_ticker]]
+head(first_series)
+```
+
+```{r}
+ts.plot(first_series$close, ylab = "Close", xlab = "Index", main = paste(first_ticker, "close"))
+```
+
+## References
+
+- B3 historical trading data.

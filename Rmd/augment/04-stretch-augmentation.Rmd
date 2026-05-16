@@ -1,0 +1,74 @@
+## Stretch Augmentation
+
+About the technique
+- Stretch augmentation amplifies variations inside the window.
+- It is useful for exposing the model to stronger local oscillations than those seen in the original sample.
+
+Didactic goal: inspect how amplitude expansion creates alternative training windows while keeping the same temporal structure.
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Time series augmentation - stretch
+
+# Installing the package (if needed)
+#install.packages("tspredit")
+```
+
+We start by loading the packages used throughout this example.
+
+```{r}
+# Loading the packages
+library(daltoolbox)
+library(tspredit) 
+```
+
+
+We load the example series that will be used throughout the demonstration.
+
+```{r}
+# Series for study
+
+data(tsd)
+library(ggplot2)
+plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
+```
+
+The next step organizes the series into sliding windows, which is the tabular representation used by the later transformations and models.
+
+```{r}
+# Sliding windows
+
+sw_size <- 10
+xw <- ts_data(tsd$y, sw_size)
+```
+
+Now we augmentation (stretch).
+
+```{r}
+# Augmentation (stretch)
+
+augment <- ts_aug_stretch()
+set_example_seed()
+augment <- fit(augment, xw)
+xa <- transform(augment, xw)
+idx <- attr(xa, "idx")
+ts_head(xa)
+```
+
+This plot overlays the original and augmented windows so you can see how the transformation changes the local shape.
+
+```{r}
+# Plot (original vs augmented windows)
+
+i <- 1:nrow(xw)
+y <- xw[,sw_size]
+plot(x = i, y = y, main = "cosine")
+lines(x = i, y = y, col="black")
+for (j in 1:nrow(xa)) {
+  lines(x = (idx[j]-sw_size+1):idx[j], y = xa[j,1:sw_size], col="green")
+}
+```
+
+References
+- H. I. Fawaz, G. Forestier, J. Weber, L. Idoumghar, and P.-A. Muller (2019). Deep learning for time series classification: A review. Data Mining and Knowledge Discovery, 33, 917–963.
+

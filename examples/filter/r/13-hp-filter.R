@@ -1,0 +1,33 @@
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Filter - Hodrick-Prescott
+
+# Install tspredit if needed
+#install.packages("tspredit")
+
+# Load packages
+library(daltoolbox)
+library(tspredit) 
+
+# Prepare a noisy series example with spikes
+data(tsd)
+y <- tsd$y
+noise <- rnorm(length(y), 0, sd(y)/10)
+spike <- rnorm(1, 0, sd(y))
+tsd$y <- tsd$y + noise
+tsd$y[10] <- tsd$y[10] + spike
+tsd$y[20] <- tsd$y[20] + spike
+tsd$y[30] <- tsd$y[30] + spike
+
+library(ggplot2)
+# Visualize noisy input
+plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
+
+# Apply the HP filter (trend extraction)
+
+filter <- ts_fil_hp()             # uses default lambda internally
+set_example_seed()
+filter <- fit(filter, tsd$y)
+y <- transform(filter, tsd$y)     # returns trend-adjusted output
+
+# Compare original vs trend component (or adjusted)
+plot_ts_pred(y=tsd$y, yadj=y) + theme(text = element_text(size=16))

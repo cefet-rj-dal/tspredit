@@ -1,0 +1,45 @@
+Package: tspredit
+Title: Time Series Prediction with Integrated Tuning
+Version: 1.3.707
+Authors@R: 
+  c(    person(given = "Eduardo", family = "Ogasawara", role = c("aut", "ths", "cre"), 
+               email = "eogasawara@ieee.org", comment = c(ORCID = "0000-0002-0466-0626")),
+        person(given = "Cristiane", family = "Gea", role = "aut", email = "cristiane.gea@eic.cefet-rj.br"),
+        person(given = "Diego", family = "Carvalho", role = "ctb", email = "diego.carvalho@cefet-rj.br"),
+        person(given = "Diogo", family = "Santos", role = "aut", email = "diogo.santos@eic.cefet-rj.br"),
+        person(given = "Eduardo", family = "Bezerra", role = "ctb", email = "ebezerra@cefet-rj.br"),
+        person(given = "Esther", family = "Pacitti", role = "ctb", email = "Esther.Pacitti@lirmm.fr"),
+        person(given = "Fabio", family = "Porto", role = "ctb", email = "fporto@lncc.br"),
+        person(given = "Fernando", family = "Alexandrino", role = "aut", email = "fernando.alexandrino@ifsp.edu.br"),
+        person(given = "Rebecca", family = "Salles", role = "aut", email = "rebecca.salles@eic.cefet-rj.br"),
+        person(given = "Vitoria", family = "Birindiba", role = "aut", email = "vitoria.birindiba@eic.cefet-rj.br"),
+        person(given = "CEFET/RJ", role = "cph")
+  )
+Description: 
+  Time series prediction is a critical task in data analysis, requiring not only the selection of appropriate models, but also suitable data preprocessing and tuning strategies. 
+  TSPredIT (Time Series Prediction with Integrated Tuning) is a framework that provides a seamless integration of data preprocessing, decomposition, model training, hyperparameter optimization, and evaluation. 
+  Unlike other frameworks, TSPredIT emphasizes the co-optimization of both preprocessing and modeling steps, improving predictive performance. 
+  It supports a variety of statistical and machine learning models, filtering techniques, outlier detection, data augmentation, and ensemble strategies. 
+  More information is available in Salles et al. <doi:10.1007/978-3-662-68014-8_2>.
+License: MIT + file LICENSE
+URL: https://cefet-rj-dal.github.io/tspredit/, https://github.com/cefet-rj-dal/tspredit
+BugReports: https://github.com/cefet-rj-dal/tspredit/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Depends: R (>= 4.1.0)
+Imports: 
+  stats,
+  DescTools,
+  e1071, 
+  elmNNRcpp, 
+  FNN, 
+  forecast,
+  hht,
+  KFAS,
+  mFilter,
+  nnet, 
+  randomForest,
+  wavelets,
+  dplyr,
+  daltoolbox
+Config/roxygen2/version: 8.0.0

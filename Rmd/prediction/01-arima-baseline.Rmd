@@ -1,0 +1,91 @@
+## ARIMA Baseline
+
+About the method
+- ARIMA models a univariate series with autoregressive terms, differencing, and moving-average terms.
+- In `tspredit`, `ts_arima()` performs automatic order selection and then generates recursive forecasts for the requested horizon.
+
+Didactic goal: learn the classical forecasting baseline before moving to sliding-window machine-learning models.
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+#install.packages("tspredit")
+
+# Loading the package
+library(tspredit) 
+```
+
+We load the example series in its raw sequential form, without creating sliding windows yet.
+
+```{r}
+# Series for study (no sliding window)
+
+data(tsd)
+ts <- ts_data(tsd$y, 0)
+ts_head(ts, 3)
+```
+
+Before moving on, we visualize the series so the effect of the next transformation can be compared against the original signal.
+
+```{r}
+# Series visualization
+library(ggplot2)
+plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
+```
+
+We now preserve the time order and split the raw sequence into train and test partitions.
+
+```{r}
+# Train-test split on the ordered series
+
+samp <- ts_sample(ts, test_size = 5)
+ts_head(samp$train, 3)
+ts_head(samp$test, 3)
+```
+
+This step training the arima model (orders selected automatically).
+
+```{r}
+# Training the ARIMA model (orders selected automatically)
+
+model <- ts_arima(p = 5, d = 0, q = 0)
+set_example_seed()
+model <- fit(model, x = samp$train)
+```
+
+We first evaluate the in-sample fit so the model adjustment can be compared with the later forecast.
+
+```{r}
+# Fit evaluation (train)
+
+adjust <- predict(model, samp$train)
+adjust <- as.vector(adjust)
+output <- as.vector(samp$train)
+ev_adjust <- evaluate(model, output, adjust)
+ev_adjust$mse
+```
+
+We now generate a five-step forecast on the test segment and compare it with the observed values.
+
+```{r}
+# Forecast on test set (5 steps ahead)
+
+prediction <- predict(model, x = samp$test[1,], steps_ahead = 5)
+prediction <- as.vector(prediction)
+output <- as.vector(samp$test)
+ev_test <- evaluate(model, output, prediction)
+ev_test
+```
+
+The final plot compares the observed series, the training adjustment, and the forecasted test horizon.
+
+```{r}
+# Plot comparing actual vs fit (train) and forecast (test)
+
+yvalues <- c(samp$train, samp$test)
+plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction, color_prediction="orange") + theme(text = element_text(size=16))
+```
+
+References
+- G. E. P. Box, G. M. Jenkins, G. C. Reinsel, and G. M. Ljung (2015). Time Series Analysis: Forecasting and Control. Wiley.
+- R. J. Hyndman and Y. Khandakar (2008). Automatic time series forecasting: The forecast package for R. Journal of Statistical Software, 27(3), 1–22. doi:10.18637/jss.v027.i03
+
