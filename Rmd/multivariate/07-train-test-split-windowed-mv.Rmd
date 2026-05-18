@@ -1,4 +1,4 @@
-## Train and Test Splits for Multivariate Data
+## Train and Test Splits for Windowed Multivariate Data
 
 About the concept
 - In sliding-window forecasting workflows, train/test splitting should happen after the lagged representation is materialized.
@@ -8,7 +8,7 @@ Didactic goal: inspect how the aligned multivariate data becomes lagged windows 
 
 ```{r}
 source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
-# Train and test splits for multivariate data
+# Train and test splits for windowed multivariate data
 
 # Installing the package (if needed)
 # install.packages("tspredit")

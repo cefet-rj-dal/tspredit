@@ -1,17 +1,12 @@
-## -----------------------------------------------------------------------------
 source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
 # Target-centered multivariate forecasting with deterministic auxiliaries
 
 # Installing the package (if needed)
 # install.packages("tspredit")
 
-
-## -----------------------------------------------------------------------------
 library(daltoolbox)
 library(tspredit)
 
-
-## -----------------------------------------------------------------------------
 data(EUNITE.Loads)
 data(EUNITE.Reg)
 
@@ -38,12 +33,8 @@ mv <- ts_data_mv(
 
 ts_head(mv, 3)
 
-
-## -----------------------------------------------------------------------------
 samp <- ts_sample(mv, test_size = 5)
 
-
-## -----------------------------------------------------------------------------
 model <- ts_regsw_mv(
   model_y = ts_mv_spec(
     ts_mlp(ts_norm_an(), input_size = 4, size = 4, decay = 0),
@@ -57,45 +48,26 @@ model <- ts_regsw_mv(
   window_size = 7
 )
 
-
-## -----------------------------------------------------------------------------
 set_example_seed()
 model <- fit(model, samp$train)
 
-
-## -----------------------------------------------------------------------------
 pred_1 <- predict(model, steps_ahead = 1)
 pred_1
 
-
-## -----------------------------------------------------------------------------
 pred_5 <- predict(model, steps_ahead = 5)
 pred_5
 
-
-## -----------------------------------------------------------------------------
 pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
 pred_all
 
-
-## -----------------------------------------------------------------------------
 plots <- plot_ts_pred_mv(samp$train, samp$test, pred_all)
 
-
-## -----------------------------------------------------------------------------
 plots$y
 
-
-## -----------------------------------------------------------------------------
 plots$x1
 
-
-## -----------------------------------------------------------------------------
 plots$x2
 
-
-## -----------------------------------------------------------------------------
 output <- tail(samp$test$y, 5)
 ev_test <- evaluate(model, output, pred_5)
 ev_test$metrics
-

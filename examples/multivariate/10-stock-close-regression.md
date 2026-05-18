@@ -223,7 +223,7 @@ Target trajectory:
 plot_close
 ```
 
-![plot of chunk unnamed-chunk-12](fig/06-stock-close-regression/unnamed-chunk-12-1.png)
+![plot of chunk unnamed-chunk-12](fig/10-stock-close-regression/unnamed-chunk-12-1.png)
 
 Auxiliary variable `open`:
 
@@ -232,7 +232,7 @@ Auxiliary variable `open`:
 plot_open
 ```
 
-![plot of chunk unnamed-chunk-13](fig/06-stock-close-regression/unnamed-chunk-13-1.png)
+![plot of chunk unnamed-chunk-13](fig/10-stock-close-regression/unnamed-chunk-13-1.png)
 
 Auxiliary variable `volume`:
 
@@ -241,7 +241,7 @@ Auxiliary variable `volume`:
 plot_volume
 ```
 
-![plot of chunk unnamed-chunk-14](fig/06-stock-close-regression/unnamed-chunk-14-1.png)
+![plot of chunk unnamed-chunk-14](fig/10-stock-close-regression/unnamed-chunk-14-1.png)
 
 The held-out target values remain available for evaluation against the target
 forecast.

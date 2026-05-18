@@ -178,7 +178,7 @@ Target trajectory:
 plots$y
 ```
 
-![plot of chunk unnamed-chunk-11](fig/05-target-centered-regression/unnamed-chunk-11-1.png)
+![plot of chunk unnamed-chunk-11](fig/09-target-centered-regression/unnamed-chunk-11-1.png)
 
 Auxiliary variable `x1`:
 
@@ -187,7 +187,7 @@ Auxiliary variable `x1`:
 plots$x1
 ```
 
-![plot of chunk unnamed-chunk-12](fig/05-target-centered-regression/unnamed-chunk-12-1.png)
+![plot of chunk unnamed-chunk-12](fig/09-target-centered-regression/unnamed-chunk-12-1.png)
 
 Auxiliary variable `x2`:
 
@@ -196,7 +196,7 @@ Auxiliary variable `x2`:
 plots$x2
 ```
 
-![plot of chunk unnamed-chunk-13](fig/05-target-centered-regression/unnamed-chunk-13-1.png)
+![plot of chunk unnamed-chunk-13](fig/09-target-centered-regression/unnamed-chunk-13-1.png)
 
 The held-out target values remain available for evaluation against the target
 forecast.

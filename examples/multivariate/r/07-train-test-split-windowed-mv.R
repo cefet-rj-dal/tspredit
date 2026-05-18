@@ -1,5 +1,5 @@
 source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
-# Train and test splits for multivariate data
+# Train and test splits for windowed multivariate data
 
 # Installing the package (if needed)
 # install.packages("tspredit")
