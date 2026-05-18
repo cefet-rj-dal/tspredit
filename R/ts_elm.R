@@ -69,6 +69,10 @@ ts_elm <- function(preprocess = NA, input_size = NA, input_map = ts_lagmap(), nh
 #'@noRd
 do_fit.ts_elm <- function(obj, x, y) {
   # Train ELM with random hidden layer and closed-form output weights
+  if (is.data.frame(x))
+    x <- as.matrix(x)
+  if (!is.matrix(y))
+    y <- as.matrix(y)
   obj$model <- elmNNRcpp::elm_train(x, y, nhid = obj$nhid, actfun = obj$actfun, init_weights = "uniform_positive", bias = FALSE, verbose = FALSE)
   return(obj)
 }

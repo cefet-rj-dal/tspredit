@@ -7,6 +7,8 @@ A useful way to read this folder is to treat ARIMA as the baseline for protocol 
 ## Classical baseline
 
 - [01-arima-baseline.md](01-arima-baseline.md) - fit ARIMA with automatic order selection and recursive forecasting.
+- [11-darima-regression.md](11-darima-regression.md) - fit the delegated-differencing ARIMA-like regressor in the sliding-window workflow.
+- [12-warma-regression.md](12-warma-regression.md) - fit the local window-based ARMA-inspired competitor with stepwise normalization.
 
 ## Classical machine-learning regressors
 

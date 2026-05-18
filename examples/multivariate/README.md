@@ -24,4 +24,5 @@ typically needs them:
 ### Block 2: Forecasting workflow
 
 - [04-deterministic-auxiliary-models.md](04-deterministic-auxiliary-models.md) - inspect when auxiliary variables should use deterministic pipelines such as `ts_deterministic()`, `ts_periodic()`, and `ts_persist()`.
-- [05-target-centered-regression.md](05-target-centered-regression.md) - build a complete multivariate forecasting system from an existing benchmark in the package and inspect one-step and multistep prediction.
+- [05-target-centered-regression.md](05-target-centered-regression.md) - build a complete multivariate forecasting system with deterministic auxiliary variables and inspect one-step and multistep prediction.
+- [06-stock-close-regression.md](06-stock-close-regression.md) - forecast stock closing prices from non-deterministic auxiliary variables and inspect a mixed workflow with MLP, ELM, DARIMA, and WARMA submodels.

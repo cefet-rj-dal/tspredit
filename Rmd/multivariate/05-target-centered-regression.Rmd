@@ -1,14 +1,14 @@
-## Target-Centered Multivariate Forecasting
+## Target-Centered Multivariate Forecasting with Deterministic Auxiliaries
 
 About the method
 - This workflow keeps `y` as the forecasting target and treats `x1, ..., xn` as auxiliary series that also receive their own predictive pipelines.
 - The multivariate wrapper reuses the univariate learners already available in `tspredit`, while coordinating how the synchronized lagged windows are built for each variable.
 
-Didactic goal: provide a first overview of how multivariate forecasting works in `tspredit` 2.0 using an existing benchmark from the package.
+Didactic goal: provide a first overview of how multivariate forecasting works in `tspredit` 2.0 when the auxiliary variables follow deterministic laws of formation.
 
 ```{r}
 source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
-# Target-centered multivariate forecasting
+# Target-centered multivariate forecasting with deterministic auxiliaries
 
 # Installing the package (if needed)
 # install.packages("tspredit")
@@ -154,6 +154,7 @@ What this example shows
 - `ts_mv_spec()` lets each variable keep its own object-oriented pipeline.
 - `ts_regsw_mv()` coordinates one target model and one auxiliary model per covariate while reusing the learners already available in the univariate package.
 - Rule-based univariate predictors from the `ts_deterministic()` family are often more appropriate than generic learners for deterministic auxiliary variables.
+- This is the deterministic-auxiliary scenario; the next example in the sequence treats non-deterministic auxiliary variables as endogenous series with their own forecasting models.
 
 References
 - Hyndman, R. J., & Athanasopoulos, G. Forecasting: Principles and Practice.
