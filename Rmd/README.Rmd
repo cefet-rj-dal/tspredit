@@ -18,6 +18,7 @@ If you are new to the package, begin with the tutorial track. After that, use th
 - [augment](/examples/augment/README.md) - augmentation strategies organized from the no-augmentation baseline to shape perturbations and recency-aware schemes.
 - [normalization](/examples/normalization/README.md) - normalization strategies organized from no scaling to global, local, adaptive, and differencing-based transformations.
 - [prediction](/examples/prediction/README.md) - forecasting models organized from ARIMA baselines to machine-learning, neural, and tuning workflows.
+- [multivariate](/examples/multivariate/README.md) - target-centered multivariate forecasting workflows built by orchestrating one pipeline for `y` and one for each auxiliary variable.
 - [custom](/examples/custom/README.md) - extension examples showing how to plug custom predictors, filters, augmentations, and normalizers into the same `tspredit` contract.
 
 ## Suggested Reading Order
@@ -31,4 +32,5 @@ If you prefer to assemble understanding by component, this order is usually the 
 3. `datasets`
 4. `filter`, `augment`, and `normalization`
 5. `prediction`
-6. `custom`
+6. `multivariate`
+7. `custom`

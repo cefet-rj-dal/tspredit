@@ -135,6 +135,9 @@ ts_data <- function(y, sw=1) {
 #'@importFrom utils head
 #'@export
 ts_head <- function(x, n = 6L, ...) {
+  if (inherits(x, "ts_data_mv")) {
+    return(utils::head(as.data.frame(x), n))
+  }
   utils::head(unclass(x), n)
 }
 
