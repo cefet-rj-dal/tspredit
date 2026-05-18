@@ -20,31 +20,7 @@ We begin by loading the packages used in the example.
 
 ``` r
 library(daltoolbox)
-```
-
-```
-## Warning: pacote 'daltoolbox' foi compilado no R versão 4.5.1
-```
-
-```
-## 
-## Anexando pacote: 'daltoolbox'
-```
-
-```
-## O seguinte objeto é mascarado por 'package:base':
-## 
-##     transform
-```
-
-``` r
 library(tspredit)
-```
-
-```
-## Registered S3 method overwritten by 'quantmod':
-##   method            from
-##   as.zoo.data.frame zoo
 ```
 
 We now build an aligned multivariate dataset from benchmark data already
@@ -62,10 +38,27 @@ data(EUNITE.Reg)
 if (!is.null(attr(EUNITE.Loads, "url"))) {
   EUNITE.Loads <- loadfulldata(EUNITE.Loads)
 }
+```
+
+```
+## Warning in attr(EUNITE.Loads, "url"): 'xfun::attr()' é obsoleto.
+## Use 'xfun::attr2()' em seu lugar.
+## Veja help("Deprecated")
+```
+
+``` r
 if (!is.null(attr(EUNITE.Reg, "url"))) {
   EUNITE.Reg <- loadfulldata(EUNITE.Reg)
 }
+```
 
+```
+## Warning in attr(EUNITE.Reg, "url"): 'xfun::attr()' é obsoleto.
+## Use 'xfun::attr2()' em seu lugar.
+## Veja help("Deprecated")
+```
+
+``` r
 load_cols <- setdiff(names(EUNITE.Loads), "split")
 y <- apply(EUNITE.Loads[, load_cols, drop = FALSE], 1, max)
 x1 <- as.numeric(EUNITE.Reg$Holiday)
@@ -205,7 +198,7 @@ Target trajectory:
 plots$y
 ```
 
-![plot of chunk unnamed-chunk-11](fig/01-target-centered-regression/unnamed-chunk-11-1.png)
+![plot of chunk unnamed-chunk-11](fig/02-target-centered-regression/unnamed-chunk-11-1.png)
 
 Auxiliary variable `x1`:
 
@@ -214,7 +207,7 @@ Auxiliary variable `x1`:
 plots$x1
 ```
 
-![plot of chunk unnamed-chunk-12](fig/01-target-centered-regression/unnamed-chunk-12-1.png)
+![plot of chunk unnamed-chunk-12](fig/02-target-centered-regression/unnamed-chunk-12-1.png)
 
 Auxiliary variable `x2`:
 
@@ -223,7 +216,7 @@ Auxiliary variable `x2`:
 plots$x2
 ```
 
-![plot of chunk unnamed-chunk-13](fig/01-target-centered-regression/unnamed-chunk-13-1.png)
+![plot of chunk unnamed-chunk-13](fig/02-target-centered-regression/unnamed-chunk-13-1.png)
 
 The held-out target values remain available for evaluation against the target
 forecast.

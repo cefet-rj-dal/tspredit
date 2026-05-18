@@ -65,8 +65,11 @@ pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
 pred_all
 
 plots <- plot_ts_pred_mv(samp$train, samp$test, pred_all)
+
 plots$y
+
 plots$x1
+
 plots$x2
 
 output <- tail(samp$test$y, 5)

@@ -9,10 +9,16 @@ process.
 The examples in this folder explain the new abstractions in the order a reader
 typically needs them:
 
-- the aligned multivariate data object
-- the variable-specific pipeline specification
-- the multivariate orchestrator that reuses the existing univariate learners
+- first the aligned multivariate data object
+- then the variable-specific pipeline specification
+- then the multivariate orchestrator that reuses the existing univariate learners
 
 ## Current examples
 
-- [01-target-centered-regression.md](01-target-centered-regression.md) - build a complete multivariate forecasting system from an existing benchmark in the package and inspect one-step and multistep prediction.
+### Block 1: Data and alignment
+
+- [01-build-ts-data-mv.md](01-build-ts-data-mv.md) - construct the aligned multivariate object and inspect how `y` and `x1, ..., xn` remain synchronized over time.
+
+### Block 2: Forecasting workflow
+
+- [02-target-centered-regression.md](02-target-centered-regression.md) - build a complete multivariate forecasting system from an existing benchmark in the package and inspect one-step and multistep prediction.
