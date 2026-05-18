@@ -7,7 +7,7 @@ library(tspredit)
 # Series for study (no sliding window)
 
 data(tsd)
-ts <- ts_data(tsd$y, 0)
+ts <- ts_data(tsd$y, 1)
 ts_head(ts, 3)
 
 # Series visualization

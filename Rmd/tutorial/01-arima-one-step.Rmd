@@ -1,4 +1,4 @@
-# Tutorial 01 - ARIMA for One-Step Prediction
+﻿# Tutorial 01 - ARIMA for One-Step Prediction
 
 This tutorial starts with the simplest forecasting scenario: predict the next observation only once.
 
@@ -30,7 +30,7 @@ ARIMA operates directly on the univariate series, so we do not create sliding wi
 
 ```{r}
 # Wrap the raw series without a lag window.
-ts <- ts_data(tsd$y, 0)
+ts <- ts_data(tsd$y, 1)
 ts_head(ts, 5)
 ```
 
@@ -79,7 +79,7 @@ The table reports three complementary metrics:
 - `smape`: a relative error measure that is easier to compare across scales;
 - `R2`: the fraction of variance explained relative to a constant-mean baseline.
 
-For `R2`, values near `1` are better, `0` means “no better than predicting the mean”, and negative values mean the forecast is worse than that naive baseline.
+For `R2`, values near `1` are better, `0` means â€œno better than predicting the meanâ€, and negative values mean the forecast is worse than that naive baseline.
 
 It is also important to interpret the blue dashed line correctly: these are conditional one-step-ahead fitted values, not an interpolation of the observed series. Even with a better autoregressive order, the fitted curve is still a forecasting object, so some discrepancy around turning points is expected.
 
@@ -116,4 +116,5 @@ That makes it a good reference point for the rest of the tutorial series. From h
 - evaluate the forecast against held-out observations.
 
 For ARIMA specifically, remember that an in-sample fitted curve is still a forecasting object. It can therefore lag the observed signal near local peaks and valleys, especially when the autoregressive order is too low for the oscillatory structure of the series.
+
 

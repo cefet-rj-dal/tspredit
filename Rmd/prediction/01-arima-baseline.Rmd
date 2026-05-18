@@ -1,4 +1,4 @@
-## ARIMA Baseline
+﻿## ARIMA Baseline
 
 About the method
 - ARIMA models a univariate series with autoregressive terms, differencing, and moving-average terms.
@@ -20,7 +20,7 @@ We load the example series in its raw sequential form, without creating sliding 
 # Series for study (no sliding window)
 
 data(tsd)
-ts <- ts_data(tsd$y, 0)
+ts <- ts_data(tsd$y, 1)
 ts_head(ts, 3)
 ```
 
@@ -87,5 +87,6 @@ plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction, color_prediction="orange")
 
 References
 - G. E. P. Box, G. M. Jenkins, G. C. Reinsel, and G. M. Ljung (2015). Time Series Analysis: Forecasting and Control. Wiley.
-- R. J. Hyndman and Y. Khandakar (2008). Automatic time series forecasting: The forecast package for R. Journal of Statistical Software, 27(3), 1–22. doi:10.18637/jss.v027.i03
+- R. J. Hyndman and Y. Khandakar (2008). Automatic time series forecasting: The forecast package for R. Journal of Statistical Software, 27(3), 1â€“22. doi:10.18637/jss.v027.i03
+
 

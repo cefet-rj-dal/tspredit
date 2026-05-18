@@ -4,7 +4,15 @@
 \alias{adjust_ts_data_mv}
 \title{Adjust \code{ts_data_mv}}
 \usage{
-adjust_ts_data_mv(data, y, x = NULL)
+adjust_ts_data_mv(
+  data,
+  y,
+  x = NULL,
+  sw = 1,
+  variables = NULL,
+  lags = NULL,
+  representation = c("aligned", "windowed")
+)
 }
 \arguments{
 \item{data}{Matrix or data.frame.}
@@ -12,6 +20,14 @@ adjust_ts_data_mv(data, y, x = NULL)
 \item{y}{Character scalar. Target variable name.}
 
 \item{x}{Character vector. Auxiliary variable names.}
+
+\item{sw}{Integer. Temporal width of the representation.}
+
+\item{variables}{Character vector. Variables represented in the object.}
+
+\item{lags}{Named list of lag positions per variable.}
+
+\item{representation}{Character. Either \code{"aligned"} or \code{"windowed"}.}
 }
 \value{
 A \code{ts_data_mv} object.
@@ -21,7 +37,7 @@ Restore the multivariate time-series metadata after subsetting
 or data manipulation.
 }
 \details{
-This helper mirrors \code{adjust_ts_data()} from the univariate workflow. It is
-mainly useful after operations that return a regular \code{data.frame} and need to
-be promoted back to the aligned multivariate representation.
+This helper mirrors \code{adjust_ts_data()} from the univariate workflow. It
+preserves whether the multivariate object is aligned (\code{sw = 1}) or lagged
+(\code{sw > 1}).
 }

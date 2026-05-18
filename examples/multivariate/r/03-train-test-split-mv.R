@@ -27,13 +27,11 @@ mv <- ts_data_mv(
   y = "y"
 )
 
-samp <- ts_sample(mv, test_size = 5)
+windows <- ts_data_mv(mv, sw = 7)
+
+ts_head(windows, 3)
+
+samp <- ts_sample(windows, test_size = 10)
 
 ts_head(samp$train, 3)
 ts_head(samp$test, 3)
-
-train_windows <- ts_window_mv(samp$train, window_size = 7)
-test_windows <- ts_window_mv(samp$test, window_size = 5)
-
-ts_head(train_windows, 3)
-ts_head(test_windows, 1)

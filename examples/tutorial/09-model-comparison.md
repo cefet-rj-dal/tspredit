@@ -33,7 +33,7 @@ The next block prepares both data views: the raw sequence for ARIMA and the slid
 
 ``` r
 # Prepare the raw-series and sliding-window views of the same signal.
-ts_raw <- ts_data(tsd$y, 0)
+ts_raw <- ts_data(tsd$y, 1)
 ts_win <- ts_data(tsd$y, 10)
 ```
 
@@ -188,4 +188,5 @@ data.frame(
 This comparison shows an important practical point: the best model can depend on the forecasting protocol.
 
 A model may be strong when forecasting one point ahead and weaker when projecting several values into the future. That is why the evaluation protocol should always match the intended use case.
+
 

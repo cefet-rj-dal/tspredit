@@ -22,7 +22,7 @@ We load the example series in its raw sequential form, without creating sliding 
 # Series for study (no sliding window)
 
 data(tsd)
-ts <- ts_data(tsd$y, 0)
+ts <- ts_data(tsd$y, 1)
 ts_head(ts, 3)
 ```
 
@@ -97,7 +97,7 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 8.076802e-09
+## [1] 8.073772e-09
 ```
 
 We now generate a five-step forecast on the test segment and compare it with the observed values.
@@ -118,20 +118,20 @@ ev_test
 ## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
 ## 
 ## $prediction
-## [1]  0.41211881  0.17388946 -0.07515026 -0.31951936 -0.54401966
+## [1]  0.41211864  0.17388950 -0.07515067 -0.31951916 -0.54402029
 ## 
 ## $smape
-## [1] 3.10581e-06
+## [1] 1.605749e-06
 ## 
 ## $mse
-## [1] 5.935781e-13
+## [1] 1.812958e-13
 ## 
 ## $R2
 ## [1] 1
 ## 
 ## $metrics
-##            mse       smape R2
-## 1 5.935781e-13 3.10581e-06  1
+##            mse        smape R2
+## 1 1.812958e-13 1.605749e-06  1
 ```
 
 The final plot compares the observed series, the training adjustment, and the forecasted test horizon.
@@ -148,5 +148,6 @@ plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction, color_prediction="orange")
 
 References
 - G. E. P. Box, G. M. Jenkins, G. C. Reinsel, and G. M. Ljung (2015). Time Series Analysis: Forecasting and Control. Wiley.
-- R. J. Hyndman and Y. Khandakar (2008). Automatic time series forecasting: The forecast package for R. Journal of Statistical Software, 27(3), 1–22. doi:10.18637/jss.v027.i03
+- R. J. Hyndman and Y. Khandakar (2008). Automatic time series forecasting: The forecast package for R. Journal of Statistical Software, 27(3), 1â€“22. doi:10.18637/jss.v027.i03
+
 

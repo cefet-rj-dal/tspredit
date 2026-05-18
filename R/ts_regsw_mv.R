@@ -393,6 +393,9 @@ fit.ts_regsw_mv <- function(obj, x, y = NULL, ...) {
   if (!inherits(x, "ts_data_mv")) {
     stop("fit.ts_regsw_mv expects a ts_data_mv object.")
   }
+  if (!identical(attr(x, "representation"), "aligned")) {
+    stop("fit.ts_regsw_mv expects aligned ts_data_mv data (sw = 1).")
+  }
 
   obj <- mv_validate_model_specs(obj, x)
   data <- as.data.frame(x)
@@ -430,6 +433,9 @@ predict.ts_regsw_mv <- function(object, x = NULL, steps_ahead = 1, return_all = 
   } else {
     if (!inherits(x, "ts_data_mv")) {
       stop("predict.ts_regsw_mv expects x to be NULL or a ts_data_mv object.")
+    }
+    if (!identical(attr(x, "representation"), "aligned")) {
+      stop("predict.ts_regsw_mv expects aligned ts_data_mv data (sw = 1).")
     }
     history <- x
   }

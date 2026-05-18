@@ -1,4 +1,4 @@
-# Tutorial 03 - ARIMA for Multiple Steps Ahead
+﻿# Tutorial 03 - ARIMA for Multiple Steps Ahead
 
 The next scenario is a direct multi-step forecast: instead of updating the model after each new observed value, we ask for several future values at once.
 
@@ -27,7 +27,7 @@ plot_ts(x = tsd$x, y = tsd$y) + theme(text = element_text(size = 16))
 
 ```{r}
 # Build the series object without sliding windows.
-ts <- ts_data(tsd$y, 0)
+ts <- ts_data(tsd$y, 1)
 ```
 
 We will forecast the last five observations in one shot.
@@ -91,4 +91,5 @@ This protocol is especially relevant when:
 - the future horizon must be known in advance;
 - intermediate observations will not be available soon enough;
 - planning depends on a block of future values instead of only the next one.
+
 

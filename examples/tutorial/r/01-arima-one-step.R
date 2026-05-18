@@ -11,7 +11,7 @@ data(tsd)
 plot_ts(x = tsd$x, y = tsd$y) + theme(text = element_text(size = 16))
 
 # Wrap the raw series without a lag window.
-ts <- ts_data(tsd$y, 0)
+ts <- ts_data(tsd$y, 1)
 ts_head(ts, 5)
 
 # Keep the last point for out-of-sample evaluation.

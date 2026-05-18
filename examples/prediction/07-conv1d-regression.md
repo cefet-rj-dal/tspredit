@@ -23,6 +23,13 @@ We start by loading the packages used throughout this example.
 # Loading the packages
 library(daltoolbox)
 library(daltoolboxdp)
+```
+
+```
+## Warning: pacote 'daltoolboxdp' foi compilado no R versão 4.5.3
+```
+
+``` r
 library(tspredit)
 ```
 
@@ -91,7 +98,7 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 1.640747e-08
+## [1] 2.782165e-08
 ```
 
 We now forecast the test set and compare the predicted values with the observed ones.
@@ -112,20 +119,20 @@ ev_test
 ## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
 ## 
 ## $prediction
-## [1]  0.41235491  0.17288403 -0.07584621 -0.31876148 -0.54408022
+## [1]  0.41131708  0.17396483 -0.07377369 -0.31783974 -0.54215535
 ## 
 ## $smape
-## [1] 0.003612407
+## [1] 0.00591669
 ## 
 ## $mse
-## [1] 4.255261e-07
+## [1] 1.769373e-06
 ## 
 ## $R2
-## [1] 0.9999963
+## [1] 0.9999847
 ## 
 ## $metrics
-##            mse       smape        R2
-## 1 4.255261e-07 0.003612407 0.9999963
+##            mse      smape        R2
+## 1 1.769373e-06 0.00591669 0.9999847
 ```
 
 This final plot summarizes the result of the transformation so the effect can be interpreted visually.

@@ -7,7 +7,7 @@ set_example_seed(123L)
 data(tsd)
 
 # Prepare the raw-series and sliding-window views of the same signal.
-ts_raw <- ts_data(tsd$y, 0)
+ts_raw <- ts_data(tsd$y, 1)
 ts_win <- ts_data(tsd$y, 10)
 
 # Create one-step train/test splits for both representations.

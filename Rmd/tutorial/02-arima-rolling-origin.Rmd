@@ -1,4 +1,4 @@
-# Tutorial 02 - ARIMA for Rolling-Origin Evaluation
+﻿# Tutorial 02 - ARIMA for Rolling-Origin Evaluation
 
 Forecasting a single point is useful, but it does not tell us how the model behaves when predictions need to be repeated over time.
 
@@ -29,7 +29,7 @@ As before, ARIMA uses the raw series instead of sliding windows.
 
 ```{r}
 # Keep the series as a single ordered sequence.
-ts <- ts_data(tsd$y, 0)
+ts <- ts_data(tsd$y, 1)
 ```
 
 This time we reserve a longer test segment. Each point in that segment will be predicted one step ahead in sequence.
@@ -93,4 +93,5 @@ This is often closer to operational use than a single one-step forecast:
 - monitor tomorrow's value every day;
 - update the forecast as new observations arrive;
 - measure whether short-horizon accuracy is stable over time.
+
 

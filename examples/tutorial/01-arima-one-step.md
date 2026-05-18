@@ -14,6 +14,13 @@ source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/example
 # Load the package and the example series used throughout the tutorials.
 library(daltoolbox)
 library(forecast)
+```
+
+```
+## Warning: pacote 'forecast' foi compilado no R versão 4.5.3
+```
+
+``` r
 library(tspredit)
 library(ggplot2)
 
@@ -35,7 +42,7 @@ ARIMA operates directly on the univariate series, so we do not create sliding wi
 
 ``` r
 # Wrap the raw series without a lag window.
-ts <- ts_data(tsd$y, 0)
+ts <- ts_data(tsd$y, 1)
 ts_head(ts, 5)
 ```
 
@@ -129,7 +136,7 @@ ev_adjust$metrics
 
 ```
 ##            mse      smape R2
-## 1 1.977804e-10 0.05001045  1
+## 1 5.898807e-11 0.05000581  1
 ```
 
 The table reports three complementary metrics:
@@ -138,7 +145,7 @@ The table reports three complementary metrics:
 - `smape`: a relative error measure that is easier to compare across scales;
 - `R2`: the fraction of variance explained relative to a constant-mean baseline.
 
-For `R2`, values near `1` are better, `0` means “no better than predicting the mean”, and negative values mean the forecast is worse than that naive baseline.
+For `R2`, values near `1` are better, `0` means â€œno better than predicting the meanâ€, and negative values mean the forecast is worse than that naive baseline.
 
 It is also important to interpret the blue dashed line correctly: these are conditional one-step-ahead fitted values, not an interpolation of the observed series. Even with a better autoregressive order, the fitted curve is still a forecasting object, so some discrepancy around turning points is expected.
 
@@ -160,20 +167,20 @@ ev_test
 ## [1] -0.5440211
 ## 
 ## $prediction
-## [1] -0.5440215
+## [1] -0.544021
 ## 
 ## $smape
-## [1] 7.671266e-07
+## [1] 1.79757e-07
 ## 
 ## $mse
-## [1] 1.74167e-13
+## [1] 9.563192e-15
 ## 
 ## $R2
 ## [1] NA
 ## 
 ## $metrics
-##           mse        smape R2
-## 1 1.74167e-13 7.671266e-07 NA
+##            mse       smape R2
+## 1 9.563192e-15 1.79757e-07 NA
 ```
 
 Finally, we plot the one-step fitted values on train and the one-step forecast on the held-out observation.
@@ -200,4 +207,5 @@ That makes it a good reference point for the rest of the tutorial series. From h
 - evaluate the forecast against held-out observations.
 
 For ARIMA specifically, remember that an in-sample fitted curve is still a forecasting object. It can therefore lag the observed signal near local peaks and valleys, especially when the autoregressive order is too low for the oscillatory structure of the series.
+
 

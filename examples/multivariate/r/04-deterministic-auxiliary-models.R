@@ -1,17 +1,12 @@
-## -----------------------------------------------------------------------------
 source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
 # Deterministic auxiliary models in multivariate forecasting
 
 # Installing the package (if needed)
 # install.packages("tspredit")
 
-
-## -----------------------------------------------------------------------------
 library(daltoolbox)
 library(tspredit)
 
-
-## -----------------------------------------------------------------------------
 data(EUNITE.Loads)
 data(EUNITE.Reg)
 
@@ -34,32 +29,24 @@ mv <- ts_data_mv(
 
 samp <- ts_sample(mv, test_size = 5)
 
-
-## -----------------------------------------------------------------------------
 model_x1 <- ts_mv_spec(
   ts_deterministic("periodic", period = 7)
 )
 
 class(model_x1$model)
 
-
-## -----------------------------------------------------------------------------
 model_x2 <- ts_mv_spec(
   ts_periodic(7)
 )
 
 class(model_x2$model)
 
-
-## -----------------------------------------------------------------------------
 model_persist <- ts_mv_spec(
   ts_persist()
 )
 
 class(model_persist$model)
 
-
-## -----------------------------------------------------------------------------
 model <- ts_regsw_mv(
   model_y = ts_mv_spec(
     ts_mlp(ts_norm_an(), input_size = 4, size = 4, decay = 0),
@@ -74,11 +61,8 @@ model <- ts_regsw_mv(
 
 class(model)
 
-
-## -----------------------------------------------------------------------------
 set_example_seed()
 model <- fit(model, samp$train)
 pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
 
 pred_all$x
-

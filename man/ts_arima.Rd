@@ -47,8 +47,8 @@ library(daltoolbox)
 library(tspredit)
 data(tsd)
 
-# 1) Wrap the raw vector as `ts_data` without sliding windows
-ts <- ts_data(tsd$y, 0)
+# 1) Wrap the raw vector as `ts_data` with `sw = 1`
+ts <- ts_data(tsd$y, 1)
 ts_head(ts, 3)
 
 # 2) Split into train/test using the last 5 observations as test

@@ -4,44 +4,74 @@
 \alias{ts_data_mv}
 \title{Multivariate Time Series Data}
 \usage{
-ts_data_mv(data, y, x = NULL)
+ts_data_mv(
+  data,
+  y = NULL,
+  x = NULL,
+  sw = 1,
+  variables = NULL,
+  lags = NULL,
+  transforms = NULL
+)
 }
 \arguments{
 \item{data}{data.frame or matrix with one column per variable and one row per
-time index.}
+time index. It can also be an existing \code{ts_data_mv}, in which case the
+stored metadata is reused by default.}
 
-\item{y}{Character scalar. Name of the target variable.}
+\item{y}{Optional character scalar. Name of the target variable. When \code{data}
+already inherits from \code{ts_data_mv}, this defaults to the stored target name.}
 
 \item{x}{Optional character vector. Names of the auxiliary variables. By
 default, all columns except \code{y} are used.}
+
+\item{sw}{Integer. Temporal width of the representation. Use \code{sw = 1} for
+aligned multivariate observations and \code{sw > 1} for lagged windows.}
+
+\item{variables}{Optional character vector. Variables to include when
+\code{sw > 1}. By default, all variables stored in \code{data} are used.}
+
+\item{lags}{Optional named list with one integer vector per variable. When
+omitted, every variable uses all lags from \code{0:(sw-1)}.}
+
+\item{transforms}{Optional named list of raw-series transformations applied per
+variable before the lagged blocks are built. Each entry can be a single
+transform object or a list of transforms.}
 }
 \value{
 A \code{ts_data_mv} object.
 }
 \description{
-Construct a multivariate time-series object that preserves
-aligned observations across the target series and its auxiliary variables.
+Construct a multivariate time-series object used throughout the
+target-centered multivariate workflow.
 }
 \details{
-\code{ts_data_mv()} is the entry point for the new multivariate workflow.
-Conceptually, it plays the same role as \code{ts_data()} in the univariate path,
-but instead of immediately materializing a sliding-window matrix, it first
-preserves the synchronized raw observations of every variable involved in the
-forecasting system.
-
-The resulting object stores:
+\code{ts_data_mv()} follows the same design principle as \code{ts_data()} in the
+univariate path:
 \itemize{
-\item the target variable name (\code{attr(x, "y")})
-\item the auxiliary variable names (\code{attr(x, "x")})
-\item the ordered set of variables used by the multivariate workflow
+\item with \code{sw = 1}, it stores aligned multivariate observations
+\item with \code{sw > 1}, it materializes multivariate lagged windows
 }
 
-This representation is intentionally simple: one row per time index and one
-column per variable. The multivariate regressor later uses these aligned
-columns to build the expanded lagged windows required by each submodel.
+This keeps a single data abstraction for both the aligned and the lagged
+representations.
 
-The object must remain time-aligned. Every row is interpreted as the same
-time instant for \code{y} and all \code{x} variables.
+In aligned mode (\code{sw = 1}):
+\itemize{
+\item each row is a time instant
+\item each column is one variable
+}
+
+In lagged mode (\code{sw > 1}):
+\itemize{
+\item each row is a forecasting origin
+\item each variable contributes one lag block
+\item column names follow the pattern \code{var_tk}
+}
+
+Optional \code{variables}, \code{lags}, and \code{transforms} let the caller inspect a
+specific multivariate feature space while staying inside the \code{ts_data_mv}
+abstraction.
 }
 \examples{
 data(tsd)
@@ -54,4 +84,7 @@ mv <- ts_data_mv(
  y = "y"
 )
 ts_head(mv, 3)
+
+mv_sw <- ts_data_mv(mv, sw = 5)
+ts_head(mv_sw, 3)
 }

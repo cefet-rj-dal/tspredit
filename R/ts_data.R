@@ -4,11 +4,12 @@
 #'
 #' Accepts either a vector (raw time series) or a matrix/data.frame already
 #' organized in sliding windows. Internally, a `ts_data` is stored as a matrix
-#' with `sw` lag columns named `t{lag}` (e.g., `t9, t8, ..., t0`). When `sw` is
-#' zero or one, the series is stored as a single column (`t0`).
+#' with `sw` lag columns named `t{lag}` (e.g., `t9, t8, ..., t0`). When
+#' `sw = 1`, the series is stored as a single column (`t0`).
 #'
 #'@param y Numeric vector or matrix-like. Time series values or sliding windows.
-#'@param sw Integer. Sliding-window size (number of lag columns).
+#'@param sw Integer. Sliding-window size (number of lag columns). Use `sw = 1`
+#' for the single-series representation and `sw > 1` for lagged windows.
 #'@return A `ts_data` object (matrix with attributes and column names).
 #'@examples
 #'# Example: building sliding windows
@@ -43,6 +44,11 @@ ts_data <- function(y, sw=1) {
     colnames(window) <- col
     return(window)
   }
+
+  if (!is.numeric(sw) || length(sw) != 1 || sw < 1) {
+    stop("sw must be a positive integer.")
+  }
+  sw <- as.integer(sw)
 
   if (sw > 1)
     y <- ts_sw(as.matrix(y), sw)
@@ -136,9 +142,6 @@ ts_data <- function(y, sw=1) {
 #'@export
 ts_head <- function(x, n = 6L, ...) {
   if (inherits(x, "ts_data_mv")) {
-    return(utils::head(as.data.frame(x), n))
-  }
-  if (inherits(x, "ts_window_mv")) {
     return(utils::head(as.data.frame(x), n))
   }
   utils::head(unclass(x), n)

@@ -1,11 +1,16 @@
 #'@title Time Series Sample
-#'@description Split a `ts_data` into train and test sets.
+#'@description Split a time-series representation into train and test sets.
 #'
 #' Extracts `test_size` rows from the end (minus an optional `offset`) as the
 #' test set. The remaining initial rows form the training set. The `offset`
 #' is useful to reproduce experiments with different forecast origins.
 #'
-#'@param ts A `ts_data` matrix.
+#' For sliding-window workflows, the most coherent usage is to materialize the
+#' lagged representation first and split it afterwards. This preserves the lag
+#' context required by the earliest rows of the test partition, mirroring the
+#' package's univariate forecasting examples.
+#'
+#'@param ts A `ts_data` or `ts_data_mv` object.
 #'@param test_size Integer. Number of rows in the test split (default = 1).
 #'@param offset Integer. Offset from the end before the test split (default = 0).
 #'@return A list with `$train` and `$test` (both `ts_data`).

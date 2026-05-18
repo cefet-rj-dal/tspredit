@@ -145,8 +145,8 @@ evaluate(model, as.vector(io_test$output), prediction)$metrics
 ```
 
 ```
-##           mse      smape        R2
-## 1 6.66291e+11 0.02841737 0.8735525
+##            mse      smape        R2
+## 1 656366928969 0.02821532 0.8754358
 ```
 
 This example shows that a custom normalizer in `tspredit` needs to provide the same practical contract as the built-in preprocessors: a fitted state, a forward transformation, and an inverse transformation for predictions.

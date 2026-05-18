@@ -34,7 +34,7 @@ As before, ARIMA uses the raw series instead of sliding windows.
 
 ``` r
 # Keep the series as a single ordered sequence.
-ts <- ts_data(tsd$y, 0)
+ts <- ts_data(tsd$y, 1)
 ```
 
 This time we reserve a longer test segment. Each point in that segment will be predicted one step ahead in sequence.
@@ -92,10 +92,10 @@ ev_test
 ## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
 ## 
 ## $prediction
-## [1]  0.41211881  0.39475240 -0.07514989 -0.31951908 -0.54402153
+## [1]  0.41211864  0.39475240 -0.07514989 -0.31951908 -0.54402101
 ## 
 ## $smape
-## [1] 0.1553653
+## [1] 0.1553651
 ## 
 ## $mse
 ## [1] 0.009756086
@@ -105,7 +105,7 @@ ev_test
 ## 
 ## $metrics
 ##           mse     smape        R2
-## 1 0.009756086 0.1553653 0.9157362
+## 1 0.009756086 0.1553651 0.9157362
 ```
 
 A side-by-side table helps us inspect where the rolling forecasts stayed close to the observed values and where they drifted away.
@@ -122,11 +122,11 @@ data.frame(
 
 ```
 ##   step    observed   predicted
-## 1    1  0.41211849  0.41211881
+## 1    1  0.41211849  0.41211864
 ## 2    2  0.17388949  0.39475240
 ## 3    3 -0.07515112 -0.07514989
 ## 4    4 -0.31951919 -0.31951908
-## 5    5 -0.54402111 -0.54402153
+## 5    5 -0.54402111 -0.54402101
 ```
 
 We can also visualize the adjustment on train and the rolling forecasts on the final test block.
@@ -152,4 +152,5 @@ This is often closer to operational use than a single one-step forecast:
 - monitor tomorrow's value every day;
 - update the forecast as new observations arrive;
 - measure whether short-horizon accuracy is stable over time.
+
 

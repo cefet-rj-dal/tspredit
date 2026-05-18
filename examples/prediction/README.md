@@ -28,4 +28,3 @@ A useful way to read this folder is to treat ARIMA as the baseline for protocol 
 
 - [09-model-tuning.md](09-model-tuning.md) - search over model and window hyperparameters in a controlled workflow.
 - [10-integrated-tuning.md](10-integrated-tuning.md) - optimize preprocessing, augmentation, and model parameters together.
-

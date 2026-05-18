@@ -20,31 +20,7 @@ We begin by loading the packages used in the example.
 
 ``` r
 library(daltoolbox)
-```
-
-```
-## Warning: pacote 'daltoolbox' foi compilado no R versão 4.5.1
-```
-
-```
-## 
-## Anexando pacote: 'daltoolbox'
-```
-
-```
-## O seguinte objeto é mascarado por 'package:base':
-## 
-##     transform
-```
-
-``` r
 library(tspredit)
-```
-
-```
-## Registered S3 method overwritten by 'quantmod':
-##   method            from
-##   as.zoo.data.frame zoo
 ```
 
 We now use package benchmarks already distributed with `tspredit`. We extract:
@@ -61,27 +37,10 @@ data(EUNITE.Reg)
 if (!is.null(attr(EUNITE.Loads, "url"))) {
   EUNITE.Loads <- loadfulldata(EUNITE.Loads)
 }
-```
-
-```
-## Warning in attr(EUNITE.Loads, "url"): 'xfun::attr()' é obsoleto.
-## Use 'xfun::attr2()' em seu lugar.
-## Veja help("Deprecated")
-```
-
-``` r
 if (!is.null(attr(EUNITE.Reg, "url"))) {
   EUNITE.Reg <- loadfulldata(EUNITE.Reg)
 }
-```
 
-```
-## Warning in attr(EUNITE.Reg, "url"): 'xfun::attr()' é obsoleto.
-## Use 'xfun::attr2()' em seu lugar.
-## Veja help("Deprecated")
-```
-
-``` r
 load_cols <- setdiff(names(EUNITE.Loads), "split")
 y <- apply(EUNITE.Loads[, load_cols, drop = FALSE], 1, max)
 x1 <- as.numeric(EUNITE.Reg$Weekday)
@@ -122,12 +81,6 @@ attr(mv, "y")
 ```
 
 ```
-## Warning in attr(mv, "y"): 'xfun::attr()' é obsoleto.
-## Use 'xfun::attr2()' em seu lugar.
-## Veja help("Deprecated")
-```
-
-```
 ## [1] "y"
 ```
 
@@ -136,23 +89,11 @@ attr(mv, "x")
 ```
 
 ```
-## Warning in attr(mv, "x"): 'xfun::attr()' é obsoleto.
-## Use 'xfun::attr2()' em seu lugar.
-## Veja help("Deprecated")
-```
-
-```
 ## [1] "x1" "x2"
 ```
 
 ``` r
 attr(mv, "variables")
-```
-
-```
-## Warning in attr(mv, "variables"): 'xfun::attr()' é obsoleto.
-## Use 'xfun::attr2()' em seu lugar.
-## Veja help("Deprecated")
 ```
 
 ```

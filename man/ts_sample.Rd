@@ -7,7 +7,7 @@
 ts_sample(ts, test_size = 1, offset = 0)
 }
 \arguments{
-\item{ts}{A \code{ts_data} matrix.}
+\item{ts}{A \code{ts_data} or \code{ts_data_mv} object.}
 
 \item{test_size}{Integer. Number of rows in the test split (default = 1).}
 
@@ -17,11 +17,16 @@ ts_sample(ts, test_size = 1, offset = 0)
 A list with \verb{$train} and \verb{$test} (both \code{ts_data}).
 }
 \description{
-Split a \code{ts_data} into train and test sets.
+Split a time-series representation into train and test sets.
 
 Extracts \code{test_size} rows from the end (minus an optional \code{offset}) as the
 test set. The remaining initial rows form the training set. The \code{offset}
 is useful to reproduce experiments with different forecast origins.
+
+For sliding-window workflows, the most coherent usage is to materialize the
+lagged representation first and split it afterwards. This preserves the lag
+context required by the earliest rows of the test partition, mirroring the
+package's univariate forecasting examples.
 }
 \examples{
 # Setting up a ts_data and making a temporal split

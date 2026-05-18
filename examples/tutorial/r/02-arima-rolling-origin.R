@@ -10,7 +10,7 @@ data(tsd)
 plot_ts(x = tsd$x, y = tsd$y) + theme(text = element_text(size = 16))
 
 # Keep the series as a single ordered sequence.
-ts <- ts_data(tsd$y, 0)
+ts <- ts_data(tsd$y, 1)
 
 # Reserve the last five observations for rolling-origin evaluation.
 samp <- ts_sample(ts, test_size = 5)

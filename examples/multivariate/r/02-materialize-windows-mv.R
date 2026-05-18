@@ -27,14 +27,14 @@ mv <- ts_data_mv(
   y = "y"
 )
 
-windows_full <- ts_window_mv(mv, window_size = 7)
+windows_full <- ts_data_mv(mv, sw = 7)
 ts_head(windows_full, 3)
 
 colnames(windows_full)
 
-windows_selected <- ts_window_mv(
+windows_selected <- ts_data_mv(
   mv,
-  window_size = 7,
+  sw = 7,
   lags = list(
     y = c(6, 3, 0),
     x1 = c(1, 0),
@@ -44,9 +44,9 @@ windows_selected <- ts_window_mv(
 
 ts_head(windows_selected, 3)
 
-windows_transformed <- ts_window_mv(
+windows_transformed <- ts_data_mv(
   mv,
-  window_size = 7,
+  sw = 7,
   transforms = list(y = ts_fil_ma(3))
 )
 

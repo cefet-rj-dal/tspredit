@@ -1,10 +1,10 @@
 ## Train and Test Splits for Multivariate Data
 
 About the concept
-- In the multivariate workflow, train/test splitting happens on the aligned object before forecasting.
+- In sliding-window forecasting workflows, train/test splitting should happen after the lagged representation is materialized.
 - The split must preserve the temporal synchronization between `y` and all auxiliary variables.
 
-Didactic goal: inspect how the aligned multivariate data and the lagged materialization behave before and after the time-aware split.
+Didactic goal: inspect how the aligned multivariate data becomes lagged windows and why the split should happen at that stage.
 
 ```{r}
 source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
@@ -41,28 +41,29 @@ mv <- ts_data_mv(
 )
 ```
 
-We first split the aligned multivariate object.
+We first materialize the aligned multivariate object into lagged windows.
 
 ```{r}
-samp <- ts_sample(mv, test_size = 5)
+windows <- ts_data_mv(mv, sw = 7)
+
+ts_head(windows, 3)
+```
+
+We then split the lagged representation into train and test partitions.
+
+```{r}
+samp <- ts_sample(windows, test_size = 10)
 
 ts_head(samp$train, 3)
 ts_head(samp$test, 3)
 ```
 
-The same split can then be materialized into lagged windows separately for training and test.
-
-```{r}
-train_windows <- ts_window_mv(samp$train, window_size = 7)
-test_windows <- ts_window_mv(samp$test, window_size = 5)
-
-ts_head(train_windows, 3)
-ts_head(test_windows, 1)
-```
-
-This makes the temporal boundary explicit: the learner sees lagged windows built from the training portion only, while the held-out tail remains untouched for forecasting and evaluation.
+This is the important detail inherited from the univariate workflow: the first
+rows of the test partition already carry lagged values whose context comes from
+the end of the training period. If we split the raw aligned series first and
+only then materialize the windows, we lose that boundary information.
 
 What this example shows
-- `ts_sample()` keeps the multivariate alignment intact.
-- Window materialization can be applied independently to train and test partitions.
-- The forecasting workflow remains time-aware from the raw data to the lagged representation.
+- `ts_data_mv(..., sw > 1)` is the multivariate bridge from aligned observations to lagged forecasting inputs.
+- `ts_sample()` should be applied after the lagged representation is materialized when the goal is a sliding-window train/test split.
+- The forecasting workflow remains time-aware from the raw multivariate data to the final train/test window partitions.

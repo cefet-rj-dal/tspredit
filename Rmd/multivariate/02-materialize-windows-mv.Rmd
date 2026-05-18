@@ -1,7 +1,7 @@
 ## Materialize Multivariate Windows
 
 About the concept
-- `ts_window_mv()` turns the aligned multivariate object into explicit lagged blocks.
+- `ts_data_mv(..., sw > 1)` turns the aligned multivariate object into explicit lagged blocks.
 - This is the step where terms such as `y_t6`, `x1_t3`, or `x2_t0` become visible as columns.
 
 Didactic goal: inspect how the multivariate lagged structure is materialized before the learning algorithms consume it.
@@ -46,7 +46,7 @@ mv <- ts_data_mv(
 The first materialization uses the full base window for every variable.
 
 ```{r}
-windows_full <- ts_window_mv(mv, window_size = 7)
+windows_full <- ts_data_mv(mv, sw = 7)
 ts_head(windows_full, 3)
 ```
 
@@ -59,9 +59,9 @@ colnames(windows_full)
 We can also request only specific lag positions for each variable. This is a useful intermediate view before the complete forecasting pipeline is assembled.
 
 ```{r}
-windows_selected <- ts_window_mv(
+windows_selected <- ts_data_mv(
   mv,
-  window_size = 7,
+  sw = 7,
   lags = list(
     y = c(6, 3, 0),
     x1 = c(1, 0),
@@ -75,9 +75,9 @@ ts_head(windows_selected, 3)
 Finally, the same step can reflect variable-specific raw-series transformations before the lagged blocks are created.
 
 ```{r}
-windows_transformed <- ts_window_mv(
+windows_transformed <- ts_data_mv(
   mv,
-  window_size = 7,
+  sw = 7,
   transforms = list(y = ts_fil_ma(3))
 )
 
@@ -85,6 +85,6 @@ ts_head(windows_transformed, 3)
 ```
 
 What this example shows
-- `ts_window_mv()` is the explicit multivariate lag-materialization step.
+- `ts_data_mv(..., sw > 1)` is the explicit multivariate lag-materialization step.
 - The base window is shared, but each variable can expose different lag positions.
 - Raw-series transforms can be applied before the lagged blocks are assembled.

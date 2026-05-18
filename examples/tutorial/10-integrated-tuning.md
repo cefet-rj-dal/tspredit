@@ -155,20 +155,20 @@ ev_test
 ## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
 ## 
 ## $prediction
-## [1]  0.41597902  0.17798556 -0.07123254 -0.31749905 -0.54621717
+## [1]  0.41597901  0.17798556 -0.07123254 -0.31749904 -0.54621713
 ## 
 ## $smape
-## [1] 0.01930299
+## [1] 0.01930295
 ## 
 ## $mse
-## [1] 1.118812e-05
+## [1] 1.118805e-05
 ## 
 ## $R2
 ## [1] 0.9999034
 ## 
 ## $metrics
 ##            mse      smape        R2
-## 1 1.118812e-05 0.01930299 0.9999034
+## 1 1.118805e-05 0.01930295 0.9999034
 ```
 
 We also inspect the in-sample adjustment, because a tuned model should still produce a coherent fit on the training data.
@@ -183,7 +183,7 @@ ev_adjust$metrics
 
 ```
 ##            mse       smape        R2
-## 1 1.374045e-05 0.008416788 0.9999724
+## 1 1.374047e-05 0.008416781 0.9999724
 ```
 
 The final plot connects the selected pipeline to the resulting forecast trajectory.

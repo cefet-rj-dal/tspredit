@@ -1,10 +1,10 @@
 ## Train and Test Splits for Multivariate Data
 
 About the concept
-- In the multivariate workflow, train/test splitting happens on the aligned object before forecasting.
+- In sliding-window forecasting workflows, train/test splitting should happen after the lagged representation is materialized.
 - The split must preserve the temporal synchronization between `y` and all auxiliary variables.
 
-Didactic goal: inspect how the aligned multivariate data and the lagged materialization behave before and after the time-aware split.
+Didactic goal: inspect how the aligned multivariate data becomes lagged windows and why the split should happen at that stage.
 
 
 ``` r
@@ -29,27 +29,10 @@ data(EUNITE.Reg)
 if (!is.null(attr(EUNITE.Loads, "url"))) {
   EUNITE.Loads <- loadfulldata(EUNITE.Loads)
 }
-```
-
-```
-## Warning in attr(EUNITE.Loads, "url"): 'xfun::attr()' é obsoleto.
-## Use 'xfun::attr2()' em seu lugar.
-## Veja help("Deprecated")
-```
-
-``` r
 if (!is.null(attr(EUNITE.Reg, "url"))) {
   EUNITE.Reg <- loadfulldata(EUNITE.Reg)
 }
-```
 
-```
-## Warning in attr(EUNITE.Reg, "url"): 'xfun::attr()' é obsoleto.
-## Use 'xfun::attr2()' em seu lugar.
-## Veja help("Deprecated")
-```
-
-``` r
 load_cols <- setdiff(names(EUNITE.Loads), "split")
 y <- apply(EUNITE.Loads[, load_cols, drop = FALSE], 1, max)
 x1 <- as.numeric(EUNITE.Reg$Weekday)
@@ -61,20 +44,44 @@ mv <- ts_data_mv(
 )
 ```
 
-We first split the aligned multivariate object.
+We first materialize the aligned multivariate object into lagged windows.
 
 
 ``` r
-samp <- ts_sample(mv, test_size = 5)
+windows <- ts_data_mv(mv, sw = 7)
+
+ts_head(windows, 3)
+```
+
+```
+##   y_t6 y_t5 y_t4 y_t3 y_t2 y_t1 y_t0 x1_t6 x1_t5 x1_t4 x1_t3 x1_t2 x1_t1 x1_t0 x2_t6 x2_t5 x2_t4 x2_t3 x2_t2 x2_t1
+## 1  797  777  797  757  707  730  818     4     5     6     7     1     2     3     0     0     0     1     1     0
+## 2  777  797  757  707  730  818  818     5     6     7     1     2     3     4     0     0     1     1     0     0
+## 3  797  757  707  730  818  818  803     6     7     1     2     3     4     5     0     1     1     0     0     0
+##   x2_t0
+## 1     0
+## 2     0
+## 3     0
+```
+
+We then split the lagged representation into train and test partitions.
+
+
+``` r
+samp <- ts_sample(windows, test_size = 10)
 
 ts_head(samp$train, 3)
 ```
 
 ```
-##     y x1 x2
-## 1 797  4  0
-## 2 777  5  0
-## 3 797  6  0
+##   y_t6 y_t5 y_t4 y_t3 y_t2 y_t1 y_t0 x1_t6 x1_t5 x1_t4 x1_t3 x1_t2 x1_t1 x1_t0 x2_t6 x2_t5 x2_t4 x2_t3 x2_t2 x2_t1
+## 1  797  777  797  757  707  730  818     4     5     6     7     1     2     3     0     0     0     1     1     0
+## 2  777  797  757  707  730  818  818     5     6     7     1     2     3     4     0     0     1     1     0     0
+## 3  797  757  707  730  818  818  803     6     7     1     2     3     4     5     0     1     1     0     0     0
+##   x2_t0
+## 1     0
+## 2     0
+## 3     0
 ```
 
 ``` r
@@ -82,47 +89,22 @@ ts_head(samp$test, 3)
 ```
 
 ```
-##       y x1 x2
-## 757 791  4  0
-## 758 776  5  0
-## 759 792  6  0
+##     y_t6 y_t5 y_t4 y_t3 y_t2 y_t1 y_t0 x1_t6 x1_t5 x1_t4 x1_t3 x1_t2 x1_t1 x1_t0 x2_t6 x2_t5 x2_t4 x2_t3 x2_t2 x2_t1
+## 746  738  699  782  782  792  801  781     7     1     2     3     4     5     6     1     1     0     0     0     0
+## 747  699  782  782  792  801  781  731     1     2     3     4     5     6     7     1     0     0     0     0     0
+## 748  782  782  792  801  781  731  708     2     3     4     5     6     7     1     0     0     0     0     0     1
+##     x2_t0
+## 746     0
+## 747     1
+## 748     1
 ```
 
-The same split can then be materialized into lagged windows separately for training and test.
-
-
-``` r
-train_windows <- ts_window_mv(samp$train, window_size = 7)
-test_windows <- ts_window_mv(samp$test, window_size = 5)
-
-ts_head(train_windows, 3)
-```
-
-```
-##   y_t6 y_t5 y_t4 y_t3 y_t2 y_t1 y_t0 x1_t6 x1_t5 x1_t4 x1_t3 x1_t2 x1_t1 x1_t0
-## 1  797  777  797  757  707  730  818     4     5     6     7     1     2     3
-## 2  777  797  757  707  730  818  818     5     6     7     1     2     3     4
-## 3  797  757  707  730  818  818  803     6     7     1     2     3     4     5
-##   x2_t6 x2_t5 x2_t4 x2_t3 x2_t2 x2_t1 x2_t0
-## 1     0     0     0     1     1     0     0
-## 2     0     0     1     1     0     0     0
-## 3     0     1     1     0     0     0     0
-```
-
-``` r
-ts_head(test_windows, 1)
-```
-
-```
-##   y_t4 y_t3 y_t2 y_t1 y_t0 x1_t4 x1_t3 x1_t2 x1_t1 x1_t0 x2_t4 x2_t3 x2_t2
-## 1  791  776  792  763  743     4     5     6     7     1     0     0     0
-##   x2_t1 x2_t0
-## 1     1     1
-```
-
-This makes the temporal boundary explicit: the learner sees lagged windows built from the training portion only, while the held-out tail remains untouched for forecasting and evaluation.
+This is the important detail inherited from the univariate workflow: the first
+rows of the test partition already carry lagged values whose context comes from
+the end of the training period. If we split the raw aligned series first and
+only then materialize the windows, we lose that boundary information.
 
 What this example shows
-- `ts_sample()` keeps the multivariate alignment intact.
-- Window materialization can be applied independently to train and test partitions.
-- The forecasting workflow remains time-aware from the raw data to the lagged representation.
+- `ts_data_mv(..., sw > 1)` is the multivariate bridge from aligned observations to lagged forecasting inputs.
+- `ts_sample()` should be applied after the lagged representation is materialized when the goal is a sliding-window train/test split.
+- The forecasting workflow remains time-aware from the raw multivariate data to the final train/test window partitions.

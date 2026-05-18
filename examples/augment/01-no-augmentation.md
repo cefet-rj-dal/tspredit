@@ -21,6 +21,24 @@ We start by loading the packages used throughout this example.
 ``` r
 # Loading the packages
 library(daltoolbox)
+```
+
+```
+## Warning: pacote 'daltoolbox' foi compilado no R versão 4.5.3
+```
+
+```
+## 
+## Anexando pacote: 'daltoolbox'
+```
+
+```
+## O seguinte objeto é mascarado por 'package:base':
+## 
+##     transform
+```
+
+``` r
 library(tspredit) 
 ```
 
@@ -33,6 +51,13 @@ We load the example series that will be used throughout the demonstration.
 
 data(tsd)
 library(ggplot2)
+```
+
+```
+## Warning: pacote 'ggplot2' foi compilado no R versão 4.5.3
+```
+
+``` r
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 

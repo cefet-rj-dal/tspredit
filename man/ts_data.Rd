@@ -9,7 +9,8 @@ ts_data(y, sw = 1)
 \arguments{
 \item{y}{Numeric vector or matrix-like. Time series values or sliding windows.}
 
-\item{sw}{Integer. Sliding-window size (number of lag columns).}
+\item{sw}{Integer. Sliding-window size (number of lag columns). Use \code{sw = 1}
+for the single-series representation and \code{sw > 1} for lagged windows.}
 }
 \value{
 A \code{ts_data} object (matrix with attributes and column names).
@@ -20,8 +21,8 @@ DAL Toolbox.
 
 Accepts either a vector (raw time series) or a matrix/data.frame already
 organized in sliding windows. Internally, a \code{ts_data} is stored as a matrix
-with \code{sw} lag columns named \verb{t\{lag\}} (e.g., \verb{t9, t8, ..., t0}). When \code{sw} is
-zero or one, the series is stored as a single column (\code{t0}).
+with \code{sw} lag columns named \verb{t\{lag\}} (e.g., \verb{t9, t8, ..., t0}). When
+\code{sw = 1}, the series is stored as a single column (\code{t0}).
 }
 \examples{
 # Example: building sliding windows

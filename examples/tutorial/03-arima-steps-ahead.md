@@ -32,7 +32,7 @@ plot_ts(x = tsd$x, y = tsd$y) + theme(text = element_text(size = 16))
 
 ``` r
 # Build the series object without sliding windows.
-ts <- ts_data(tsd$y, 0)
+ts <- ts_data(tsd$y, 1)
 ```
 
 We will forecast the last five observations in one shot.
@@ -90,20 +90,20 @@ ev_test
 ## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
 ## 
 ## $prediction
-## [1]  0.41211881  0.17388946 -0.07515026 -0.31951936 -0.54401966
+## [1]  0.41211864  0.17388950 -0.07515067 -0.31951916 -0.54402029
 ## 
 ## $smape
-## [1] 3.10581e-06
+## [1] 1.605749e-06
 ## 
 ## $mse
-## [1] 5.935781e-13
+## [1] 1.812958e-13
 ## 
 ## $R2
 ## [1] 1
 ## 
 ## $metrics
-##            mse       smape R2
-## 1 5.935781e-13 3.10581e-06  1
+##            mse        smape R2
+## 1 1.812958e-13 1.605749e-06  1
 ```
 
 It is useful to compare the forecasted trajectory against the true held-out values.
@@ -120,11 +120,11 @@ data.frame(
 
 ```
 ##   step    observed   predicted
-## 1    1  0.41211849  0.41211881
-## 2    2  0.17388949  0.17388946
-## 3    3 -0.07515112 -0.07515026
-## 4    4 -0.31951919 -0.31951936
-## 5    5 -0.54402111 -0.54401966
+## 1    1  0.41211849  0.41211864
+## 2    2  0.17388949  0.17388950
+## 3    3 -0.07515112 -0.07515067
+## 4    4 -0.31951919 -0.31951916
+## 5    5 -0.54402111 -0.54402029
 ```
 
 The plot below highlights the difference between in-sample fit and direct future projection.
@@ -150,4 +150,5 @@ This protocol is especially relevant when:
 - the future horizon must be known in advance;
 - intermediate observations will not be available soon enough;
 - planning depends on a block of future values instead of only the next one.
+
 
