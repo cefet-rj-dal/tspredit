@@ -24,8 +24,8 @@ library(tspredit)
 We now use package benchmarks already distributed with `tspredit`. We extract:
 
 - the daily maximum load from `EUNITE.Loads` as the target `y`
-- the holiday indicator from `EUNITE.Reg` as `x1`
-- the weekday code from `EUNITE.Reg` as `x2`
+- the weekday code from `EUNITE.Reg` as `x1`
+- a weekend indicator derived from `EUNITE.Reg` as `x2`
 
 ```{r}
 data(EUNITE.Loads)
@@ -40,8 +40,8 @@ if (!is.null(attr(EUNITE.Reg, "url"))) {
 
 load_cols <- setdiff(names(EUNITE.Loads), "split")
 y <- apply(EUNITE.Loads[, load_cols, drop = FALSE], 1, max)
-x1 <- as.numeric(EUNITE.Reg$Holiday)
-x2 <- as.numeric(EUNITE.Reg$Weekday)
+x1 <- as.numeric(EUNITE.Reg$Weekday)
+x2 <- as.numeric(EUNITE.Reg$Weekday %in% c(1, 7))
 ```
 
 We now build the aligned multivariate object. Every row corresponds to the same

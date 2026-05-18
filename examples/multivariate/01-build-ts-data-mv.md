@@ -50,8 +50,8 @@ library(tspredit)
 We now use package benchmarks already distributed with `tspredit`. We extract:
 
 - the daily maximum load from `EUNITE.Loads` as the target `y`
-- the holiday indicator from `EUNITE.Reg` as `x1`
-- the weekday code from `EUNITE.Reg` as `x2`
+- the weekday code from `EUNITE.Reg` as `x1`
+- a weekend indicator derived from `EUNITE.Reg` as `x2`
 
 
 ``` r
@@ -84,8 +84,8 @@ if (!is.null(attr(EUNITE.Reg, "url"))) {
 ``` r
 load_cols <- setdiff(names(EUNITE.Loads), "split")
 y <- apply(EUNITE.Loads[, load_cols, drop = FALSE], 1, max)
-x1 <- as.numeric(EUNITE.Reg$Holiday)
-x2 <- as.numeric(EUNITE.Reg$Weekday)
+x1 <- as.numeric(EUNITE.Reg$Weekday)
+x2 <- as.numeric(EUNITE.Reg$Weekday %in% c(1, 7))
 ```
 
 We now build the aligned multivariate object. Every row corresponds to the same
@@ -107,11 +107,11 @@ ts_head(mv, 5)
 
 ```
 ##     y x1 x2
-## 1 797  1  4
-## 2 777  0  5
-## 3 797  0  6
-## 4 757  0  7
-## 5 707  0  1
+## 1 797  4  0
+## 2 777  5  0
+## 3 797  6  0
+## 4 757  7  1
+## 5 707  1  1
 ```
 
 The object keeps the target and the auxiliary variable names as metadata.
@@ -169,9 +169,9 @@ ts_head(samp$train, 3)
 
 ```
 ##     y x1 x2
-## 1 797  1  4
-## 2 777  0  5
-## 3 797  0  6
+## 1 797  4  0
+## 2 777  5  0
+## 3 797  6  0
 ```
 
 ``` r
@@ -180,9 +180,9 @@ ts_head(samp$test, 3)
 
 ```
 ##       y x1 x2
-## 757 791  0  4
-## 758 776  0  5
-## 759 792  0  6
+## 757 791  4  0
+## 758 776  5  0
+## 759 792  6  0
 ```
 
 What this example shows

@@ -51,6 +51,8 @@ while preserving a single orchestration contract. For example:
 \item the target \code{y} may use \code{ts_lstm(ts_norm_an(), ...)}
 \item \code{x1} may use \code{ts_mlp(ts_norm_diff(), ...)}
 \item \code{x2} may use \code{ts_rf(ts_norm_gminmax(), ...)} plus a smoothing filter
+\item deterministic auxiliary variables may use \code{ts_deterministic()},
+\code{ts_periodic()}, or \code{ts_persist()}
 }
 
 In other words, the multivariate layer coordinates the pipelines, but the
@@ -58,9 +60,5 @@ behavior of each variable still lives inside its own object.
 }
 \examples{
 spec_y <- ts_mv_spec(ts_mlp(ts_norm_gminmax()), variables = c("y", "x1"))
-spec_x1 <- ts_mv_spec(
- ts_mlp(ts_norm_diff(), input_size = 4),
- variables = c("x1", "y"),
- transforms = list(x1 = ts_fil_ma(3))
-)
+spec_x1 <- ts_mv_spec(ts_deterministic("periodic", period = 7), variables = "x1")
 }

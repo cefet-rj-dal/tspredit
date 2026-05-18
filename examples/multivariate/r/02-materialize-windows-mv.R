@@ -1,5 +1,5 @@
 source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
-# Build multivariate time-series data
+# Materialize multivariate windows
 
 # Installing the package (if needed)
 # install.packages("tspredit")
@@ -23,20 +23,31 @@ x1 <- as.numeric(EUNITE.Reg$Weekday)
 x2 <- as.numeric(EUNITE.Reg$Weekday %in% c(1, 7))
 
 mv <- ts_data_mv(
-  data.frame(
-    y = y,
-    x1 = x1,
-    x2 = x2
-  ),
+  data.frame(y = y, x1 = x1, x2 = x2),
   y = "y"
 )
 
-ts_head(mv, 5)
+windows_full <- ts_window_mv(mv, window_size = 7)
+ts_head(windows_full, 3)
 
-attr(mv, "y")
-attr(mv, "x")
-attr(mv, "variables")
+colnames(windows_full)
 
-samp <- ts_sample(mv, test_size = 5)
-ts_head(samp$train, 3)
-ts_head(samp$test, 3)
+windows_selected <- ts_window_mv(
+  mv,
+  window_size = 7,
+  lags = list(
+    y = c(6, 3, 0),
+    x1 = c(1, 0),
+    x2 = c(6, 0)
+  )
+)
+
+ts_head(windows_selected, 3)
+
+windows_transformed <- ts_window_mv(
+  mv,
+  window_size = 7,
+  transforms = list(y = ts_fil_ma(3))
+)
+
+ts_head(windows_transformed, 3)

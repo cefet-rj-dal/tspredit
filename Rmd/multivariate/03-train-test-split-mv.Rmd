@@ -1,0 +1,68 @@
+## Train and Test Splits for Multivariate Data
+
+About the concept
+- In the multivariate workflow, train/test splitting happens on the aligned object before forecasting.
+- The split must preserve the temporal synchronization between `y` and all auxiliary variables.
+
+Didactic goal: inspect how the aligned multivariate data and the lagged materialization behave before and after the time-aware split.
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Train and test splits for multivariate data
+
+# Installing the package (if needed)
+# install.packages("tspredit")
+```
+
+```{r}
+library(daltoolbox)
+library(tspredit)
+```
+
+```{r}
+data(EUNITE.Loads)
+data(EUNITE.Reg)
+
+if (!is.null(attr(EUNITE.Loads, "url"))) {
+  EUNITE.Loads <- loadfulldata(EUNITE.Loads)
+}
+if (!is.null(attr(EUNITE.Reg, "url"))) {
+  EUNITE.Reg <- loadfulldata(EUNITE.Reg)
+}
+
+load_cols <- setdiff(names(EUNITE.Loads), "split")
+y <- apply(EUNITE.Loads[, load_cols, drop = FALSE], 1, max)
+x1 <- as.numeric(EUNITE.Reg$Weekday)
+x2 <- as.numeric(EUNITE.Reg$Weekday %in% c(1, 7))
+
+mv <- ts_data_mv(
+  data.frame(y = y, x1 = x1, x2 = x2),
+  y = "y"
+)
+```
+
+We first split the aligned multivariate object.
+
+```{r}
+samp <- ts_sample(mv, test_size = 5)
+
+ts_head(samp$train, 3)
+ts_head(samp$test, 3)
+```
+
+The same split can then be materialized into lagged windows separately for training and test.
+
+```{r}
+train_windows <- ts_window_mv(samp$train, window_size = 7)
+test_windows <- ts_window_mv(samp$test, window_size = 5)
+
+ts_head(train_windows, 3)
+ts_head(test_windows, 1)
+```
+
+This makes the temporal boundary explicit: the learner sees lagged windows built from the training portion only, while the held-out tail remains untouched for forecasting and evaluation.
+
+What this example shows
+- `ts_sample()` keeps the multivariate alignment intact.
+- Window materialization can be applied independently to train and test partitions.
+- The forecasting workflow remains time-aware from the raw data to the lagged representation.

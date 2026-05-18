@@ -72,15 +72,11 @@ model <- ts_regsw_mv(
   model_y = ts_mv_spec(
     ts_mlp(ts_norm_an(), input_size = 4, size = 4, decay = 0),
     variables = c("y", "x1", "x2"),
-    transforms = list(x2 = ts_fil_ma(3))
+    transforms = list(y = ts_fil_ma(3))
   ),
   models_x = list(
-    x1 = ts_mv_spec(ts_arima()),
-    x2 = ts_mv_spec(
-      ts_rf(ts_norm_gminmax(), input_size = 4, ntree = 20),
-      variables = c("x2", "y"),
-      transforms = list(x2 = ts_fil_ma(3))
-    )
+    x1 = ts_mv_spec(ts_deterministic("periodic", period = 7)),
+    x2 = ts_mv_spec(ts_deterministic("periodic", period = 7))
   ),
   window_size = 10
 )

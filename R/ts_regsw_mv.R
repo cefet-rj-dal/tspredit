@@ -20,6 +20,8 @@
 #' - the target `y` may use `ts_lstm(ts_norm_an(), ...)`
 #' - `x1` may use `ts_mlp(ts_norm_diff(), ...)`
 #' - `x2` may use `ts_rf(ts_norm_gminmax(), ...)` plus a smoothing filter
+#' - deterministic auxiliary variables may use `ts_deterministic()`,
+#'   `ts_periodic()`, or `ts_persist()`
 #'
 #' In other words, the multivariate layer coordinates the pipelines, but the
 #' behavior of each variable still lives inside its own object.
@@ -39,11 +41,7 @@
 #'@return A `ts_mv_spec` object.
 #'@examples
 #'spec_y <- ts_mv_spec(ts_mlp(ts_norm_gminmax()), variables = c("y", "x1"))
-#'spec_x1 <- ts_mv_spec(
-#'  ts_mlp(ts_norm_diff(), input_size = 4),
-#'  variables = c("x1", "y"),
-#'  transforms = list(x1 = ts_fil_ma(3))
-#')
+#'spec_x1 <- ts_mv_spec(ts_deterministic("periodic", period = 7), variables = "x1")
 #'@export
 ts_mv_spec <- function(model, variables = NULL, lags = NULL, transforms = NULL) {
   obj <- list(
@@ -110,15 +108,11 @@ ts_mv_spec <- function(model, variables = NULL, lags = NULL, transforms = NULL) 
 #'   model_y = ts_mv_spec(
 #'     ts_mlp(ts_norm_an(), input_size = 4, size = 4, decay = 0),
 #'     variables = c("y", "x1", "x2"),
-#'     transforms = list(x2 = ts_fil_ma(3))
+#'     transforms = list(y = ts_fil_ma(3))
 #'   ),
 #'   models_x = list(
-#'     x1 = ts_mv_spec(ts_arima()),
-#'     x2 = ts_mv_spec(
-#'       ts_rf(ts_norm_gminmax(), input_size = 4, ntree = 20),
-#'       variables = c("x2", "y"),
-#'       transforms = list(x2 = ts_fil_ma(3))
-#'     )
+#'     x1 = ts_mv_spec(ts_deterministic("periodic", period = 7)),
+#'     x2 = ts_mv_spec(ts_deterministic("periodic", period = 7))
 #'   ),
 #'   window_size = 10
 #' )
