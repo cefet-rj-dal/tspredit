@@ -7,8 +7,8 @@ A useful way to read this folder is to treat ARIMA as the baseline for protocol 
 ## Classical baseline
 
 - [01-arima-baseline.md](01-arima-baseline.md) - fit ARIMA with automatic order selection and recursive forecasting.
-- [11-darima-regression.md](11-darima-regression.md) - fit the delegated-differencing ARIMA-like regressor in the sliding-window workflow.
-- [12-warma-regression.md](12-warma-regression.md) - fit the local window-based ARMA-inspired competitor with stepwise normalization.
+- [12-darima-regression.md](12-darima-regression.md) - fit the delegated-differencing ARIMA-like regressor in the sliding-window workflow.
+- [13-warma-regression.md](13-warma-regression.md) - fit the local window-based ARMA-inspired competitor with stepwise normalization.
 
 ## Classical machine-learning regressors
 
@@ -20,13 +20,14 @@ A useful way to read this folder is to treat ARIMA as the baseline for protocol 
 
 - [05-mlp-regression.md](05-mlp-regression.md) - train a multilayer perceptron on lagged inputs.
 - [06-elm-regression.md](06-elm-regression.md) - use an Extreme Learning Machine for fast neural regression.
+- [07-torch-ts-mlp-regression.md](07-torch-ts-mlp-regression.md) - train a PyTorch-based multilayer perceptron on lagged inputs.
 
 ## Sequence-oriented neural models
 
-- [07-conv1d-regression.md](07-conv1d-regression.md) - detect local temporal motifs with a 1D convolutional network.
-- [08-lstm-regression.md](08-lstm-regression.md) - model sequential dependencies with an LSTM network.
+- [08-conv1d-regression.md](08-conv1d-regression.md) - detect local temporal motifs with a 1D convolutional network.
+- [09-lstm-regression.md](09-lstm-regression.md) - model sequential dependencies with an LSTM network.
 
 ## Model search and integrated tuning
 
-- [09-model-tuning.md](09-model-tuning.md) - search over model and window hyperparameters in a controlled workflow.
-- [10-integrated-tuning.md](10-integrated-tuning.md) - optimize preprocessing, augmentation, and model parameters together.
+- [10-model-tuning.md](10-model-tuning.md) - search over model and window hyperparameters in a controlled workflow.
+- [11-integrated-tuning.md](11-integrated-tuning.md) - optimize preprocessing, augmentation, and model parameters together.
