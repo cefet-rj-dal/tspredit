@@ -21,20 +21,6 @@ We start by loading the packages used throughout this example.
 ``` r
 # Loading the packages
 library(daltoolbox)
-```
-
-```
-## 
-## Attaching package: 'daltoolbox'
-```
-
-```
-## The following object is masked from 'package:base':
-## 
-##     transform
-```
-
-``` r
 library(tspredit) 
 ```
 
@@ -47,17 +33,6 @@ We load the example series that will be used throughout the demonstration.
 
 data(tsd)
 library(ggplot2)
-```
-
-```
-## Warning: package 'ggplot2' was built under R version 4.5.3
-```
-
-```
-## Need help getting started? Try the R Graphics Cookbook: https://r-graphics.org
-```
-
-``` r
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 

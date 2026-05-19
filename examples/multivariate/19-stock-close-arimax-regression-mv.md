@@ -28,29 +28,13 @@ data(stocks)
 if (!is.null(attr(stocks, "url"))) {
   stocks <- loadfulldata(stocks)
 }
-```
 
-```
-## Warning in .rs.downloadFile(url = url, destfile = tf, quiet = TRUE, mode = "wb"): downloaded length 1742821 != reported length 3229450
-```
-
-```
-## Warning in .rs.downloadFile(url = url, destfile = tf, quiet = TRUE, mode = "wb"): URL
-## 'https://raw.githubusercontent.com/cefet-rj-dal/tspredbench/refs/heads/main/tspredit/stocks.RData': Timeout of 60 seconds was reached
-```
-
-```
-## Error in `.rs.downloadFile()`:
-## ! download from 'https://raw.githubusercontent.com/cefet-rj-dal/tspredbench/refs/heads/main/tspredit/stocks.RData' failed
-```
-
-``` r
 ticker_name <- if ("VALE3" %in% names(stocks)) "VALE3" else names(stocks)[1]
 ticker <- stocks[[ticker_name]]
 ticker <- ticker[, c("date", "open", "high", "low", "close", "volume")]
 ticker <- stats::na.omit(ticker)
 ticker <- subset(ticker, open > 0 & high > 0 & low > 0 & volume > 0)
-cutoff_date <- max(ticker$date) - 365 * 2
+cutoff_date <- max(ticker$date) - 365
 ticker <- ticker[ticker$date > cutoff_date, ]
 
 mv <- ts_data_mv(
@@ -87,7 +71,7 @@ pred_1
 ```
 
 ```
-## [1] 3.853311
+## [1] 85.12973
 ## attr(,"y_name")
 ## [1] "close"
 ## attr(,"x_names")
@@ -98,20 +82,20 @@ pred_1
 ## [1] 1
 ## attr(,"prediction_x")
 ## attr(,"prediction_x")$open
-## [1] 3.75
+## [1] 84.71471
 ## 
 ## attr(,"prediction_x")$high
-## [1] 3.891666
+## [1] 85.91756
 ## 
 ## attr(,"prediction_x")$low
-## [1] 3.75
+## [1] 84.13761
 ## 
 ## attr(,"prediction_x")$volume
-## [1] 1543513
+## [1] 33823708
 ## 
 ## attr(,"system")
-##      close open     high  low  volume
-## 1 3.853311 3.75 3.891666 3.75 1543513
+##      close     open     high      low   volume
+## 1 85.12973 84.71471 85.91756 84.13761 33823708
 ## attr(,"class")
 ## [1] "ts_mv_prediction" "numeric"
 ```
@@ -123,7 +107,7 @@ pred_5
 ```
 
 ```
-## [1] 3.853311 3.853311 3.853311 3.853311 3.853311
+## [1] 85.12973 85.74534 85.66564 86.38978 86.27683
 ## attr(,"y_name")
 ## [1] "close"
 ## attr(,"x_names")
@@ -134,24 +118,24 @@ pred_5
 ## [1] 5
 ## attr(,"prediction_x")
 ## attr(,"prediction_x")$open
-## [1] 3.75 3.75 3.75 3.75 3.75
+## [1] 84.71471 85.00943 85.30414 85.59886 85.89357
 ## 
 ## attr(,"prediction_x")$high
-## [1] 3.891666 3.891666 3.891666 3.891666 3.891666
+## [1] 85.91756 86.21238 86.50720 86.80203 87.09685
 ## 
 ## attr(,"prediction_x")$low
-## [1] 3.75 3.75 3.75 3.75 3.75
+## [1] 84.13761 84.77751 84.66497 85.42839 85.27659
 ## 
 ## attr(,"prediction_x")$volume
-## [1] 1543513 1543513 1543513 1543513 1543513
+## [1] 33823708 34808034 35140363 34063940 35529814
 ## 
 ## attr(,"system")
-##      close open     high  low  volume
-## 1 3.853311 3.75 3.891666 3.75 1543513
-## 2 3.853311 3.75 3.891666 3.75 1543513
-## 3 3.853311 3.75 3.891666 3.75 1543513
-## 4 3.853311 3.75 3.891666 3.75 1543513
-## 5 3.853311 3.75 3.891666 3.75 1543513
+##      close     open     high      low   volume
+## 1 85.12973 84.71471 85.91756 84.13761 33823708
+## 2 85.74534 85.00943 86.21238 84.77751 34808034
+## 3 85.66564 85.30414 86.50720 84.66497 35140363
+## 4 86.38978 85.59886 86.80203 85.42839 34063940
+## 5 86.27683 85.89357 87.09685 85.27659 35529814
 ## attr(,"class")
 ## [1] "ts_mv_prediction" "numeric"
 ```
@@ -162,12 +146,12 @@ attr(pred_5, "system")
 ```
 
 ```
-##      close open     high  low  volume
-## 1 3.853311 3.75 3.891666 3.75 1543513
-## 2 3.853311 3.75 3.891666 3.75 1543513
-## 3 3.853311 3.75 3.891666 3.75 1543513
-## 4 3.853311 3.75 3.891666 3.75 1543513
-## 5 3.853311 3.75 3.891666 3.75 1543513
+##      close     open     high      low   volume
+## 1 85.12973 84.71471 85.91756 84.13761 33823708
+## 2 85.74534 85.00943 86.21238 84.77751 34808034
+## 3 85.66564 85.30414 86.50720 84.66497 35140363
+## 4 86.38978 85.59886 86.80203 85.42839 34063940
+## 5 86.27683 85.89357 87.09685 85.27659 35529814
 ```
 
 
@@ -177,8 +161,8 @@ ev_test$metrics
 ```
 
 ```
-##          mse     smape        R2
-## 1 0.09085392 0.0647933 -1.573411
+##        mse      smape        R2
+## 1 6.147663 0.02325208 -1.910469
 ```
 
 

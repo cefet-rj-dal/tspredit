@@ -28,7 +28,7 @@ io_test <- ts_projection(samp$test)
 
 # Training the 1D CNN
 
-model <- ts_conv1d(ts_norm_gminmax(), input_size=4, epochs=10000)
+model <- ts_conv1d(ts_norm_gminmax(), input_size=4, epochs=100)
 set_example_seed()
 model <- fit(model, x=io_train$input, y=io_train$output)
 

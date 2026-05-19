@@ -8,6 +8,7 @@ expand_dataset <- function(x) {
 
 data(NN5)
 NN5 <- expand_dataset(NN5)
+NN5 <- tail(NN5, 1000)
 cat("Dataset: NN5\n")
 cat("Rows:", nrow(NN5), "\n")
 cat("Columns:", ncol(NN5), "\n")

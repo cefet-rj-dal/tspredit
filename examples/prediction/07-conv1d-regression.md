@@ -38,14 +38,10 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
-##             t2        t1        t0
-## [1,] 0.9839859 0.9092974 0.7780732
-## [2,] 0.9092974 0.7780732 0.5984721
-## [3,] 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
 ```
 
 Before moving on, we visualize the series so the effect of the next transformation can be compared against the original signal.
@@ -76,7 +72,7 @@ This step training the 1d cnn.
 ``` r
 # Training the 1D CNN
 
-model <- ts_conv1d(ts_norm_gminmax(), input_size=4, epochs=10000)
+model <- ts_conv1d(ts_norm_gminmax(), input_size=4, epochs=100)
 set_example_seed()
 model <- fit(model, x=io_train$input, y=io_train$output)
 ```
@@ -95,7 +91,7 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 2.456616e-07
+## [1] 0.0001007105
 ```
 
 We now forecast the test set and compare the predicted values with the observed ones.
@@ -116,20 +112,20 @@ ev_test
 ## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
 ## 
 ## $prediction
-## [1]  0.41157154  0.17390627 -0.07435373 -0.32043754 -0.54553048
+## [1]  0.4347691  0.2108168 -0.0255444 -0.2686127 -0.4891945
 ## 
 ## $smape
-## [1] 0.003546468
+## [1] 0.301998
 ## 
 ## $mse
-## [1] 8.113682e-07
+## [1] 0.001986985
 ## 
 ## $R2
-## [1] 0.999993
+## [1] 0.9828383
 ## 
 ## $metrics
-##            mse       smape       R2
-## 1 8.113682e-07 0.003546468 0.999993
+##           mse    smape        R2
+## 1 0.001986985 0.301998 0.9828383
 ```
 
 This final plot summarizes the result of the transformation so the effect can be interpreted visually.

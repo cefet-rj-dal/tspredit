@@ -39,14 +39,10 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
-##             t2        t1        t0
-## [1,] 0.9839859 0.9092974 0.7780732
-## [2,] 0.9092974 0.7780732 0.5984721
-## [3,] 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
 ```
 
 Before moving on, we visualize the series so the effect of the next transformation can be compared against the original signal.
@@ -77,7 +73,7 @@ We now train the lstm model on the prepared training data.
 ``` r
 # Training the LSTM model
 
-model <- ts_lstm(ts_norm_gminmax(), input_size=4, epochs=10000)
+model <- ts_lstm(ts_norm_gminmax(), input_size=4, epochs=100)
 set_example_seed()
 model <- fit(model, x=io_train$input, y=io_train$output)
 ```
@@ -96,7 +92,7 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 1.399452e-07
+## [1] 0.1919475
 ```
 
 We now forecast the test set and compare the predicted values with the observed ones.
@@ -118,7 +114,7 @@ print(sprintf("%.2f, %.2f", output, prediction))
 ```
 
 ```
-## [1] "0.41, 0.41"   "0.17, 0.17"   "-0.08, -0.07" "-0.32, -0.32" "-0.54, -0.54"
+## [1] "0.41, 0.60"  "0.17, 0.53"  "-0.08, 0.43" "-0.32, 0.29" "-0.54, 0.13"
 ```
 
 This chunk evaluates the custom component on the held-out test segment.
@@ -132,8 +128,8 @@ print(head(ev_test$metrics))
 ```
 
 ```
-##            mse       smape        R2
-## 1 1.956114e-07 0.002723419 0.9999983
+##         mse    smape        R2
+## 1 0.2505888 1.476837 -1.164348
 ```
 
 ``` r
@@ -141,7 +137,7 @@ print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
 ```
 
 ```
-## [1] "smape: 0.27"
+## [1] "smape: 147.68"
 ```
 
 This final plot summarizes the result of the transformation so the effect can be interpreted visually.

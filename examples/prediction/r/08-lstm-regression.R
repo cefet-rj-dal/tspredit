@@ -28,7 +28,7 @@ io_test <- ts_projection(samp$test)
 
 # Training the LSTM model
 
-model <- ts_lstm(ts_norm_gminmax(), input_size=4, epochs=10000)
+model <- ts_lstm(ts_norm_gminmax(), input_size=4, epochs=100)
 set_example_seed()
 model <- fit(model, x=io_train$input, y=io_train$output)
 
