@@ -8,6 +8,7 @@ expand_dataset <- function(x) {
 
 data(ipeadata.d)
 ipeadata.d <- expand_dataset(ipeadata.d)
+ipeadata.d <- tail(ipeadata.d, 365)
 cat("Dataset: ipeadata.d\n")
 cat("Rows:", nrow(ipeadata.d), "\n")
 cat("Columns:", ncol(ipeadata.d), "\n")

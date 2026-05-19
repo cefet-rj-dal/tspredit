@@ -18,20 +18,6 @@ source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/example
 
 ``` r
 library(daltoolbox)
-```
-
-```
-## 
-## Attaching package: 'daltoolbox'
-```
-
-```
-## The following object is masked from 'package:base':
-## 
-##     transform
-```
-
-``` r
 library(tspredit)
 ```
 
