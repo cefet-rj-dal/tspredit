@@ -128,13 +128,25 @@ fit.ts_arimax <- function(obj, x, y = NULL, ...) {
 predict.ts_arimax <- function(object, x = NULL, steps_ahead = 1, return_all = FALSE, ...) {
   steps_ahead <- as.integer(steps_ahead)
   future_x <- reg_mv_forecast_aux(object, x = x, steps_ahead = steps_ahead)
+  forecast_h <- steps_ahead
+  forecast_x <- future_x
+
+  # forecast::forecast.Arima() can fail for h = 1 with xreg even when the
+  # same call works for h > 1. Requesting one extra step avoids that internal
+  # edge case; only the first step is used here.
+  if (steps_ahead == 1L) {
+    forecast_h <- 2L
+    forecast_x <- rbind(future_x, future_x[1, , drop = FALSE])
+    rownames(forecast_x) <- NULL
+  }
+
   prediction_y <- as.vector(
     forecast::forecast(
       object$model,
-      h = steps_ahead,
-      xreg = reg_mv_numeric_matrix(future_x, object$x_names, context = "future auxiliary data")
+      h = forecast_h,
+      xreg = reg_mv_numeric_matrix(forecast_x, object$x_names, context = "future auxiliary data")
     )$mean
-  )
+  )[seq_len(steps_ahead)]
 
   object$history <- reg_mv_update_history(object, future_x, prediction_y)
 

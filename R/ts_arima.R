@@ -123,7 +123,7 @@ predict.ts_arima <- function(object, x, y = NULL, steps_ahead=NULL, ...) {
   else {
     if (is.null(steps_ahead))
       steps_ahead <- length(x)
-    if ((steps_ahead == 1) && (length(x) != 1)) {
+    if (!is.null(x) && (steps_ahead == 1) && (length(x) != 1)) {
       # Rolling one-step-ahead forecast across the horizon
       pred <- NULL
       model <- object$model
