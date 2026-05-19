@@ -19,14 +19,9 @@ if (!dir.exists(log_dir)) {
 }
 run_id <- format(Sys.time(), "%Y%m%d-%H%M%S")
 log_file <- file.path(log_dir, sprintf("conversion-%s.log", run_id))
-duration_log_file <- file.path(log_dir, sprintf("conversion-%s-duration.log", run_id))
 
 append_log <- function(...) {
   cat(..., file = log_file, append = TRUE, sep = "")
-}
-
-append_duration_log <- function(...) {
-  cat(..., file = duration_log_file, append = TRUE, sep = "")
 }
 
 append_conversion_log <- function(result) {
@@ -57,12 +52,13 @@ format_calls <- function(calls) {
   paste(lines, collapse = "\n")
 }
 
-record_condition <- function(phase, input, err) {
+record_condition <- function(phase, input, err, elapsed_seconds = NA_real_) {
   append_log(
     "\n",
     strrep("=", 80), "\n",
     sprintf("[%s] %s\n", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), phase),
     sprintf("file: %s\n", input),
+    sprintf("duration: %s\n", if (is.na(elapsed_seconds)) "n/a" else format_duration(elapsed_seconds)),
     sprintf("message: %s\n", conditionMessage(err)),
     sprintf("call: %s\n", paste(deparse(conditionCall(err)), collapse = " ")),
     "stack:\n",
@@ -95,7 +91,7 @@ run_phase <- function(inputs, phase, converter) {
     }, error = function(err) {
       finished_at <- Sys.time()
       elapsed <- difftime(finished_at, started_at, units = "secs")
-      record_condition(phase, input, err)
+      record_condition(phase, input, err, as.numeric(elapsed))
       list(
         ok = FALSE,
         input = input,
@@ -108,16 +104,6 @@ run_phase <- function(inputs, phase, converter) {
     })
 
     append_conversion_log(result)
-    append_duration_log(
-      sprintf(
-        "[%s] phase=%s status=%s duration=%s file=%s\n",
-        format(result$finished_at, "%Y-%m-%d %H:%M:%S"),
-        result$phase,
-        if (isTRUE(result$ok)) "ok" else "fail",
-        format_duration(result$elapsed_seconds),
-        result$input
-      )
-    )
 
     results[[i]] <- result
   }
@@ -315,8 +301,6 @@ texs <- list.files(path = dir, pattern = ".Rmd$", full.names = TRUE, recursive =
 if (TRUE) {
   append_log(sprintf("Conversion run started at %s\n", format(Sys.time(), "%Y-%m-%d %H:%M:%S")))
   append_log(sprintf("Working directory: %s\n", normalizePath(getwd(), winslash = "/")))
-  append_duration_log(sprintf("Conversion duration run started at %s\n", format(Sys.time(), "%Y-%m-%d %H:%M:%S")))
-  append_duration_log(sprintf("Working directory: %s\n", normalizePath(getwd(), winslash = "/")))
 
   md_results <- run_phase(texs, "rmd->md", convert_rmd_md)
   docx_results <- run_phase(texs, "rmd->docx", convert_rmd_docx)
@@ -328,7 +312,7 @@ if (TRUE) {
 
   total_fail <- md_summary$fail + docx_summary$fail + r_summary$fail
   total_duration <- sum(vapply(c(md_results, docx_results, r_results), function(x) x$elapsed_seconds, numeric(1)))
-  append_duration_log(sprintf("Total measured duration: %s\n", format_duration(total_duration)))
+  append_log(sprintf("Total measured duration: %s\n", format_duration(total_duration)))
   if (total_fail > 0) {
     cat(sprintf("Conversion finished with failures. Log: %s\n", log_file))
   } else {

@@ -47,24 +47,24 @@ output <- tail(samp$test$close, 5)
 ```{r}
 model <- ts_regsw_mv(
   model_y = ts_mv_spec(
-    ts_lstm(ts_norm_gminmax(), input_size = 4, epochs = 250),
+    ts_lstm(ts_norm_gminmax(), input_size = 4, epochs = 25),
     variables = c("close", "open", "high", "low")
   ),
   models_x = list(
     open = ts_mv_spec(
-      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 250),
+      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 25),
       variables = c("open", "close", "high")
     ),
     high = ts_mv_spec(
-      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 250),
+      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 25),
       variables = c("high", "close", "open")
     ),
     low = ts_mv_spec(
-      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 250),
+      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 25),
       variables = c("low", "close", "open")
     ),
     volume = ts_mv_spec(
-      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 250),
+      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 25),
       variables = c("volume", "close", "open")
     )
   ),
