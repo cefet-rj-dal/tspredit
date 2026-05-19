@@ -21,20 +21,6 @@ We start by loading the packages used throughout this example.
 ``` r
 # Loading the packages
 library(daltoolbox)
-```
-
-```
-## 
-## Attaching package: 'daltoolbox'
-```
-
-```
-## The following object is masked from 'package:base':
-## 
-##     transform
-```
-
-``` r
 library(daltoolboxdp)
 library(tspredit)
 ```

@@ -1,10 +1,11 @@
 source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
-# Stock closing-price forecasting with MLP as target learner
+# Stock closing-price forecasting with LSTM as target learner
 
 # Installing packages (if needed)
 # install.packages("tspredit")
 
 library(daltoolbox)
+library(daltoolboxdp)
 library(tspredit)
 
 data(stocks)
@@ -32,24 +33,24 @@ output <- tail(samp$test$close, 5)
 
 model <- ts_regsw_mv(
   model_y = ts_mv_spec(
-    ts_mlp(ts_norm_gminmax(), input_size = 4, size = 3, decay = 0, maxit = 50),
+    ts_lstm(ts_norm_gminmax(), input_size = 4, epochs = 10),
     variables = c("close", "open", "high", "low")
   ),
   models_x = list(
     open = ts_mv_spec(
-      ts_mlp(ts_norm_gminmax(), input_size = 3, size = 3, decay = 0, maxit = 50),
+      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 10),
       variables = c("open", "close", "high")
     ),
     high = ts_mv_spec(
-      ts_mlp(ts_norm_gminmax(), input_size = 3, size = 3, decay = 0, maxit = 50),
+      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 10),
       variables = c("high", "close", "open")
     ),
     low = ts_mv_spec(
-      ts_mlp(ts_norm_gminmax(), input_size = 3, size = 3, decay = 0, maxit = 50),
+      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 10),
       variables = c("low", "close", "open")
     ),
     volume = ts_mv_spec(
-      ts_mlp(ts_norm_gminmax(), input_size = 3, size = 3, decay = 0, maxit = 50),
+      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 10),
       variables = c("volume", "close", "open")
     )
   ),

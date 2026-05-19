@@ -1,14 +1,14 @@
-## Stock Closing-Price Forecasting with MLP as Target Learner
+## Stock Closing-Price Forecasting with LSTM as Target Learner
 
 About the method
-- This example keeps the same stock-closing-price scenario, but now the target `close` is forecast with `ts_mlp()`.
+- This example keeps the same stock-closing-price scenario, but now the target `close` is forecast with `ts_lstm()`.
 
-Didactic goal: inspect how a multilayer perceptron behaves as the target learner inside the target-centered multivariate workflow.
+Didactic goal: inspect how an LSTM behaves as the target learner inside the target-centered multivariate workflow.
 
 
 ``` r
 source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
-# Stock closing-price forecasting with MLP as target learner
+# Stock closing-price forecasting with LSTM as target learner
 
 # Installing packages (if needed)
 # install.packages("tspredit")
@@ -17,6 +17,7 @@ source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/example
 
 ``` r
 library(daltoolbox)
+library(daltoolboxdp)
 library(tspredit)
 ```
 
@@ -50,24 +51,24 @@ output <- tail(samp$test$close, 5)
 ``` r
 model <- ts_regsw_mv(
   model_y = ts_mv_spec(
-    ts_mlp(ts_norm_gminmax(), input_size = 4, size = 3, decay = 0, maxit = 50),
+    ts_lstm(ts_norm_gminmax(), input_size = 4, epochs = 10),
     variables = c("close", "open", "high", "low")
   ),
   models_x = list(
     open = ts_mv_spec(
-      ts_mlp(ts_norm_gminmax(), input_size = 3, size = 3, decay = 0, maxit = 50),
+      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 10),
       variables = c("open", "close", "high")
     ),
     high = ts_mv_spec(
-      ts_mlp(ts_norm_gminmax(), input_size = 3, size = 3, decay = 0, maxit = 50),
+      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 10),
       variables = c("high", "close", "open")
     ),
     low = ts_mv_spec(
-      ts_mlp(ts_norm_gminmax(), input_size = 3, size = 3, decay = 0, maxit = 50),
+      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 10),
       variables = c("low", "close", "open")
     ),
     volume = ts_mv_spec(
-      ts_mlp(ts_norm_gminmax(), input_size = 3, size = 3, decay = 0, maxit = 50),
+      ts_lstm(ts_norm_gminmax(), input_size = 3, epochs = 10),
       variables = c("volume", "close", "open")
     )
   ),
@@ -84,7 +85,7 @@ pred_1
 ```
 
 ```
-## [1] 85.71934
+## [1] 74.49954
 ## attr(,"y_name")
 ## [1] "close"
 ## attr(,"x_names")
@@ -95,20 +96,20 @@ pred_1
 ## [1] 1
 ## attr(,"prediction_x")
 ## attr(,"prediction_x")$open
-## [1] 86.00116
+## [1] 67.13967
 ## 
 ## attr(,"prediction_x")$high
-## [1] 87.49194
+## [1] 67.86573
 ## 
 ## attr(,"prediction_x")$low
-## [1] 85.52673
+## [1] 67.06578
 ## 
 ## attr(,"prediction_x")$volume
-## [1] 23156233
+## [1] 23279579
 ## 
 ## attr(,"system")
 ##      close     open     high      low   volume
-## 1 85.71934 86.00116 87.49194 85.52673 23156233
+## 1 74.49954 67.13967 67.86573 67.06578 23279579
 ## attr(,"class")
 ## [1] "ts_mv_prediction" "numeric"
 ```
@@ -120,7 +121,7 @@ pred_5
 ```
 
 ```
-## [1] 85.71934 86.72840 86.81184 86.14814 86.02339
+## [1] 74.49954 73.57838 71.07175 69.89868 68.04403
 ## attr(,"y_name")
 ## [1] "close"
 ## attr(,"x_names")
@@ -131,24 +132,24 @@ pred_5
 ## [1] 5
 ## attr(,"prediction_x")
 ## attr(,"prediction_x")$open
-## [1] 86.00116 85.19367 85.60119 86.40139 85.80143
+## [1] 67.13967 67.70867 66.18850 64.68147 63.51151
 ## 
 ## attr(,"prediction_x")$high
-## [1] 87.49194 88.53915 88.59214 88.13705 87.80729
+## [1] 67.86573 67.95517 65.77867 66.50032 65.21691
 ## 
 ## attr(,"prediction_x")$low
-## [1] 85.52673 85.92770 85.33525 85.90062 85.78070
+## [1] 67.06578 66.91908 67.35802 66.82295 66.66033
 ## 
 ## attr(,"prediction_x")$volume
-## [1] 23156233 29050471 27906794 26263887 24386466
+## [1] 23279579 24004661 23914327 23421989 23079636
 ## 
 ## attr(,"system")
 ##      close     open     high      low   volume
-## 1 85.71934 86.00116 87.49194 85.52673 23156233
-## 2 86.72840 85.19367 88.53915 85.92770 29050471
-## 3 86.81184 85.60119 88.59214 85.33525 27906794
-## 4 86.14814 86.40139 88.13705 85.90062 26263887
-## 5 86.02339 85.80143 87.80729 85.78070 24386466
+## 1 74.49954 67.13967 67.86573 67.06578 23279579
+## 2 73.57838 67.70867 67.95517 66.91908 24004661
+## 3 71.07175 66.18850 65.77867 67.35802 23914327
+## 4 69.89868 64.68147 66.50032 66.82295 23421989
+## 5 68.04403 63.51151 65.21691 66.66033 23079636
 ## attr(,"class")
 ## [1] "ts_mv_prediction" "numeric"
 ```
@@ -160,11 +161,11 @@ attr(pred_5, "system")
 
 ```
 ##      close     open     high      low   volume
-## 1 85.71934 86.00116 87.49194 85.52673 23156233
-## 2 86.72840 85.19367 88.53915 85.92770 29050471
-## 3 86.81184 85.60119 88.59214 85.33525 27906794
-## 4 86.14814 86.40139 88.13705 85.90062 26263887
-## 5 86.02339 85.80143 87.80729 85.78070 24386466
+## 1 74.49954 67.13967 67.86573 67.06578 23279579
+## 2 73.57838 67.70867 67.95517 66.91908 24004661
+## 3 71.07175 66.18850 65.77867 67.35802 23914327
+## 4 69.89868 64.68147 66.50032 66.82295 23421989
+## 5 68.04403 63.51151 65.21691 66.66033 23079636
 ```
 
 
@@ -174,8 +175,8 @@ ev_test$metrics
 ```
 
 ```
-##        mse      smape        R2
-## 1 4.010121 0.01863371 -0.898499
+##        mse     smape        R2
+## 1 263.2779 0.2034654 -123.6428
 ```
 
 
@@ -183,8 +184,8 @@ ev_test$metrics
 plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
 
-![plot of chunk unnamed-chunk-9](fig/14-stock-close-mlp-regression/unnamed-chunk-9-1.png)
+![plot of chunk unnamed-chunk-9](fig/18-stock-close-lstm-regression/unnamed-chunk-9-1.png)
 
 What this example shows
-- `ts_mlp()` can be reused directly as the target learner inside `ts_regsw_mv()`.
+- `ts_lstm()` can be reused directly as the target learner inside `ts_regsw_mv()`.
 - The same learner family can be reused for the target and for all endogenous auxiliaries when the goal is a cleaner didactic comparison.
