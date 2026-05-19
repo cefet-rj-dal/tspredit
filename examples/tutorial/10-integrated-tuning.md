@@ -56,19 +56,6 @@ tune <- ts_integtune(
 )
 ```
 
-```
-## Warning: reiniciando promessa interrompida de avaliação
-```
-
-```
-## Warning: internal error 1 in R_decompress1 with libdeflate
-```
-
-```
-## Error:
-## ! lazy-load database 'C:/R/R-4.5.0/library/tspredit/R/tspredit.rdb' is corrupt
-```
-
 Now we fit the integrated tuner on the training data. Internally, it evaluates combinations of input size, normalization, augmentation, and model hyperparameters.
 
 
@@ -76,11 +63,6 @@ Now we fit the integrated tuner on the training data. Internally, it evaluates c
 # Fit the integrated tuning process.
 set_example_seed()
 model <- fit(tune, x = io_train$input, y = io_train$output)
-```
-
-```
-## Error:
-## ! objeto 'tune' não encontrado
 ```
 
 After tuning, the fitted model stores the best configuration that was selected.
@@ -92,8 +74,50 @@ attr(model, "params")
 ```
 
 ```
-## Error:
-## ! objeto 'model' não encontrado
+## $input_size
+## [1] 4
+## 
+## $preprocess
+## [1] "ts_norm_gminmax"
+## 
+## $augment
+## [1] "ts_aug_none"
+## 
+## $size
+## [1] 3
+## 
+## $decay
+## [1] 0
+## 
+## $maxit
+## [1] 500
+## 
+## $key
+## [1] 14
+## 
+## attr(,"out.attrs")
+## attr(,"out.attrs")$dim
+## input_size preprocess    augment       size      decay      maxit 
+##          3          2          2          3          2          1 
+## 
+## attr(,"out.attrs")$dimnames
+## attr(,"out.attrs")$dimnames$input_size
+## [1] "input_size=3" "input_size=4" "input_size=5"
+## 
+## attr(,"out.attrs")$dimnames$preprocess
+## [1] "preprocess=ts_norm_gminmax" "preprocess=ts_norm_an"     
+## 
+## attr(,"out.attrs")$dimnames$augment
+## [1] "augment=ts_aug_none"   "augment=ts_aug_jitter"
+## 
+## attr(,"out.attrs")$dimnames$size
+## [1] "size=2" "size=3" "size=4"
+## 
+## attr(,"out.attrs")$dimnames$decay
+## [1] "decay=0.00" "decay=0.01"
+## 
+## attr(,"out.attrs")$dimnames$maxit
+## [1] "maxit=500"
 ```
 
 The next object records the evaluated combinations and their errors.
@@ -105,8 +129,13 @@ head(attr(model, "hyperparameters"))
 ```
 
 ```
-## Error:
-## ! objeto 'model' não encontrado
+##   input_size      preprocess     augment size decay maxit key        error msg
+## 1          3 ts_norm_gminmax ts_aug_none    2     0   500   1 2.101521e-05    
+## 2          4 ts_norm_gminmax ts_aug_none    2     0   500   2 2.842284e-05    
+## 3          5 ts_norm_gminmax ts_aug_none    2     0   500   3 2.254544e-05    
+## 4          3      ts_norm_an ts_aug_none    2     0   500   4 1.212301e-04    
+## 5          4      ts_norm_an ts_aug_none    2     0   500   5 2.952699e-04    
+## 6          5      ts_norm_an ts_aug_none    2     0   500   6 2.707322e-04
 ```
 
 Once the tuned pipeline has been selected, we forecast the held-out horizon exactly as in the earlier MLP tutorials.
@@ -115,31 +144,31 @@ Once the tuned pipeline has been selected, we forecast the held-out horizon exac
 ``` r
 # Forecast the final five-step horizon with the tuned pipeline.
 prediction <- as.vector(predict(model, x = io_test$input[1:1, ], steps_ahead = 5))
-```
-
-```
-## Error:
-## ! objeto 'model' não encontrado
-```
-
-``` r
 output <- as.vector(io_test$output)
 
 ev_test <- evaluate(model, output, prediction)
-```
-
-```
-## Error:
-## ! objeto 'model' não encontrado
-```
-
-``` r
 ev_test
 ```
 
 ```
-## Error:
-## ! objeto 'ev_test' não encontrado
+## $values
+## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
+## 
+## $prediction
+## [1]  0.41597901  0.17798556 -0.07123254 -0.31749904 -0.54621713
+## 
+## $smape
+## [1] 0.01930295
+## 
+## $mse
+## [1] 1.118805e-05
+## 
+## $R2
+## [1] 0.9999034
+## 
+## $metrics
+##            mse      smape        R2
+## 1 1.118805e-05 0.01930295 0.9999034
 ```
 
 We also inspect the in-sample adjustment, because a tuned model should still produce a coherent fit on the training data.
@@ -148,29 +177,13 @@ We also inspect the in-sample adjustment, because a tuned model should still pro
 ``` r
 # Evaluate the tuned model on the training data.
 adjust <- as.vector(predict(model, io_train$input))
-```
-
-```
-## Error:
-## ! objeto 'model' não encontrado
-```
-
-``` r
 ev_adjust <- evaluate(model, as.vector(io_train$output), adjust)
-```
-
-```
-## Error:
-## ! objeto 'model' não encontrado
-```
-
-``` r
 ev_adjust$metrics
 ```
 
 ```
-## Error:
-## ! objeto 'ev_adjust' não encontrado
+##            mse       smape        R2
+## 1 1.374047e-05 0.008416781 0.9999724
 ```
 
 The final plot connects the selected pipeline to the resulting forecast trajectory.
@@ -183,10 +196,7 @@ plot_ts_pred(y = yvalues, yadj = adjust, ypre = prediction, color_prediction = "
   theme(text = element_text(size = 16))
 ```
 
-```
-## Error:
-## ! objeto 'adjust' não encontrado
-```
+![plot of chunk unnamed-chunk-9](fig/10-integrated-tuning/unnamed-chunk-9-1.png)
 
 ## Interpretation
 

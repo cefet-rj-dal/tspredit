@@ -40,6 +40,11 @@ mv <- ts_data_mv(
 samp <- ts_sample(mv, test_size = 5)
 ```
 
+The experiment now follows the same structure used in the other singular
+multivariate notebooks: define the split, fit the model, inspect the one-step
+forecast, inspect the multi-step target forecast, inspect the synchronized
+system forecast, and then evaluate the target trajectory.
+
 The formula makes the relation between the target and the auxiliaries explicit.
 
 
@@ -59,6 +64,26 @@ pred_1
 
 ```
 ## [1] 0.4116193
+## attr(,"y_name")
+## [1] "y"
+## attr(,"x_names")
+## [1] "x1" "x2"
+## attr(,"variables")
+## [1] "y"  "x1" "x2"
+## attr(,"steps_ahead")
+## [1] 1
+## attr(,"prediction_x")
+## attr(,"prediction_x")$x1
+## [1] 0.1738895
+## 
+## attr(,"prediction_x")$x2
+## [1] 0.6117765
+## 
+## attr(,"system")
+##           y        x1        x2
+## 1 0.4116193 0.1738895 0.6117765
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
 ```
 
 
@@ -69,31 +94,6 @@ pred_5
 
 ```
 ## [1]  0.41161932  0.17404351 -0.07477247 -0.31935845 -0.44889824
-```
-
-When we ask for the complete object, the target forecast is returned together
-with the auxiliary values that were used in the horizon.
-
-
-``` r
-pred_all <- predict(model, x = samp$test, steps_ahead = 5, return_all = TRUE)
-pred_all
-```
-
-```
-## $y
-## [1]  0.41161932  0.17404351 -0.07477247 -0.31935845 -0.44889824
-## 
-## $x
-## $x$x1
-## [1]  0.17388949 -0.07515112 -0.31951919 -0.54402111 -0.54402111
-## 
-## $x$x2
-## [1]  0.61177652  0.40357731  0.17028562 -0.07359361 -0.31289714
-## 
-## 
-## attr(,"class")
-## [1] "ts_mv_prediction"
 ## attr(,"y_name")
 ## [1] "y"
 ## attr(,"x_names")
@@ -102,6 +102,39 @@ pred_all
 ## [1] "y"  "x1" "x2"
 ## attr(,"steps_ahead")
 ## [1] 5
+## attr(,"prediction_x")
+## attr(,"prediction_x")$x1
+## [1]  0.17388949 -0.07515112 -0.31951919 -0.54402111 -0.54402111
+## 
+## attr(,"prediction_x")$x2
+## [1]  0.61177652  0.40357731  0.17028562 -0.07359361 -0.31289714
+## 
+## attr(,"system")
+##             y          x1          x2
+## 1  0.41161932  0.17388949  0.61177652
+## 2  0.17404351 -0.07515112  0.40357731
+## 3 -0.07477247 -0.31951919  0.17028562
+## 4 -0.31935845 -0.54402111 -0.07359361
+## 5 -0.44889824 -0.54402111 -0.31289714
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
+```
+
+The prediction itself is the target path. The synchronized multivariate
+forecast is attached as an attribute.
+
+
+``` r
+attr(pred_5, "system")
+```
+
+```
+##             y          x1          x2
+## 1  0.41161932  0.17388949  0.61177652
+## 2  0.17404351 -0.07515112  0.40357731
+## 3 -0.07477247 -0.31951919  0.17028562
+## 4 -0.31935845 -0.54402111 -0.07359361
+## 5 -0.44889824 -0.54402111 -0.31289714
 ```
 
 The target values remain available for direct evaluation.

@@ -23,11 +23,13 @@ samp <- ts_sample(mv, test_size = 5)
 model <- ts_var(p_max = 3)
 model <- fit(model, samp$train)
 
+pred_1 <- predict(model, steps_ahead = 1)
+pred_1
+
 pred_5 <- predict(model, steps_ahead = 5)
 pred_5
 
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
-pred_all
+attr(pred_5, "system")
 
 ev_test <- evaluate(model, tail(samp$test$y, 5), pred_5)
 ev_test$metrics

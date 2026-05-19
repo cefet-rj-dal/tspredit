@@ -27,25 +27,7 @@ data(stocks)
 if (!is.null(attr(stocks, "url"))) {
   stocks <- loadfulldata(stocks)
 }
-```
 
-```
-## Warning in .rs.downloadFile(url = url, destfile = tf, quiet = TRUE, mode = "wb"): downloaded length 98286 != reported
-## length 3229450
-```
-
-```
-## Warning in .rs.downloadFile(url = url, destfile = tf, quiet = TRUE, mode = "wb"): URL
-## 'https://raw.githubusercontent.com/cefet-rj-dal/tspredbench/refs/heads/main/tspredit/stocks.RData': Timeout of 60
-## seconds was reached
-```
-
-```
-## Error in `.rs.downloadFile()`:
-## ! download from 'https://raw.githubusercontent.com/cefet-rj-dal/tspredbench/refs/heads/main/tspredit/stocks.RData' failed
-```
-
-``` r
 ticker_name <- if ("VALE3" %in% names(stocks)) "VALE3" else names(stocks)[1]
 ticker <- stocks[[ticker_name]]
 ticker <- ticker[, c("date", "open", "high", "low", "close", "volume")]
@@ -97,20 +79,112 @@ model <- ts_regsw_mv(
 ``` r
 set_example_seed()
 model <- fit(model, samp$train)
+pred_1 <- predict(model, steps_ahead = 1)
+pred_1
+```
+
+```
+## [1] 72.69532
+## attr(,"y_name")
+## [1] "close"
+## attr(,"x_names")
+## [1] "open"   "high"   "low"    "volume"
+## attr(,"variables")
+## [1] "close"  "open"   "high"   "low"    "volume"
+## attr(,"steps_ahead")
+## [1] 1
+## attr(,"prediction_x")
+## attr(,"prediction_x")$open
+## [1] 85.05918
+## 
+## attr(,"prediction_x")$high
+## [1] 85.29949
+## 
+## attr(,"prediction_x")$low
+## [1] 81.44817
+## 
+## attr(,"prediction_x")$volume
+## [1] 21877063
+## 
+## attr(,"system")
+##      close     open     high      low   volume
+## 1 72.69532 85.05918 85.29949 81.44817 21877063
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
+```
+
+
+``` r
 pred_5 <- predict(model, steps_ahead = 5)
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
+pred_5
+```
+
+```
+## [1]  72.69532  32.90832  70.70014 188.45650  51.03202
+## attr(,"y_name")
+## [1] "close"
+## attr(,"x_names")
+## [1] "open"   "high"   "low"    "volume"
+## attr(,"variables")
+## [1] "close"  "open"   "high"   "low"    "volume"
+## attr(,"steps_ahead")
+## [1] 5
+## attr(,"prediction_x")
+## attr(,"prediction_x")$open
+## [1]  85.05918  38.60900 -73.25965  73.60015  51.60219
+## 
+## attr(,"prediction_x")$high
+## [1]   85.2994888   72.5576631   50.9842936 -142.8079115   -0.8722029
+## 
+## attr(,"prediction_x")$low
+## [1]  81.44817  73.67211 -91.78459 200.51619 -26.27833
+## 
+## attr(,"prediction_x")$volume
+## [1] 21877063 25529676 29695572 25579320 28693895
+## 
+## attr(,"system")
+##       close      open         high       low   volume
+## 1  72.69532  85.05918   85.2994888  81.44817 21877063
+## 2  32.90832  38.60900   72.5576631  73.67211 25529676
+## 3  70.70014 -73.25965   50.9842936 -91.78459 29695572
+## 4 188.45650  73.60015 -142.8079115 200.51619 25579320
+## 5  51.03202  51.60219   -0.8722029 -26.27833 28693895
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
+```
+
+
+``` r
+attr(pred_5, "system")
+```
+
+```
+##       close      open         high       low   volume
+## 1  72.69532  85.05918   85.2994888  81.44817 21877063
+## 2  32.90832  38.60900   72.5576631  73.67211 25529676
+## 3  70.70014 -73.25965   50.9842936 -91.78459 29695572
+## 4 188.45650  73.60015 -142.8079115 200.51619 25579320
+## 5  51.03202  51.60219   -0.8722029 -26.27833 28693895
+```
+
+
+``` r
 ev_test <- evaluate(model, output, pred_5)
 ev_test$metrics
 ```
 
 ```
-##        mse     smape        R2
-## 1 1.597411 0.1814958 -44.24621
+##        mse     smape       R2
+## 1 3119.531 0.5201632 -1475.87
 ```
 
 
 ``` r
-plot_ts_pred_mv(samp$train, samp$test, pred_all, variable = "close")
+plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
 
-![plot of chunk unnamed-chunk-6](fig/14-stock-close-mlp-regression/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-9](fig/14-stock-close-mlp-regression/unnamed-chunk-9-1.png)
+
+What this example shows
+- `ts_mlp()` can be reused directly as the target learner inside `ts_regsw_mv()`.
+- The same learner family can be reused for the target and for all endogenous auxiliaries when the goal is a cleaner didactic comparison.

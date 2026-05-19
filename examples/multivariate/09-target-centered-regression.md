@@ -115,6 +115,26 @@ pred_1
 
 ```
 ## [1] 799.21
+## attr(,"y_name")
+## [1] "y"
+## attr(,"x_names")
+## [1] "x1" "x2"
+## attr(,"variables")
+## [1] "y"  "x1" "x2"
+## attr(,"steps_ahead")
+## [1] 1
+## attr(,"prediction_x")
+## attr(,"prediction_x")$x1
+## [1] 4
+## 
+## attr(,"prediction_x")$x2
+## [1] 0
+## 
+## attr(,"system")
+##        y x1 x2
+## 1 799.21  4  0
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
 ```
 
 The second forecast mode is recursive multi-step prediction. By default, it
@@ -128,31 +148,6 @@ pred_5
 
 ```
 ## [1] 799.2100 786.5946 781.4834 756.8355 712.7802
-```
-
-If we want to inspect the whole recursive system, we can ask for the target and
-the auxiliary forecasts together.
-
-
-``` r
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
-pred_all
-```
-
-```
-## $y
-## [1] 799.2100 786.5946 781.4834 756.8355 712.7802
-## 
-## $x
-## $x$x1
-## [1] 4 5 6 7 1
-## 
-## $x$x2
-## [1] 0 0 0 1 1
-## 
-## 
-## attr(,"class")
-## [1] "ts_mv_prediction"
 ## attr(,"y_name")
 ## [1] "y"
 ## attr(,"x_names")
@@ -161,6 +156,73 @@ pred_all
 ## [1] "y"  "x1" "x2"
 ## attr(,"steps_ahead")
 ## [1] 5
+## attr(,"prediction_x")
+## attr(,"prediction_x")$x1
+## [1] 4 5 6 7 1
+## 
+## attr(,"prediction_x")$x2
+## [1] 0 0 0 1 1
+## 
+## attr(,"system")
+##          y x1 x2
+## 1 799.2100  4  0
+## 2 786.5946  5  0
+## 3 781.4834  6  0
+## 4 756.8355  7  1
+## 5 712.7802  1  1
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
+```
+
+If we want to inspect the whole recursive system, we can ask for the target and
+the auxiliary forecasts together through the prediction attributes.
+
+
+``` r
+pred_all <- predict(model, steps_ahead = 5)
+pred_all
+```
+
+```
+## [1] 799.2100 786.5946 781.4834 756.8355 712.7802
+## attr(,"y_name")
+## [1] "y"
+## attr(,"x_names")
+## [1] "x1" "x2"
+## attr(,"variables")
+## [1] "y"  "x1" "x2"
+## attr(,"steps_ahead")
+## [1] 5
+## attr(,"prediction_x")
+## attr(,"prediction_x")$x1
+## [1] 4 5 6 7 1
+## 
+## attr(,"prediction_x")$x2
+## [1] 0 0 0 1 1
+## 
+## attr(,"system")
+##          y x1 x2
+## 1 799.2100  4  0
+## 2 786.5946  5  0
+## 3 781.4834  6  0
+## 4 756.8355  7  1
+## 5 712.7802  1  1
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
+```
+
+
+``` r
+attr(pred_all, "system")
+```
+
+```
+##          y x1 x2
+## 1 799.2100  4  0
+## 2 786.5946  5  0
+## 3 781.4834  6  0
+## 4 756.8355  7  1
+## 5 712.7802  1  1
 ```
 
 The multivariate plotting helper reuses the same visual language already used
@@ -178,7 +240,7 @@ Target trajectory:
 plots$y
 ```
 
-![plot of chunk unnamed-chunk-11](fig/09-target-centered-regression/unnamed-chunk-11-1.png)
+![plot of chunk unnamed-chunk-12](fig/09-target-centered-regression/unnamed-chunk-12-1.png)
 
 Auxiliary variable `x1`:
 
@@ -187,7 +249,7 @@ Auxiliary variable `x1`:
 plots$x1
 ```
 
-![plot of chunk unnamed-chunk-12](fig/09-target-centered-regression/unnamed-chunk-12-1.png)
+![plot of chunk unnamed-chunk-13](fig/09-target-centered-regression/unnamed-chunk-13-1.png)
 
 Auxiliary variable `x2`:
 
@@ -196,7 +258,7 @@ Auxiliary variable `x2`:
 plots$x2
 ```
 
-![plot of chunk unnamed-chunk-13](fig/09-target-centered-regression/unnamed-chunk-13-1.png)
+![plot of chunk unnamed-chunk-14](fig/09-target-centered-regression/unnamed-chunk-14-1.png)
 
 The held-out target values remain available for evaluation against the target
 forecast.

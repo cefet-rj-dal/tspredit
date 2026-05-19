@@ -57,8 +57,10 @@ pred_1
 pred_5 <- predict(model, steps_ahead = 5)
 pred_5
 
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
+pred_all <- predict(model, steps_ahead = 5)
 pred_all
+
+attr(pred_all, "system")
 
 plots <- plot_ts_pred_mv(samp$train, samp$test, pred_all)
 

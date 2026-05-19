@@ -63,6 +63,9 @@ class(model)
 
 set_example_seed()
 model <- fit(model, samp$train)
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
+pred_all <- predict(model, steps_ahead = 5)
+pred_all
 
-pred_all$x
+attr(pred_all, "system")
+
+attr(pred_all, "prediction_x")

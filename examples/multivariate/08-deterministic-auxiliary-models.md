@@ -134,9 +134,55 @@ We can already fit the composed object and inspect the auxiliary recursive path.
 ``` r
 set_example_seed()
 model <- fit(model, samp$train)
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
+pred_all <- predict(model, steps_ahead = 5)
+pred_all
+```
 
-pred_all$x
+```
+## [1] 794.4405 788.4387 781.0410 752.0925 713.9170
+## attr(,"y_name")
+## [1] "y"
+## attr(,"x_names")
+## [1] "x1" "x2"
+## attr(,"variables")
+## [1] "y"  "x1" "x2"
+## attr(,"steps_ahead")
+## [1] 5
+## attr(,"prediction_x")
+## attr(,"prediction_x")$x1
+## [1] 4 5 6 7 1
+## 
+## attr(,"prediction_x")$x2
+## [1] 0 0 0 1 1
+## 
+## attr(,"system")
+##          y x1 x2
+## 1 794.4405  4  0
+## 2 788.4387  5  0
+## 3 781.0410  6  0
+## 4 752.0925  7  1
+## 5 713.9170  1  1
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
+```
+
+
+``` r
+attr(pred_all, "system")
+```
+
+```
+##          y x1 x2
+## 1 794.4405  4  0
+## 2 788.4387  5  0
+## 3 781.0410  6  0
+## 4 752.0925  7  1
+## 5 713.9170  1  1
+```
+
+
+``` r
+attr(pred_all, "prediction_x")
 ```
 
 ```

@@ -29,8 +29,7 @@ pred_1
 pred_5 <- predict(model, x = samp$test, steps_ahead = 5)
 pred_5
 
-pred_all <- predict(model, x = samp$test, steps_ahead = 5, return_all = TRUE)
-pred_all
+attr(pred_5, "system")
 
 ev_test <- evaluate(model, tail(samp$test$y, 5), pred_5)
 ev_test$metrics

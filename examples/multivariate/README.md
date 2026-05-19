@@ -39,3 +39,9 @@ The examples in this folder now follow the most didactic order:
 - [15-stock-close-elm-regression.md](15-stock-close-elm-regression.md) - keep the stock scenario fixed and use ELM as the target learner.
 - [16-stock-close-conv1d-regression.md](16-stock-close-conv1d-regression.md) - keep the stock scenario fixed and use Conv1D as the target learner.
 - [17-stock-close-lstm-regression.md](17-stock-close-lstm-regression.md) - keep the stock scenario fixed and use LSTM as the target learner.
+
+### Block 4: Singular stock battery (`ts_reg_mv`)
+
+- [18-stock-close-linear-regression-mv.md](18-stock-close-linear-regression-mv.md) - revisit the stock scenario in the singular branch with formula-based multivariate linear regression.
+- [19-stock-close-arimax-regression-mv.md](19-stock-close-arimax-regression-mv.md) - revisit the stock scenario in the singular branch with `ts_arimax()` and univariate support models for the auxiliaries.
+- [20-stock-close-vector-autoregression-mv.md](20-stock-close-vector-autoregression-mv.md) - revisit the stock scenario in the singular branch with a joint vector autoregression that still keeps `close` as the distinguished target.

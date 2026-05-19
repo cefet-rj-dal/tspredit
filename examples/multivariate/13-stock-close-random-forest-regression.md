@@ -79,8 +79,96 @@ model <- ts_regsw_mv(
 ``` r
 set_example_seed()
 model <- fit(model, samp$train)
+pred_1 <- predict(model, steps_ahead = 1)
+pred_1
+```
+
+```
+## [1] 86.3301
+## attr(,"y_name")
+## [1] "close"
+## attr(,"x_names")
+## [1] "open"   "high"   "low"    "volume"
+## attr(,"variables")
+## [1] "close"  "open"   "high"   "low"    "volume"
+## attr(,"steps_ahead")
+## [1] 1
+## attr(,"prediction_x")
+## attr(,"prediction_x")$open
+## [1] 86.3875
+## 
+## attr(,"prediction_x")$high
+## [1] 87.8604
+## 
+## attr(,"prediction_x")$low
+## [1] 85.3674
+## 
+## attr(,"prediction_x")$volume
+## [1] 33311755
+## 
+## attr(,"system")
+##     close    open    high     low   volume
+## 1 86.3301 86.3875 87.8604 85.3674 33311755
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
+```
+
+
+``` r
 pred_5 <- predict(model, steps_ahead = 5)
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
+pred_5
+```
+
+```
+## [1] 86.3301 86.0448 85.4388 85.7633 85.9880
+## attr(,"y_name")
+## [1] "close"
+## attr(,"x_names")
+## [1] "open"   "high"   "low"    "volume"
+## attr(,"variables")
+## [1] "close"  "open"   "high"   "low"    "volume"
+## attr(,"steps_ahead")
+## [1] 5
+## attr(,"prediction_x")
+## attr(,"prediction_x")$open
+## [1] 86.3875 86.6744 86.0593 86.3069 86.6225
+## 
+## attr(,"prediction_x")$high
+## [1] 87.8604 87.9481 87.4504 87.5042 87.8782
+## 
+## attr(,"prediction_x")$low
+## [1] 85.3674 85.5644 84.9202 85.2543 85.4405
+## 
+## attr(,"prediction_x")$volume
+## [1] 33311755 39028010 36387377 32137987 33762048
+## 
+## attr(,"system")
+##     close    open    high     low   volume
+## 1 86.3301 86.3875 87.8604 85.3674 33311755
+## 2 86.0448 86.6744 87.9481 85.5644 39028010
+## 3 85.4388 86.0593 87.4504 84.9202 36387377
+## 4 85.7633 86.3069 87.5042 85.2543 32137987
+## 5 85.9880 86.6225 87.8782 85.4405 33762048
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
+```
+
+
+``` r
+attr(pred_5, "system")
+```
+
+```
+##     close    open    high     low   volume
+## 1 86.3301 86.3875 87.8604 85.3674 33311755
+## 2 86.0448 86.6744 87.9481 85.5644 39028010
+## 3 85.4388 86.0593 87.4504 84.9202 36387377
+## 4 85.7633 86.3069 87.5042 85.2543 32137987
+## 5 85.9880 86.6225 87.8782 85.4405 33762048
+```
+
+
+``` r
 ev_test <- evaluate(model, output, pred_5)
 ev_test$metrics
 ```
@@ -92,7 +180,11 @@ ev_test$metrics
 
 
 ``` r
-plot_ts_pred_mv(samp$train, samp$test, pred_all, variable = "close")
+plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
 
-![plot of chunk unnamed-chunk-6](fig/13-stock-close-random-forest-regression/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-9](fig/13-stock-close-random-forest-regression/unnamed-chunk-9-1.png)
+
+What this example shows
+- `ts_rf()` can be reused directly as the target learner inside `ts_regsw_mv()`.
+- The same learner family can be reused for the target and for all endogenous auxiliaries when the goal is a cleaner didactic comparison.

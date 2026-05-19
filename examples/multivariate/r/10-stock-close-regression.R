@@ -15,11 +15,14 @@ if (!is.null(attr(stocks, "url"))) {
 
 ticker_name <- if ("VALE3" %in% names(stocks)) "VALE3" else names(stocks)[1]
 ticker <- stocks[[ticker_name]]
-ticker <- ticker[, c("open", "high", "low", "close", "volume")]
+ticker <- ticker[, c("date", "open", "high", "low", "close", "volume")]
 ticker <- stats::na.omit(ticker)
+ticker <- subset(ticker, open > 0 & high > 0 & low > 0 & volume > 0)
+cutoff_date <- max(ticker$date) - 365 * 2
+ticker <- ticker[ticker$date > cutoff_date, ]
 
 mv <- ts_data_mv(
-  ticker,
+  ticker[, c("open", "high", "low", "close", "volume")],
   y = "close",
   x = c("open", "high", "low", "volume")
 )
@@ -74,18 +77,9 @@ pred_1
 pred_5 <- predict(model, steps_ahead = 5)
 pred_5
 
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
-pred_all
+attr(pred_5, "system")
 
-plot_close <- plot_ts_pred_mv(samp$train, samp$test, pred_all, variable = "close")
-plot_open <- plot_ts_pred_mv(samp$train, samp$test, pred_all, variable = "open")
-plot_volume <- plot_ts_pred_mv(samp$train, samp$test, pred_all, variable = "volume")
-
-plot_close
-
-plot_open
-
-plot_volume
+plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 
 output <- tail(samp$test$close, 5)
 ev_test <- evaluate(model, output, pred_5)

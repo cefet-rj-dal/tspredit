@@ -39,8 +39,10 @@ mv <- ts_data_mv(
 samp <- ts_sample(mv, test_size = 5)
 ```
 
-Before the multivariate model, we keep a direct univariate `ARIMA` baseline on
-the target.
+This notebook follows the same singular-experiment structure as the linear
+regression example, but now the target model is `ARIMAX` and the auxiliary
+paths are forecast by support models. Before that, we keep a direct univariate
+`ARIMA` baseline on the target.
 
 
 ``` r
@@ -77,34 +79,31 @@ model <- fit(model, samp$train)
 
 
 ``` r
+pred_1 <- predict(model, steps_ahead = 1)
+```
+
+```
+## Error in `forecast.forecast_ARIMA()`:
+## ! xreg should be a numeric matrix or a numeric vector
+```
+
+``` r
+pred_1
+```
+
+```
+## Error:
+## ! objeto 'pred_1' não encontrado
+```
+
+
+``` r
 pred_5 <- predict(model, steps_ahead = 5)
 pred_5
 ```
 
 ```
 ## [1] 0.5408026 0.4447323 0.3424647 0.2399858 0.1429504
-```
-
-
-``` r
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
-pred_all
-```
-
-```
-## $y
-## [1] 0.5408026 0.4447323 0.3424647 0.2399858 0.1429504
-## 
-## $x
-## $x$x1
-## [1] 0.3957914 0.3801112 0.3650522 0.3505898 0.3367004
-## 
-## $x$x2
-## [1]  0.62052022  0.43144081  0.22783805  0.02292366 -0.17082088
-## 
-## 
-## attr(,"class")
-## [1] "ts_mv_prediction"
 ## attr(,"y_name")
 ## [1] "y"
 ## attr(,"x_names")
@@ -113,6 +112,36 @@ pred_all
 ## [1] "y"  "x1" "x2"
 ## attr(,"steps_ahead")
 ## [1] 5
+## attr(,"prediction_x")
+## attr(,"prediction_x")$x1
+## [1] 0.3957914 0.3801112 0.3650522 0.3505898 0.3367004
+## 
+## attr(,"prediction_x")$x2
+## [1]  0.62052022  0.43144081  0.22783805  0.02292366 -0.17082088
+## 
+## attr(,"system")
+##           y        x1          x2
+## 1 0.5408026 0.3957914  0.62052022
+## 2 0.4447323 0.3801112  0.43144081
+## 3 0.3424647 0.3650522  0.22783805
+## 4 0.2399858 0.3505898  0.02292366
+## 5 0.1429504 0.3367004 -0.17082088
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
+```
+
+
+``` r
+attr(pred_5, "system")
+```
+
+```
+##           y        x1          x2
+## 1 0.5408026 0.3957914  0.62052022
+## 2 0.4447323 0.3801112  0.43144081
+## 3 0.3424647 0.3650522  0.22783805
+## 4 0.2399858 0.3505898  0.02292366
+## 5 0.1429504 0.3367004 -0.17082088
 ```
 
 

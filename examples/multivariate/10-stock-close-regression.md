@@ -93,6 +93,12 @@ ev_arima$metrics
 ## 1 6.769314 0.02329485 -2.204775
 ```
 
+The multivariate experiment below follows the same structure used in the model
+comparison notebooks that come next: fit the system, inspect the one-step
+target forecast, inspect the five-step target forecast, inspect the full
+multivariate forecast table, plot the target, and evaluate the target
+trajectory.
+
 This time, the auxiliary variables are not deterministic. We therefore assign
 real forecasting models to them. After a few trial configurations, a `Random
 Forest` worked better as the target learner for this particular stock holdout,
@@ -160,6 +166,32 @@ pred_1
 
 ```
 ## [1] 86.1927
+## attr(,"y_name")
+## [1] "close"
+## attr(,"x_names")
+## [1] "open"   "high"   "low"    "volume"
+## attr(,"variables")
+## [1] "close"  "open"   "high"   "low"    "volume"
+## attr(,"steps_ahead")
+## [1] 1
+## attr(,"prediction_x")
+## attr(,"prediction_x")$open
+## [1] 85.78517
+## 
+## attr(,"prediction_x")$high
+## [1] 85.99456
+## 
+## attr(,"prediction_x")$low
+## [1] 82.20966
+## 
+## attr(,"prediction_x")$volume
+## [1] 33076060
+## 
+## attr(,"system")
+##     close     open     high      low   volume
+## 1 86.1927 85.78517 85.99456 82.20966 33076060
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
 ```
 
 We then inspect the recursive multi-step path for the target.
@@ -172,36 +204,6 @@ pred_5
 
 ```
 ## [1] 86.1927 86.1368 85.7986 85.7490 85.7441
-```
-
-And finally the full recursive system, including the auxiliary predictions.
-
-
-``` r
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
-pred_all
-```
-
-```
-## $y
-## [1] 86.1927 86.1368 85.7986 85.7490 85.7441
-## 
-## $x
-## $x$open
-## [1] 85.78517 84.00956 85.78546 86.87644 85.34103
-## 
-## $x$high
-## [1] 85.99456 87.11913 87.63444 86.98998 86.67025
-## 
-## $x$low
-## [1] 82.20966 82.47191 82.21620 82.24374 82.37079
-## 
-## $x$volume
-## [1] 33076060 33506772 34513366 33013400 31279800
-## 
-## 
-## attr(,"class")
-## [1] "ts_mv_prediction"
 ## attr(,"y_name")
 ## [1] "close"
 ## attr(,"x_names")
@@ -210,44 +212,56 @@ pred_all
 ## [1] "close"  "open"   "high"   "low"    "volume"
 ## attr(,"steps_ahead")
 ## [1] 5
+## attr(,"prediction_x")
+## attr(,"prediction_x")$open
+## [1] 85.78517 84.00956 85.78546 86.87644 85.34103
+## 
+## attr(,"prediction_x")$high
+## [1] 85.99456 87.11913 87.63444 86.98998 86.67025
+## 
+## attr(,"prediction_x")$low
+## [1] 82.20966 82.47191 82.21620 82.24374 82.37079
+## 
+## attr(,"prediction_x")$volume
+## [1] 33076060 33506772 34513366 33013400 31279800
+## 
+## attr(,"system")
+##     close     open     high      low   volume
+## 1 86.1927 85.78517 85.99456 82.20966 33076060
+## 2 86.1368 84.00956 87.11913 82.47191 33506772
+## 3 85.7986 85.78546 87.63444 82.21620 34513366
+## 4 85.7490 86.87644 86.98998 82.24374 33013400
+## 5 85.7441 85.34103 86.67025 82.37079 31279800
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
 ```
 
-To keep the notebook readable, we plot the target and two representative
-auxiliaries.
+The synchronized multivariate forecast remains attached as an attribute of that
+target path.
 
 
 ``` r
-plot_close <- plot_ts_pred_mv(samp$train, samp$test, pred_all, variable = "close")
-plot_open <- plot_ts_pred_mv(samp$train, samp$test, pred_all, variable = "open")
-plot_volume <- plot_ts_pred_mv(samp$train, samp$test, pred_all, variable = "volume")
+attr(pred_5, "system")
 ```
 
-Target trajectory:
+```
+##     close     open     high      low   volume
+## 1 86.1927 85.78517 85.99456 82.20966 33076060
+## 2 86.1368 84.00956 87.11913 82.47191 33506772
+## 3 85.7986 85.78546 87.63444 82.21620 34513366
+## 4 85.7490 86.87644 86.98998 82.24374 33013400
+## 5 85.7441 85.34103 86.67025 82.37079 31279800
+```
+
+We keep the plot focused on the target trajectory, because the model-comparison
+notebooks after this one reuse the same visual convention.
 
 
 ``` r
-plot_close
+plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
 
-![plot of chunk unnamed-chunk-12](fig/10-stock-close-regression/unnamed-chunk-12-1.png)
-
-Auxiliary variable `open`:
-
-
-``` r
-plot_open
-```
-
-![plot of chunk unnamed-chunk-13](fig/10-stock-close-regression/unnamed-chunk-13-1.png)
-
-Auxiliary variable `volume`:
-
-
-``` r
-plot_volume
-```
-
-![plot of chunk unnamed-chunk-14](fig/10-stock-close-regression/unnamed-chunk-14-1.png)
+![plot of chunk unnamed-chunk-11](fig/10-stock-close-regression/unnamed-chunk-11-1.png)
 
 The held-out target values remain available for evaluation against the target
 forecast.

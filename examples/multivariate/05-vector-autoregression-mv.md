@@ -51,34 +51,42 @@ model <- fit(model, samp$train)
 
 
 ``` r
+pred_1 <- predict(model, steps_ahead = 1)
+pred_1
+```
+
+```
+## [1] 0.4121185
+## attr(,"y_name")
+## [1] "y"
+## attr(,"x_names")
+## [1] "x1" "x2"
+## attr(,"variables")
+## [1] "y"  "x1" "x2"
+## attr(,"steps_ahead")
+## [1] 1
+## attr(,"prediction_x")
+## attr(,"prediction_x")$x1
+## [1] 0.1738895
+## 
+## attr(,"prediction_x")$x2
+## [1] 0.6117765
+## 
+## attr(,"system")
+##           y        x1        x2
+## 1 0.4121185 0.1738895 0.6117765
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
+```
+
+
+``` r
 pred_5 <- predict(model, steps_ahead = 5)
 pred_5
 ```
 
 ```
 ## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
-```
-
-
-``` r
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
-pred_all
-```
-
-```
-## $y
-## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
-## 
-## $x
-## $x$x1
-## [1]  0.17388949 -0.07515112 -0.31951919 -0.54402111 -0.73469843
-## 
-## $x$x2
-## [1]  0.61177652  0.40357731  0.17028562 -0.07359361 -0.31289714
-## 
-## 
-## attr(,"class")
-## [1] "ts_mv_prediction"
 ## attr(,"y_name")
 ## [1] "y"
 ## attr(,"x_names")
@@ -87,6 +95,36 @@ pred_all
 ## [1] "y"  "x1" "x2"
 ## attr(,"steps_ahead")
 ## [1] 5
+## attr(,"prediction_x")
+## attr(,"prediction_x")$x1
+## [1]  0.17388949 -0.07515112 -0.31951919 -0.54402111 -0.73469843
+## 
+## attr(,"prediction_x")$x2
+## [1]  0.61177652  0.40357731  0.17028562 -0.07359361 -0.31289714
+## 
+## attr(,"system")
+##             y          x1          x2
+## 1  0.41211849  0.17388949  0.61177652
+## 2  0.17388949 -0.07515112  0.40357731
+## 3 -0.07515112 -0.31951919  0.17028562
+## 4 -0.31951919 -0.54402111 -0.07359361
+## 5 -0.54402111 -0.73469843 -0.31289714
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
+```
+
+
+``` r
+attr(pred_5, "system")
+```
+
+```
+##             y          x1          x2
+## 1  0.41211849  0.17388949  0.61177652
+## 2  0.17388949 -0.07515112  0.40357731
+## 3 -0.07515112 -0.31951919  0.17028562
+## 4 -0.31951919 -0.54402111 -0.07359361
+## 5 -0.54402111 -0.73469843 -0.31289714
 ```
 
 The target can still be evaluated exactly as in the target-centered models.
@@ -105,4 +143,4 @@ ev_test$metrics
 What this example shows
 - `ts_var()` models the multivariate system jointly, not just one regression equation for `y`.
 - Even in that systemic setting, the `tspredit` interface can keep a distinguished target variable.
-- `return_all = TRUE` is the key to inspect the full system forecast while preserving the target-centered default behavior.
+- The target forecast is returned directly, while the full system forecast remains available as an attribute of that vector.
