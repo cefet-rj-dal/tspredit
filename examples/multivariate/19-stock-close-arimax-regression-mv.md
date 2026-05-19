@@ -28,7 +28,23 @@ data(stocks)
 if (!is.null(attr(stocks, "url"))) {
   stocks <- loadfulldata(stocks)
 }
+```
 
+```
+## Warning in .rs.downloadFile(url = url, destfile = tf, quiet = TRUE, mode = "wb"): downloaded length 1742821 != reported length 3229450
+```
+
+```
+## Warning in .rs.downloadFile(url = url, destfile = tf, quiet = TRUE, mode = "wb"): URL
+## 'https://raw.githubusercontent.com/cefet-rj-dal/tspredbench/refs/heads/main/tspredit/stocks.RData': Timeout of 60 seconds was reached
+```
+
+```
+## Error in `.rs.downloadFile()`:
+## ! download from 'https://raw.githubusercontent.com/cefet-rj-dal/tspredbench/refs/heads/main/tspredit/stocks.RData' failed
+```
+
+``` r
 ticker_name <- if ("VALE3" %in% names(stocks)) "VALE3" else names(stocks)[1]
 ticker <- stocks[[ticker_name]]
 ticker <- ticker[, c("date", "open", "high", "low", "close", "volume")]
@@ -67,20 +83,37 @@ model <- fit(model, samp$train)
 
 ``` r
 pred_1 <- predict(model, steps_ahead = 1)
-```
-
-```
-## Error in `forecast.forecast_ARIMA()`:
-## ! xreg should be a numeric matrix or a numeric vector
-```
-
-``` r
 pred_1
 ```
 
 ```
-## Error:
-## ! objeto 'pred_1' não encontrado
+## [1] 3.853311
+## attr(,"y_name")
+## [1] "close"
+## attr(,"x_names")
+## [1] "open"   "high"   "low"    "volume"
+## attr(,"variables")
+## [1] "close"  "open"   "high"   "low"    "volume"
+## attr(,"steps_ahead")
+## [1] 1
+## attr(,"prediction_x")
+## attr(,"prediction_x")$open
+## [1] 3.75
+## 
+## attr(,"prediction_x")$high
+## [1] 3.891666
+## 
+## attr(,"prediction_x")$low
+## [1] 3.75
+## 
+## attr(,"prediction_x")$volume
+## [1] 1543513
+## 
+## attr(,"system")
+##      close open     high  low  volume
+## 1 3.853311 3.75 3.891666 3.75 1543513
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
 ```
 
 
@@ -90,7 +123,7 @@ pred_5
 ```
 
 ```
-## [1] 84.90874 85.79125 85.90288 86.42229 86.39645
+## [1] 3.853311 3.853311 3.853311 3.853311 3.853311
 ## attr(,"y_name")
 ## [1] "close"
 ## attr(,"x_names")
@@ -101,24 +134,24 @@ pred_5
 ## [1] 5
 ## attr(,"prediction_x")
 ## attr(,"prediction_x")$open
-## [1] 84.93073 85.17775 85.48636 85.67721 85.98083
+## [1] 3.75 3.75 3.75 3.75 3.75
 ## 
 ## attr(,"prediction_x")$high
-## [1] 85.94709 86.45342 86.94192 87.11054 87.41316
+## [1] 3.891666 3.891666 3.891666 3.891666 3.891666
 ## 
 ## attr(,"prediction_x")$low
-## [1] 84.00661 84.75538 84.70732 85.27819 85.21823
+## [1] 3.75 3.75 3.75 3.75 3.75
 ## 
 ## attr(,"prediction_x")$volume
-## [1] 23280511 23525822 23586540 23601568 23605288
+## [1] 1543513 1543513 1543513 1543513 1543513
 ## 
 ## attr(,"system")
-##      close     open     high      low   volume
-## 1 84.90874 84.93073 85.94709 84.00661 23280511
-## 2 85.79125 85.17775 86.45342 84.75538 23525822
-## 3 85.90288 85.48636 86.94192 84.70732 23586540
-## 4 86.42229 85.67721 87.11054 85.27819 23601568
-## 5 86.39645 85.98083 87.41316 85.21823 23605288
+##      close open     high  low  volume
+## 1 3.853311 3.75 3.891666 3.75 1543513
+## 2 3.853311 3.75 3.891666 3.75 1543513
+## 3 3.853311 3.75 3.891666 3.75 1543513
+## 4 3.853311 3.75 3.891666 3.75 1543513
+## 5 3.853311 3.75 3.891666 3.75 1543513
 ## attr(,"class")
 ## [1] "ts_mv_prediction" "numeric"
 ```
@@ -129,12 +162,12 @@ attr(pred_5, "system")
 ```
 
 ```
-##      close     open     high      low   volume
-## 1 84.90874 84.93073 85.94709 84.00661 23280511
-## 2 85.79125 85.17775 86.45342 84.75538 23525822
-## 3 85.90288 85.48636 86.94192 84.70732 23586540
-## 4 86.42229 85.67721 87.11054 85.27819 23601568
-## 5 86.39645 85.98083 87.41316 85.21823 23605288
+##      close open     high  low  volume
+## 1 3.853311 3.75 3.891666 3.75 1543513
+## 2 3.853311 3.75 3.891666 3.75 1543513
+## 3 3.853311 3.75 3.891666 3.75 1543513
+## 4 3.853311 3.75 3.891666 3.75 1543513
+## 5 3.853311 3.75 3.891666 3.75 1543513
 ```
 
 
@@ -144,8 +177,8 @@ ev_test$metrics
 ```
 
 ```
-##        mse      smape        R2
-## 1 6.331754 0.02290969 -1.997622
+##          mse     smape        R2
+## 1 0.09085392 0.0647933 -1.573411
 ```
 
 

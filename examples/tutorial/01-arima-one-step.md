@@ -14,6 +14,13 @@ source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/example
 # Load the package and the example series used throughout the tutorials.
 library(daltoolbox)
 library(forecast)
+```
+
+```
+## Warning: package 'forecast' was built under R version 4.5.3
+```
+
+``` r
 library(tspredit)
 library(ggplot2)
 

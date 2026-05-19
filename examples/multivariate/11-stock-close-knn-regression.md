@@ -31,25 +31,7 @@ data(stocks)
 if (!is.null(attr(stocks, "url"))) {
   stocks <- loadfulldata(stocks)
 }
-```
 
-```
-## Warning in .rs.downloadFile(url = url, destfile = tf, quiet = TRUE, mode = "wb"): downloaded length 2371566 != reported
-## length 3229450
-```
-
-```
-## Warning in .rs.downloadFile(url = url, destfile = tf, quiet = TRUE, mode = "wb"): URL
-## 'https://raw.githubusercontent.com/cefet-rj-dal/tspredbench/refs/heads/main/tspredit/stocks.RData': Timeout of 60
-## seconds was reached
-```
-
-```
-## Error in `.rs.downloadFile()`:
-## ! download from 'https://raw.githubusercontent.com/cefet-rj-dal/tspredbench/refs/heads/main/tspredit/stocks.RData' failed
-```
-
-``` r
 ticker_name <- if ("VALE3" %in% names(stocks)) "VALE3" else names(stocks)[1]
 ticker <- stocks[[ticker_name]]
 ticker <- ticker[, c("date", "open", "high", "low", "close", "volume")]
@@ -68,10 +50,10 @@ ts_head(mv, 3)
 ```
 
 ```
-##      close     open     high      low  volume
-## 1 3.500000 3.500000 3.542500 3.500000  585600
-## 2 3.416666 3.466666 3.474166 3.416666  782400
-## 3 3.416666 3.375000 3.416666 3.375000 1876800
+##      close  open  high   low   volume
+## 6057 65.72 65.99 66.14 65.51 12497900
+## 6058 65.51 65.50 65.87 65.04 17360200
+## 6059 68.00 66.49 68.32 66.34 40947100
 ```
 
 ``` r
@@ -79,7 +61,7 @@ nrow(ticker)
 ```
 
 ```
-## [1] 28
+## [1] 498
 ```
 
 
@@ -137,7 +119,7 @@ pred_1
 ```
 
 ```
-## [1] 3.880555
+## [1] 85.51667
 ## attr(,"y_name")
 ## [1] "close"
 ## attr(,"x_names")
@@ -148,20 +130,20 @@ pred_1
 ## [1] 1
 ## attr(,"prediction_x")
 ## attr(,"prediction_x")$open
-## [1] 3.833333
+## [1] 86.03
 ## 
 ## attr(,"prediction_x")$high
-## [1] 3.922222
+## [1] 87.75
 ## 
 ## attr(,"prediction_x")$low
-## [1] 3.819444
+## [1] 85.28333
 ## 
 ## attr(,"prediction_x")$volume
-## [1] 408000
+## [1] 23460867
 ## 
 ## attr(,"system")
-##      close     open     high      low volume
-## 1 3.880555 3.833333 3.922222 3.819444 408000
+##      close  open  high      low   volume
+## 1 85.51667 86.03 87.75 85.28333 23460867
 ## attr(,"class")
 ## [1] "ts_mv_prediction" "numeric"
 ```
@@ -173,7 +155,7 @@ pred_5
 ```
 
 ```
-## [1] 3.880555 4.019444 4.027777 4.097222 4.041666
+## [1] 85.51667 85.51667 85.51667 85.51667 85.51667
 ## attr(,"y_name")
 ## [1] "close"
 ## attr(,"x_names")
@@ -184,24 +166,24 @@ pred_5
 ## [1] 5
 ## attr(,"prediction_x")
 ## attr(,"prediction_x")$open
-## [1] 3.833333 3.847222 4.000000 4.075278 4.069444
+## [1] 86.03 86.03 86.03 86.03 86.03
 ## 
 ## attr(,"prediction_x")$high
-## [1] 3.922222 3.963888 4.027777 4.125000 4.097222
+## [1] 87.75 87.75 87.75 87.75 87.75
 ## 
 ## attr(,"prediction_x")$low
-## [1] 3.819444 3.944444 4.005833 4.041944 4.008333
+## [1] 85.28333 84.95000 84.95000 84.95000 84.95000
 ## 
 ## attr(,"prediction_x")$volume
-## [1]  408000 1808000 1726400  342400  366400
+## [1] 23460867 18097367 19815867 20675567 20406133
 ## 
 ## attr(,"system")
-##      close     open     high      low  volume
-## 1 3.880555 3.833333 3.922222 3.819444  408000
-## 2 4.019444 3.847222 3.963888 3.944444 1808000
-## 3 4.027777 4.000000 4.027777 4.005833 1726400
-## 4 4.097222 4.075278 4.125000 4.041944  342400
-## 5 4.041666 4.069444 4.097222 4.008333  366400
+##      close  open  high      low   volume
+## 1 85.51667 86.03 87.75 85.28333 23460867
+## 2 85.51667 86.03 87.75 84.95000 18097367
+## 3 85.51667 86.03 87.75 84.95000 19815867
+## 4 85.51667 86.03 87.75 84.95000 20675567
+## 5 85.51667 86.03 87.75 84.95000 20406133
 ## attr(,"class")
 ## [1] "ts_mv_prediction" "numeric"
 ```
@@ -212,12 +194,12 @@ attr(pred_5, "system")
 ```
 
 ```
-##      close     open     high      low  volume
-## 1 3.880555 3.833333 3.922222 3.819444  408000
-## 2 4.019444 3.847222 3.963888 3.944444 1808000
-## 3 4.027777 4.000000 4.027777 4.005833 1726400
-## 4 4.097222 4.075278 4.125000 4.041944  342400
-## 5 4.041666 4.069444 4.097222 4.008333  366400
+##      close  open  high      low   volume
+## 1 85.51667 86.03 87.75 85.28333 23460867
+## 2 85.51667 86.03 87.75 84.95000 18097367
+## 3 85.51667 86.03 87.75 84.95000 19815867
+## 4 85.51667 86.03 87.75 84.95000 20675567
+## 5 85.51667 86.03 87.75 84.95000 20406133
 ```
 
 
@@ -227,8 +209,8 @@ ev_test$metrics
 ```
 
 ```
-##          mse      smape         R2
-## 1 0.05074129 0.05299035 -0.4372322
+##        mse      smape        R2
+## 1 6.295635 0.02349538 -1.980523
 ```
 
 

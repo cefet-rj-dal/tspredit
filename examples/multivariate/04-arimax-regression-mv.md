@@ -80,20 +80,31 @@ model <- fit(model, samp$train)
 
 ``` r
 pred_1 <- predict(model, steps_ahead = 1)
-```
-
-```
-## Error in `forecast.forecast_ARIMA()`:
-## ! xreg should be a numeric matrix or a numeric vector
-```
-
-``` r
 pred_1
 ```
 
 ```
-## Error:
-## ! objeto 'pred_1' não encontrado
+## [1] 0.5408026
+## attr(,"y_name")
+## [1] "y"
+## attr(,"x_names")
+## [1] "x1" "x2"
+## attr(,"variables")
+## [1] "y"  "x1" "x2"
+## attr(,"steps_ahead")
+## [1] 1
+## attr(,"prediction_x")
+## attr(,"prediction_x")$x1
+## [1] 0.3957914
+## 
+## attr(,"prediction_x")$x2
+## [1] 0.6205202
+## 
+## attr(,"system")
+##           y        x1        x2
+## 1 0.5408026 0.3957914 0.6205202
+## attr(,"class")
+## [1] "ts_mv_prediction" "numeric"
 ```
 
 
