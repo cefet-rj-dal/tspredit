@@ -31,7 +31,7 @@ ticker <- stocks[[ticker_name]]
 ticker <- ticker[, c("date", "open", "high", "low", "close", "volume")]
 ticker <- stats::na.omit(ticker)
 ticker <- subset(ticker, open > 0 & high > 0 & low > 0 & volume > 0)
-cutoff_date <- max(ticker$date) - 365 * 2
+cutoff_date <- max(ticker$date) - 365
 ticker <- ticker[ticker$date > cutoff_date, ]
 
 mv <- ts_data_mv(
