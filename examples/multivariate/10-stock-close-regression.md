@@ -26,6 +26,9 @@ calendar auxiliaries, we use market variables from the packaged `stocks`
 collection. The target is the closing price, while the other fields behave as
 non-deterministic auxiliary series.
 
+For a faster didactic run, we keep only the last two years of valid
+observations.
+
 
 ``` r
 data(stocks)
@@ -36,11 +39,14 @@ if (!is.null(attr(stocks, "url"))) {
 
 ticker_name <- if ("VALE3" %in% names(stocks)) "VALE3" else names(stocks)[1]
 ticker <- stocks[[ticker_name]]
-ticker <- ticker[, c("open", "high", "low", "close", "volume")]
+ticker <- ticker[, c("date", "open", "high", "low", "close", "volume")]
 ticker <- stats::na.omit(ticker)
+ticker <- subset(ticker, open > 0 & high > 0 & low > 0 & volume > 0)
+cutoff_date <- max(ticker$date) - 365 * 2
+ticker <- ticker[ticker$date > cutoff_date, ]
 
 mv <- ts_data_mv(
-  ticker,
+  ticker[, c("open", "high", "low", "close", "volume")],
   y = "close",
   x = c("open", "high", "low", "volume")
 )
@@ -49,10 +55,10 @@ ts_head(mv, 3)
 ```
 
 ```
-##      close     open     high      low  volume
-## 1 3.500000 3.500000 3.542500 3.500000  585600
-## 2 3.416666 3.466666 3.474166 3.416666  782400
-## 3 3.416666 3.375000 3.416666 3.375000 1876800
+##      close  open  high   low   volume
+## 6057 65.72 65.99 66.14 65.51 12497900
+## 6058 65.51 65.50 65.87 65.04 17360200
+## 6059 68.00 66.49 68.32 66.34 40947100
 ```
 
 The aligned object can now be split in time just like any other target-centered
@@ -84,7 +90,7 @@ ev_arima$metrics
 
 ```
 ##        mse      smape        R2
-## 1 4.904158 0.02269408 -2.053065
+## 1 6.769314 0.02329485 -2.204775
 ```
 
 This time, the auxiliary variables are not deterministic. We therefore assign
@@ -153,7 +159,7 @@ pred_1
 ```
 
 ```
-## [1] 88.5635
+## [1] 86.1927
 ```
 
 We then inspect the recursive multi-step path for the target.
@@ -165,7 +171,7 @@ pred_5
 ```
 
 ```
-## [1] 88.5635 87.4750 87.6003 87.4603 87.5465
+## [1] 86.1927 86.1368 85.7986 85.7490 85.7441
 ```
 
 And finally the full recursive system, including the auxiliary predictions.
@@ -178,20 +184,20 @@ pred_all
 
 ```
 ## $y
-## [1] 88.5635 87.4750 87.6003 87.4603 87.5465
+## [1] 86.1927 86.1368 85.7986 85.7490 85.7441
 ## 
 ## $x
 ## $x$open
-## [1] 85.80139 88.61880 89.57019 87.88007 88.15521
+## [1] 85.78517 84.00956 85.78546 86.87644 85.34103
 ## 
 ## $x$high
-## [1] 90.64456 90.82650 89.66789 89.05472 89.18879
+## [1] 85.99456 87.11913 87.63444 86.98998 86.67025
 ## 
 ## $x$low
-## [1] 86.76855 86.95671 86.91732 87.05260 86.91490
+## [1] 82.20966 82.47191 82.21620 82.24374 82.37079
 ## 
 ## $x$volume
-## [1] 34433500 35625440 34347888 32881186 34999543
+## [1] 33076060 33506772 34513366 33013400 31279800
 ## 
 ## 
 ## attr(,"class")
@@ -254,8 +260,8 @@ ev_test$metrics
 ```
 
 ```
-##       mse      smape        R2
-## 1 1.19053 0.01033564 0.2588403
+##        mse      smape        R2
+## 1 4.312106 0.01930004 -1.041467
 ```
 
 We can now compare the direct closing-price baseline against the multivariate
@@ -270,9 +276,9 @@ rbind(
 ```
 
 ```
-##                  mse      smape         R2
-## ARIMA_close 4.904158 0.02269408 -2.0530650
-## MV_mixed    1.190530 0.01033564  0.2588403
+##                  mse      smape        R2
+## ARIMA_close 6.769314 0.02329485 -2.204775
+## MV_mixed    4.312106 0.01930004 -1.041467
 ```
 
 What this example shows

@@ -32,3 +32,10 @@ The examples in this folder now follow the most didactic order:
 - [08-deterministic-auxiliary-models.md](08-deterministic-auxiliary-models.md) - inspect when auxiliary variables should use deterministic pipelines such as `ts_deterministic()`, `ts_periodic()`, and `ts_persist()`.
 - [09-target-centered-regression.md](09-target-centered-regression.md) - build a complete multivariate forecasting system with deterministic auxiliary variables and inspect one-step and multistep prediction.
 - [10-stock-close-regression.md](10-stock-close-regression.md) - forecast stock closing prices from non-deterministic auxiliary variables and inspect a mixed workflow with MLP, ELM, DARIMA, and WARMA submodels.
+- [11-stock-close-knn-regression.md](11-stock-close-knn-regression.md) - keep the stock scenario fixed and use KNN as the target learner.
+- [12-stock-close-svm-regression.md](12-stock-close-svm-regression.md) - keep the stock scenario fixed and use SVM as the target learner.
+- [13-stock-close-random-forest-regression.md](13-stock-close-random-forest-regression.md) - keep the stock scenario fixed and use Random Forest as the target learner.
+- [14-stock-close-mlp-regression.md](14-stock-close-mlp-regression.md) - keep the stock scenario fixed and use MLP as the target learner.
+- [15-stock-close-elm-regression.md](15-stock-close-elm-regression.md) - keep the stock scenario fixed and use ELM as the target learner.
+- [16-stock-close-conv1d-regression.md](16-stock-close-conv1d-regression.md) - keep the stock scenario fixed and use Conv1D as the target learner.
+- [17-stock-close-lstm-regression.md](17-stock-close-lstm-regression.md) - keep the stock scenario fixed and use LSTM as the target learner.
