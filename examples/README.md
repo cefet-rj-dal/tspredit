@@ -15,6 +15,7 @@ If you are new to the package, begin with the tutorial track. After that, use th
 - [tsdata](/examples/tsdata/README.md) - foundational objects and operations used by the rest of the package: `ts_data`, projection into `X` and `y`, and temporal train/test splitting.
 - [datasets](/examples/datasets/README.md) - packaged datasets organized from the synthetic `tsd` example to forecasting benchmarks, public indicator collections, and financial series.
 - [filter](/examples/filter/README.md) - filtering strategies organized from baseline and smoothing methods to robust, frequency-based, decomposition-based, state-space, and seasonal techniques.
+- [lagmapping](/examples/lagmapping/README.md) - lag-selection strategies that decide which past observations are exposed to the predictor, from positional baselines to correlation-driven and supervised mappings.
 - [augment](/examples/augment/README.md) - augmentation strategies organized from the no-augmentation baseline to shape perturbations and recency-aware schemes.
 - [normalization](/examples/normalization/README.md) - normalization strategies organized from no scaling to global, local, adaptive, and differencing-based transformations.
 - [prediction](/examples/prediction/README.md) - forecasting models organized from ARIMA baselines to machine-learning, neural, and tuning workflows.
@@ -30,7 +31,11 @@ If you prefer to assemble understanding by component, this order is usually the 
 1. `tsdata`
 2. `tutorial`
 3. `datasets`
-4. `filter`, `augment`, and `normalization`
-5. `prediction`
-6. `multivariate`
-7. `custom`
+4. `filter`
+5. `lagmapping`
+6. `augment` and `normalization`
+7. `prediction`
+8. `multivariate`
+9. `custom`
+
+This ordering is didactic because it follows the forecasting pipeline more closely: first understand how the series is represented, then inspect the available data, then decide whether to smooth the signal, then decide which lags should become predictors, then apply data expansion and scaling, and only after that compare forecasting models and more advanced extensions.
