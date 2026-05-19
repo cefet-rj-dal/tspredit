@@ -1,0 +1,116 @@
+## Stock Closing-Price Forecasting with MLP as Target Learner
+
+About the method
+- This example keeps the same stock-closing-price scenario, but now the target `close` is forecast with `ts_mlp()`.
+
+Didactic goal: inspect how a multilayer perceptron behaves as the target learner inside the target-centered multivariate workflow.
+
+
+``` r
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Stock closing-price forecasting with MLP as target learner
+
+# Installing packages (if needed)
+# install.packages("tspredit")
+```
+
+
+``` r
+library(daltoolbox)
+library(tspredit)
+```
+
+
+``` r
+data(stocks)
+
+if (!is.null(attr(stocks, "url"))) {
+  stocks <- loadfulldata(stocks)
+}
+```
+
+```
+## Warning in .rs.downloadFile(url = url, destfile = tf, quiet = TRUE, mode = "wb"): downloaded length 98286 != reported
+## length 3229450
+```
+
+```
+## Warning in .rs.downloadFile(url = url, destfile = tf, quiet = TRUE, mode = "wb"): URL
+## 'https://raw.githubusercontent.com/cefet-rj-dal/tspredbench/refs/heads/main/tspredit/stocks.RData': Timeout of 60
+## seconds was reached
+```
+
+```
+## Error in `.rs.downloadFile()`:
+## ! download from 'https://raw.githubusercontent.com/cefet-rj-dal/tspredbench/refs/heads/main/tspredit/stocks.RData' failed
+```
+
+``` r
+ticker_name <- if ("VALE3" %in% names(stocks)) "VALE3" else names(stocks)[1]
+ticker <- stocks[[ticker_name]]
+ticker <- ticker[, c("date", "open", "high", "low", "close", "volume")]
+ticker <- stats::na.omit(ticker)
+ticker <- subset(ticker, open > 0 & high > 0 & low > 0 & volume > 0)
+cutoff_date <- max(ticker$date) - 365 * 2
+ticker <- ticker[ticker$date > cutoff_date, ]
+
+mv <- ts_data_mv(
+  ticker[, c("open", "high", "low", "close", "volume")],
+  y = "close",
+  x = c("open", "high", "low", "volume")
+)
+
+samp <- ts_sample(mv, test_size = 5)
+output <- tail(samp$test$close, 5)
+```
+
+
+``` r
+model <- ts_regsw_mv(
+  model_y = ts_mv_spec(
+    ts_mlp(ts_norm_gminmax(), input_size = 4, size = 4, decay = 0),
+    variables = c("close", "open", "high", "low")
+  ),
+  models_x = list(
+    open = ts_mv_spec(
+      ts_mlp(ts_norm_gminmax(), input_size = 3, size = 4, decay = 0),
+      variables = c("open", "close", "high")
+    ),
+    high = ts_mv_spec(
+      ts_mlp(ts_norm_gminmax(), input_size = 3, size = 4, decay = 0),
+      variables = c("high", "close", "open")
+    ),
+    low = ts_mv_spec(
+      ts_mlp(ts_norm_gminmax(), input_size = 3, size = 4, decay = 0),
+      variables = c("low", "close", "open")
+    ),
+    volume = ts_mv_spec(
+      ts_mlp(ts_norm_gminmax(), input_size = 3, size = 4, decay = 0),
+      variables = c("volume", "close", "open")
+    )
+  ),
+  window_size = 5
+)
+```
+
+
+``` r
+set_example_seed()
+model <- fit(model, samp$train)
+pred_5 <- predict(model, steps_ahead = 5)
+pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
+ev_test <- evaluate(model, output, pred_5)
+ev_test$metrics
+```
+
+```
+##        mse     smape        R2
+## 1 1.597411 0.1814958 -44.24621
+```
+
+
+``` r
+plot_ts_pred_mv(samp$train, samp$test, pred_all, variable = "close")
+```
+
+![plot of chunk unnamed-chunk-6](fig/14-stock-close-mlp-regression/unnamed-chunk-6-1.png)

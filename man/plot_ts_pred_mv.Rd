@@ -24,8 +24,10 @@ context for the plot.}
 observations. When supplied, the observed future is shown together with the
 recursive predictions.}
 
-\item{prediction}{A \code{ts_mv_prediction} object returned by
-\code{predict(ts_regsw_mv, return_all = TRUE)}.}
+\item{prediction}{Multivariate forecast returned by \code{predict()} in the
+multivariate workflows. The target forecast is returned as a vector and the
+full system forecast is stored in attributes. Older list-based
+\code{ts_mv_prediction} objects are also accepted for compatibility.}
 
 \item{variable}{Optional character scalar. Name of a single variable to plot.
 When omitted, plots are returned for every variable in the prediction.}

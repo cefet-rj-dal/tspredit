@@ -84,10 +84,10 @@ ts_mv_spec <- function(model, variables = NULL, lags = NULL, transforms = NULL) 
 #' - raw-series auxiliary models such as `ts_arima()` currently use only their
 #'   own variable as input
 #'
-#' The method can return either:
-#' - only the forecast of `y`
-#' - or the full recursive path of `y` and all auxiliary predictions when
-#'   `return_all = TRUE`
+#' The method returns the forecast of `y` as a numeric vector. The recursive
+#' path of `y` and all auxiliary predictions is attached to that vector as
+#' attributes, so the interface stays target-centered without discarding the
+#' system forecast.
 #'
 #'@param model_y A `ts_mv_spec` or a fitted-model constructor for the target
 #' variable.
@@ -120,7 +120,8 @@ ts_mv_spec <- function(model, variables = NULL, lags = NULL, transforms = NULL) 
 #'model <- fit(model, samp$train)
 #'predict(model, steps_ahead = 1)
 #'predict(model, steps_ahead = 5)
-#'predict(model, steps_ahead = 5, return_all = TRUE)
+#'pred <- predict(model, steps_ahead = 5)
+#'attr(pred, "system")
 #'@export
 ts_regsw_mv <- function(model_y, models_x, window_size = 30) {
   if (missing(model_y)) {
@@ -305,13 +306,25 @@ mv_prepare_one_step_input <- function(data, spec) {
 }
 
 mv_compose_prediction <- function(object, prediction_y, prediction_x) {
-  result <- list(y = prediction_y, x = prediction_x)
-  class(result) <- "ts_mv_prediction"
-  attr(result, "y_name") <- object$y_name
-  attr(result, "x_names") <- object$x_names
-  attr(result, "variables") <- c(object$y_name, object$x_names)
-  attr(result, "steps_ahead") <- length(prediction_y)
-  result
+  prediction_y <- as.vector(prediction_y)
+  prediction_x <- lapply(prediction_x, as.vector)
+
+  system_prediction <- data.frame(
+    setNames(list(prediction_y), object$y_name),
+    as.data.frame(prediction_x, optional = TRUE, stringsAsFactors = FALSE),
+    check.names = FALSE
+  )
+  system_prediction <- system_prediction[, c(object$y_name, object$x_names), drop = FALSE]
+
+  attr(prediction_y, "y_name") <- object$y_name
+  attr(prediction_y, "x_names") <- object$x_names
+  attr(prediction_y, "variables") <- c(object$y_name, object$x_names)
+  attr(prediction_y, "steps_ahead") <- length(prediction_y)
+  attr(prediction_y, "prediction_x") <- prediction_x
+  attr(prediction_y, "system") <- system_prediction
+  class(prediction_y) <- unique(c("ts_mv_prediction", class(prediction_y)))
+
+  prediction_y
 }
 
 mv_fit_submodel <- function(model, input, output, series = NULL) {
@@ -477,9 +490,5 @@ predict.ts_regsw_mv <- function(object, x = NULL, steps_ahead = 1, return_all = 
   }
 
   object$history <- history
-  if (return_all) {
-    return(mv_compose_prediction(object, prediction_y, prediction_x))
-  }
-
-  prediction_y
+  mv_compose_prediction(object, prediction_y, prediction_x)
 }

@@ -23,13 +23,6 @@ We start by loading the packages used throughout this example.
 # Loading the packages
 library(daltoolbox)
 library(daltoolboxdp)
-```
-
-```
-## Warning: pacote 'daltoolboxdp' foi compilado no R versão 4.5.3
-```
-
-``` r
 library(tspredit)
 ```
 

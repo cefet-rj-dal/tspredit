@@ -19,8 +19,10 @@
 #'@param future Optional `ts_data_mv` or data.frame with the held-out aligned
 #' observations. When supplied, the observed future is shown together with the
 #' recursive predictions.
-#'@param prediction A `ts_mv_prediction` object returned by
-#' `predict(ts_regsw_mv, return_all = TRUE)`.
+#'@param prediction Multivariate forecast returned by `predict()` in the
+#' multivariate workflows. The target forecast is returned as a vector and the
+#' full system forecast is stored in attributes. Older list-based
+#' `ts_mv_prediction` objects are also accepted for compatibility.
 #'@param variable Optional character scalar. Name of a single variable to plot.
 #' When omitted, plots are returned for every variable in the prediction.
 #'@param label_x x-axis label.
@@ -57,7 +59,7 @@ plot_ts_pred_mv <- function(history, future = NULL, prediction, variable = NULL,
                             color = "black", color_adjust = "blue",
                             color_prediction = "green") {
   if (!inherits(prediction, "ts_mv_prediction")) {
-    stop("prediction must be a ts_mv_prediction object returned by predict(..., return_all = TRUE).")
+    stop("prediction must be a multivariate prediction returned by predict().")
   }
 
   history <- as.data.frame(history)
@@ -68,9 +70,18 @@ plot_ts_pred_mv <- function(history, future = NULL, prediction, variable = NULL,
   variables <- attr(prediction, "variables")
   y_name <- attr(prediction, "y_name")
   x_names <- attr(prediction, "x_names")
+  if (is.null(variables) || is.null(y_name) || is.null(x_names)) {
+    stop("prediction is missing multivariate metadata attributes.")
+  }
 
-  prediction_values <- c(list(prediction$y), prediction$x)
-  names(prediction_values) <- c(y_name, x_names)
+  system_prediction <- attr(prediction, "system")
+  if (is.null(system_prediction)) {
+    prediction_values <- c(list(as.vector(prediction)), attr(prediction, "prediction_x"))
+    names(prediction_values) <- c(y_name, x_names)
+  } else {
+    prediction_values <- lapply(c(y_name, x_names), function(name) as.vector(system_prediction[[name]]))
+    names(prediction_values) <- c(y_name, x_names)
+  }
 
   if (!is.null(variable)) {
     if (!(variable %in% variables)) {

@@ -37,6 +37,11 @@ mv <- ts_data_mv(
 samp <- ts_sample(mv, test_size = 5)
 ```
 
+The experiment now follows the same structure used in the other singular
+multivariate notebooks: define the split, fit the model, inspect the one-step
+forecast, inspect the multi-step target forecast, inspect the synchronized
+system forecast, and then evaluate the target trajectory.
+
 The formula makes the relation between the target and the auxiliaries explicit.
 
 ```{r}
@@ -57,12 +62,11 @@ pred_5 <- predict(model, x = samp$test, steps_ahead = 5)
 pred_5
 ```
 
-When we ask for the complete object, the target forecast is returned together
-with the auxiliary values that were used in the horizon.
+The prediction itself is the target path. The synchronized multivariate
+forecast is attached as an attribute.
 
 ```{r}
-pred_all <- predict(model, x = samp$test, steps_ahead = 5, return_all = TRUE)
-pred_all
+attr(pred_5, "system")
 ```
 
 The target values remain available for direct evaluation.

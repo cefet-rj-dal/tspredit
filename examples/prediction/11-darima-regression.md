@@ -21,24 +21,6 @@ We start by loading the packages used throughout this example.
 ``` r
 # Loading the packages
 library(daltoolbox)
-```
-
-```
-## Warning: pacote 'daltoolbox' foi compilado no R versão 4.5.3
-```
-
-```
-## 
-## Anexando pacote: 'daltoolbox'
-```
-
-```
-## O seguinte objeto é mascarado por 'package:base':
-## 
-##     transform
-```
-
-``` r
 library(tspredit)
 ```
 
@@ -55,14 +37,10 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
-##             t2        t1        t0
-## [1,] 0.9839859 0.9092974 0.7780732
-## [2,] 0.9092974 0.7780732 0.5984721
-## [3,] 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
 ```
 
 Before moving on, we visualize the original series so the effect of delegated
@@ -72,13 +50,6 @@ differencing can be interpreted later in the pipeline.
 ``` r
 # Original series visualization
 library(ggplot2)
-```
-
-```
-## Warning: pacote 'ggplot2' foi compilado no R versão 4.5.3
-```
-
-``` r
 plot_ts(x = tsd$x, y = tsd$y) + theme(text = element_text(size = 16))
 ```
 

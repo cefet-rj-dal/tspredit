@@ -1,0 +1,81 @@
+## Stock Closing-Price Forecasting with Singular Vector Autoregression
+
+About the method
+- This example closes the singular stock battery with `ts_var()`.
+- The whole aligned system is modeled jointly, but `close` remains the distinguished target returned by `predict()`.
+
+Didactic goal: inspect how a systemic singular model behaves on the same stock scenario used in the sliding-window battery.
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Stock closing-price forecasting with singular vector autoregression
+
+# Installing packages (if needed)
+# install.packages("tspredit")
+```
+
+```{r}
+library(daltoolbox)
+library(tspredit)
+```
+
+```{r}
+data(stocks)
+
+if (!is.null(attr(stocks, "url"))) {
+  stocks <- loadfulldata(stocks)
+}
+
+ticker_name <- if ("VALE3" %in% names(stocks)) "VALE3" else names(stocks)[1]
+ticker <- stocks[[ticker_name]]
+ticker <- ticker[, c("date", "open", "high", "low", "close", "volume")]
+ticker <- stats::na.omit(ticker)
+ticker <- subset(ticker, open > 0 & high > 0 & low > 0 & volume > 0)
+cutoff_date <- max(ticker$date) - 365 * 2
+ticker <- ticker[ticker$date > cutoff_date, ]
+
+mv <- ts_data_mv(
+  ticker[, c("open", "high", "low", "close", "volume")],
+  y = "close",
+  x = c("open", "high", "low", "volume")
+)
+
+samp <- ts_sample(mv, test_size = 5)
+output <- tail(samp$test$close, 5)
+```
+
+The vector autoregression works directly on the aligned multivariate system and
+returns the target path together with the synchronized system forecast.
+
+```{r}
+model <- ts_var(p_max = 3)
+model <- fit(model, samp$train)
+```
+
+```{r}
+pred_1 <- predict(model, steps_ahead = 1)
+pred_1
+```
+
+```{r}
+pred_5 <- predict(model, steps_ahead = 5)
+pred_5
+```
+
+```{r}
+attr(pred_5, "system")
+```
+
+```{r}
+ev_test <- evaluate(model, output, pred_5)
+ev_test$metrics
+```
+
+```{r}
+plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
+```
+
+What this example shows
+- `ts_var()` models the aligned stock system jointly in the singular multivariate branch.
+- Even in this systemic setting, the package keeps `close` as the semantic target returned by `predict()`.
+- The full system forecast remains available through the multivariate prediction attributes.

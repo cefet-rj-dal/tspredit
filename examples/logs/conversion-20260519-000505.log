@@ -1,0 +1,155 @@
+Conversion run started at 2026-05-19 00:05:05
+Working directory: C:/Git/cefet-rj-dal/tspredit
+
+================================================================================
+[2026-05-19 00:20:50] rmd->docx
+file: Rmd/multivariate/04-arimax-regression-mv.Rmd
+message: xreg should be a numeric matrix or a numeric vector
+call: forecast.forecast_ARIMA(object$model, h = steps_ahead, xreg = as.matrix(future_x))
+stack:
+001: source("C:/Git/cefet-rj-dal/tspredit/Rmd/conversor.R")
+002: withVisible(eval(ei, envir))
+003: eval(ei, envir)
+004: eval(ei, envir)
+005: run_phase(texs, "rmd->docx", convert_rmd_docx)
+006: tryCatch({     converter(input)     list(ok = TRUE, input = input, phase = phase, message = NULL) }, error = function(err) {     record_condition(phase, input, err)     list(ok = FALSE, input = input, phase = phase, message = conditionMessage(err)) })
+007: tryCatchList(expr, classes, parentenv, handlers)
+008: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+009: value[[3L]](cond)
+010: record_condition(phase, input, err)
+
+================================================================================
+[2026-05-19 00:21:12] rmd->docx
+file: Rmd/multivariate/09-target-centered-regression.Rmd
+message: prediction must be a ts_mv_prediction object returned by predict(..., return_all = TRUE).
+call: plot_ts_pred_mv(samp$train, samp$test, pred_all)
+stack:
+001: source("C:/Git/cefet-rj-dal/tspredit/Rmd/conversor.R")
+002: withVisible(eval(ei, envir))
+003: eval(ei, envir)
+004: eval(ei, envir)
+005: run_phase(texs, "rmd->docx", convert_rmd_docx)
+006: tryCatch({     converter(input)     list(ok = TRUE, input = input, phase = phase, message = NULL) }, error = function(err) {     record_condition(phase, input, err)     list(ok = FALSE, input = input, phase = phase, message = conditionMessage(err)) })
+007: tryCatchList(expr, classes, parentenv, handlers)
+008: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+009: value[[3L]](cond)
+010: record_condition(phase, input, err)
+
+================================================================================
+[2026-05-19 00:21:15] rmd->docx
+file: Rmd/multivariate/10-stock-close-regression.Rmd
+message: prediction must be a ts_mv_prediction object returned by predict(..., return_all = TRUE).
+call: plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
+stack:
+001: source("C:/Git/cefet-rj-dal/tspredit/Rmd/conversor.R")
+002: withVisible(eval(ei, envir))
+003: eval(ei, envir)
+004: eval(ei, envir)
+005: run_phase(texs, "rmd->docx", convert_rmd_docx)
+006: tryCatch({     converter(input)     list(ok = TRUE, input = input, phase = phase, message = NULL) }, error = function(err) {     record_condition(phase, input, err)     list(ok = FALSE, input = input, phase = phase, message = conditionMessage(err)) })
+007: tryCatchList(expr, classes, parentenv, handlers)
+008: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+009: value[[3L]](cond)
+010: record_condition(phase, input, err)
+
+================================================================================
+[2026-05-19 00:21:17] rmd->docx
+file: Rmd/multivariate/11-stock-close-knn-regression.Rmd
+message: prediction must be a ts_mv_prediction object returned by predict(..., return_all = TRUE).
+call: plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
+stack:
+001: source("C:/Git/cefet-rj-dal/tspredit/Rmd/conversor.R")
+002: withVisible(eval(ei, envir))
+003: eval(ei, envir)
+004: eval(ei, envir)
+005: run_phase(texs, "rmd->docx", convert_rmd_docx)
+006: tryCatch({     converter(input)     list(ok = TRUE, input = input, phase = phase, message = NULL) }, error = function(err) {     record_condition(phase, input, err)     list(ok = FALSE, input = input, phase = phase, message = conditionMessage(err)) })
+007: tryCatchList(expr, classes, parentenv, handlers)
+008: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+009: value[[3L]](cond)
+010: record_condition(phase, input, err)
+
+================================================================================
+[2026-05-19 00:21:19] rmd->docx
+file: Rmd/multivariate/12-stock-close-svm-regression.Rmd
+message: prediction must be a ts_mv_prediction object returned by predict(..., return_all = TRUE).
+call: plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
+stack:
+001: source("C:/Git/cefet-rj-dal/tspredit/Rmd/conversor.R")
+002: withVisible(eval(ei, envir))
+003: eval(ei, envir)
+004: eval(ei, envir)
+005: run_phase(texs, "rmd->docx", convert_rmd_docx)
+006: tryCatch({     converter(input)     list(ok = TRUE, input = input, phase = phase, message = NULL) }, error = function(err) {     record_condition(phase, input, err)     list(ok = FALSE, input = input, phase = phase, message = conditionMessage(err)) })
+007: tryCatchList(expr, classes, parentenv, handlers)
+008: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+009: value[[3L]](cond)
+010: record_condition(phase, input, err)
+
+================================================================================
+[2026-05-19 00:21:21] rmd->docx
+file: Rmd/multivariate/13-stock-close-random-forest-regression.Rmd
+message: prediction must be a ts_mv_prediction object returned by predict(..., return_all = TRUE).
+call: plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
+stack:
+001: source("C:/Git/cefet-rj-dal/tspredit/Rmd/conversor.R")
+002: withVisible(eval(ei, envir))
+003: eval(ei, envir)
+004: eval(ei, envir)
+005: run_phase(texs, "rmd->docx", convert_rmd_docx)
+006: tryCatch({     converter(input)     list(ok = TRUE, input = input, phase = phase, message = NULL) }, error = function(err) {     record_condition(phase, input, err)     list(ok = FALSE, input = input, phase = phase, message = conditionMessage(err)) })
+007: tryCatchList(expr, classes, parentenv, handlers)
+008: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+009: value[[3L]](cond)
+010: record_condition(phase, input, err)
+
+================================================================================
+[2026-05-19 00:21:25] rmd->docx
+file: Rmd/multivariate/14-stock-close-mlp-regression.Rmd
+message: prediction must be a ts_mv_prediction object returned by predict(..., return_all = TRUE).
+call: plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
+stack:
+001: source("C:/Git/cefet-rj-dal/tspredit/Rmd/conversor.R")
+002: withVisible(eval(ei, envir))
+003: eval(ei, envir)
+004: eval(ei, envir)
+005: run_phase(texs, "rmd->docx", convert_rmd_docx)
+006: tryCatch({     converter(input)     list(ok = TRUE, input = input, phase = phase, message = NULL) }, error = function(err) {     record_condition(phase, input, err)     list(ok = FALSE, input = input, phase = phase, message = conditionMessage(err)) })
+007: tryCatchList(expr, classes, parentenv, handlers)
+008: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+009: value[[3L]](cond)
+010: record_condition(phase, input, err)
+
+================================================================================
+[2026-05-19 00:21:27] rmd->docx
+file: Rmd/multivariate/15-stock-close-elm-regression.Rmd
+message: prediction must be a ts_mv_prediction object returned by predict(..., return_all = TRUE).
+call: plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
+stack:
+001: source("C:/Git/cefet-rj-dal/tspredit/Rmd/conversor.R")
+002: withVisible(eval(ei, envir))
+003: eval(ei, envir)
+004: eval(ei, envir)
+005: run_phase(texs, "rmd->docx", convert_rmd_docx)
+006: tryCatch({     converter(input)     list(ok = TRUE, input = input, phase = phase, message = NULL) }, error = function(err) {     record_condition(phase, input, err)     list(ok = FALSE, input = input, phase = phase, message = conditionMessage(err)) })
+007: tryCatchList(expr, classes, parentenv, handlers)
+008: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+009: value[[3L]](cond)
+010: record_condition(phase, input, err)
+
+================================================================================
+[2026-05-19 00:25:34] rmd->docx
+file: Rmd/multivariate/16-stock-close-conv1d-regression.Rmd
+message: prediction must be a ts_mv_prediction object returned by predict(..., return_all = TRUE).
+call: plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
+stack:
+001: source("C:/Git/cefet-rj-dal/tspredit/Rmd/conversor.R")
+002: withVisible(eval(ei, envir))
+003: eval(ei, envir)
+004: eval(ei, envir)
+005: run_phase(texs, "rmd->docx", convert_rmd_docx)
+006: tryCatch({     converter(input)     list(ok = TRUE, input = input, phase = phase, message = NULL) }, error = function(err) {     record_condition(phase, input, err)     list(ok = FALSE, input = input, phase = phase, message = conditionMessage(err)) })
+007: tryCatchList(expr, classes, parentenv, handlers)
+008: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+009: value[[3L]](cond)
+010: record_condition(phase, input, err)

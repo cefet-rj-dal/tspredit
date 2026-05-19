@@ -76,6 +76,12 @@ ev_arima <- evaluate(arima_baseline, as.vector(close_samp$test), pred_arima)
 ev_arima$metrics
 ```
 
+The multivariate experiment below follows the same structure used in the model
+comparison notebooks that come next: fit the system, inspect the one-step
+target forecast, inspect the five-step target forecast, inspect the full
+multivariate forecast table, plot the target, and evaluate the target
+trajectory.
+
 This time, the auxiliary variables are not deterministic. We therefore assign
 real forecasting models to them. After a few trial configurations, a `Random
 Forest` worked better as the target learner for this particular stock holdout,
@@ -145,38 +151,18 @@ pred_5 <- predict(model, steps_ahead = 5)
 pred_5
 ```
 
-And finally the full recursive system, including the auxiliary predictions.
+The synchronized multivariate forecast remains attached as an attribute of that
+target path.
 
 ```{r}
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
-pred_all
+attr(pred_5, "system")
 ```
 
-To keep the notebook readable, we plot the target and two representative
-auxiliaries.
+We keep the plot focused on the target trajectory, because the model-comparison
+notebooks after this one reuse the same visual convention.
 
 ```{r}
-plot_close <- plot_ts_pred_mv(samp$train, samp$test, pred_all, variable = "close")
-plot_open <- plot_ts_pred_mv(samp$train, samp$test, pred_all, variable = "open")
-plot_volume <- plot_ts_pred_mv(samp$train, samp$test, pred_all, variable = "volume")
-```
-
-Target trajectory:
-
-```{r}
-plot_close
-```
-
-Auxiliary variable `open`:
-
-```{r}
-plot_open
-```
-
-Auxiliary variable `volume`:
-
-```{r}
-plot_volume
+plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
 
 The held-out target values remain available for evaluation against the target

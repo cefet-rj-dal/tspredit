@@ -52,6 +52,14 @@ samp <- ts_sample(mv, test_size = 5)
 output <- tail(samp$test$close, 5)
 ```
 
+From this point on, the stock examples follow the same experimental line:
+
+- keep the same dataset, split, and window size
+- change only the learner family
+- use the same learner family for the target and for all endogenous auxiliaries
+- inspect `pred_1`, `pred_5`, the synchronized forecast table, the target plot,
+  and the target metrics
+
 To keep the example easier to understand, the endogenous auxiliary variables use
 the same model family as the target learner. Only the variable roles change.
 
@@ -86,9 +94,17 @@ model <- ts_regsw_mv(
 ```{r}
 set_example_seed()
 model <- fit(model, samp$train)
+pred_1 <- predict(model, steps_ahead = 1)
+pred_1
+```
+
+```{r}
 pred_5 <- predict(model, steps_ahead = 5)
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
 pred_5
+```
+
+```{r}
+attr(pred_5, "system")
 ```
 
 ```{r}
@@ -97,7 +113,7 @@ ev_test$metrics
 ```
 
 ```{r}
-plot_ts_pred_mv(samp$train, samp$test, pred_all, variable = "close")
+plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
 
 What this example shows

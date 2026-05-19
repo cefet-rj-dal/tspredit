@@ -36,8 +36,10 @@ mv <- ts_data_mv(
 samp <- ts_sample(mv, test_size = 5)
 ```
 
-Before the multivariate model, we keep a direct univariate `ARIMA` baseline on
-the target.
+This notebook follows the same singular-experiment structure as the linear
+regression example, but now the target model is `ARIMAX` and the auxiliary
+paths are forecast by support models. Before that, we keep a direct univariate
+`ARIMA` baseline on the target.
 
 ```{r}
 y_ts <- ts_data(tsd$y, 1)
@@ -66,13 +68,17 @@ model <- fit(model, samp$train)
 ```
 
 ```{r}
+pred_1 <- predict(model, steps_ahead = 1)
+pred_1
+```
+
+```{r}
 pred_5 <- predict(model, steps_ahead = 5)
 pred_5
 ```
 
 ```{r}
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
-pred_all
+attr(pred_5, "system")
 ```
 
 ```{r}

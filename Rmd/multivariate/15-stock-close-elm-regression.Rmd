@@ -74,12 +74,28 @@ model <- ts_regsw_mv(
 ```{r}
 set_example_seed()
 model <- fit(model, samp$train)
+pred_1 <- predict(model, steps_ahead = 1)
+pred_1
+```
+
+```{r}
 pred_5 <- predict(model, steps_ahead = 5)
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
+pred_5
+```
+
+```{r}
+attr(pred_5, "system")
+```
+
+```{r}
 ev_test <- evaluate(model, output, pred_5)
 ev_test$metrics
 ```
 
 ```{r}
-plot_ts_pred_mv(samp$train, samp$test, pred_all, variable = "close")
+plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
+
+What this example shows
+- `ts_elm()` can be reused directly as the target learner inside `ts_regsw_mv()`.
+- The same learner family can be reused for the target and for all endogenous auxiliaries when the goal is a cleaner didactic comparison.

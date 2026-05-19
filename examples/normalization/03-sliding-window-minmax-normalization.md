@@ -79,17 +79,43 @@ target column (`t0`) before and after the transformation.
 
 ``` r
 preproc <- ts_norm_swminmax()
+```
+
+```
+## Warning: internal error 1 in R_decompress1 with libdeflate
+```
+
+```
+## Error:
+## ! lazy-load database 'C:/R/R-4.5.0/library/tspredit/R/tspredit.rdb' is corrupt
+```
+
+``` r
 set_example_seed()
 preproc <- fit(preproc, ts)
+```
+
+```
+## Error:
+## ! objeto 'preproc' não encontrado
+```
+
+``` r
 tst <- transform(preproc, ts)
+```
+
+```
+## Error:
+## ! objeto 'preproc' não encontrado
+```
+
+``` r
 ts_head(tst, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
-## [1,] 0.0000000 0.2480253 0.4806295 0.6833506 0.8435842 0.9513678 1.0000000 0.9864570 0.9115809 0.7800272
-## [2,] 0.0000000 0.3093246 0.5789095 0.7919932 0.9353274 1.0000000 0.9819901 0.8824175 0.7074731 0.4680341
-## [3,] 0.1587515 0.4871082 0.7466460 0.9212282 1.0000000 0.9780638 0.8567835 0.6436998 0.3520610 0.0000000
+## Error:
+## ! objeto 'tst' não encontrado
 ```
 
 ``` r
@@ -97,13 +123,8 @@ summary(tst[, 10])
 ```
 
 ```
-##        t0        
-##  Min.   :0.0000  
-##  1st Qu.:0.0000  
-##  Median :0.2264  
-##  Mean   :0.4301  
-##  3rd Qu.:0.9974  
-##  Max.   :1.0000
+## Error:
+## ! objeto 'tst' não encontrado
 ```
 
 ``` r
@@ -111,13 +132,23 @@ compare_t0 <- rbind(
   data.frame(idx = seq_len(nrow(ts)), value = as.vector(ts[, ncol(ts)]), series = "original t0"),
   data.frame(idx = seq_len(nrow(tst)), value = as.vector(tst[, ncol(tst)]), series = "transformed t0")
 )
+```
 
+```
+## Error:
+## ! objeto 'tst' não encontrado
+```
+
+``` r
 ggplot(compare_t0, aes(x = idx, y = value, color = series)) +
   geom_line(linewidth = 0.7) +
   theme_minimal(base_size = 14)
 ```
 
-![plot of chunk unnamed-chunk-6](fig/03-sliding-window-minmax-normalization/unnamed-chunk-6-1.png)
+```
+## Error:
+## ! objeto 'compare_t0' não encontrado
+```
 
 What to observe
 

@@ -187,8 +187,11 @@ ts_var_next_row <- function(object, history) {
 #'@exportS3Method predict ts_var
 #'@inheritParams do_predict
 #'@param steps_ahead Integer. Forecast horizon.
-#'@param return_all Logical. When `TRUE`, return the full forecast system.
-#'@return Numeric vector with target forecasts or a `ts_mv_prediction` object.
+#'@param return_all Logical. Ignored for compatibility. The method always
+#' returns the target forecast as a vector with the full forecast system
+#' attached as attributes.
+#'@return Numeric vector with target forecasts. The full forecast system is
+#' attached as attributes.
 #'@noRd
 predict.ts_var <- function(object, x = NULL, steps_ahead = 1, return_all = FALSE, ...) {
   steps_ahead <- as.integer(steps_ahead)
@@ -213,10 +216,6 @@ predict.ts_var <- function(object, x = NULL, steps_ahead = 1, return_all = FALSE
   object$history <- adjust_ts_data_mv(history_df, y = object$y_name, x = object$x_names, sw = 1, representation = "aligned")
   prediction_y <- predictions[, object$y_name]
 
-  if (return_all) {
-    prediction_x <- as.list(as.data.frame(predictions[, object$x_names, drop = FALSE]))
-    return(mv_compose_prediction(object, prediction_y, prediction_x))
-  }
-
-  prediction_y
+  prediction_x <- as.list(as.data.frame(predictions[, object$x_names, drop = FALSE]))
+  mv_compose_prediction(object, prediction_y, prediction_x)
 }

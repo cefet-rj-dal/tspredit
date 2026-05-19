@@ -46,13 +46,17 @@ model <- fit(model, samp$train)
 ```
 
 ```{r}
+pred_1 <- predict(model, steps_ahead = 1)
+pred_1
+```
+
+```{r}
 pred_5 <- predict(model, steps_ahead = 5)
 pred_5
 ```
 
 ```{r}
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
-pred_all
+attr(pred_5, "system")
 ```
 
 The target can still be evaluated exactly as in the target-centered models.
@@ -65,4 +69,4 @@ ev_test$metrics
 What this example shows
 - `ts_var()` models the multivariate system jointly, not just one regression equation for `y`.
 - Even in that systemic setting, the `tspredit` interface can keep a distinguished target variable.
-- `return_all = TRUE` is the key to inspect the full system forecast while preserving the target-centered default behavior.
+- The target forecast is returned directly, while the full system forecast remains available as an attribute of that vector.

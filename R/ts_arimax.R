@@ -119,8 +119,11 @@ fit.ts_arimax <- function(obj, x, y = NULL, ...) {
 #'@exportS3Method predict ts_arimax
 #'@inheritParams do_predict
 #'@param steps_ahead Integer. Forecast horizon.
-#'@param return_all Logical. When `TRUE`, return target and auxiliary forecasts.
-#'@return Numeric vector with target forecasts or a `ts_mv_prediction` object.
+#'@param return_all Logical. Ignored for compatibility. The method always
+#' returns the target forecast as a vector with the full multivariate forecast
+#' attached as attributes.
+#'@return Numeric vector with target forecasts. The full multivariate forecast
+#' is attached as attributes.
 #'@noRd
 predict.ts_arimax <- function(object, x = NULL, steps_ahead = 1, return_all = FALSE, ...) {
   steps_ahead <- as.integer(steps_ahead)
@@ -131,11 +134,6 @@ predict.ts_arimax <- function(object, x = NULL, steps_ahead = 1, return_all = FA
 
   object$history <- reg_mv_update_history(object, future_x, prediction_y)
 
-  if (return_all) {
-    prediction_x <- as.list(future_x)
-    class(prediction_x) <- "list"
-    return(mv_compose_prediction(object, prediction_y, prediction_x))
-  }
-
-  prediction_y
+  prediction_x <- as.list(future_x)
+  mv_compose_prediction(object, prediction_y, prediction_x)
 }

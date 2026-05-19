@@ -110,9 +110,16 @@ We can already fit the composed object and inspect the auxiliary recursive path.
 ```{r}
 set_example_seed()
 model <- fit(model, samp$train)
-pred_all <- predict(model, steps_ahead = 5, return_all = TRUE)
+pred_all <- predict(model, steps_ahead = 5)
+pred_all
+```
 
-pred_all$x
+```{r}
+attr(pred_all, "system")
+```
+
+```{r}
+attr(pred_all, "prediction_x")
 ```
 
 What this example shows

@@ -52,12 +52,10 @@ Supported configurations in this first version:
 own variable as input
 }
 
-The method can return either:
-\itemize{
-\item only the forecast of \code{y}
-\item or the full recursive path of \code{y} and all auxiliary predictions when
-\code{return_all = TRUE}
-}
+The method returns the forecast of \code{y} as a numeric vector. The recursive
+path of \code{y} and all auxiliary predictions is attached to that vector as
+attributes, so the interface stays target-centered without discarding the
+system forecast.
 }
 \examples{
 data(tsd)
@@ -84,5 +82,6 @@ model <- ts_regsw_mv(
 model <- fit(model, samp$train)
 predict(model, steps_ahead = 1)
 predict(model, steps_ahead = 5)
-predict(model, steps_ahead = 5, return_all = TRUE)
+pred <- predict(model, steps_ahead = 5)
+attr(pred, "system")
 }

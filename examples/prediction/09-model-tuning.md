@@ -109,6 +109,15 @@ tune <- ts_tune(
 )
 ```
 
+```
+## Warning: internal error 1 in R_decompress1 with libdeflate
+```
+
+```
+## Error:
+## ! lazy-load database 'C:/R/R-4.5.0/library/tspredit/R/tspredit.rdb' is corrupt
+```
+
 
 
 This chunk train projection and fit the best model.
@@ -124,6 +133,11 @@ set_example_seed()
 model <- fit(tune, x=io_train$input, y=io_train$output)
 ```
 
+```
+## Error:
+## ! objeto 'tune' não encontrado
+```
+
 We first evaluate the in-sample fit so the model adjustment can be compared with the later forecast.
 
 
@@ -131,13 +145,29 @@ We first evaluate the in-sample fit so the model adjustment can be compared with
 # Fit evaluation (train)
 
 adjust <- predict(model, io_train$input)
+```
+
+```
+## Error:
+## ! objeto 'model' não encontrado
+```
+
+``` r
 ev_adjust <- evaluate(model, io_train$output, adjust)
+```
+
+```
+## Error:
+## ! objeto 'model' não encontrado
+```
+
+``` r
 print(head(ev_adjust$metrics))
 ```
 
 ```
-##            mse        smape R2
-## 1 3.447795e-29 1.583855e-14  1
+## Error:
+## ! objeto 'ev_adjust' não encontrado
 ```
 
 We now forecast the test set and compare the predicted values with the observed ones.
@@ -149,8 +179,23 @@ We now forecast the test set and compare the predicted values with the observed 
 steps_ahead <- 1
 io_test <- ts_projection(samp$test)
 prediction <- predict(model, x=io_test$input, steps_ahead=steps_ahead)
-prediction <- as.vector(prediction)
+```
 
+```
+## Error:
+## ! objeto 'model' não encontrado
+```
+
+``` r
+prediction <- as.vector(prediction)
+```
+
+```
+## Error:
+## ! objeto 'prediction' não encontrado
+```
+
+``` r
 output <- as.vector(io_test$output)
 if (steps_ahead > 1)
     output <- output[1:steps_ahead]
@@ -159,7 +204,8 @@ print(sprintf("%.2f, %.2f", output, prediction))
 ```
 
 ```
-## [1] "0.99, 0.99"
+## Error:
+## ! objeto 'prediction' não encontrado
 ```
 
 This chunk evaluates the custom component on the held-out test segment.
@@ -169,12 +215,20 @@ This chunk evaluates the custom component on the held-out test segment.
 # Test evaluation
 
 ev_test <- evaluate(model, output, prediction)
+```
+
+```
+## Error:
+## ! objeto 'model' não encontrado
+```
+
+``` r
 print(head(ev_test$metrics))
 ```
 
 ```
-##            mse        smape R2
-## 1 6.933348e-29 8.400574e-15 NA
+## Error:
+## ! objeto 'ev_test' não encontrado
 ```
 
 ``` r
@@ -182,7 +236,8 @@ print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
 ```
 
 ```
-## [1] "smape: 0.00"
+## Error:
+## ! objeto 'ev_test' não encontrado
 ```
 
 This final plot summarizes the result of the transformation so the effect can be interpreted visually.
@@ -195,7 +250,10 @@ yvalues <- c(io_train$output, io_test$output)
 plot_ts_pred(y=yvalues, yadj=adjust, ypre=prediction, color_prediction=if (steps_ahead == 1) "green" else "orange") + theme(text = element_text(size=16))
 ```
 
-![plot of chunk unnamed-chunk-12](fig/09-model-tuning/unnamed-chunk-12-1.png)
+```
+## Error:
+## ! objeto 'adjust' não encontrado
+```
 
 This chunk options of hyperparameter ranges by model ranges for elm.
 
