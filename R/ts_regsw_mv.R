@@ -306,8 +306,8 @@ mv_prepare_one_step_input <- function(data, spec) {
 }
 
 mv_compose_prediction <- function(object, prediction_y, prediction_x) {
-  prediction_y <- as.vector(prediction_y)
-  prediction_x <- lapply(prediction_x, as.vector)
+  prediction_y <- as.numeric(prediction_y)
+  prediction_x <- lapply(prediction_x, as.numeric)
 
   system_prediction <- data.frame(
     setNames(list(prediction_y), object$y_name),

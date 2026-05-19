@@ -86,7 +86,7 @@ fit.ts_arimax <- function(obj, x, y = NULL, ...) {
 
   data <- as.data.frame(x)
   y_series <- data[[obj$y_name]]
-  xreg <- as.matrix(data[, obj$x_names, drop = FALSE])
+  xreg <- reg_mv_numeric_matrix(data, obj$x_names, context = "training auxiliary data")
 
   if (isTRUE(obj$manual_order)) {
     obj$model <- forecast::Arima(
@@ -129,7 +129,11 @@ predict.ts_arimax <- function(object, x = NULL, steps_ahead = 1, return_all = FA
   steps_ahead <- as.integer(steps_ahead)
   future_x <- reg_mv_forecast_aux(object, x = x, steps_ahead = steps_ahead)
   prediction_y <- as.vector(
-    forecast::forecast(object$model, h = steps_ahead, xreg = as.matrix(future_x))$mean
+    forecast::forecast(
+      object$model,
+      h = steps_ahead,
+      xreg = reg_mv_numeric_matrix(future_x, object$x_names, context = "future auxiliary data")
+    )$mean
   )
 
   object$history <- reg_mv_update_history(object, future_x, prediction_y)

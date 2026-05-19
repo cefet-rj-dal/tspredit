@@ -58,7 +58,12 @@ plot_ts_pred_mv <- function(history, future = NULL, prediction, variable = NULL,
                             label_x = "", label_y = "Value",
                             color = "black", color_adjust = "blue",
                             color_prediction = "green") {
-  if (!inherits(prediction, "ts_mv_prediction")) {
+  has_mv_metadata <- !is.null(attr(prediction, "system")) ||
+    (!is.null(attr(prediction, "y_name")) &&
+     !is.null(attr(prediction, "x_names")) &&
+     !is.null(attr(prediction, "variables")))
+
+  if (!inherits(prediction, "ts_mv_prediction") && !has_mv_metadata) {
     stop("prediction must be a multivariate prediction returned by predict().")
   }
 

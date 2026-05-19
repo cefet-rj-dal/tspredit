@@ -140,10 +140,41 @@ reg_mv_known_future_x <- function(object, x, steps_ahead) {
   future[seq_len(steps_ahead), , drop = FALSE]
 }
 
+reg_mv_coerce_numeric_df <- function(data, columns, context = "data") {
+  data <- as.data.frame(data)
+  if (!all(columns %in% names(data))) {
+    stop(sprintf("%s must contain columns: %s", context, paste(columns, collapse = ", ")))
+  }
+
+  selected <- data[, columns, drop = FALSE]
+  numeric_cols <- lapply(seq_along(selected), function(idx) {
+    column <- selected[[idx]]
+    if (is.factor(column)) {
+      column <- as.character(column)
+    }
+    suppressWarnings(column_num <- as.numeric(column))
+    if (length(column_num) != length(column) || anyNA(column_num)) {
+      stop(sprintf("%s column '%s' cannot be safely coerced to numeric.", context, columns[[idx]]))
+    }
+    column_num
+  })
+
+  numeric_df <- as.data.frame(numeric_cols, optional = TRUE, stringsAsFactors = FALSE)
+  names(numeric_df) <- columns
+  numeric_df
+}
+
+reg_mv_numeric_matrix <- function(data, columns, context = "data") {
+  numeric_df <- reg_mv_coerce_numeric_df(data, columns = columns, context = context)
+  matrix <- data.matrix(numeric_df)
+  colnames(matrix) <- columns
+  matrix
+}
+
 reg_mv_forecast_aux <- function(object, x = NULL, steps_ahead = 1) {
   known_x <- reg_mv_known_future_x(object, x, steps_ahead)
   if (!is.null(known_x)) {
-    return(known_x)
+    return(reg_mv_coerce_numeric_df(known_x, object$x_names, context = "future auxiliary data"))
   }
 
   if (length(object$fitted_models_x) == 0) {
@@ -153,7 +184,7 @@ reg_mv_forecast_aux <- function(object, x = NULL, steps_ahead = 1) {
   prediction_x <- setNames(vector("list", length(object$x_names)), object$x_names)
   for (name in object$x_names) {
     pred <- predict(object$fitted_models_x[[name]], x = NULL, steps_ahead = steps_ahead)
-    prediction_x[[name]] <- as.vector(pred)
+    prediction_x[[name]] <- as.numeric(pred)
   }
 
   as.data.frame(prediction_x, optional = TRUE, stringsAsFactors = FALSE)
