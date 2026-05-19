@@ -7,7 +7,7 @@ Authors@R:
         person(given = "Cristiane", family = "Gea", role = "aut", email = "cristiane.gea@eic.cefet-rj.br"),
         person(given = "Diego", family = "Carvalho", role = "ctb", email = "diego.carvalho@cefet-rj.br"),
         person(given = "Diogo", family = "Santos", role = "aut", email = "diogo.santos@eic.cefet-rj.br"),
-        person(given = "Arthur Ronald Ferreira Diogenes", family = "Garcia", role = "aut", email = "arthur.garcia@eic.cefet-rj.br"),
+        person(given = "Arthur", family = "Garcia", role = "aut", email = "arthur.garcia@eic.cefet-rj.br"),
         person(given = "Eduardo", family = "Bezerra", role = "ctb", email = "ebezerra@cefet-rj.br"),
         person(given = "Esther", family = "Pacitti", role = "ctb", email = "Esther.Pacitti@lirmm.fr"),
         person(given = "Fabio", family = "Porto", role = "ctb", email = "fporto@lncc.br"),
