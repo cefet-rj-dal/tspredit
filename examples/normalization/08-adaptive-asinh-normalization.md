@@ -5,6 +5,7 @@ About the technique
 - Adaptive asinh normalization applies an inverse-hyperbolic-sine contrast around the adaptive local level.
 - It is useful when the analyst wants a transformation that is approximately linear near zero and progressively log-like for larger magnitudes.
 - Within the adaptive-normalization family implemented by `ts_norm_an()`, this corresponds to `operation = "asinh"`.
+- The adaptive reference is estimated on the full supervised window, so the nonlinear contrast is computed over the same complete window that reaches the downstream model.
 
 Didactic goal: understand a smooth nonlinear alternative that connects additive and multiplicative interpretations without a hard switch.
 
@@ -54,10 +55,14 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
+##             t2        t1        t0
+## [1,] 0.9839859 0.9092974 0.7780732
+## [2,] 0.9092974 0.7780732 0.5984721
+## [3,] 0.7780732 0.5984721 0.3816610
 ```
 
 ``` r
@@ -87,10 +92,14 @@ ts_head(tst, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
-## [1,] 0.2262389 0.3352009 0.4289621 0.5011678 0.5519707 0.5832954 0.5967386 0.5930364 0.5719840 0.5324504
-## [2,] 0.3189801 0.4108290 0.4818765 0.5320312 0.5630196 0.5763321 0.5726651 0.5518244 0.5127444 0.4537091
-## [3,] 0.4069396 0.4777221 0.5277275 0.5586382 0.5719204 0.5682616 0.5474698 0.5084945 0.4496521 0.3696621
+##             t9        t8        t7        t6        t5        t4        t3
+## [1,] 0.1889821 0.3112798 0.4165162 0.4975591 0.5545796 0.5897382 0.6048267
+## [2,] 0.2930737 0.3961639 0.4759068 0.5321998 0.5669808 0.5819227 0.5778068
+## [3,] 0.3917985 0.4712439 0.5273694 0.5620632 0.5769710 0.5728644 0.5495279
+##             t2        t1        t0
+## [1,] 0.6006714 0.5770424 0.5326703
+## [2,] 0.5544154 0.5105525 0.4442920
+## [3,] 0.5057825 0.4397384 0.3499586
 ```
 
 ``` r
@@ -99,12 +108,12 @@ summary(tst[, 10])
 
 ```
 ##        t0         
-##  Min.   :0.06292  
-##  1st Qu.:0.19582  
-##  Median :0.44171  
-##  Mean   :0.45703  
-##  3rd Qu.:0.68093  
-##  Max.   :0.94882
+##  Min.   :0.00567  
+##  1st Qu.:0.15484  
+##  Median :0.43082  
+##  Mean   :0.44802  
+##  3rd Qu.:0.69932  
+##  Max.   :1.00000
 ```
 
 ``` r
@@ -113,9 +122,11 @@ compare_t0 <- rbind(
   data.frame(idx = seq_len(nrow(tst)), value = as.vector(tst[, ncol(tst)]), series = "transformed t0")
 )
 
-ggplot(compare_t0, aes(x = idx, y = value, color = series)) +
-  geom_line(linewidth = 0.7) +
-  theme_minimal(base_size = 14)
+plot_ts_pred(
+  x = compare_t0[compare_t0$series == "original t0", "idx"],
+  y = compare_t0[compare_t0$series == "original t0", "value"],
+  yadj = compare_t0[compare_t0$series == "transformed t0", "value"]
+) + theme(text = element_text(size = 16))
 ```
 
 ![plot of chunk unnamed-chunk-6](fig/08-adaptive-asinh-normalization/unnamed-chunk-6-1.png)

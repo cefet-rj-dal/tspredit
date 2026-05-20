@@ -52,6 +52,11 @@ We inspect the operators in two complementary ways:
 - the transformed target dimension (`t0`) across time, which is the signal most
   directly consumed by the supervised pipeline
 
+In the current `ts_norm_an()` contract, the adaptive reference is estimated on
+the full supervised window, not only on the lagged inputs. So every curve below
+reflects the complete window-wise transformation that the operator applies in
+practice.
+
 This separation matters. If we only plot the transformed target across time,
 the comparison becomes hard to read because each operator is reacting to a
 different local window at each time step. The anchor-window plot removes this
@@ -60,14 +65,11 @@ transform the same local pattern?
 
 ```{r}
 ops <- list(
-  divide = ts_norm_an(operation = "divide"),
-  subtract = ts_norm_an(operation = "subtract"),
-  softdivide = ts_norm_an(operation = "softdivide", scale = "sd", lambda = 1),
-  asinh = ts_norm_an(operation = "asinh", scale = "sd", lambda = 1)
+  divide = ts_norm_an(outliers = NULL, operation = "divide"),
+  subtract = ts_norm_an(outliers = NULL, operation = "subtract"),
+  softdivide = ts_norm_an(outliers = NULL, operation = "softdivide", scale = "sd", lambda = 1),
+  asinh = ts_norm_an(outliers = NULL, operation = "asinh", scale = "sd", lambda = 1)
 )
-
-compute_reference <- getFromNamespace("compute_adaptive_reference", "tspredit")
-apply_operation <- getFromNamespace("apply_adaptive_operation", "tspredit")
 
 anchor_row <- function(series_name, tsw) {
   if (series_name == "level_shift") {
@@ -84,18 +86,13 @@ collect_window_profiles <- function(y, series_name) {
 
   for (op_name in names(ops)) {
     preproc <- fit(ops[[op_name]], tsw)
-    window_ref <- compute_reference(preproc, tsw[anchor, , drop = FALSE])
-    yw <- apply_operation(
-      preproc,
-      tsw[anchor, , drop = FALSE],
-      window_ref$center,
-      window_ref$scale
-    )
+    yt <- transform(preproc, tsw)
+    yw <- yt[anchor, , drop = FALSE]
 
     out <- rbind(
       out,
       data.frame(
-        lag = factor(colnames(tsw), levels = colnames(tsw)),
+        lag = factor(colnames(yt), levels = colnames(yt)),
         value = as.vector(yw),
         operator = op_name,
         series = series_name
@@ -139,14 +136,16 @@ comparison_t0 <- do.call(
 )
 ```
 
-This plot compares one fixed window per series. It is the clearest way to see
-how each operator transforms the same lag profile.
+This plot compares one fixed window per series after the full adaptive
+normalization pipeline has been applied, including the internal global min-max
+scaling. It is the clearest way to see how each operator transforms the same
+lag profile while keeping the vertical scale comparable.
 
 ```{r}
 ggplot(window_profiles, aes(x = lag, y = value, color = operator, group = operator)) +
   geom_line(linewidth = 0.7) +
   geom_point(size = 1.2) +
-  facet_wrap(~ series, scales = "free_y", ncol = 2) +
+  facet_wrap(~ series, ncol = 2) +
   theme_minimal(base_size = 14)
 ```
 
@@ -181,7 +180,7 @@ comparison above.
 ```{r}
 ggplot(comparison_t0, aes(x = idx, y = value, color = operator)) +
   geom_line(linewidth = 0.5) +
-  facet_wrap(~ series, scales = "free_y", ncol = 2) +
+  facet_wrap(~ series, ncol = 2) +
   theme_minimal(base_size = 14)
 ```
 

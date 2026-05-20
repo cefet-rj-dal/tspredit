@@ -30,9 +30,9 @@ io_test <- ts_projection(samp$test)
 model <- torch_ts_mlp(
   ts_norm_gminmax(),
   input_size = 4,
-  hidden_sizes = c(16L, 8L),
-  epochs = 100L,
-  batch_size = 16L
+  hidden_sizes = c(32L, 16L),
+  epochs = 200L,
+  batch_size = 8L
 )
 set_example_seed()
 model <- fit(model, x = io_train$input, y = io_train$output)

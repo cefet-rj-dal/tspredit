@@ -45,6 +45,11 @@ The default \code{"recent"} method reproduces the historical behavior of the
 package: it keeps the most recent \code{input_size} observations available in the
 sliding window.
 
+When \code{ts_lagmap()} is used inside a \code{ts_regsw} model, the mapper is fitted
+after the model preprocessor has transformed the training windows. So the
+selected positions refer to the representation actually seen by the backend,
+not necessarily to the raw pre-transform window geometry.
+
 Correlation-based methods operate on the raw training series reconstructed
 from the input windows and aligned outputs. Supervised methods (\code{"mi"} and
 \code{"mrmr"}) inspect the relationship between each lagged attribute and the

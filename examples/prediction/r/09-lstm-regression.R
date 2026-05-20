@@ -28,7 +28,14 @@ io_test <- ts_projection(samp$test)
 
 # Training the LSTM model
 
-model <- ts_lstm(ts_norm_gminmax(), input_size=4, epochs=100)
+model <- ts_lstm(
+  ts_norm_gminmax(),
+  input_size = 4,
+  hidden_size = 16L,
+  mlp_hidden_sizes = c(8L),
+  batch_size = 4L,
+  epochs = 200L
+)
 set_example_seed()
 model <- fit(model, x=io_train$input, y=io_train$output)
 
@@ -42,9 +49,9 @@ ev_adjust$mse
 
 # Forecast on test set
 
-steps_ahead <- 1
+steps_ahead <- 5
 io_test <- ts_projection(samp$test)
-prediction <- predict(model, x=io_test$input, steps_ahead=steps_ahead)
+prediction <- predict(model, x=io_test$input[1,], steps_ahead=steps_ahead)
 prediction <- as.vector(prediction)
 
 output <- as.vector(io_test$output)

@@ -30,6 +30,11 @@
 #' the chosen transformation consistently during fit, transform, and inverse
 #' transform.
 #'
+#' In the current contract, the adaptive reference is estimated from the full
+#' supervised window passed to `fit()` or `transform()`. So when the input is a
+#' sliding window produced by `ts_data()`, the terminal `t0` position is part of
+#' the same window-wise reference used for the transformation.
+#'
 #' The adaptive reference \eqn{\mu} is estimated either by a simple mean or by an
 #' exponentially weighted mean (`average = "ema"`). The hybrid operators
 #' additionally use a local scale estimate `s` based on either the standard
@@ -184,10 +189,10 @@ reverse_adaptive_operation <- function(obj, data, center, scale_value) {
 
 #'@exportS3Method fit ts_norm_an
 fit.ts_norm_an <- function(obj, data, ...) {
-  # Estimate adaptive references from the lagged inputs only, then apply
-  # the same transformation to the full supervised window, including target.
-  input <- data[, 1:(ncol(data) - 1), drop = FALSE]
-  reference <- compute_adaptive_reference(obj, input)
+  # Estimate adaptive references from the full supervised window so the
+  # adaptive center/scale is learned over the same geometry later used in
+  # transform().
+  reference <- compute_adaptive_reference(obj, data)
   data <- apply_adaptive_operation(obj, data, reference$center, reference$scale)
 
   if (!is.null(obj$outliers)) {
@@ -216,6 +221,8 @@ transform.ts_norm_an <- function(obj, data, x = NULL, ...) {
     return(x)
   }
 
+  # Keep the fit/transform contract aligned: both phases use the full
+  # supervised window when estimating the adaptive reference.
   reference <- compute_adaptive_reference(obj, data)
   data <- apply_adaptive_operation(obj, data, reference$center, reference$scale)
   data <- (data - obj$gmin) / obj$grange

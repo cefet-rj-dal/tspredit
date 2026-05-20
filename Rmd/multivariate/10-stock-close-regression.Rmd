@@ -151,8 +151,15 @@ pred_5 <- predict(model, steps_ahead = 5)
 pred_5
 ```
 
-The synchronized multivariate forecast remains attached as an attribute of that
-target path.
+The recursive predictions for the endogenous auxiliary variables are also
+attached to that target-centered return object.
+
+```{r}
+attr(pred_5, "prediction_x")
+```
+
+The synchronized multivariate forecast remains attached as a tabular attribute
+of the same target path.
 
 ```{r}
 attr(pred_5, "system")
@@ -188,5 +195,6 @@ What this example shows
 - `stocks` provides a natural target-centered multivariate scenario with non-deterministic auxiliary variables.
 - A direct `ARIMA` on the closing price remains an important baseline and should be checked before moving to a richer multivariate design.
 - Auxiliary variables do not need to share the same learner: some can use `ts_elm()`, others can use `ts_mlp()`, `ts_darima()`, or `ts_warma()`.
+- The prediction object is still target-centered, but it preserves the endogenous auxiliary forecasts through `attr(pred, "prediction_x")` and the full synchronized forecast through `attr(pred, "system")`.
 - `ts_darima()` and `ts_warma()` are useful support models for the target-centered multivariate workflow because they already live in the `ts_regsw` lineage.
 - This is a different scenario from the previous deterministic-auxiliary example: here the auxiliary variables must themselves be forecast as evolving stochastic series.

@@ -5,6 +5,7 @@ About the technique
 - Softdivide adaptive normalization blends subtractive and divisive behavior through a stabilized denominator.
 - It is useful when the series can be close to zero in some windows but still exhibit heteroscedastic scaling in others.
 - Within the adaptive-normalization family implemented by `ts_norm_an()`, this corresponds to `operation = "softdivide"`.
+- The adaptive center and scale are estimated on the full supervised window, then the resulting values are globally rescaled by the internal min-max stage.
 
 Didactic goal: see how a smooth transition between additive and relative normalization regimes can stabilize windows without losing scale comparability.
 
@@ -54,10 +55,14 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
+##             t2        t1        t0
+## [1,] 0.9839859 0.9092974 0.7780732
+## [2,] 0.9092974 0.7780732 0.5984721
+## [3,] 0.7780732 0.5984721 0.3816610
 ```
 
 ``` r
@@ -87,10 +92,14 @@ ts_head(tst, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
-## [1,] 0.2285699 0.3253376 0.4160887 0.4951808 0.5576963 0.5997483 0.6187223 0.6134385 0.5842254 0.5328994
-## [2,] 0.3067719 0.3952724 0.4724030 0.5333681 0.5743772 0.5928807 0.5877279 0.5592393 0.5091862 0.4406806
-## [3,] 0.3907643 0.4674532 0.5280693 0.5688436 0.5872411 0.5821178 0.5537923 0.5040258 0.4359125 0.3536873
+##             t9        t8        t7        t6        t5        t4        t3
+## [1,] 0.1912055 0.3024095 0.4066993 0.4975909 0.5694328 0.6177584 0.6395630
+## [2,] 0.2810741 0.3827776 0.4714149 0.5414752 0.5886023 0.6098661 0.6039446
+## [3,] 0.3775969 0.4657268 0.5353859 0.5822431 0.6033852 0.5974976 0.5649464
+##             t2        t1        t0
+## [1,] 0.6334909 0.5999197 0.5409365
+## [2,] 0.5712060 0.5136856 0.4349600
+## [3,] 0.5077554 0.4294806 0.3349886
 ```
 
 ``` r
@@ -98,13 +107,13 @@ summary(tst[, 10])
 ```
 
 ```
-##        t0         
-##  Min.   :0.06219  
-##  1st Qu.:0.20406  
-##  Median :0.42391  
-##  Mean   :0.45306  
-##  3rd Qu.:0.69267  
-##  Max.   :0.93023
+##        t0        
+##  Min.   :0.0000  
+##  1st Qu.:0.1630  
+##  Median :0.4157  
+##  Mean   :0.4492  
+##  3rd Qu.:0.7245  
+##  Max.   :0.9975
 ```
 
 ``` r
@@ -113,9 +122,11 @@ compare_t0 <- rbind(
   data.frame(idx = seq_len(nrow(tst)), value = as.vector(tst[, ncol(tst)]), series = "transformed t0")
 )
 
-ggplot(compare_t0, aes(x = idx, y = value, color = series)) +
-  geom_line(linewidth = 0.7) +
-  theme_minimal(base_size = 14)
+plot_ts_pred(
+  x = compare_t0[compare_t0$series == "original t0", "idx"],
+  y = compare_t0[compare_t0$series == "original t0", "value"],
+  yadj = compare_t0[compare_t0$series == "transformed t0", "value"]
+) + theme(text = element_text(size = 16))
 ```
 
 ![plot of chunk unnamed-chunk-6](fig/07-adaptive-softdivide-normalization/unnamed-chunk-6-1.png)

@@ -21,14 +21,11 @@ synthetic <- list(
 )
 
 ops <- list(
-  divide = ts_norm_an(operation = "divide"),
-  subtract = ts_norm_an(operation = "subtract"),
-  softdivide = ts_norm_an(operation = "softdivide", scale = "sd", lambda = 1),
-  asinh = ts_norm_an(operation = "asinh", scale = "sd", lambda = 1)
+  divide = ts_norm_an(outliers = NULL, operation = "divide"),
+  subtract = ts_norm_an(outliers = NULL, operation = "subtract"),
+  softdivide = ts_norm_an(outliers = NULL, operation = "softdivide", scale = "sd", lambda = 1),
+  asinh = ts_norm_an(outliers = NULL, operation = "asinh", scale = "sd", lambda = 1)
 )
-
-compute_reference <- getFromNamespace("compute_adaptive_reference", "tspredit")
-apply_operation <- getFromNamespace("apply_adaptive_operation", "tspredit")
 
 anchor_row <- function(series_name, tsw) {
   if (series_name == "level_shift") {
@@ -45,18 +42,13 @@ collect_window_profiles <- function(y, series_name) {
 
   for (op_name in names(ops)) {
     preproc <- fit(ops[[op_name]], tsw)
-    window_ref <- compute_reference(preproc, tsw[anchor, , drop = FALSE])
-    yw <- apply_operation(
-      preproc,
-      tsw[anchor, , drop = FALSE],
-      window_ref$center,
-      window_ref$scale
-    )
+    yt <- transform(preproc, tsw)
+    yw <- yt[anchor, , drop = FALSE]
 
     out <- rbind(
       out,
       data.frame(
-        lag = factor(colnames(tsw), levels = colnames(tsw)),
+        lag = factor(colnames(yt), levels = colnames(yt)),
         value = as.vector(yw),
         operator = op_name,
         series = series_name
@@ -102,10 +94,10 @@ comparison_t0 <- do.call(
 ggplot(window_profiles, aes(x = lag, y = value, color = operator, group = operator)) +
   geom_line(linewidth = 0.7) +
   geom_point(size = 1.2) +
-  facet_wrap(~ series, scales = "free_y", ncol = 2) +
+  facet_wrap(~ series, ncol = 2) +
   theme_minimal(base_size = 14)
 
 ggplot(comparison_t0, aes(x = idx, y = value, color = operator)) +
   geom_line(linewidth = 0.5) +
-  facet_wrap(~ series, scales = "free_y", ncol = 2) +
+  facet_wrap(~ series, ncol = 2) +
   theme_minimal(base_size = 14)

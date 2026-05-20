@@ -6,6 +6,12 @@
 #' input window expected by ML backends and to apply pre/post processing
 #' (e.g., normalization) consistently during fit and predict.
 #'
+#' The preprocessing stage runs before `input_map` is fitted. So lag selection
+#' is learned on the transformed representation actually delivered to the
+#' backend model, not on the raw pre-transform window. This matters for
+#' preprocessors such as `ts_norm_diff()` that change the effective window
+#' geometry.
+#'
 #'@param preprocess Normalization preprocessor (e.g., `ts_norm_gminmax()`).
 #'@param input_size Integer. Number of lagged inputs per example.
 #'@param input_map Lag-selection strategy object created by `ts_lagmap()`.
@@ -38,19 +44,23 @@ ts_regsw <- function(preprocess = NA, input_size = NA, input_map = ts_lagmap()) 
 #'@return A fitted object with learned backend model and fitted preprocessor.
 #'@noRd
 fit.ts_regsw <- function(obj, x, y, ...) {
-  obj$input_map <- fit(obj$input_map, x, y, input_size = obj$input_size)
-
   # Fit preprocessor on input windows
   obj$preprocess <- fit(obj$preprocess, x)
 
-  # Transform inputs using fitted preprocessor
+  # Transform inputs using fitted preprocessor before learning the lag map.
+  # This keeps column selection aligned when preprocessing changes the
+  # window representation, as in first-difference normalization.
   x <- transform(obj$preprocess, x)
 
   # Transform outputs consistently (e.g., inverse-scaling later)
   y <- transform(obj$preprocess, x, y)
 
+  # Fit the lag mapping on the representation actually seen by the backend.
+  obj$input_map <- fit(obj$input_map, x, y, input_size = obj$input_size)
+
   # Train the backend model using only the feature columns
-  obj <- do_fit(obj, obj$ts_as_matrix(x, obj$input_map, obj$input_size), y)
+  x_model <- obj$ts_as_matrix(x, obj$input_map, obj$input_size)
+  obj <- do_fit(obj, x_model, y)
 
   return(obj)
 }

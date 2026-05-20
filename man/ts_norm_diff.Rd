@@ -15,6 +15,11 @@ A \code{ts_norm_diff} object.
 \description{
 Transform a series by first differences to remove level and
 highlight changes; normalization is then applied to the differenced series.
+
+In sliding-window mode, this transformation reduces the window width by one:
+a window with columns \verb{t9 ... t0} becomes a differenced window with
+\verb{t8 ... t0} expressed as consecutive first differences. Any downstream lag
+selection must therefore be learned on the transformed representation.
 }
 \examples{
 # Differencing + global min–max normalization

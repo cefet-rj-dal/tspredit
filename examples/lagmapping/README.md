@@ -8,6 +8,10 @@ The default behavior of `tspredit` is still available through `recent`, which
 The examples below show each mapping strategy in isolation while keeping the
 same forecasting workflow.
 
+Inside `ts_regsw` models, the lag mapper is fitted after preprocessing. So if a
+preprocessor changes the window representation, the selected lag positions refer
+to that transformed geometry rather than to the raw original window.
+
 ## Positional baselines
 
 - [01-recent-lag-mapping.md](01-recent-lag-mapping.md) - keep the most recent lags and reproduce the historical behavior of the package.

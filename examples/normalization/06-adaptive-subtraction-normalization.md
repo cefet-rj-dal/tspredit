@@ -5,6 +5,7 @@ About the technique
 - Subtractive adaptive normalization removes the adaptive local level from each window.
 - It is useful when the relevant signal is a deviation around a moving baseline, especially near zero where divisive normalization can become unstable.
 - Within the adaptive-normalization family implemented by `ts_norm_an()`, this corresponds to `operation = "subtract"`.
+- The adaptive reference is estimated on the full supervised window, so the same complete window geometry is used in both `fit()` and `transform()`.
 
 Didactic goal: see adaptive normalization as a local detrending operator that preserves additive contrasts.
 
@@ -54,10 +55,14 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
+##             t2        t1        t0
+## [1,] 0.9839859 0.9092974 0.7780732
+## [2,] 0.9092974 0.7780732 0.5984721
+## [3,] 0.7780732 0.5984721 0.3816610
 ```
 
 ``` r
@@ -87,10 +92,14 @@ ts_head(tst, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
-## [1,] 0.1770086 0.2931936 0.4021548 0.4971174 0.5721773 0.6226675 0.6454487 0.6391047 0.6040297 0.5424046
-## [2,] 0.2650884 0.3740495 0.4690122 0.5440720 0.5945622 0.6173435 0.6109994 0.5759245 0.5142994 0.4299558
-## [3,] 0.3677446 0.4627073 0.5377671 0.5882573 0.6110386 0.6046945 0.5696195 0.5079945 0.4236508 0.3218327
+##             t9        t8        t7        t6        t5        t4        t3
+## [1,] 0.1426727 0.2715416 0.3923982 0.4977280 0.5809822 0.6369844 0.6622527
+## [2,] 0.2403681 0.3612247 0.4665545 0.5498087 0.6058109 0.6310792 0.6240425
+## [3,] 0.3542314 0.4595612 0.5428154 0.5988176 0.6240859 0.6170493 0.5781452
+##             t2        t1        t0
+## [1,] 0.6552160 0.6163119 0.5479592
+## [2,] 0.5851384 0.5167857 0.4232342
+## [3,] 0.5097925 0.4162410 0.3033073
 ```
 
 ``` r
@@ -98,13 +107,13 @@ summary(tst[, 10])
 ```
 
 ```
-##        t0         
-##  Min.   :0.04995  
-##  1st Qu.:0.15185  
-##  Median :0.41183  
-##  Mean   :0.44854  
-##  3rd Qu.:0.73197  
-##  Max.   :0.94995
+##        t0          
+##  Min.   :0.001746  
+##  1st Qu.:0.114768  
+##  Median :0.403130  
+##  Mean   :0.443849  
+##  3rd Qu.:0.758225  
+##  Max.   :1.000000
 ```
 
 ``` r
@@ -113,9 +122,11 @@ compare_t0 <- rbind(
   data.frame(idx = seq_len(nrow(tst)), value = as.vector(tst[, ncol(tst)]), series = "transformed t0")
 )
 
-ggplot(compare_t0, aes(x = idx, y = value, color = series)) +
-  geom_line(linewidth = 0.7) +
-  theme_minimal(base_size = 14)
+plot_ts_pred(
+  x = compare_t0[compare_t0$series == "original t0", "idx"],
+  y = compare_t0[compare_t0$series == "original t0", "value"],
+  yadj = compare_t0[compare_t0$series == "transformed t0", "value"]
+) + theme(text = element_text(size = 16))
 ```
 
 ![plot of chunk unnamed-chunk-6](fig/06-adaptive-subtraction-normalization/unnamed-chunk-6-1.png)

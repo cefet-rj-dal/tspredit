@@ -37,10 +37,14 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
+##             t2        t1        t0
+## [1,] 0.9839859 0.9092974 0.7780732
+## [2,] 0.9092974 0.7780732 0.5984721
+## [3,] 0.7780732 0.5984721 0.3816610
 ```
 
 Before moving on, we visualize the series so the effect of the next transformation can be compared against the original signal.
@@ -74,9 +78,9 @@ We now train the PyTorch MLP model on the prepared training data.
 model <- torch_ts_mlp(
   ts_norm_gminmax(),
   input_size = 4,
-  hidden_sizes = c(16L, 8L),
-  epochs = 100L,
-  batch_size = 16L
+  hidden_sizes = c(32L, 16L),
+  epochs = 200L,
+  batch_size = 8L
 )
 set_example_seed()
 model <- fit(model, x = io_train$input, y = io_train$output)
@@ -96,7 +100,7 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 0.1782903
+## [1] 1.727474e-05
 ```
 
 We now forecast the test set and compare the predicted values with the observed ones.
@@ -117,20 +121,20 @@ ev_test
 ## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
 ## 
 ## $prediction
-## [1] 0.7210775 0.6664229 0.6165880 0.5381956 0.5377110
+## [1]  0.41312615  0.17741968 -0.06702235 -0.30823471 -0.53065394
 ## 
 ## $smape
-## [1] 1.54351
+## [1] 0.03954362
 ## 
 ## $mse
-## [1] 0.5444734
+## [1] 7.71151e-05
 ## 
 ## $R2
-## [1] -3.702645
+## [1] 0.999334
 ## 
 ## $metrics
-##         mse   smape        R2
-## 1 0.5444734 1.54351 -3.702645
+##           mse      smape       R2
+## 1 7.71151e-05 0.03954362 0.999334
 ```
 
 This final plot summarizes the result of the transformation so the effect can be interpreted visually.

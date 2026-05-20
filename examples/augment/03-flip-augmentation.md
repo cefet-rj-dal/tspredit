@@ -63,28 +63,44 @@ ts_head(xa)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3        t2         t1         t0
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859  0.9092974  0.7780732
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974  0.7780732  0.5984721
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732  0.5984721  0.3816610
-## [4,] 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721  0.3816610  0.1411200
-## [5,] 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610  0.1411200 -0.1081951
-## [6,] 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610 0.1411200 -0.1081951 -0.3507832
+##             t9        t8        t7        t6        t5        t4        t3
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
+## [4,] 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
+## [5,] 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
+## [6,] 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
+##             t2         t1         t0
+## [1,] 0.9839859  0.9092974  0.7780732
+## [2,] 0.9092974  0.7780732  0.5984721
+## [3,] 0.7780732  0.5984721  0.3816610
+## [4,] 0.5984721  0.3816610  0.1411200
+## [5,] 0.3816610  0.1411200 -0.1081951
+## [6,] 0.1411200 -0.1081951 -0.3507832
 ```
 
 This plot overlays the original and augmented windows so you can see how the transformation changes the local shape.
 
 
 ``` r
-# Plot (original vs augmented windows)
+# Plot a few representative windows on the lag axis
+aug_rows <- (nrow(xw) + 1):min(nrow(xa), nrow(xw) + 6)
+comparison <- do.call(
+  rbind,
+  lapply(aug_rows, function(row_id) {
+    source_row <- idx[row_id]
+    rbind(
+      data.frame(lag = seq_len(sw_size), value = as.numeric(xw[source_row, 1:sw_size]), series = "original", sample = paste("window", source_row)),
+      data.frame(lag = seq_len(sw_size), value = as.numeric(xa[row_id, 1:sw_size]), series = "augmented", sample = paste("window", source_row))
+    )
+  })
+)
 
-i <- 1:nrow(xw)
-y <- xw[,sw_size]
-plot(x = i, y = y, main = "cosine")
-lines(x = i, y = y, col="black")
-for (j in 1:nrow(xa)) {
-  lines(x = (idx[j]-sw_size+1):idx[j], y = xa[j,1:sw_size], col="green")
-}
+ggplot(comparison, aes(x = lag, y = value, color = series, group = series)) +
+  geom_line(linewidth = 0.7) +
+  geom_point(size = 1.2) +
+  facet_wrap(~ sample, ncol = 3) +
+  theme_minimal(base_size = 14)
 ```
 
 ![plot of chunk unnamed-chunk-6](fig/03-flip-augmentation/unnamed-chunk-6-1.png)

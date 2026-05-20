@@ -24,6 +24,12 @@ sliding-window representations.
 This class provides helpers to map \code{ts_data} matrices into the
 input window expected by ML backends and to apply pre/post processing
 (e.g., normalization) consistently during fit and predict.
+
+The preprocessing stage runs before \code{input_map} is fitted. So lag selection
+is learned on the transformed representation actually delivered to the
+backend model, not on the raw pre-transform window. This matters for
+preprocessors such as \code{ts_norm_diff()} that change the effective window
+geometry.
 }
 \examples{
 # Abstract base class for sliding-window regressors

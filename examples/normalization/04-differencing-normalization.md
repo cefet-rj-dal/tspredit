@@ -4,6 +4,7 @@ About the technique
 
 - Differencing replaces each value by its change relative to the previous observation.
 - This reduces trend effects and often makes the series easier to scale and model.
+- In sliding-window form, the transformation shortens the window by one column because consecutive differences are taken across the full supervised window.
 
 Didactic goal: see how stabilization by differencing changes both the level and the interpretation of the series.
 
@@ -21,8 +22,26 @@ We start by loading the packages used throughout this example.
 
 ``` r
 library(daltoolbox)
+```
+
+```
+## 
+## Attaching package: 'daltoolbox'
+```
+
+```
+## The following object is masked from 'package:base':
+## 
+##     transform
+```
+
+``` r
 library(tspredit)
 library(ggplot2)
+```
+
+```
+## Warning: package 'ggplot2' was built under R version 4.5.3
 ```
 
 We load the example series that will be used throughout the demonstration.
@@ -53,10 +72,14 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
+##             t2        t1        t0
+## [1,] 0.9839859 0.9092974 0.7780732
+## [2,] 0.9092974 0.7780732 0.5984721
+## [3,] 0.7780732 0.5984721 0.3816610
 ```
 
 ``` r
@@ -86,10 +109,14 @@ ts_head(tst, 3)
 ```
 
 ```
-##             t8        t7        t6        t5        t4        t3        t2        t1         t0
-## [1,] 0.9982009 0.9672887 0.9073861 0.8222178 0.7170790 0.5985067 0.4738732 0.3509276 0.23731412
-## [2,] 0.9672887 0.9073861 0.8222178 0.7170790 0.5985067 0.4738732 0.3509276 0.2373141 0.14009662
-## [3,] 0.9073861 0.8222178 0.7170790 0.5985067 0.4738732 0.3509276 0.2373141 0.1400966 0.06531964
+##             t8        t7        t6        t5        t4        t3        t2
+## [1,] 0.9982009 0.9672887 0.9073861 0.8222178 0.7170790 0.5985067 0.4738732
+## [2,] 0.9672887 0.9073861 0.8222178 0.7170790 0.5985067 0.4738732 0.3509276
+## [3,] 0.9073861 0.8222178 0.7170790 0.5985067 0.4738732 0.3509276 0.2373141
+##             t1         t0
+## [1,] 0.3509276 0.23731412
+## [2,] 0.2373141 0.14009662
+## [3,] 0.1400966 0.06531964
 ```
 
 ``` r
@@ -112,9 +139,11 @@ compare_t0 <- rbind(
   data.frame(idx = seq_len(nrow(tst)), value = as.vector(tst[, ncol(tst)]), series = "transformed t0")
 )
 
-ggplot(compare_t0, aes(x = idx, y = value, color = series)) +
-  geom_line(linewidth = 0.7) +
-  theme_minimal(base_size = 14)
+plot_ts_pred(
+  x = compare_t0[compare_t0$series == "original t0", "idx"],
+  y = compare_t0[compare_t0$series == "original t0", "value"],
+  yadj = compare_t0[compare_t0$series == "transformed t0", "value"]
+) + theme(text = element_text(size = 16))
 ```
 
 ![plot of chunk unnamed-chunk-6](fig/04-differencing-normalization/unnamed-chunk-6-1.png)

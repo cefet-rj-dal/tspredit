@@ -77,6 +77,8 @@ pred_1
 pred_5 <- predict(model, steps_ahead = 5)
 pred_5
 
+attr(pred_5, "prediction_x")
+
 attr(pred_5, "system")
 
 plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")

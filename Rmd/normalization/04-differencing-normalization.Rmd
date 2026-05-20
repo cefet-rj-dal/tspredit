@@ -4,6 +4,7 @@ About the technique
 
 - Differencing replaces each value by its change relative to the previous observation.
 - This reduces trend effects and often makes the series easier to scale and model.
+- In sliding-window form, the transformation shortens the window by one column because consecutive differences are taken across the full supervised window.
 
 Didactic goal: see how stabilization by differencing changes both the level and the interpretation of the series.
 
@@ -62,9 +63,11 @@ compare_t0 <- rbind(
   data.frame(idx = seq_len(nrow(tst)), value = as.vector(tst[, ncol(tst)]), series = "transformed t0")
 )
 
-ggplot(compare_t0, aes(x = idx, y = value, color = series)) +
-  geom_line(linewidth = 0.7) +
-  theme_minimal(base_size = 14)
+plot_ts_pred(
+  x = compare_t0[compare_t0$series == "original t0", "idx"],
+  y = compare_t0[compare_t0$series == "original t0", "value"],
+  yadj = compare_t0[compare_t0$series == "transformed t0", "value"]
+) + theme(text = element_text(size = 16))
 ```
 
 What to observe

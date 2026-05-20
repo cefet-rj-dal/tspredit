@@ -5,6 +5,7 @@ About the technique
 - Softdivide adaptive normalization blends subtractive and divisive behavior through a stabilized denominator.
 - It is useful when the series can be close to zero in some windows but still exhibit heteroscedastic scaling in others.
 - Within the adaptive-normalization family implemented by `ts_norm_an()`, this corresponds to `operation = "softdivide"`.
+- The adaptive center and scale are estimated on the full supervised window, then the resulting values are globally rescaled by the internal min-max stage.
 
 Didactic goal: see how a smooth transition between additive and relative normalization regimes can stabilize windows without losing scale comparability.
 
@@ -63,9 +64,11 @@ compare_t0 <- rbind(
   data.frame(idx = seq_len(nrow(tst)), value = as.vector(tst[, ncol(tst)]), series = "transformed t0")
 )
 
-ggplot(compare_t0, aes(x = idx, y = value, color = series)) +
-  geom_line(linewidth = 0.7) +
-  theme_minimal(base_size = 14)
+plot_ts_pred(
+  x = compare_t0[compare_t0$series == "original t0", "idx"],
+  y = compare_t0[compare_t0$series == "original t0", "value"],
+  yadj = compare_t0[compare_t0$series == "transformed t0", "value"]
+) + theme(text = element_text(size = 16))
 ```
 
 What to observe

@@ -4,6 +4,8 @@ Normalization changes the numerical scale presented to the forecasting model. In
 
 The examples below are organized as a progression. Begin with the no-normalization baseline, then compare global and local scaling, and finally inspect adaptive and differencing-based strategies that are more appropriate when the series changes its distribution over time.
 
+For the adaptive family implemented by `ts_norm_an()`, the reference level and reference scale are estimated from the full supervised window passed to the transform. In other words, the operator is applied to the same complete window geometry that later reaches the model.
+
 ## Baseline and global scaling
 
 - [01-no-normalization.md](01-no-normalization.md) - keep the values unchanged to create the reference case for later comparisons.
@@ -18,7 +20,7 @@ The examples below are organized as a progression. Begin with the no-normalizati
 
 The adaptive-normalization examples below are all instances of the same family
 implemented by `ts_norm_an()`. They differ only in the operator used to compare
-each window against its adaptive reference level and adaptive reference scale.
+each full supervised window against its adaptive reference level and adaptive reference scale.
 
 - [05-adaptive-normalization.md](05-adaptive-normalization.md) - use divisive adaptive normalization to compare local patterns across different levels.
 - [06-adaptive-subtraction-normalization.md](06-adaptive-subtraction-normalization.md) - remove the adaptive local level when near-zero windows make ratios unstable.

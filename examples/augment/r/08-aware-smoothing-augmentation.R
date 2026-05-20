@@ -10,6 +10,7 @@ library(tspredit)
 
 i <- seq(0, 2*pi+8*pi/50, pi/50)
 x <- cos(i)
+set_example_seed()
 noise <- rnorm(length(x), 0, sd(x)/10)
 
 x <- x + noise
@@ -41,10 +42,22 @@ filter <- tspredit::ts_aug_awaresmooth(0.25)
 xa <- transform(filter, xw)
 idx <- attr(xa, "idx")
 
-# Plot (original vs augmented windows)
+# Plot a few representative windows on the lag axis
+library(ggplot2)
+aug_rows <- (nrow(xw) + 1):min(nrow(xa), nrow(xw) + 6)
+comparison <- do.call(
+  rbind,
+  lapply(aug_rows, function(row_id) {
+    source_row <- idx[row_id]
+    rbind(
+      data.frame(lag = seq_len(sw_size), value = as.numeric(xw[source_row, 1:sw_size]), series = "original", sample = paste("window", source_row)),
+      data.frame(lag = seq_len(sw_size), value = as.numeric(xa[row_id, 1:sw_size]), series = "augmented", sample = paste("window", source_row))
+    )
+  })
+)
 
-plot(x = i, y = y, main = "cosine")
-lines(x = i, y = y, col="black")
-for (j in 1:nrow(xa)) {
-  lines(x = (idx[j]-sw_size+1):idx[j], y = xa[j,1:sw_size], col="green")
-}
+ggplot(comparison, aes(x = lag, y = value, color = series, group = series)) +
+  geom_line(linewidth = 0.7) +
+  geom_point(size = 1.2) +
+  facet_wrap(~ sample, ncol = 3) +
+  theme_minimal(base_size = 14)

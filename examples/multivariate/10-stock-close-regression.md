@@ -18,6 +18,20 @@ source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/example
 
 ``` r
 library(daltoolbox)
+```
+
+```
+## 
+## Attaching package: 'daltoolbox'
+```
+
+```
+## The following object is masked from 'package:base':
+## 
+##     transform
+```
+
+``` r
 library(tspredit)
 ```
 
@@ -236,8 +250,30 @@ pred_5
 ## [1] "ts_mv_prediction" "numeric"
 ```
 
-The synchronized multivariate forecast remains attached as an attribute of that
-target path.
+The recursive predictions for the endogenous auxiliary variables are also
+attached to that target-centered return object.
+
+
+``` r
+attr(pred_5, "prediction_x")
+```
+
+```
+## $open
+## [1] 85.78517 84.00956 85.78546 86.87644 85.34103
+## 
+## $high
+## [1] 85.99456 87.11913 87.63444 86.98998 86.67025
+## 
+## $low
+## [1] 82.20966 82.47191 82.21620 82.24374 82.37079
+## 
+## $volume
+## [1] 33076060 33506772 34513366 33013400 31279800
+```
+
+The synchronized multivariate forecast remains attached as a tabular attribute
+of the same target path.
 
 
 ``` r
@@ -261,7 +297,7 @@ notebooks after this one reuse the same visual convention.
 plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
 
-![plot of chunk unnamed-chunk-11](fig/10-stock-close-regression/unnamed-chunk-11-1.png)
+![plot of chunk unnamed-chunk-12](fig/10-stock-close-regression/unnamed-chunk-12-1.png)
 
 The held-out target values remain available for evaluation against the target
 forecast.
@@ -299,5 +335,6 @@ What this example shows
 - `stocks` provides a natural target-centered multivariate scenario with non-deterministic auxiliary variables.
 - A direct `ARIMA` on the closing price remains an important baseline and should be checked before moving to a richer multivariate design.
 - Auxiliary variables do not need to share the same learner: some can use `ts_elm()`, others can use `ts_mlp()`, `ts_darima()`, or `ts_warma()`.
+- The prediction object is still target-centered, but it preserves the endogenous auxiliary forecasts through `attr(pred, "prediction_x")` and the full synchronized forecast through `attr(pred, "system")`.
 - `ts_darima()` and `ts_warma()` are useful support models for the target-centered multivariate workflow because they already live in the `ts_regsw` lineage.
 - This is a different scenario from the previous deterministic-auxiliary example: here the auxiliary variables must themselves be forecast as evolving stochastic series.

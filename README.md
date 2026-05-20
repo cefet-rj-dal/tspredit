@@ -60,6 +60,11 @@ and were rewritten with a more didactic order and clearer grouping.
 - [Filtering](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/filter/) -
   compare identity baselines, smoothing methods, robust filters,
   decomposition methods, and state-space or seasonal adjustments.
+- [Lag
+  mapping](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/lagmapping/) -
+  study how different lag-selection rules decide which past observations
+  are exposed to the predictor, from positional baselines to
+  correlation-driven and supervised mappings.
 - [Augmentation](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/augment/) -
   study when synthetic windows help, from simple perturbations to
   recency-aware transformations.
@@ -69,10 +74,41 @@ and were rewritten with a more didactic order and clearer grouping.
 - [Prediction](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/prediction/) -
   move from classical baselines to machine-learning and neural
   forecasting models, then to tuning.
+- [Multivariate
+  forecasting](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/multivariate/) -
+  extend the pipeline to target-centered multivariate workflows by
+  combining one model for `y` with auxiliary-variable pipelines.
 - [Custom
   extensions](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/custom/) -
   learn how to add your own predictors, filters, augmentations, and
   normalization methods without breaking the package contract.
+
+### Suggested reading order
+
+If you want the clearest learning path across the collections, this
+sequence is usually the most productive:
+
+1.  [Time-series data
+    utilities](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/tsdata/)
+2.  [Tutorials](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/tutorial/)
+3.  [Datasets](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/datasets/)
+4.  [Filtering](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/filter/)
+5.  [Lag
+    mapping](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/lagmapping/)
+6.  [Augmentation](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/augment/)
+    and
+    [Normalization](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/normalization/)
+7.  [Prediction](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/prediction/)
+8.  [Multivariate
+    forecasting](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/multivariate/)
+9.  [Custom
+    extensions](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/custom/)
+
+This order follows the forecasting pipeline more closely: first
+represent and split the series, then inspect the data, then decide
+whether to smooth the signal, then decide which lags should become
+predictors, then apply data expansion and scaling, and only after that
+compare models and more advanced extensions.
 
 ### Documentation design
 
