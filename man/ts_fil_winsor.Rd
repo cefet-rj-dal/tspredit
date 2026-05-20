@@ -23,7 +23,7 @@ tsd$y[9] <- 2 * tsd$y[9]  # inject an outlier
 
 # Fit Winsor filter and transform series
 filter <- ts_fil_winsor()
-filter <- fit(filter, tsd$y)
+filter <- daltoolbox::fit(filter, tsd$y)
 y <- transform(filter, tsd$y)
 
 # Plot original vs Winsorized series

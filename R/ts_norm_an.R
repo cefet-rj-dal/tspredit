@@ -69,19 +69,19 @@
 #'
 #'# divisive adaptive normalization (default)
 #'preproc <- ts_norm_an()
-#'preproc <- fit(preproc, ts)
+#'preproc <- daltoolbox::fit(preproc, ts)
 #'tst <- transform(preproc, ts)
 #'ts_head(tst, 3)
 #'
 #'# subtractive adaptive normalization
 #'preproc <- ts_norm_an(operation = "subtract")
-#'preproc <- fit(preproc, ts)
+#'preproc <- daltoolbox::fit(preproc, ts)
 #'tst <- transform(preproc, ts)
 #'ts_head(tst, 3)
 #'
 #'# EMA-based soft division
 #'preproc <- ts_norm_an(average = "ema", operation = "softdivide", scale = "mad")
-#'preproc <- fit(preproc, ts)
+#'preproc <- daltoolbox::fit(preproc, ts)
 #'tst <- transform(preproc, ts)
 #'ts_head(tst, 3)
 #'@importFrom daltoolbox outliers_boxplot

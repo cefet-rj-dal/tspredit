@@ -27,7 +27,7 @@ y <- sin(x) + 0.25 * sin(12 * x)
 
 # Fit FFT-based filter and reconstruct the low-frequency signal
 filter <- ts_fil_fft()
-filter <- fit(filter, y)
+filter <- daltoolbox::fit(filter, y)
 yhat <- transform(filter, y)
 
 # Compare original vs frequency-smoothed series

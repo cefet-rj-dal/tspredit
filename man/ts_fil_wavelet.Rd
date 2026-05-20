@@ -26,7 +26,7 @@ tsd$y[9] <- 2 * tsd$y[9]  # inject an outlier
 
 # Fit wavelet filter ("haar" by default; can pass a list to select best)
 filter <- ts_fil_wavelet()
-filter <- fit(filter, tsd$y)
+filter <- daltoolbox::fit(filter, tsd$y)
 y <- transform(filter, tsd$y)
 
 # Compare original vs wavelet-denoised series

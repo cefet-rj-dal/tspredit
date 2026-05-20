@@ -44,14 +44,14 @@
 #'   input_size = 4,
 #'   input_map = ts_lagmap("seasonal", seasonality = 4)
 #' )
-#' model <- fit(model, x = io_train$input, y = io_train$output)
+#' model <- daltoolbox::fit(model, x = io_train$input, y = io_train$output)
 #'
 #' # Multi-step forecast and evaluation
 #' prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 #' prediction <- as.vector(prediction)
 #' output <- as.vector(io_test$output)
 #'
-#' ev_test <- evaluate(model, output, prediction)
+#' ev_test <- daltoolbox::evaluate(model, output, prediction)
 #' ev_test
 #'@export
 ts_svm <- function(preprocess = NA, input_size = NA, input_map = ts_lagmap(), kernel = c("radial", "linear", "polynomial", "sigmoid"), epsilon = 0, cost = 10) {

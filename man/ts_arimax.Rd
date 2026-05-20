@@ -73,7 +73,7 @@ mv <- ts_data_mv(data.frame(y = tsd$y, x1 = x1, x2 = as.numeric(x2)), y = "y")
 samp <- ts_sample(mv, test_size = 5)
 
 model <- ts_arimax(models_x = list(x1 = ts_arima(), x2 = ts_arima()))
-model <- fit(model, samp$train)
+model <- daltoolbox::fit(model, samp$train)
 predict(model, steps_ahead = 5)
 }
 \references{

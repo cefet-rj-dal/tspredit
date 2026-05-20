@@ -34,7 +34,7 @@ summary(ts[,10])
 
 # Fit global min–max and transform; inspect post-scale values
 preproc <- ts_norm_gminmax()
-preproc <- fit(preproc, ts)
+preproc <- daltoolbox::fit(preproc, ts)
 tst <- transform(preproc, ts)
 ts_head(tst, 3)
 summary(tst[,10])

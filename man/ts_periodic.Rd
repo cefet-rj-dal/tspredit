@@ -23,6 +23,6 @@ cycle.
 \examples{
 series <- c(4, 5, 6, 7, 1, 2, 3)
 model <- ts_periodic(7)
-model <- fit(model, x = series)
+model <- daltoolbox::fit(model, x = series)
 predict(model, steps_ahead = 5)
 }

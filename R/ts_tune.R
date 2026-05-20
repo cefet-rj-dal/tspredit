@@ -41,14 +41,14 @@
 #' )
 #'
 #' # Run CV-based search and get the best fitted model
-#' model <- fit(tune, x = io_train$input, y = io_train$output)
+#' model <- daltoolbox::fit(tune, x = io_train$input, y = io_train$output)
 #'
 #' # Forecast and evaluate on the held-out horizon
 #' prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 #' prediction <- as.vector(prediction)
 #' output <- as.vector(io_test$output)
 #'
-#' ev_test <- evaluate(model, output, prediction)
+#' ev_test <- daltoolbox::evaluate(model, output, prediction)
 #' ev_test
 #'@export
 ts_tune <- function(input_size, base_model, folds=10, ranges=NULL) {

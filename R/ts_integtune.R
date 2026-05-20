@@ -36,14 +36,14 @@
 #' )
 #'
 #' # Run search; augmentation (if provided) is applied during training internally
-#' model <- fit(tune, x = io_train$input, y = io_train$output)
+#' model <- daltoolbox::fit(tune, x = io_train$input, y = io_train$output)
 #'
 #' # Forecast and evaluate on the held-out window
 #' prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 #' prediction <- as.vector(prediction)
 #' output <- as.vector(io_test$output)
 #'
-#' ev_test <- evaluate(model, output, prediction)
+#' ev_test <- daltoolbox::evaluate(model, output, prediction)
 #' ev_test
 #'@importFrom daltoolbox dal_tune
 #'@importFrom daltoolbox fit

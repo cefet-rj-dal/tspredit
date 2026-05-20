@@ -23,7 +23,7 @@
 #'
 #' # Apply jitter (adds small noise; keeps target column unchanged)
 #' augment <- ts_aug_jitter()
-#' augment <- fit(augment, xw)
+#' augment <- daltoolbox::fit(augment, xw)
 #' xa <- transform(augment, xw)
 #' ts_head(xa)
 #'@importFrom daltoolbox dal_transform

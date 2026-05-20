@@ -32,7 +32,7 @@ tsd$y[9] <- 2 * tsd$y[9]
 
 # Define EMA filter, fit and transform the series
 filter <- ts_fil_ema(ema = 3)
-filter <- fit(filter, tsd$y)
+filter <- daltoolbox::fit(filter, tsd$y)
 y <- transform(filter, tsd$y)
 
 # Compare original vs smoothed series

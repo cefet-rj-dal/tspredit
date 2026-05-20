@@ -40,14 +40,14 @@
 #' # Define Random Forest and fit
 #' model <- ts_rf(ts_norm_gminmax(), input_size = 9,
 #'   nodesize = 1, ntree = 100)
-#' model <- fit(model, x = io_train$input, y = io_train$output)
+#' model <- daltoolbox::fit(model, x = io_train$input, y = io_train$output)
 #'
 #' # Forecast multiple steps and assess error
 #' prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 #' prediction <- as.vector(prediction)
 #' output <- as.vector(io_test$output)
 #'
-#' ev_test <- evaluate(model, output, prediction)
+#' ev_test <- daltoolbox::evaluate(model, output, prediction)
 #' ev_test
 #'@export
 ts_rf <- function(preprocess = NA, input_size = NA, input_map = ts_lagmap(), nodesize = 1, ntree = 100, mtry = NULL) {

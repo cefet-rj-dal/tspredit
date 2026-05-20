@@ -27,7 +27,7 @@ y <- x / 100 + sin(2 * pi * x / 12) + rnorm(120, sd = 0.05)
 
 # Fit seasonal adjustment (set frequency if known) and transform
 filter <- ts_fil_seas_adj(frequency = 12)
-filter <- fit(filter, y)
+filter <- daltoolbox::fit(filter, y)
 yhat <- transform(filter, y)
 
 # Plot original vs seasonally adjusted series

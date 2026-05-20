@@ -35,12 +35,12 @@
 #'@examples
 #'series <- c(4, 5, 6, 7, 1, 2, 3)
 #'model <- ts_deterministic("periodic", period = 7)
-#'model <- fit(model, x = series)
+#'model <- daltoolbox::fit(model, x = series)
 #'predict(model, steps_ahead = 5)
 #'
 #'sw <- ts_data(series, sw = 4)
 #'io <- ts_projection(sw)
-#'model <- fit(ts_deterministic("persist"), io$input, io$output)
+#'model <- daltoolbox::fit(ts_deterministic("persist"), io$input, io$output)
 #'predict(model, io$input[1:2, ], steps_ahead = 1)
 #'@export
 ts_deterministic <- function(mode = c("periodic", "persist"),
@@ -279,7 +279,7 @@ predict.ts_deterministic <- function(object, x = NULL, y = NULL, steps_ahead = N
 #'@examples
 #'series <- c(4, 5, 6, 7, 1, 2, 3)
 #'model <- ts_periodic(7)
-#'model <- fit(model, x = series)
+#'model <- daltoolbox::fit(model, x = series)
 #'predict(model, steps_ahead = 5)
 #'@export
 ts_periodic <- function(period, context_size = NULL) {
@@ -295,7 +295,7 @@ ts_periodic <- function(period, context_size = NULL) {
 #'@examples
 #'series <- c(10, 11, 11, 11)
 #'model <- ts_persist()
-#'model <- fit(model, x = series)
+#'model <- daltoolbox::fit(model, x = series)
 #'predict(model, steps_ahead = 3)
 #'@export
 ts_persist <- function() {

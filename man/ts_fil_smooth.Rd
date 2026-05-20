@@ -23,7 +23,7 @@ tsd$y[9] <- 2 * tsd$y[9]  # inject an outlier
 
 # Fit smoother and transform to reduce spikes/noise
 filter <- ts_fil_smooth()
-filter <- fit(filter, tsd$y)
+filter <- daltoolbox::fit(filter, tsd$y)
 y <- transform(filter, tsd$y)
 
 # Compare original vs smoothed series

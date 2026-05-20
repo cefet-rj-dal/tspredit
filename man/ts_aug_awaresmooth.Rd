@@ -29,7 +29,7 @@ ts_head(xw)
 
 # Apply awareness+smooth augmentation and inspect result
 augment <- ts_aug_awaresmooth()
-augment <- fit(augment, xw)
+augment <- daltoolbox::fit(augment, xw)
 xa <- transform(augment, xw)
 ts_head(xa)
 }

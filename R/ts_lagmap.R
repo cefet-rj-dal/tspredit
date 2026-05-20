@@ -53,7 +53,7 @@
 #' io <- ts_projection(ts)
 #'
 #' mapper <- ts_lagmap(method = "pacf")
-#' mapper <- fit(mapper, io$input, io$output, input_size = 4)
+#' mapper <- daltoolbox::fit(mapper, io$input, io$output, input_size = 4)
 #' mapper$lags
 #' mapper$columns
 #' @importFrom daltoolbox dal_base

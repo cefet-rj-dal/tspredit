@@ -30,7 +30,7 @@ summary(ts[,10])
 
 # Fit per-window min–max and transform; inspect post-scale values
 preproc <- ts_norm_swminmax()
-preproc <- fit(preproc, ts)
+preproc <- daltoolbox::fit(preproc, ts)
 tst <- transform(preproc, ts)
 ts_head(tst, 3)
 summary(tst[,10])

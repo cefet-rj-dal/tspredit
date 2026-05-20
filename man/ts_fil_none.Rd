@@ -22,7 +22,7 @@ tsd$y[9] <- 2 * tsd$y[9]  # inject an outlier for comparison
 
 # Fit identity filter and transform (no change expected)
 filter <- ts_fil_none()
-filter <- fit(filter, tsd$y)
+filter <- daltoolbox::fit(filter, tsd$y)
 y <- transform(filter, tsd$y)
 
 # Plot original vs (identical) filtered series

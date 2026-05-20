@@ -20,7 +20,7 @@
 #'
 #' # Fit EMD filter and reconstruct without the first (noisiest) IMF
 #' filter <- ts_fil_emd()
-#' filter <- fit(filter, tsd$y)
+#' filter <- daltoolbox::fit(filter, tsd$y)
 #' y <- transform(filter, tsd$y)
 #'
 #' # Compare original vs smoothed series

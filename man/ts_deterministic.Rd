@@ -59,11 +59,11 @@ predictive mechanism is a rule, not a learner over lagged attributes.
 \examples{
 series <- c(4, 5, 6, 7, 1, 2, 3)
 model <- ts_deterministic("periodic", period = 7)
-model <- fit(model, x = series)
+model <- daltoolbox::fit(model, x = series)
 predict(model, steps_ahead = 5)
 
 sw <- ts_data(series, sw = 4)
 io <- ts_projection(sw)
-model <- fit(ts_deterministic("persist"), io$input, io$output)
+model <- daltoolbox::fit(ts_deterministic("persist"), io$input, io$output)
 predict(model, io$input[1:2, ], steps_ahead = 1)
 }

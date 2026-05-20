@@ -30,7 +30,7 @@ ts_head(xw)
 
 # Apply awareness augmentation (bias toward recent rows)
 augment <- ts_aug_awareness()
-augment <- fit(augment, xw)
+augment <- daltoolbox::fit(augment, xw)
 xa <- transform(augment, xw)
 ts_head(xa)
 }

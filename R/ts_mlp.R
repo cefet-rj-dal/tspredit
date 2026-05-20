@@ -45,7 +45,7 @@
 #'imap <- ts_lagmap("even")
 #'model <- ts_mlp(ts_norm_gminmax(), input_size = 4, input_map = imap,
 #'  size = 4, decay = 0)
-#'model <- fit(model, x=io_train$input, y=io_train$output)
+#'model <- daltoolbox::fit(model, x=io_train$input, y=io_train$output)
 #'
 #'# Predict 5 steps ahead
 #'prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
@@ -53,7 +53,7 @@
 #'output <- as.vector(io_test$output)
 #'
 #'# Evaluate
-#'ev_test <- evaluate(model, output, prediction)
+#'ev_test <- daltoolbox::evaluate(model, output, prediction)
 #'ev_test
 #'@export
 ts_mlp <- function(preprocess = NA, input_size = NA, input_map = ts_lagmap(), size = NA, decay = 0.01, maxit = 1000) {

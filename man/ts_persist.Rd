@@ -16,6 +16,6 @@ observed value.
 \examples{
 series <- c(10, 11, 11, 11)
 model <- ts_persist()
-model <- fit(model, x = series)
+model <- daltoolbox::fit(model, x = series)
 predict(model, steps_ahead = 3)
 }

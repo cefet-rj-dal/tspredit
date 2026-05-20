@@ -46,14 +46,14 @@ io_test <- ts_projection(samp$test)
 
 # Define KNN regressor and fit (distance-based; normalization recommended)
 model <- ts_knn(ts_norm_gminmax(), input_size = 4, input_map = ts_lagmap("pacf"), k = 3)
-model <- fit(model, x = io_train$input, y = io_train$output)
+model <- daltoolbox::fit(model, x = io_train$input, y = io_train$output)
 
 # Predict multiple steps ahead and evaluate
 prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
 prediction <- as.vector(prediction)
 output <- as.vector(io_test$output)
 
-ev_test <- evaluate(model, output, prediction)
+ev_test <- daltoolbox::evaluate(model, output, prediction)
 ev_test
 }
 \references{

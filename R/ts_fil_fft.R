@@ -20,7 +20,7 @@
 #'
 #' # Fit FFT-based filter and reconstruct the low-frequency signal
 #' filter <- ts_fil_fft()
-#' filter <- fit(filter, y)
+#' filter <- daltoolbox::fit(filter, y)
 #' yhat <- transform(filter, y)
 #'
 #' # Compare original vs frequency-smoothed series

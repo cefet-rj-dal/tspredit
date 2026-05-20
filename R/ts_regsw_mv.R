@@ -117,7 +117,7 @@ ts_mv_spec <- function(model, variables = NULL, lags = NULL, transforms = NULL) 
 #'   window_size = 10
 #' )
 #'
-#'model <- fit(model, samp$train)
+#'model <- daltoolbox::fit(model, samp$train)
 #'predict(model, steps_ahead = 1)
 #'predict(model, steps_ahead = 5)
 #'pred <- predict(model, steps_ahead = 5)

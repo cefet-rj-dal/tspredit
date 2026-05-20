@@ -61,7 +61,7 @@ model <- ts_lm_mv(
  models_x = list(x1 = ts_arima(), x2 = ts_arima()),
  formula = y ~ x1 + x2
 )
-model <- fit(model, samp$train)
+model <- daltoolbox::fit(model, samp$train)
 predict(model, steps_ahead = 5)
 }
 \references{

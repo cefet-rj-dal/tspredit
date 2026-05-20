@@ -19,7 +19,7 @@
 #'
 #' # Fit spline smoother (spar controls smoothness) and transform
 #' filter <- ts_fil_spline(spar = 0.5)
-#' filter <- fit(filter, tsd$y)
+#' filter <- daltoolbox::fit(filter, tsd$y)
 #' y <- transform(filter, tsd$y)
 #'
 #' # Compare original vs smoothed series

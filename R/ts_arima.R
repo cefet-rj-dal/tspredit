@@ -48,7 +48,7 @@
 #'
 #'# 3) Fit a user-specified ARIMA(5,0,0)
 #'model <- ts_arima(p = 5, d = 0, q = 0)
-#'model <- fit(model, x = samp$train)
+#'model <- daltoolbox::fit(model, x = samp$train)
 #'
 #'# 4) Predict 5 steps ahead from the most recent observed point
 #'prediction <- predict(model, x = samp$test[1,], steps_ahead = 5)
@@ -56,7 +56,7 @@
 #'output <- as.vector(samp$test)
 #'
 #'# 5) Evaluate forecast accuracy
-#'ev_test <- evaluate(model, output, prediction)
+#'ev_test <- daltoolbox::evaluate(model, output, prediction)
 #'ev_test
 #'@export
 ts_arima <- function(p = NULL, d = NULL, q = NULL) {

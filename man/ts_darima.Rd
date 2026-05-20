@@ -70,7 +70,7 @@ io_train <- ts_projection(samp$train)
 io_test <- ts_projection(samp$test)
 
 model <- ts_darima(ts_norm_diff(), input_size = 5)
-model <- fit(model, io_train$input, io_train$output)
+model <- daltoolbox::fit(model, io_train$input, io_train$output)
 
 prediction <- predict(model, io_test$input[1, ], steps_ahead = 5)
 prediction

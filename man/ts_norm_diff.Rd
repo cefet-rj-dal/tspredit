@@ -35,7 +35,7 @@ summary(ts[,10])
 
 # Fit differencing preprocessor and transform; note one fewer lag column
 preproc <- ts_norm_diff()
-preproc <- fit(preproc, ts)
+preproc <- daltoolbox::fit(preproc, ts)
 tst <- transform(preproc, ts)
 ts_head(tst, 3)
 summary(tst[,9])

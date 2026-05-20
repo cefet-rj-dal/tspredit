@@ -26,7 +26,7 @@ ts_head(xw)
 
 # No augmentation; returns the same windows with indices preserved
 augment <- ts_aug_none()
-augment <- fit(augment, xw)
+augment <- daltoolbox::fit(augment, xw)
 xa <- transform(augment, xw)
 ts_head(xa)
 }

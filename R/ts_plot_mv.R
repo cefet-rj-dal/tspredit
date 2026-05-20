@@ -50,7 +50,7 @@
 #'   ),
 #'   window_size = 5
 #' )
-#'model <- fit(model, samp$train)
+#'model <- daltoolbox::fit(model, samp$train)
 #'pred <- predict(model, steps_ahead = 5, return_all = TRUE)
 #'plots <- plot_ts_pred_mv(samp$train, samp$test, pred)
 #'@export

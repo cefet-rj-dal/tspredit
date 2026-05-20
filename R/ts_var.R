@@ -44,7 +44,7 @@
 #'samp <- ts_sample(mv, test_size = 5)
 #'
 #'model <- ts_var(p_max = 3)
-#'model <- fit(model, samp$train)
+#'model <- daltoolbox::fit(model, samp$train)
 #'predict(model, steps_ahead = 5)
 #'@export
 ts_var <- function(target = NULL, p = NULL, p_max = 5, intercept = TRUE) {

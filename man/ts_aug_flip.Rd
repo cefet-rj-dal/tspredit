@@ -30,7 +30,7 @@ ts_head(xw)
 
 # Apply flip augmentation and inspect augmented windows
 augment <- ts_aug_flip()
-augment <- fit(augment, xw)
+augment <- daltoolbox::fit(augment, xw)
 xa <- transform(augment, xw)
 ts_head(xa)
 }

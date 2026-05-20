@@ -25,7 +25,7 @@ xw <- ts_data(tsd$y, 10)
 
 # No data normalization — transform returns inputs unchanged
 normalize <- ts_norm_none()
-normalize <- fit(normalize, xw)
+normalize <- daltoolbox::fit(normalize, xw)
 xa <- transform(normalize, xw)
 ts_head(xa)
 }

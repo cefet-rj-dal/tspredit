@@ -18,7 +18,7 @@
 #'
 #' # Fit KF (H = obs noise, Q = process noise) and transform
 #' filter <- ts_fil_kalman()
-#' filter <- fit(filter, tsd$y)
+#' filter <- daltoolbox::fit(filter, tsd$y)
 #' y <- transform(filter, tsd$y)
 #'
 #' # Plot original vs KF-smoothed series

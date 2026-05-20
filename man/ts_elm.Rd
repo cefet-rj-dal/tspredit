@@ -59,7 +59,7 @@ io_test <- ts_projection(samp$test)
 imap <- ts_lagmap("acf")
 model <- ts_elm(ts_norm_gminmax(), input_size = 4, input_map = imap,
   nhid = 3, actfun = "purelin")
-model <- fit(model, x = io_train$input, y = io_train$output)
+model <- daltoolbox::fit(model, x = io_train$input, y = io_train$output)
 
 # Forecast 5 steps ahead starting from the last known window
 prediction <- predict(model, x = io_test$input[1,], steps_ahead = 5)
@@ -67,7 +67,7 @@ prediction <- as.vector(prediction)
 output <- as.vector(io_test$output)
 
 # Evaluate forecast error on the test horizon
-ev_test <- evaluate(model, output, prediction)
+ev_test <- daltoolbox::evaluate(model, output, prediction)
 ev_test
 }
 \references{
