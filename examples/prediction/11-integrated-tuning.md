@@ -141,8 +141,8 @@ print(head(ev_adjust$metrics))
 ```
 
 ```
-##            mse        smape R2
-## 1 3.447795e-29 1.583855e-14  1
+##            mse       smape R2
+## 1 4.686814e-30 5.77268e-15  1
 ```
 
 This chunk forecast on the test segment.
@@ -179,7 +179,7 @@ print(head(ev_test$metrics))
 
 ```
 ##            mse        smape R2
-## 1 6.933348e-29 8.400574e-15 NA
+## 1 8.985619e-30 3.024207e-15 NA
 ```
 
 ``` r

@@ -18,20 +18,6 @@ source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/example
 
 ``` r
 library(daltoolbox)
-```
-
-```
-## 
-## Attaching package: 'daltoolbox'
-```
-
-```
-## The following object is masked from 'package:base':
-## 
-##     transform
-```
-
-``` r
 library(tspredit)
 ```
 
@@ -104,7 +90,7 @@ ev_arima$metrics
 
 ```
 ##        mse      smape        R2
-## 1 6.769314 0.02329485 -2.204775
+## 1 6.768766 0.02329364 -2.204515
 ```
 
 The multivariate experiment below follows the same structure used in the model
@@ -327,7 +313,7 @@ rbind(
 
 ```
 ##                  mse      smape        R2
-## ARIMA_close 6.769314 0.02329485 -2.204775
+## ARIMA_close 6.768766 0.02329364 -2.204515
 ## MV_mixed    4.312106 0.01930004 -1.041467
 ```
 

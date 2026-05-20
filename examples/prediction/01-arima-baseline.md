@@ -97,7 +97,7 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 8.073772e-09
+## [1] 8.076802e-09
 ```
 
 We now generate a five-step forecast on the test segment and compare it with the observed values.
@@ -118,20 +118,20 @@ ev_test
 ## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
 ## 
 ## $prediction
-## [1]  0.41211864  0.17388950 -0.07515067 -0.31951916 -0.54402029
+## [1]  0.41211881  0.17388946 -0.07515026 -0.31951936 -0.54401966
 ## 
 ## $smape
-## [1] 1.605749e-06
+## [1] 3.10581e-06
 ## 
 ## $mse
-## [1] 1.812958e-13
+## [1] 5.935781e-13
 ## 
 ## $R2
 ## [1] 1
 ## 
 ## $metrics
-##            mse        smape R2
-## 1 1.812958e-13 1.605749e-06  1
+##            mse       smape R2
+## 1 5.935781e-13 3.10581e-06  1
 ```
 
 The final plot compares the observed series, the training adjustment, and the forecasted test horizon.

@@ -98,7 +98,7 @@ train_eval$metrics
 
 ```
 ##            mse      smape        R2
-## 1 7.194175e-05 0.02315932 0.9998554
+## 1 7.327578e-05 0.02382606 0.9998527
 ```
 
 We now forecast the test horizon and evaluate the predictions against the observed values.
@@ -112,7 +112,7 @@ test_eval$metrics
 
 ```
 ##           mse     smape        R2
-## 1 0.002059226 0.2188279 0.9822144
+## 1 0.002143518 0.2234372 0.9814863
 ```
 
 This example shows that a custom predictor does not need to reimplement the whole forecasting pipeline. It only needs to respect the expected `tspredit` contract.

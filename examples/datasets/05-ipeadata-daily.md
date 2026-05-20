@@ -31,6 +31,7 @@ expand_dataset <- function(x) {
 ``` r
 data(ipeadata.d)
 ipeadata.d <- expand_dataset(ipeadata.d)
+ipeadata.d <- tail(ipeadata.d, 365)
 cat("Dataset: ipeadata.d\n")
 ```
 
@@ -43,7 +44,7 @@ cat("Rows:", nrow(ipeadata.d), "\n")
 ```
 
 ```
-## Rows: 8184
+## Rows: 365
 ```
 
 ``` r
@@ -67,13 +68,13 @@ head(ipeadata.d[, 1:4])
 ```
 
 ```
-##   GM366_IBVSP366 GM366_ERC366 GM366_EREURO366 GM366_ERPV366
-## 1         3580.8  1.15200e-09        0.841157   1.34545e-13
-## 2         3564.3  1.15200e-09        0.847678   1.38182e-13
-## 3         3753.5  1.15200e-09        0.859567   1.30909e-13
-## 4         3904.9  1.17382e-09        0.852447   1.27273e-13
-## 5         4051.9  1.17382e-09        0.861268   1.45455e-13
-## 6         4010.8  1.17382e-09        0.868371   1.63636e-13
+##      GM366_IBVSP366 GM366_ERC366 GM366_EREURO366 GM366_ERPV366
+## 7820             NA       3.5865              NA          2.67
+## 7821             NA       3.6575              NA          2.66
+## 7822             NA       3.6743              NA          2.63
+## 7823             NA       3.6915              NA          2.59
+## 7824             NA       3.6379              NA          2.68
+## 7825             NA       3.5278              NA          2.70
 ```
 
 

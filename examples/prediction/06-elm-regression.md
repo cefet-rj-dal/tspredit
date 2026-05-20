@@ -99,7 +99,7 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 2.484272e-27
+## [1] 2.445432e-27
 ```
 
 We now forecast the test set and compare the predicted values with the observed ones.
@@ -123,17 +123,17 @@ ev_test
 ## [1]  0.41211849  0.17388949 -0.07515112 -0.31951919 -0.54402111
 ## 
 ## $smape
-## [1] 2.056052e-12
+## [1] 2.130585e-12
 ## 
 ## $mse
-## [1] 3.464323e-25
+## [1] 3.675509e-25
 ## 
 ## $R2
 ## [1] 1
 ## 
 ## $metrics
 ##            mse        smape R2
-## 1 3.464323e-25 2.056052e-12  1
+## 1 3.675509e-25 2.130585e-12  1
 ```
 
 This final plot summarizes the result of the transformation so the effect can be interpreted visually.

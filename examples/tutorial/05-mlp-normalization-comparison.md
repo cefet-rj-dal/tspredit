@@ -86,8 +86,8 @@ res_an$test_metrics
 ```
 
 ```
-##            mse       smape        R2
-## 1 7.138197e-06 0.006005058 0.9999383
+##            mse      smape        R2
+## 1 8.343199e-05 0.04486295 0.9992794
 ```
 
 To make the comparison easy to inspect, we place the test metrics side by side.
@@ -102,9 +102,9 @@ rbind(
 ```
 
 ```
-##                    model          mse       smape        R2
-## 1         global min-max 1.001462e-04 0.060588308 0.9991350
-## 2 adaptive normalization 7.138197e-06 0.006005058 0.9999383
+##                    model          mse      smape        R2
+## 1         global min-max 1.001462e-04 0.06058831 0.9991350
+## 2 adaptive normalization 8.343199e-05 0.04486295 0.9992794
 ```
 
 The next table compares the actual forecasted values across the two pipelines.
@@ -121,12 +121,12 @@ data.frame(
 ```
 
 ```
-##   step    observed pred_gminmax    pred_an
-## 1    1  0.41211849   0.41787725  0.4154049
-## 2    2  0.17388949   0.18362848  0.1745594
-## 3    3 -0.07515112  -0.06273766 -0.0748118
-## 4    4 -0.31951919  -0.30699150 -0.3178584
-## 5    5 -0.54402111  -0.53616730 -0.5486652
+##   step    observed pred_gminmax     pred_an
+## 1    1  0.41211849   0.41787725  0.41558516
+## 2    2  0.17388949   0.18362848  0.17989428
+## 3    3 -0.07515112  -0.06273766 -0.06651154
+## 4    4 -0.31951919  -0.30699150 -0.30822295
+## 5    5 -0.54402111  -0.53616730 -0.53110457
 ```
 
 Finally, we visualize the adaptive-normalization forecast to connect the metrics with the resulting trajectory.

@@ -21,20 +21,6 @@ We load the packages required by this example.
 ``` r
 # Load packages
 library(daltoolbox)
-```
-
-```
-## 
-## Attaching package: 'daltoolbox'
-```
-
-```
-## The following object is masked from 'package:base':
-## 
-##     transform
-```
-
-``` r
 library(tspredit) 
 ```
 
@@ -57,13 +43,6 @@ We plot the data here so the effect of the next transformation can be compared v
 
 ``` r
 library(ggplot2)
-```
-
-```
-## Warning: package 'ggplot2' was built under R version 4.5.3
-```
-
-``` r
 # Visualize original seasonal series
 plot_ts(x = x, y = y) + theme(text = element_text(size=16))
 ```

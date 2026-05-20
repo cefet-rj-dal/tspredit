@@ -22,20 +22,6 @@ We start by loading the packages used throughout this example.
 ``` r
 # Loading the packages
 library(daltoolbox)
-```
-
-```
-## 
-## Attaching package: 'daltoolbox'
-```
-
-```
-## The following object is masked from 'package:base':
-## 
-##     transform
-```
-
-``` r
 library(daltoolboxdp)
 library(tspredit)
 ```
@@ -53,14 +39,10 @@ ts_head(ts, 3)
 ```
 
 ```
-##             t9        t8        t7        t6        t5        t4        t3
-## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950
-## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859
-## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974
-##             t2        t1        t0
-## [1,] 0.9839859 0.9092974 0.7780732
-## [2,] 0.9092974 0.7780732 0.5984721
-## [3,] 0.7780732 0.5984721 0.3816610
+##             t9        t8        t7        t6        t5        t4        t3        t2        t1        t0
+## [1,] 0.0000000 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732
+## [2,] 0.2474040 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721
+## [3,] 0.4794255 0.6816388 0.8414710 0.9489846 0.9974950 0.9839859 0.9092974 0.7780732 0.5984721 0.3816610
 ```
 
 Before moving on, we visualize the series so the effect of the next transformation can be compared against the original signal.
@@ -69,13 +51,6 @@ Before moving on, we visualize the series so the effect of the next transformati
 ``` r
 # Series visualization
 library(ggplot2)
-```
-
-```
-## Warning: package 'ggplot2' was built under R version 4.5.3
-```
-
-``` r
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 
@@ -124,7 +99,7 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 0.001648942
+## [1] 0.001648941
 ```
 
 We now forecast the test set and compare the predicted values with the observed ones.
@@ -161,7 +136,7 @@ print(head(ev_test$metrics))
 
 ```
 ##           mse     smape        R2
-## 1 0.001963386 0.1164553 0.9830421
+## 1 0.001963423 0.1164572 0.9830418
 ```
 
 ``` r

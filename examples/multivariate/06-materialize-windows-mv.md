@@ -69,8 +69,8 @@ colnames(windows_full)
 ```
 
 ```
-##  [1] "y_t6"  "y_t5"  "y_t4"  "y_t3"  "y_t2"  "y_t1"  "y_t0"  "x1_t6" "x1_t5" "x1_t4" "x1_t3" "x1_t2" "x1_t1" "x1_t0" "x2_t6" "x2_t5" "x2_t4"
-## [18] "x2_t3" "x2_t2" "x2_t1" "x2_t0"
+##  [1] "y_t6"  "y_t5"  "y_t4"  "y_t3"  "y_t2"  "y_t1"  "y_t0"  "x1_t6" "x1_t5" "x1_t4" "x1_t3" "x1_t2" "x1_t1" "x1_t0" "x2_t6"
+## [16] "x2_t5" "x2_t4" "x2_t3" "x2_t2" "x2_t1" "x2_t0"
 ```
 
 We can also request only specific lag positions for each variable. This is a useful intermediate view before the complete forecasting pipeline is assembled.
@@ -111,14 +111,14 @@ ts_head(windows_transformed, 3)
 ```
 
 ```
-##       y_t6     y_t5     y_t4     y_t3     y_t2     y_t1     y_t0 x1_t6 x1_t5 x1_t4 x1_t3 x1_t2 x1_t1 x1_t0 x2_t6 x2_t5 x2_t4 x2_t3 x2_t2 x2_t1
-## 1       NA       NA 790.3333 777.0000 753.6667 731.3333 751.6667     4     5     6     7     1     2     3     0     0     0     1     1     0
-## 2       NA 790.3333 777.0000 753.6667 731.3333 751.6667 788.6667     5     6     7     1     2     3     4     0     0     1     1     0     0
-## 3 790.3333 777.0000 753.6667 731.3333 751.6667 788.6667 813.0000     6     7     1     2     3     4     5     0     1     1     0     0     0
-##   x2_t0
-## 1     0
-## 2     0
-## 3     0
+##       y_t6     y_t5     y_t4     y_t3     y_t2     y_t1     y_t0 x1_t6 x1_t5 x1_t4 x1_t3 x1_t2 x1_t1 x1_t0 x2_t6 x2_t5
+## 1       NA       NA 790.3333 777.0000 753.6667 731.3333 751.6667     4     5     6     7     1     2     3     0     0
+## 2       NA 790.3333 777.0000 753.6667 731.3333 751.6667 788.6667     5     6     7     1     2     3     4     0     0
+## 3 790.3333 777.0000 753.6667 731.3333 751.6667 788.6667 813.0000     6     7     1     2     3     4     5     0     1
+##   x2_t4 x2_t3 x2_t2 x2_t1 x2_t0
+## 1     0     1     1     0     0
+## 2     1     1     0     0     0
+## 3     1     0     0     0     0
 ```
 
 What this example shows
