@@ -122,7 +122,7 @@ ts_det_context_matrix <- function(x, context_size) {
 
   x <- as.numeric(x)
   k <- min(context_size, length(x))
-  matrix(tail(x, k), nrow = 1)
+  matrix(utils::tail(x, k), nrow = 1)
 }
 
 ts_det_match_context <- function(candidate, context) {
@@ -145,7 +145,7 @@ ts_det_periodic_next <- function(object, history) {
   k_max <- min(length(history), object$context_size)
 
   for (k in seq(k_max, 1)) {
-    context <- tail(history, k)
+    context <- utils::tail(history, k)
     matches <- numeric(0)
     for (i in seq_len(period)) {
       candidate <- extended[i:(i + k - 1)]
@@ -170,7 +170,7 @@ ts_det_persist_value <- function(object, x = NULL) {
     }
     x <- as.numeric(x)
     if (length(x) > 0) {
-      return(tail(x, 1))
+      return(utils::tail(x, 1))
     }
   }
 
@@ -197,7 +197,7 @@ fit.ts_deterministic <- function(obj, x, y = NULL, ...) {
     if (length(series) < obj$period) {
       stop("ts_deterministic(periodic) requires at least 'period' observations.")
     }
-    obj$cycle <- tail(series, obj$period)
+    obj$cycle <- utils::tail(series, obj$period)
     if (is.null(obj$context_size)) {
       obj$context_size <- ts_det_infer_context_size(obj$cycle)
     } else {
@@ -209,7 +209,7 @@ fit.ts_deterministic <- function(obj, x, y = NULL, ...) {
       context_size = obj$context_size
     )
   } else if (obj$mode == "persist") {
-    obj$last_value <- tail(series, 1)
+    obj$last_value <- utils::tail(series, 1)
     obj$context_size <- 1L
     attr(obj, "params") <- list(mode = obj$mode)
   }

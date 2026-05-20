@@ -181,7 +181,7 @@ reg_mv_forecast_aux <- function(object, x = NULL, steps_ahead = 1) {
     stop("Future auxiliary values are required. Provide x or fit models_x.")
   }
 
-  prediction_x <- setNames(vector("list", length(object$x_names)), object$x_names)
+  prediction_x <- stats::setNames(vector("list", length(object$x_names)), object$x_names)
   for (name in object$x_names) {
     pred <- predict(object$fitted_models_x[[name]], x = NULL, steps_ahead = steps_ahead)
     prediction_x[[name]] <- as.numeric(pred)

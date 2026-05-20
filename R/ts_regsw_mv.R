@@ -168,7 +168,7 @@ mv_as_spec <- function(spec, default_variables, allowed_variables, window_size) 
   }
 
   if (is.null(spec$lags)) {
-    spec$lags <- setNames(
+    spec$lags <- stats::setNames(
       lapply(spec$variables, function(...) mv_default_lags(window_size)),
       spec$variables
     )
@@ -217,7 +217,7 @@ mv_normalize_transforms <- function(transforms, variables) {
     stop(sprintf("Unknown variables in transforms: %s", paste(unknown, collapse = ", ")))
   }
 
-  normalized <- setNames(vector("list", length(variables)), variables)
+  normalized <- stats::setNames(vector("list", length(variables)), variables)
   for (var in variables) {
     entry <- transforms[[var]]
     if (is.null(entry)) {
@@ -310,7 +310,7 @@ mv_compose_prediction <- function(object, prediction_y, prediction_x) {
   prediction_x <- lapply(prediction_x, as.numeric)
 
   system_prediction <- data.frame(
-    setNames(list(prediction_y), object$y_name),
+    stats::setNames(list(prediction_y), object$y_name),
     as.data.frame(prediction_x, optional = TRUE, stringsAsFactors = FALSE),
     check.names = FALSE
   )
@@ -350,7 +350,7 @@ mv_predict_submodel <- function(template, fitted, spec, history, target) {
 
   series <- as.vector(history[[target]])
   fitted_step <- fit(template, x = series)
-  prediction <- predict(fitted_step, x = tail(series, 1), steps_ahead = 1)
+  prediction <- predict(fitted_step, x = utils::tail(series, 1), steps_ahead = 1)
   as.vector(prediction)[1]
 }
 
@@ -460,7 +460,7 @@ predict.ts_regsw_mv <- function(object, x = NULL, steps_ahead = 1, return_all = 
   names(prediction_x) <- object$x_names
 
   for (step_idx in seq_len(steps_ahead)) {
-    next_row <- setNames(as.list(rep(NA_real_, length(object$variables))), object$variables)
+    next_row <- stats::setNames(as.list(rep(NA_real_, length(object$variables))), object$variables)
 
     for (name in object$x_names) {
       spec <- object$models_x[[name]]
