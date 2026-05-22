@@ -51,8 +51,7 @@ head(names(bioenergy))
 ```
 
 ```
-## [1] "usa_bio_consumption"     "usa_bio_production"      "china_bio_consumption"   "china_bio_production"   
-## [5] "germany_bio_consumption" "germany_bio_production"
+## [1] "usa_bio_consumption"     "usa_bio_production"      "china_bio_consumption"   "china_bio_production"    "germany_bio_consumption" "germany_bio_production"
 ```
 
 ``` r

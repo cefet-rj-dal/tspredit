@@ -51,8 +51,7 @@ head(names(pesticides))
 ```
 
 ```
-## [1] "india_pesticides"   "japan_pesticides"   "canada_pesticides"  "usa_pesticides"     "china_pesticides"  
-## [6] "germany_pesticides"
+## [1] "india_pesticides"   "japan_pesticides"   "canada_pesticides"  "usa_pesticides"     "china_pesticides"   "germany_pesticides"
 ```
 
 ``` r

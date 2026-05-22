@@ -99,7 +99,7 @@ ev_adjust$mse
 ```
 
 ```
-## [1] 0.001648941
+## [1] 0.001648967
 ```
 
 We now forecast the test set and compare the predicted values with the observed ones.
@@ -136,7 +136,7 @@ print(head(ev_test$metrics))
 
 ```
 ##           mse     smape        R2
-## 1 0.001963423 0.1164572 0.9830418
+## 1 0.001963151 0.1164447 0.9830442
 ```
 
 ``` r
@@ -144,7 +144,7 @@ print(sprintf("smape: %.2f", 100*ev_test$metrics$smape))
 ```
 
 ```
-## [1] "smape: 11.65"
+## [1] "smape: 11.64"
 ```
 
 This final plot summarizes the result of the transformation so the effect can be interpreted visually.
