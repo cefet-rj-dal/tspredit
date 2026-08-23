@@ -419,7 +419,7 @@
  #' @keywords datasets
  #' @references
  #' Makridakis et al. (1982). The accuracy of extrapolation (time series) methods: Results of a forecasting competition. Journal of Forecasting, 1(2), 111–153.
- #' @source \href{https://onlinelibrary.wiley.com/doi/10.1002/for.3980010202}{The accuracy of extrapolation (time series) methods: Results of a forecasting competition}
+ #' @source Makridakis et al. (1982), DOI: 10.1002/for.3980010202.
  #' @import daltoolbox
  #' @details
  #' Consolidated list with frequencies as keys (e.g., `monthly`, `quarterly`, `yearly`). Each element is a list of series.

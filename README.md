@@ -54,11 +54,8 @@ Documentation and examples are available in the package site and in the
 repository:
 
 - [Package website](https://cefet-rj-dal.github.io/tspredit/)
-- [Function
-  reference](https://cefet-rj-dal.github.io/tspredit/reference/)
-- [Articles](https://cefet-rj-dal.github.io/tspredit/articles/)
 - [GitHub repository](https://github.com/cefet-rj-dal/tspredit)
-- [Examples](https://github.com/cefet-rj-dal/tspredit/tree/main/examples)
+- [Examples](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/)
 
 The documentation is organized around two complementary entry points:
 
@@ -75,10 +72,11 @@ examples by pipeline stage.
 
 ## Guided Tutorial Track
 
-- [Tutorials](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/tutorial/) -
-  a 10-part sequence that starts with ARIMA forecasting protocols, then
-  builds the sliding-window MLP pipeline piece by piece, and ends with
-  model comparison and integrated tuning.
+The tutorials are part of the
+[examples](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/)
+collection. They form a 10-part sequence that starts with ARIMA
+forecasting protocols, then builds the sliding-window MLP pipeline piece
+by piece, and ends with model comparison and integrated tuning.
 
 The sequence is cumulative. Each tutorial introduces one main decision
 in a time series forecasting study and keeps the code close to that
@@ -88,37 +86,32 @@ learning objective.
 
 ## Thematic Example Collections
 
-- [Time-series data
-  utilities](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/tsdata/) -
-  build `ts_data`, project windows into inputs and targets, and create
-  train/test splits that preserve temporal order.
-- [Datasets](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/datasets/) -
-  inspect the packaged datasets documented in `R/data.R` and
+The
+[examples](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/)
+collection includes thematic subcollections:
+
+- Time-series data utilities - build `ts_data`, project windows into
+  inputs and targets, and create train/test splits that preserve
+  temporal order.
+- Datasets - inspect the packaged datasets documented in `R/data.R` and
   `R/tspredbench.R`, one dataset at a time.
-- [Filtering](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/filter/) -
-  compare identity baselines, smoothing methods, robust filters,
-  decomposition methods, state-space filters, and seasonal adjustments.
-- [Lag
-  mapping](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/lagmapping/) -
-  study how different lag-selection rules decide which past observations
-  are exposed to the predictor.
-- [Augmentation](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/augment/) -
-  study when synthetic windows help, from simple perturbations to
-  recency-aware transformations.
-- [Normalization](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/normalization/) -
-  inspect how scale, drift, adaptive transformations, and differencing
-  affect the signal seen by the predictor.
-- [Prediction](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/prediction/) -
-  move from classical baselines to machine-learning and neural
-  forecasting models, then to tuning.
-- [Multivariate
-  forecasting](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/multivariate/) -
-  extend the pipeline to target-centered multivariate workflows by
-  combining one model for `y` with auxiliary-variable pipelines.
-- [Custom
-  extensions](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/custom/) -
-  learn how to add custom predictors, filters, augmentations, and
-  normalization methods without breaking the package contract.
+- Filtering - compare identity baselines, smoothing methods, robust
+  filters, decomposition methods, state-space filters, and seasonal
+  adjustments.
+- Lag mapping - study how different lag-selection rules decide which
+  past observations are exposed to the predictor.
+- Augmentation - study when synthetic windows help, from simple
+  perturbations to recency-aware transformations.
+- Normalization - inspect how scale, drift, adaptive transformations,
+  and differencing affect the signal seen by the predictor.
+- Prediction - move from classical baselines to machine-learning and
+  neural forecasting models, then to tuning.
+- Multivariate forecasting - extend the pipeline to target-centered
+  multivariate workflows by combining one model for `y` with
+  auxiliary-variable pipelines.
+- Custom extensions - learn how to add custom predictors, filters,
+  augmentations, and normalization methods without breaking the package
+  contract.
 
 ------------------------------------------------------------------------
 
@@ -144,21 +137,12 @@ learning objective.
 
 ## Course Material
 
-The public course page includes a compact slide sequence that introduces
-TSPredIT and demonstrates the main package workflows:
-
-1.  [TSPredIT
-    overview](https://github.com/eogasawara/series-temporais/blob/main/t01-tspredit.pdf)
-2.  [Tutorial](https://github.com/eogasawara/series-temporais/blob/main/t02-tutorial.pdf)
-3.  [Data
-    utilities](https://github.com/eogasawara/series-temporais/blob/main/t03-data.pdf)
-4.  [Datasets](https://github.com/eogasawara/series-temporais/blob/main/t04-datasets.pdf)
-5.  [Filtering](https://github.com/eogasawara/series-temporais/blob/main/t05-filter.pdf)
-6.  [Augmentation](https://github.com/eogasawara/series-temporais/blob/main/t06-augment.pdf)
-7.  [Normalization](https://github.com/eogasawara/series-temporais/blob/main/t07-normalization.pdf)
-8.  [Prediction](https://github.com/eogasawara/series-temporais/blob/main/t08-prediction.pdf)
-9.  [Custom
-    extensions](https://github.com/eogasawara/series-temporais/blob/main/t09-custom.pdf)
+The [public course
+material](https://github.com/eogasawara/series-temporais/) includes a
+compact slide sequence that introduces TSPredIT and demonstrates the
+main package workflows: overview, tutorial, data utilities, datasets,
+filtering, augmentation, normalization, prediction, and custom
+extensions.
 
 ------------------------------------------------------------------------
 
@@ -166,7 +150,7 @@ TSPredIT and demonstrates the main package workflows:
 
 - [DAL Toolbox](https://cefet-rj-dal.github.io/daltoolbox/)
 - [harbinger](https://cefet-rj-dal.github.io/harbinger/)
-- [Data Analytics Lab](https://eic.cefet-rj.br/~dal)
+- [Data Analytics Lab](https://eic.cefet-rj.br/~dal/)
 
 ------------------------------------------------------------------------
 

@@ -8,7 +8,7 @@
 A list of dataframes containing time series.
 }
 \source{
-\href{https://onlinelibrary.wiley.com/doi/10.1002/for.3980010202}{The accuracy of extrapolation (time series) methods: Results of a forecasting competition}
+Makridakis et al. (1982), DOI: 10.1002/for.3980010202.
 }
 \usage{
 data(m1)
