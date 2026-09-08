@@ -155,53 +155,69 @@ export(tsanutils)
 export(tslagutils)
 import(daltoolbox)
 importFrom(FNN,knn.reg)
-importFrom(KFAS,KFS)
-importFrom(KFAS,SSModel)
-importFrom(KFAS,SSMtrend)
-importFrom(daltoolbox,action)
-importFrom(daltoolbox,adjust_data.frame)
-importFrom(daltoolbox,dal_base)
-importFrom(daltoolbox,dal_transform)
-importFrom(daltoolbox,dal_tune)
-importFrom(daltoolbox,evaluate)
-importFrom(daltoolbox,fit)
-importFrom(daltoolbox,fit_curvature_min)
-importFrom(daltoolbox,inverse_transform)
-importFrom(daltoolbox,k_fold)
-importFrom(daltoolbox,outliers_boxplot)
-importFrom(daltoolbox,predictor)
-importFrom(daltoolbox,sample_random)
-importFrom(daltoolbox,select_hyper)
-importFrom(daltoolbox,set_params)
-importFrom(daltoolbox,train_test_from_folds)
-importFrom(daltoolbox,transform)
-importFrom(dplyr,filter)
-importFrom(dplyr,group_by)
-importFrom(dplyr,summarise)
+importFrom(KFAS,
+  KFS,
+  SSModel,
+  SSMtrend
+)
+importFrom(daltoolbox,
+  action,
+  adjust_data.frame,
+  dal_base,
+  dal_transform,
+  dal_tune,
+  evaluate,
+  fit,
+  fit_curvature_min,
+  inverse_transform,
+  k_fold,
+  outliers_boxplot,
+  predictor,
+  sample_random,
+  select_hyper,
+  set_params,
+  train_test_from_folds,
+  transform
+)
+importFrom(dplyr,
+  filter,
+  group_by,
+  summarise
+)
 importFrom(e1071,svm)
-importFrom(elmNNRcpp,elm_predict)
-importFrom(elmNNRcpp,elm_train)
-importFrom(forecast,Arima)
-importFrom(forecast,auto.arima)
-importFrom(forecast,forecast)
+importFrom(elmNNRcpp,
+  elm_predict,
+  elm_train
+)
+importFrom(forecast,
+  Arima,
+  auto.arima,
+  forecast
+)
 importFrom(graphics,boxplot)
 importFrom(hht,CEEMD)
 importFrom(nnet,nnet)
 importFrom(randomForest,randomForest)
-importFrom(stats,HoltWinters)
-importFrom(stats,acf)
-importFrom(stats,fft)
-importFrom(stats,lowess)
-importFrom(stats,na.omit)
-importFrom(stats,predict)
-importFrom(stats,quantile)
-importFrom(stats,rexp)
-importFrom(stats,rnorm)
-importFrom(stats,sd)
-importFrom(stats,smooth.spline)
-importFrom(stats,stl)
-importFrom(stats,ts)
-importFrom(utils,combn)
-importFrom(utils,head)
-importFrom(wavelets,imodwt)
-importFrom(wavelets,modwt)
+importFrom(stats,
+  HoltWinters,
+  acf,
+  fft,
+  lowess,
+  na.omit,
+  predict,
+  quantile,
+  rexp,
+  rnorm,
+  sd,
+  smooth.spline,
+  stl,
+  ts
+)
+importFrom(utils,
+  combn,
+  head
+)
+importFrom(wavelets,
+  imodwt,
+  modwt
+)
