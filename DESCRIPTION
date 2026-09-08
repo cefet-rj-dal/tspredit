@@ -1,6 +1,6 @@
 Package: tspredit
 Title: Time Series Prediction with Integrated Tuning
-Version: 2.0.707
+Version: 2.0.717
 Authors@R: 
   c(    person(given = "Eduardo", family = "Ogasawara", role = c("aut", "ths", "cre"), 
                email = "eogasawara@ieee.org", comment = c(ORCID = "0000-0002-0466-0626")),
@@ -12,7 +12,7 @@ Authors@R:
         person(given = "Esther", family = "Pacitti", role = "ctb", email = "Esther.Pacitti@lirmm.fr"),
         person(given = "Fabio", family = "Porto", role = "ctb", email = "fporto@lncc.br"),
         person(given = "Fernando", family = "Alexandrino", role = "aut", email = "fernando.alexandrino@ifsp.edu.br"),
-        person(given = "Luciano", family = "Mello", role = "ctb"),
+        person(given = "Luciano", family = "Mello", role = "aut", email = "luciano.mello@aluno.cefet-rj.br"),
         person(given = "Rebecca", family = "Salles", role = "aut", email = "rebecca.salles@eic.cefet-rj.br"),
         person(given = "Vitoria", family = "Birindiba", role = "aut", email = "vitoria.birindiba@eic.cefet-rj.br"),
         person(given = "CEFET/RJ", role = "cph")
