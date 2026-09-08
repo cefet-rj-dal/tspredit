@@ -1,0 +1,56 @@
+The one-dimensional Gabor filter combines a Gaussian envelope with a cosine carrier. In time series smoothing, this creates a local convolution kernel that can attenuate unwanted variation while retaining structure around a selected central frequency.
+
+Notes:
+- `window_size` controls the width of the Gaussian envelope in observations.
+- `central_frequency` is expressed in cycles per observation and must be between 0 and 0.5. Values close to zero behave more like Gaussian smoothing, while larger values emphasize oscillatory local structure.
+- The implementation uses a centered window, so it is intended for offline preprocessing rather than strictly causal forecasting.
+- Reflected boundary padding is used so the filtered series keeps the same length as the input.
+
+Objectives: The Gabor filter applies localized frequency-aware smoothing to a time series using a finite symmetric kernel.
+
+```{r}
+source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/examples/seed.R"))
+# Filter - Gabor
+
+# Install tspredit if needed
+#install.packages("tspredit")
+```
+
+We load the packages required by this example.
+
+```{r}
+# Load packages
+library(daltoolbox)
+library(tspredit)
+```
+
+This chunk prepares a noisy seasonal series.
+
+```{r}
+set_example_seed()
+x <- seq(0, 6 * pi, length.out = 120)
+y <- sin(x) + 0.3 * sin(8 * x) + rnorm(length(x), 0, 0.12)
+```
+
+We plot the data here so the effect of the transformation can be compared visually.
+
+```{r}
+library(ggplot2)
+# Visualize noisy input
+plot_ts(y = y) + theme(text = element_text(size = 16))
+```
+
+We now apply the Gabor filter.
+
+```{r}
+# Apply Gabor smoothing
+filter <- ts_fil_gabor(window_size = 3, central_frequency = 0.05)
+filter <- daltoolbox::fit(filter, y)
+yhat <- transform(filter, y)
+
+# Compare original vs filtered series
+plot_ts_pred(y = y, yadj = yhat) + theme(text = element_text(size = 16))
+```
+
+References
+- D. Gabor (1946). Theory of communication. Journal of the Institution of Electrical Engineers - Part III: Radio and Communication Engineering, 93, 429-457.

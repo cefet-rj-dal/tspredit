@@ -32,12 +32,15 @@ ts_fil_winsor <- function() {
 }
 
 #'@importFrom daltoolbox transform
-#'@importFrom DescTools Winsorize
 #'@importFrom stats quantile
 #'@exportS3Method transform ts_fil_winsor
 transform.ts_fil_winsor <- function(obj, data, ...) {
-  adjust <-DescTools::Winsorize(data)
+  adjust <- winsorize(data)
   result <- as.vector(adjust)
   return(result)
 }
 
+winsorize <- function(data) {
+  limits <- stats::quantile(data, probs = c(0.05, 0.95), na.rm = FALSE)
+  pmin(pmax(data, limits[[1]]), limits[[2]])
+}

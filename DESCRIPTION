@@ -4,14 +4,15 @@ Version: 2.0.707
 Authors@R: 
   c(    person(given = "Eduardo", family = "Ogasawara", role = c("aut", "ths", "cre"), 
                email = "eogasawara@ieee.org", comment = c(ORCID = "0000-0002-0466-0626")),
+        person(given = "Arthur", family = "Garcia", role = "aut", email = "arthur.garcia@eic.cefet-rj.br"),
         person(given = "Cristiane", family = "Gea", role = "aut", email = "cristiane.gea@eic.cefet-rj.br"),
         person(given = "Diego", family = "Carvalho", role = "ctb", email = "diego.carvalho@cefet-rj.br"),
         person(given = "Diogo", family = "Santos", role = "aut", email = "diogo.santos@eic.cefet-rj.br"),
-        person(given = "Arthur", family = "Garcia", role = "aut", email = "arthur.garcia@eic.cefet-rj.br"),
         person(given = "Eduardo", family = "Bezerra", role = "ctb", email = "ebezerra@cefet-rj.br"),
         person(given = "Esther", family = "Pacitti", role = "ctb", email = "Esther.Pacitti@lirmm.fr"),
         person(given = "Fabio", family = "Porto", role = "ctb", email = "fporto@lncc.br"),
         person(given = "Fernando", family = "Alexandrino", role = "aut", email = "fernando.alexandrino@ifsp.edu.br"),
+        person(given = "Luciano", family = "Mello", role = "ctb"),
         person(given = "Rebecca", family = "Salles", role = "aut", email = "rebecca.salles@eic.cefet-rj.br"),
         person(given = "Vitoria", family = "Birindiba", role = "aut", email = "vitoria.birindiba@eic.cefet-rj.br"),
         person(given = "CEFET/RJ", role = "cph")
@@ -30,14 +31,12 @@ Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.1.0)
 Imports: 
   stats,
-  DescTools,
   e1071, 
   elmNNRcpp, 
   FNN, 
   forecast,
   hht,
   KFAS,
-  mFilter,
   nnet, 
   randomForest,
   wavelets,

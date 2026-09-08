@@ -4,18 +4,33 @@
 \alias{ts_fil_fft}
 \title{FFT Filter}
 \usage{
-ts_fil_fft()
+ts_fil_fft(threshold = 0.9, pad_pct = 0.25, taper_pct = 0.15)
+}
+\arguments{
+\item{threshold}{Cumulative non-constant spectral energy threshold to retain.
+Larger values keep more frequency components.}
+
+\item{pad_pct}{Fraction of the series length used for reflected boundary
+padding.}
+
+\item{taper_pct}{Width of the cosine transition band relative to the cutoff
+index.}
 }
 \value{
 A \code{ts_fil_fft} object.
 }
 \description{
-Frequency-domain smoothing using the Fast Fourier Transform
-(FFT) to attenuate high-frequency components.
+Frequency-domain low-pass smoothing using the Fast Fourier
+Transform (FFT), reflected boundary padding, and a smooth cosine roll-off.
 }
 \details{
-The implementation keeps the lowest frequencies that explain most of
-the spectral energy and reconstructs the series from that low-pass spectrum.
+The implementation ignores the constant component when selecting the
+cutoff. This prevents a large mean level from dominating the energy
+criterion and collapsing the output into an almost flat series. It keeps the
+lowest frequencies that explain the requested share of non-constant spectral
+energy, applies a cosine roll-off after the cutoff to reduce ringing, and
+reconstructs the original-length series after removing the reflected
+boundary padding.
 }
 \examples{
 # Frequency-domain smoothing via FFT low-pass reconstruction

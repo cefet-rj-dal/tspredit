@@ -51,13 +51,25 @@ ts_fil_hp <- function(lambda = 100, preserve = 0.9) {
   return(obj)
 }
 
-#'@importFrom mFilter hpfilter
 #'@importFrom daltoolbox transform
 #'@exportS3Method transform ts_fil_hp
 transform.ts_fil_hp <- function(obj, data, ...) {
-  # Extract HP trend component and blend with original series
-  ts_filter <- mFilter::hpfilter(data, freq = obj$lambda, type = "lambda")$trend
+  # Extract HP trend component and blend with original series.
+  ts_filter <- hp_trend(data, lambda = obj$lambda)
   result = as.vector(obj$preserve * data + (1 - obj$preserve) * ts_filter)
   return(result)
 }
 
+hp_trend <- function(data, lambda) {
+  y <- as.numeric(data)
+  n <- length(y)
+
+  if (n < 3) {
+    return(y)
+  }
+
+  second_difference <- diff(diag(n), differences = 2)
+  penalty <- lambda * crossprod(second_difference)
+  trend <- solve(diag(n) + penalty, y)
+  as.vector(trend)
+}

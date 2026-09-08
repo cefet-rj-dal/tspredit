@@ -7,9 +7,8 @@
 ts_fil_spline(spar = NULL)
 }
 \arguments{
-\item{spar}{smoothing parameter. When spar is specified, the coefficient
-of the integral of the squared second derivative in the fitting criterion (penalized log-likelihood)
-is a monotone function of spar.}
+\item{spar}{Smoothing parameter. If \code{NULL}, it is selected automatically by
+generalized cross-validation.}
 }
 \value{
 A \code{ts_fil_spline} object.
@@ -17,6 +16,11 @@ A \code{ts_fil_spline} object.
 \description{
 Fit a cubic smoothing spline to a time series for smooth trend
 extraction with a tunable roughness penalty.
+}
+\details{
+The spline is fitted against the time index \code{1:length(data)} rather
+than against the observed values themselves. This preserves the chronological
+order of the series while smoothing the observed values along that time axis.
 }
 \examples{
 # Smoothing splines with adjustable roughness penalty
@@ -26,7 +30,7 @@ library(tspredit)
 data(tsd)
 tsd$y[9] <- 2 * tsd$y[9]  # inject an outlier
 
-# Fit spline smoother (spar controls smoothness) and transform
+# Fit spline smoother and transform
 filter <- ts_fil_spline(spar = 0.5)
 filter <- daltoolbox::fit(filter, tsd$y)
 y <- transform(filter, tsd$y)

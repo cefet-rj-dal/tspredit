@@ -21,6 +21,7 @@ The recommended way to study this folder is to keep the baseline in mind and the
 ## Frequency and decomposition methods
 
 - [09-fft-filter.md](09-fft-filter.md) - suppress high-frequency components in the frequency domain.
+- [16-gabor-filter.md](16-gabor-filter.md) - apply localized frequency-aware smoothing with a one-dimensional Gabor kernel.
 - [10-wavelet-filter.md](10-wavelet-filter.md) - denoise the signal at multiple scales with wavelets.
 - [11-emd-filter.md](11-emd-filter.md) - decompose the series into intrinsic mode functions and reconstruct a cleaner signal.
 - [12-robust-emd-filter.md](12-robust-emd-filter.md) - use a more robust EMD variant when noise and outliers are stronger.
