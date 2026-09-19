@@ -47,6 +47,13 @@ We load the example series that will be used throughout the demonstration.
 
 data(tsd)
 library(ggplot2)
+```
+
+```
+## Learn more about the underlying theory at https://ggplot2-book.org/
+```
+
+``` r
 plot_ts(x=tsd$x, y=tsd$y) + theme(text = element_text(size=16))
 ```
 
