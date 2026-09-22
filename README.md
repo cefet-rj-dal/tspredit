@@ -157,10 +157,19 @@ extensions.
 ## Playlist
 
 [TSPredIT
-videos](https://www.youtube.com/playlist?list=PLJb2qK1RWkbGlxUAljn-9eP2r_3m70aUC)
+videos](https://www.youtube.com/playlist?list=PLKGnd3Kb5RZg)
 
 [![Watch the playlist on
-YouTube](https://img.shields.io/badge/YouTube-Watch%20playlist-red?logo=youtube&logoColor=white)](https://www.youtube.com/playlist?list=PLJb2qK1RWkbGlxUAljn-9eP2r_3m70aUC)
+YouTube](https://img.shields.io/badge/YouTube-Watch%20playlist-red?logo=youtube&logoColor=white)](https://www.youtube.com/playlist?list=PLKGnd3Kb5RZg)
+
+------------------------------------------------------------------------
+
+## Slides and Videos
+
+- [Slide decks](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/slides/) -
+  one presentation per topic, indexed in `examples/slides/README.md`.
+- [Video index](https://github.com/cefet-rj-dal/tspredit/tree/main/examples/videos/) -
+  one entry per published video, indexed in `examples/videos/README.md`.
 
 ------------------------------------------------------------------------
 
