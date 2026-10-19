@@ -4,29 +4,29 @@ Companion videos for the `tspredit` examples, published on the [Time Series Pred
 
 ## Overview
 
-- [Time Series Forecasting in R: Integrated Preprocessing and TSPred IT](https://www.youtube.com/watch?v=MJRo_8ToRKc)
-- [Time Series Forecasting Tutorial in R: ARIMA, MLP, Tuning, and Evaluation](https://www.youtube.com/watch?v=cimfP5cc9II)
+- [Time Series Forecasting in R: Integrated Preprocessing and TSPred IT](https://www.youtube.com/watch?v=w9VmgGYNGiM)
+- [Time Series Forecasting Tutorial in R: ARIMA, MLP, Tuning, and Evaluation](https://www.youtube.com/watch?v=2-EimUdnKC4)
 
 ## Time Series Data (tsdata)
 
-- [Time Series Data Preparation in R: Sliding Windows, Targets, and Test Splits](https://www.youtube.com/watch?v=xKj6UqGV0Uw)
+- [Time Series Data Preparation in R: Sliding Windows, Targets, and Test Splits](https://www.youtube.com/watch?v=EIrpW6NulDM)
 
 ## Filter
 
-- [Time Series Filtering in R: Smoothing, Outliers, Frequency, and Forecasting](https://www.youtube.com/watch?v=Q-w_nj2JyP8)
+- [Time Series Filtering in R: Smoothing, Outliers, Frequency, and Forecasting](https://www.youtube.com/watch?v=R7mOa29OK2k)
 
 ## Augment
 
-- [Time Series Data Augmentation in R: Jitter, Flip, Stretch, and Recency](https://www.youtube.com/watch?v=nL_Nea-I4PE)
+- [Time Series Data Augmentation in R: Jitter, Flip, Stretch, and Recency](https://www.youtube.com/watch?v=49xk9cPKiHM)
 
 ## Normalization
 
-- [Time Series Normalization in R: Scaling, Adaptive Methods, and Forecasting](https://www.youtube.com/watch?v=cIjon68WyDU)
+- [Time Series Normalization in R: Scaling, Adaptive Methods, and Forecasting](https://www.youtube.com/watch?v=wNsw84etjGM)
 
 ## Prediction
 
-- [Time Series Forecasting Models in R: ARIMA, SVM, Random Forest, MLP, and LSTM](https://www.youtube.com/watch?v=P8YHNUWjirM)
+- [Time Series Forecasting Models in R: ARIMA, SVM, Random Forest, MLP, and LSTM](https://www.youtube.com/watch?v=XUUQIcFRFnc)
 
 ## Custom Extensions
 
-- [Custom Time Series Forecasting in R: Predictors, Filters, Augmentation, Normalizers](https://www.youtube.com/watch?v=ba4xZv-hCjg)
+- [Custom Time Series Forecasting in R: Predictors, Filters, Augmentation, Normalizers](https://www.youtube.com/watch?v=xBdk6NQhny8)
