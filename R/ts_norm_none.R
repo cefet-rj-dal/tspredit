@@ -29,10 +29,27 @@ ts_norm_none <- function() {
 
 #'@importFrom daltoolbox transform
 #'@exportS3Method transform ts_norm_none
-transform.ts_norm_none <- function(obj, data, ...) {
+transform.ts_norm_none <- function(obj, data, x = NULL, ...) {
+  # When an aligned target/forecast `x` is supplied (as done by ts_regsw during
+  # fit/predict), return it unchanged. The identity transform must not replace the
+  # target with the window matrix, which would break sliding-window regressors.
+  if (!is.null(x)) {
+    return(x)
+  }
   result <- data
   idx <- c(1:nrow(result))
   attr(result, "idx") <- idx
   return(result)
+}
+
+#'@importFrom daltoolbox inverse_transform
+#'@exportS3Method inverse_transform ts_norm_none
+inverse_transform.ts_norm_none <- function(obj, data, x = NULL, ...) {
+  # Identity inverse: mirror the transform contract on both the data and the
+  # target/forecast paths so predictions pass through unchanged.
+  if (!is.null(x)) {
+    return(x)
+  }
+  return(data)
 }
 
