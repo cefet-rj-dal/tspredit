@@ -72,7 +72,10 @@ x2[is.na(x2)] <- tsd$y[is.na(x2)]
 mv <- ts_data_mv(data.frame(y = tsd$y, x1 = x1, x2 = as.numeric(x2)), y = "y")
 samp <- ts_sample(mv, test_size = 5)
 
-model <- ts_arimax(models_x = list(x1 = ts_arima(), x2 = ts_arima()))
+# explicit small orders keep the example fast (no automatic order search)
+model <- ts_arimax(p = 1, d = 0, q = 0,
+                  models_x = list(x1 = ts_arima(p = 1, d = 0, q = 0),
+                                  x2 = ts_arima(p = 1, d = 0, q = 0)))
 model <- daltoolbox::fit(model, samp$train)
 predict(model, steps_ahead = 5)
 }
