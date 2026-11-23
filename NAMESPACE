@@ -218,7 +218,3 @@ importFrom(utils,
   combn,
   head
 )
-importFrom(wavelets,
-  imodwt,
-  modwt
-)
