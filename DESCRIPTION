@@ -1,6 +1,6 @@
 Package: tspredit
 Title: Time Series Prediction with Integrated Tuning
-Version: 2.0.727
+Version: 2.0.737
 Authors@R: 
   c(    person(given = "Eduardo", family = "Ogasawara", role = c("aut", "ths", "cre"), 
                email = "eogasawara@ieee.org", comment = c(ORCID = "0000-0002-0466-0626")),
@@ -33,8 +33,7 @@ Imports:
   stats,
   e1071, 
   elmNNRcpp, 
-  FNN, 
-  forecast,
+  FNN,
   KFAS,
   nnet,
   randomForest,

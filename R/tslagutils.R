@@ -150,8 +150,36 @@ tslag_reconstruct_series <- function(x, y) {
   c(as.numeric(x[1, ]), y)
 }
 
+# Native dominant-frequency estimate (base R port of forecast::findfrequency):
+# linear-detrend, fit an AR spectrum, and take the period of the dominant peak.
+tslag_findfrequency <- function(x) {
+  x <- as.numeric(x)
+  x <- x[is.finite(x)]
+  n <- length(x)
+  if (n < 4) return(1L)
+  tt <- seq_len(n)
+  x <- stats::residuals(stats::lm(x ~ tt))
+  spec <- tryCatch(stats::spec.ar(x, plot = FALSE), error = function(e) NULL)
+  if (is.null(spec) || !length(spec$spec)) return(1L)
+  period <- 1L
+  if (max(spec$spec) > 10) {
+    period <- floor(1 / spec$freq[which.max(spec$spec)] + 0.5)
+    if (!is.finite(period)) {
+      j <- which(diff(spec$spec) > 0)
+      if (length(j) > 0) {
+        upper <- min(length(spec$spec), 500)
+        nextmax <- j[1] + which.max(spec$spec[(j[1] + 1):upper])
+        period <- floor(1 / spec$freq[nextmax] + 0.5)
+      } else {
+        period <- 1L
+      }
+    }
+  }
+  if (!is.finite(period)) 1L else as.integer(period)
+}
+
 tslag_estimate_seasonality <- function(series, fallback = 1L) {
-  frequency <- suppressWarnings(round(forecast::findfrequency(series)))
+  frequency <- suppressWarnings(round(tslag_findfrequency(series)))
   if (!is.finite(frequency) || frequency < 2) {
     return(as.integer(fallback))
   }

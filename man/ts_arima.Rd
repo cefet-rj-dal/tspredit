@@ -4,17 +4,30 @@
 \alias{ts_arima}
 \title{ARIMA}
 \usage{
-ts_arima(p = NULL, d = NULL, q = NULL)
+ts_arima(
+  p = NULL,
+  d = NULL,
+  q = NULL,
+  auto = "aicc",
+  max_order = 12,
+  cv_folds = 2,
+  horizon = NULL
+)
 }
 \arguments{
-\item{p}{Optional integer autoregressive order. Leave \code{NULL} to let
-\code{auto.arima()} choose it.}
+\item{p}{Optional integer autoregressive order (NULL -> automatic).}
 
-\item{d}{Optional integer differencing order. Leave \code{NULL} to let
-\code{auto.arima()} choose it.}
+\item{d}{Optional integer differencing order (NULL -> automatic).}
 
-\item{q}{Optional integer moving-average order. Leave \code{NULL} to let
-\code{auto.arima()} choose it.}
+\item{q}{Optional integer moving-average order (NULL -> automatic).}
+
+\item{auto}{Automatic selector when orders are NULL: "aicc" (default) or "cv".}
+
+\item{max_order}{Cap for ACF/PACF-driven candidate lags (ARIMA++).}
+
+\item{cv_folds}{Number of rolling origins for the CV selection (ARIMA++).}
+
+\item{horizon}{CV horizon (ARIMA++); NULL -> the detected seasonal period.}
 }
 \value{
 A \code{ts_arima} object (S3), which inherits from \code{ts_reg}.
@@ -23,56 +36,48 @@ A \code{ts_arima} object (S3), which inherits from \code{ts_reg}.
 Create a time series prediction object based on the
 AutoRegressive Integrated Moving Average (ARIMA) family.
 
-This constructor sets up an S3 time series regressor that leverages the
-\code{forecast} package to either automatically select orders via
-\code{auto.arima()} or fit a user-specified \verb{(p, d, q)} structure, and provide
-one-step and multi-step forecasts.
+Native implementation (base R \code{stats::arima}): no dependency on the \code{forecast}
+package. Orders can be given explicitly or selected automatically:
+\code{auto = "aicc"} (a compact AICc search) or \code{auto = "cv"} (\strong{ARIMA++}).
 }
 \details{
 ARIMA models combine autoregressive (AR), differencing (I), and
-moving average (MA) components to model temporal dependence in a univariate
-time series. The \code{fit()} method uses \code{forecast::auto.arima()} to select
-orders using information criteria when \code{p}, \code{d}, and \code{q} are left as
-\code{NULL}; otherwise it fits the user-specified order directly.
-\code{predict()} supports both a single one-step-ahead over a horizon (rolling)
-and direct multi-step forecasting.
-
-Assumptions include (after differencing) approximate stationarity and
-homoskedastic residuals. Always inspect residual diagnostics for adequacy.
+moving average (MA) components. When \code{p}, \code{d}, \code{q} are \code{NULL}, \code{fit()} selects
+the order automatically. \code{auto = "cv"} (ARIMA++) is a smarter selector that
+fixes two weaknesses of the classic \code{auto.arima}:
+\enumerate{
+\item the (p, q) candidates come from the significant ACF/PACF lags
+(Box-Jenkins identification) instead of a fixed cap of 5, so a seasonal
+spike (e.g. lag 12) enters the search;
+\item the order is chosen by rolling-origin cross-validation matched to the
+forecast horizon (out-of-sample sMAPE), not by the in-sample AICc proxy.
+}
+This is the canonical counterpart of the Python \code{pytspredit} \code{TsArima(auto="cv")}
+and is exported for reuse (e.g. by harbinger).
 }
 \examples{
 # Example: rolling-origin evaluation with multi-step prediction
-# Load package and dataset
 library(daltoolbox)
 library(tspredit)
 data(tsd)
-
-# 1) Wrap the raw vector as `ts_data` with `sw = 1`
 ts <- ts_data(tsd$y, 1)
-ts_head(ts, 3)
-
-# 2) Split into train/test using the last 5 observations as test
 samp <- ts_sample(ts, test_size = 5)
-
-# 3) Fit a user-specified ARIMA(5,0,0)
 model <- ts_arima(p = 5, d = 0, q = 0)
 model <- daltoolbox::fit(model, x = samp$train)
-
-# 4) Predict 5 steps ahead from the most recent observed point
-prediction <- predict(model, x = samp$test[1,], steps_ahead = 5)
-prediction <- as.vector(prediction)
-output <- as.vector(samp$test)
-
-# 5) Evaluate forecast accuracy
-ev_test <- daltoolbox::evaluate(model, output, prediction)
+prediction <- as.vector(predict(model, x = samp$test[1,], steps_ahead = 5))
+ev_test <- daltoolbox::evaluate(model, as.vector(samp$test), prediction)
 ev_test
 }
 \references{
 \itemize{
 \item G. E. P. Box, G. M. Jenkins, G. C. Reinsel, and G. M. Ljung (2015).
-Time Series Analysis: Forecasting and Control. Wiley.
+Time Series Analysis: Forecasting and Control. Wiley (ACF/PACF identification).
 \item R. J. Hyndman and Y. Khandakar (2008). Automatic time series forecasting:
-The forecast package for R. Journal of Statistical Software, 27(3), 1–22.
+The forecast package for R. Journal of Statistical Software, 27(3), 1-22.
 doi:10.18637/jss.v027.i03
+\item L. J. Tashman (2000). Out-of-sample tests of forecasting accuracy.
+International Journal of Forecasting, 16(4), 437-450 (rolling-origin evaluation).
+\item D. Kwiatkowski, P. C. B. Phillips, P. Schmidt, Y. Shin (1992). Testing the null
+hypothesis of stationarity. Journal of Econometrics, 54(1-3), 159-178 (KPSS).
 }
 }

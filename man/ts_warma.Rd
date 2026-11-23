@@ -57,7 +57,7 @@ workflow.
 
 When \code{steps = NA}, the model chooses the smallest step in \verb{\{0, 1, 2\}} whose
 locally transformed reconstructed series reaches integration order zero
-according to \code{forecast::ndiffs()}.
+according to a native KPSS-based \code{ndiffs} (no \code{forecast} dependency).
 
 The current implementation should be understood as the \code{tspredit}
 interpretation of WARMA inside the package's object-oriented

@@ -190,20 +190,17 @@ importFrom(elmNNRcpp,
   elm_predict,
   elm_train
 )
-importFrom(forecast,
-  Arima,
-  auto.arima,
-  forecast
-)
 importFrom(graphics,boxplot)
 importFrom(nnet,nnet)
 importFrom(randomForest,randomForest)
 importFrom(stats,
   HoltWinters,
   acf,
+  arima,
   fft,
   lowess,
   na.omit,
+  pacf,
   predict,
   quantile,
   rexp,

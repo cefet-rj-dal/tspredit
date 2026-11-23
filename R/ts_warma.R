@@ -25,7 +25,7 @@
 #'
 #' When `steps = NA`, the model chooses the smallest step in `{0, 1, 2}` whose
 #' locally transformed reconstructed series reaches integration order zero
-#' according to `forecast::ndiffs()`.
+#' according to a native KPSS-based `ndiffs` (no `forecast` dependency).
 #'
 #' The current implementation should be understood as the `tspredit`
 #' interpretation of WARMA inside the package's object-oriented
@@ -174,7 +174,7 @@ ts_warma_select_steps <- function(series, sw) {
 
   for (steps in 0:2) {
     local_series <- ts_warma_local_series(series, sw, steps)
-    order_d <- forecast::ndiffs(local_series)
+    order_d <- arima_ndiffs(local_series)
     if (isTRUE(order_d == 0L)) {
       return(as.integer(steps))
     }

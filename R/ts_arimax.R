@@ -7,7 +7,7 @@
 #'
 #' The model keeps one target variable `y` as the main forecasting objective and
 #' uses the aligned auxiliary variables `x1, ..., xn` as regressors through the
-#' `xreg` mechanism of the `forecast` package.
+#' `xreg` mechanism (native `stats::arima`; no `forecast` dependency).
 #'
 #' This is the natural choice when the user thinks in the following way:
 #' - there is one main series `y`
@@ -28,7 +28,7 @@
 #'
 #' The current implementation follows the same philosophy as `ts_arima()`:
 #' - if `p`, `d`, and `q` are supplied, fit that specific order
-#' - otherwise use `forecast::auto.arima()` on the target with `xreg`
+#' - otherwise select the order natively (compact AICc search) on the target with `xreg`
 #'
 #' This keeps the singular multivariate branch consistent with the existing raw
 #' univariate branch of the package.
@@ -72,8 +72,7 @@ ts_arimax <- function(models_x = NULL, p = NULL, d = NULL, q = NULL) {
   obj
 }
 
-#'@importFrom forecast auto.arima
-#'@importFrom forecast Arima
+#'@importFrom stats arima predict
 #'@exportS3Method fit ts_arimax
 #'@inheritParams do_fit
 #'@return A fitted `ts_arimax` object.
@@ -88,34 +87,25 @@ fit.ts_arimax <- function(obj, x, y = NULL, ...) {
   y_series <- data[[obj$y_name]]
   xreg <- reg_mv_numeric_matrix(data, obj$x_names, context = "training auxiliary data")
 
+  # Native ARIMAX via stats::arima with external regressors (no `forecast` dependency).
   if (isTRUE(obj$manual_order)) {
-    obj$model <- forecast::Arima(
-      y_series,
-      order = c(obj$p, obj$d, obj$q),
-      xreg = xreg,
-      include.mean = obj$include_mean,
-      include.drift = obj$include_drift
-    )
+    obj$include_mean <- isTRUE(obj$d == 0)
+    obj$model <- arima_fit(y_series, c(obj$p, obj$d, obj$q), obj$include_mean, xreg = xreg)
   } else {
-    obj$model <- forecast::auto.arima(
-      y_series,
-      xreg = xreg,
-      allowdrift = TRUE,
-      allowmean = TRUE
-    )
-    order <- obj$model$arma[c(1, 6, 2, 3, 7, 4, 5)]
-    obj$p <- order[1]
-    obj$d <- order[2]
-    obj$q <- order[3]
-    obj$include_mean <- isTRUE(obj$d == 0 && !is.element("intercept", names(obj$model$coef)))
-    obj$include_drift <- (NCOL(obj$model$xreg) == 1) && is.element("drift", names(obj$model$coef))
+    sel <- arima_auto_aicc(y_series, xreg = xreg)
+    obj$p <- sel$order[1]
+    obj$d <- sel$order[2]
+    obj$q <- sel$order[3]
+    obj$include_mean <- sel$include_mean
+    obj$model <- sel$model
   }
+  obj$include_drift <- FALSE
 
   attr(obj, "params") <- list(p = obj$p, d = obj$d, q = obj$q)
   obj
 }
 
-#'@importFrom forecast forecast
+#'@importFrom stats predict
 #'@exportS3Method predict ts_arimax
 #'@inheritParams do_predict
 #'@param steps_ahead Integer. Forecast horizon.
@@ -128,24 +118,10 @@ fit.ts_arimax <- function(obj, x, y = NULL, ...) {
 predict.ts_arimax <- function(object, x = NULL, steps_ahead = 1, return_all = FALSE, ...) {
   steps_ahead <- as.integer(steps_ahead)
   future_x <- reg_mv_forecast_aux(object, x = x, steps_ahead = steps_ahead)
-  forecast_h <- steps_ahead
-  forecast_x <- future_x
 
-  # forecast::forecast.Arima() can fail for h = 1 with xreg even when the
-  # same call works for h > 1. Requesting one extra step avoids that internal
-  # edge case; only the first step is used here.
-  if (steps_ahead == 1L) {
-    forecast_h <- 2L
-    forecast_x <- rbind(future_x, future_x[1, , drop = FALSE])
-    rownames(forecast_x) <- NULL
-  }
-
+  newxreg <- reg_mv_numeric_matrix(future_x, object$x_names, context = "future auxiliary data")
   prediction_y <- as.vector(
-    forecast::forecast(
-      object$model,
-      h = forecast_h,
-      xreg = reg_mv_numeric_matrix(forecast_x, object$x_names, context = "future auxiliary data")
-    )$mean
+    predict(object$model, n.ahead = steps_ahead, newxreg = newxreg)$pred
   )[seq_len(steps_ahead)]
 
   object$history <- reg_mv_update_history(object, future_x, prediction_y)
