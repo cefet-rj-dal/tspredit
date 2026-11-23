@@ -35,7 +35,6 @@ Imports:
   elmNNRcpp, 
   FNN, 
   forecast,
-  hht,
   KFAS,
   nnet, 
   randomForest,

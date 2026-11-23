@@ -4,31 +4,43 @@
 \alias{ts_fil_remd}
 \title{Robust EMD Filter}
 \usage{
-ts_fil_remd(noise = 0.1, trials = 5, max_imfs = NULL)
+ts_fil_remd(
+  engine = "emd",
+  noise = 0.1,
+  trials = 5,
+  max_imfs = NULL,
+  random_state = NULL
+)
 }
 \arguments{
-\item{noise}{Noise amplitude passed to CEEMD.}
+\item{engine}{Decomposition engine: "emd" (single pass, default) or "eemd"
+(noise-assisted ensemble).}
 
-\item{trials}{Number of CEEMD ensemble trials.}
+\item{noise}{Relative noise width used when \code{engine = "eemd"}.}
+
+\item{trials}{Number of ensemble trials used when \code{engine = "eemd"}.}
 
 \item{max_imfs}{Maximum number of high-frequency IMFs to remove. If \code{NULL},
 the cutoff is selected automatically from the cumulative roughness curve.}
+
+\item{random_state}{Optional seed for the ensemble noise (reproducibility).}
 }
 \value{
 A \code{ts_fil_remd} object.
 }
 \description{
-Ensemble/robust EMD-based denoising using CEEMD to separate
-noise-dominated IMFs and reconstruct the signal.
+Robust EMD-based denoising that separates noise-dominated IMFs and
+reconstructs the signal by removing the selected high-frequency IMFs.
 }
 \details{
-CEEMD decomposes the series into intrinsic mode functions (IMFs).
-Early IMFs usually contain faster oscillations, while later IMFs represent
-slower components. This filter estimates a roughness score for each IMF,
-selects a cutoff from the cumulative roughness curve, and removes the
-selected high-frequency IMFs from the original series. Use \code{max_imfs} to cap
-the number of removed IMFs when preserving cycles or seasonal behavior is
-more important than aggressive denoising.
+The signal is decomposed into intrinsic mode functions (IMFs) with the
+native EMD/EEMD engine (see \code{\link{ts_fil_emd}}; no dependency on external
+EMD packages). Early IMFs usually contain faster oscillations, while later IMFs
+represent slower components. This filter estimates a roughness score for each
+IMF, selects a cutoff from the cumulative roughness curve (via
+\code{fit_curvature_min}), and removes the selected high-frequency IMFs from the
+original series. Use \code{max_imfs} to cap the number of removed IMFs when preserving
+cycles or seasonal behavior is more important than aggressive denoising.
 }
 \examples{
 # time series with noise

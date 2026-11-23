@@ -196,7 +196,6 @@ importFrom(forecast,
   forecast
 )
 importFrom(graphics,boxplot)
-importFrom(hht,CEEMD)
 importFrom(nnet,nnet)
 importFrom(randomForest,randomForest)
 importFrom(stats,
@@ -211,6 +210,7 @@ importFrom(stats,
   rnorm,
   sd,
   smooth.spline,
+  splinefun,
   stl,
   ts
 )

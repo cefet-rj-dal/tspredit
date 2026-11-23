@@ -4,12 +4,17 @@
 \alias{ts_fil_emd}
 \title{EMD Filter}
 \usage{
-ts_fil_emd(noise = 0.1, trials = 5)
+ts_fil_emd(engine = "emd", noise = 0.1, trials = 5, random_state = NULL)
 }
 \arguments{
-\item{noise}{noise}
+\item{engine}{Decomposition engine: "emd" (single pass, default) or "eemd"
+(noise-assisted ensemble).}
 
-\item{trials}{trials}
+\item{noise}{Relative noise width used when \code{engine = "eemd"}.}
+
+\item{trials}{Number of ensemble trials used when \code{engine = "eemd"}.}
+
+\item{random_state}{Optional seed for the ensemble noise (reproducibility).}
 }
 \value{
 A \code{ts_fil_emd} object.
@@ -17,7 +22,15 @@ A \code{ts_fil_emd} object.
 \description{
 Empirical Mode Decomposition (EMD) filter that decomposes a
 signal into intrinsic mode functions (IMFs) and reconstructs a smoothed
-component.
+component by removing the first (highest-frequency) IMF.
+}
+\details{
+This is a native implementation (base R + \code{stats::splinefun}) that does
+not depend on external EMD packages. It is the canonical counterpart of the
+Python \code{pytspredit} implementation (which this backports), and is orders of
+magnitude faster than ensemble EMD via \code{hht}. EMD is an adaptive, data-driven
+method; the ensemble engine is stochastic, so results are compared at the
+quality level (denoising), not value-for-value, across implementations.
 }
 \examples{
 # EMD-based smoothing: remove first IMF as noise
@@ -40,5 +53,9 @@ plot_ts_pred(y = tsd$y, yadj = y)
 \item N. E. Huang et al. (1998). The Empirical Mode Decomposition and the
 Hilbert Spectrum for nonlinear and non-stationary time series analysis.
 Proceedings of the Royal Society A.
+\item Z. Wu and N. E. Huang (2009). Ensemble Empirical Mode Decomposition: a
+noise-assisted data analysis method. Advances in Adaptive Data Analysis.
+\item G. Rilling, P. Flandrin, P. Goncalves (2003). On empirical mode decomposition
+and its algorithms (boundary mirroring). IEEE-EURASIP NSIP.
 }
 }
