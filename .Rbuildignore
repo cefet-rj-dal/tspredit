@@ -13,7 +13,7 @@
 ^examples$
 ^examples-r$
 ^examples-word$
-^Rmd$
+^notebooks$
 package.R
 jupyter.R
 ^\.positai$

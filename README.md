@@ -148,6 +148,8 @@ extensions.
 
 ## Related DAL Projects
 
+- [pytspredit — Python sibling
+  implementation](https://github.com/cefet-rj-dal/pytspredit)
 - [DAL Toolbox](https://cefet-rj-dal.github.io/daltoolbox/)
 - [harbinger](https://cefet-rj-dal.github.io/harbinger/)
 - [Data Analytics Lab](https://eic.cefet-rj.br/~dal/)
