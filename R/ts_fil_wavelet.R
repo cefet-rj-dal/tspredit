@@ -17,7 +17,9 @@
 #' - S. Mallat (1989). A Theory for Multiresolution Signal Decomposition: The Wavelet
 #'   Representation. IEEE Transactions on Pattern Analysis and Machine Intelligence.
 #' - D. B. Percival and A. T. Walden (2000). Wavelet Methods for Time Series Analysis.
-#'   Cambridge University Press.
+#'   Cambridge University Press (MODWT pyramid algorithm).
+#' - I. Daubechies (1992). Ten Lectures on Wavelets. SIAM (source of the Daubechies /
+#'   least-asymmetric / coiflet filter coefficient families).
 #'@examples
 #'# Denoising with discrete wavelets (optionally selecting best filter)
 #' # Load package and example data
