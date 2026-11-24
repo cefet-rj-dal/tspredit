@@ -168,8 +168,14 @@ arima_fit <- function(x, order, include_mean, xreg = NULL) {
         stats::arima(x, order = order, include.mean = include_mean,
                      method = "CSS-ML", optim.control = list(maxit = 100))
       } else {
-        stats::arima(x, order = order, include.mean = include_mean, xreg = xreg,
-                     method = "CSS-ML", optim.control = list(maxit = 100))
+        fit <- stats::arima(x, order = order, include.mean = include_mean, xreg = xreg,
+                            method = "CSS-ML", optim.control = list(maxit = 100))
+        # stats::arima records the symbol `xreg` in fit$call; predict.Arima then does
+        # eval.parent(fit$call$xreg) to recover the training regressors, which fails once
+        # this local `xreg` is out of scope ("object 'xreg' not found") -- breaking every
+        # ts_arimax forecast. Embed the matrix value in the call so predict() resolves it.
+        fit$call$xreg <- xreg
+        fit
       }
     ),
     error = function(e) NULL
