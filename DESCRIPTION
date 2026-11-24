@@ -38,5 +38,7 @@ Imports:
   nnet,
   randomForest,
   dplyr,
-  daltoolbox
+  daltoolbox,
+  ggplot2,
+  reshape
 Config/roxygen2/version: 8.1.1

@@ -93,6 +93,9 @@ export(do_fit)
 export(do_predict)
 export(fit_arima)
 export(loadfulldata)
+export(plot_series)
+export(plot_ts)
+export(plot_ts_pred)
 export(plot_ts_pred_mv)
 export(sMAPE.ts)
 export(ts_arima)
@@ -191,9 +194,23 @@ importFrom(elmNNRcpp,
   elm_predict,
   elm_train
 )
+importFrom(ggplot2,
+  aes,
+  element_blank,
+  geom_line,
+  geom_point,
+  ggplot,
+  labs,
+  scale_color_manual,
+  theme,
+  theme_bw,
+  xlab,
+  ylab
+)
 importFrom(graphics,boxplot)
 importFrom(nnet,nnet)
 importFrom(randomForest,randomForest)
+importFrom(reshape,melt)
 importFrom(stats,
   HoltWinters,
   acf,
