@@ -34,8 +34,8 @@ reconstructs the signal by removing the selected high-frequency IMFs.
 }
 \details{
 The signal is decomposed into intrinsic mode functions (IMFs) with the
-native EMD/EEMD engine (see \code{\link{ts_fil_emd}}; no dependency on external
-EMD packages). Early IMFs usually contain faster oscillations, while later IMFs
+EMD/EEMD engine (see \code{\link{ts_fil_emd}}). Early IMFs usually contain faster
+oscillations, while later IMFs
 represent slower components. This filter estimates a roughness score for each
 IMF, selects a cutoff from the cumulative roughness curve (via
 \code{fit_curvature_min}), and removes the selected high-frequency IMFs from the

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ts_arima.R
 \name{fit_arima}
 \alias{fit_arima}
-\title{Native automatic ARIMA fit}
+\title{Automatic ARIMA fit}
 \usage{
 fit_arima(x, auto = "aicc", max_order = 12, cv_folds = 2, horizon = NULL)
 }
@@ -25,8 +25,8 @@ fitted \code{model} (a \code{stats::arima} object).
 }
 \description{
 Selects the ARIMA \verb{(p, d, q)} order automatically and returns the
-fitted model, with no dependency on the \code{forecast} package -- the native role of
-\code{forecast::auto.arima}. This is the univariate auto-fit entry point used by
+fitted model -- the role of \code{forecast::auto.arima}. This is the univariate
+auto-fit entry point used by
 \code{\link[=ts_arima]{ts_arima()}} (constructor orders left \code{NULL} or set to \verb{(0, 0, 0)}), and is
 exported for standalone reuse (e.g. by harbinger). Its canonical counterpart is
 the exported \code{fit_arima()} in Python \code{pytspredit}.

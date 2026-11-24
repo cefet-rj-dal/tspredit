@@ -18,13 +18,14 @@ Denoise a series using the Maximal Overlap Discrete Wavelet Transform
 (MODWT): decompose the signal, zero the finest-scale detail, and reconstruct.
 }
 \details{
-This is a native implementation (base R only) of the MODWT and its inverse
-(Percival & Walden, 2000), with the wavelet/scaling filter coefficients carried as
-internal constants. It does not depend on external wavelet packages and is the
-canonical counterpart of the Python \code{pytspredit} implementation (which this
-backports). The MODWT is a deterministic linear transform, so the two match
-value-for-value (~5e-6). Note: the published coiflet ('c6') coefficients are only
-approximately orthogonal, so c6 reconstructs to ~1e-6 (as in any package).
+The MODWT is a shift-invariant, undecimated wavelet transform implemented
+as a pyramid algorithm (Percival & Walden, 2000), with the wavelet/scaling filter
+coefficients (Daubechies, least-asymmetric, coiflet, best-localized) carried as
+internal constants. This function is a backport of the canonical Python \code{pytspredit}
+implementation; the two share the same algorithm and coefficients. Because the
+MODWT is a deterministic linear transform, parity is value-for-value (~5e-6). Note:
+the published coiflet ('c6') coefficients are only approximately orthogonal, so c6
+reconstructs to ~1e-6 (as in any package).
 }
 \examples{
 # Denoising with discrete wavelets (optionally selecting best filter)

@@ -34,8 +34,8 @@
 #'   redundancy among already selected lags.
 #'
 #' The mutual-information criteria use quantile discretization and therefore
-#' provide deterministic approximations suitable for lightweight dependency-free
-#' lag selection inside the package.
+#' provide deterministic approximations suitable for lightweight lag selection
+#' inside the package.
 #'
 #' @return A `tslagutils` object exposing the helper functions.
 #'

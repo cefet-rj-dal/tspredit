@@ -36,9 +36,9 @@ A \code{ts_arima} object (S3), which inherits from \code{ts_reg}.
 Create a time series prediction object based on the
 AutoRegressive Integrated Moving Average (ARIMA) family.
 
-Native implementation (base R \code{stats::arima}): no dependency on the \code{forecast}
-package. Orders can be given explicitly or selected automatically:
-\code{auto = "aicc"} (a compact AICc search) or \code{auto = "cv"} (\strong{ARIMA++}).
+Built on base R \code{stats::arima}. Orders can be given explicitly or selected
+automatically: \code{auto = "aicc"} (a compact AICc search) or \code{auto = "cv"}
+(\strong{ARIMA++}).
 }
 \details{
 ARIMA models combine autoregressive (AR), differencing (I), and

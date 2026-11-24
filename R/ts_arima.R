@@ -2,9 +2,9 @@
 #'@description Create a time series prediction object based on the
 #' AutoRegressive Integrated Moving Average (ARIMA) family.
 #'
-#' Native implementation (base R `stats::arima`): no dependency on the `forecast`
-#' package. Orders can be given explicitly or selected automatically:
-#' `auto = "aicc"` (a compact AICc search) or `auto = "cv"` (**ARIMA++**).
+#' Built on base R `stats::arima`. Orders can be given explicitly or selected
+#' automatically: `auto = "aicc"` (a compact AICc search) or `auto = "cv"`
+#' (**ARIMA++**).
 #'
 #'@details ARIMA models combine autoregressive (AR), differencing (I), and
 #' moving average (MA) components. When `p`, `d`, `q` are `NULL` **or all `0`**
@@ -73,10 +73,10 @@ ts_arima <- function(p = NULL, d = NULL, q = NULL, auto = "aicc",
   return(obj)
 }
 
-#'@title Native automatic ARIMA fit
+#'@title Automatic ARIMA fit
 #'@description Selects the ARIMA `(p, d, q)` order automatically and returns the
-#' fitted model, with no dependency on the `forecast` package -- the native role of
-#' `forecast::auto.arima`. This is the univariate auto-fit entry point used by
+#' fitted model -- the role of `forecast::auto.arima`. This is the univariate
+#' auto-fit entry point used by
 #' [ts_arima()] (constructor orders left `NULL` or set to `(0, 0, 0)`), and is
 #' exported for standalone reuse (e.g. by harbinger). Its canonical counterpart is
 #' the exported `fit_arima()` in Python `pytspredit`.
