@@ -7,8 +7,10 @@
 #' `auto = "aicc"` (a compact AICc search) or `auto = "cv"` (**ARIMA++**).
 #'
 #'@details ARIMA models combine autoregressive (AR), differencing (I), and
-#' moving average (MA) components. When `p`, `d`, `q` are `NULL`, `fit()` selects
-#' the order automatically. `auto = "cv"` (ARIMA++) is a smarter selector that
+#' moving average (MA) components. When `p`, `d`, `q` are `NULL` **or all `0`**
+#' (`(0, 0, 0)` is read as the auto-fit sentinel, so a pure white-noise model is not
+#' reachable), `fit()` selects the order automatically via the exported [fit_arima()].
+#' `auto = "cv"` (ARIMA++) is a smarter selector that
 #' fixes two weaknesses of the classic `auto.arima`:
 #' \enumerate{
 #'   \item the (p, q) candidates come from the significant ACF/PACF lags
@@ -19,9 +21,9 @@
 #' }
 #' This is the canonical counterpart of the Python `pytspredit` `TsArima(auto="cv")`
 #' and is exported for reuse (e.g. by harbinger).
-#'@param p Optional integer autoregressive order (NULL -> automatic).
-#'@param d Optional integer differencing order (NULL -> automatic).
-#'@param q Optional integer moving-average order (NULL -> automatic).
+#'@param p Optional integer autoregressive order (NULL or (0,0,0) -> automatic).
+#'@param d Optional integer differencing order (NULL or (0,0,0) -> automatic).
+#'@param q Optional integer moving-average order (NULL or (0,0,0) -> automatic).
 #'@param auto Automatic selector when orders are NULL: "aicc" (default) or "cv".
 #'@param max_order Cap for ACF/PACF-driven candidate lags (ARIMA++).
 #'@param cv_folds Number of rolling origins for the CV selection (ARIMA++).
@@ -62,11 +64,44 @@ ts_arima <- function(p = NULL, d = NULL, q = NULL, auto = "aicc",
   obj$max_order <- max_order
   obj$cv_folds <- cv_folds
   obj$horizon <- horizon
-  obj$manual_order <- !is.null(p) && !is.null(d) && !is.null(q)
+  specified <- !is.null(p) && !is.null(d) && !is.null(q)
+  auto_zero <- specified && p == 0 && d == 0 && q == 0  # (0,0,0) = auto-fit sentinel
+  obj$manual_order <- specified && !auto_zero
   obj$include_mean <- isTRUE(obj$manual_order && d == 0)
 
   class(obj) <- append("ts_arima", class(obj))
   return(obj)
+}
+
+#'@title Native automatic ARIMA fit
+#'@description Selects the ARIMA `(p, d, q)` order automatically and returns the
+#' fitted model, with no dependency on the `forecast` package -- the native role of
+#' `forecast::auto.arima`. This is the univariate auto-fit entry point used by
+#' [ts_arima()] (constructor orders left `NULL` or set to `(0, 0, 0)`), and is
+#' exported for standalone reuse (e.g. by harbinger). Its canonical counterpart is
+#' the exported `fit_arima()` in Python `pytspredit`.
+#'@param x Numeric vector: the training series.
+#'@param auto Selector: "aicc" (default, compact AICc search approximating
+#' `forecast::auto.arima`) or "cv" (**ARIMA++**: ACF/PACF-driven candidates plus
+#' horizon-matched rolling-origin cross-validation).
+#'@param max_order Cap for the ACF/PACF-driven candidate lags (ARIMA++).
+#'@param cv_folds Number of rolling origins for the CV selection (ARIMA++).
+#'@param horizon CV horizon (ARIMA++); NULL -> the detected seasonal period.
+#'@return A list with `order` (the selected `c(p, d, q)`), `include_mean`, and the
+#' fitted `model` (a `stats::arima` object).
+#'@examples
+#' x <- as.numeric(co2)[1:60]
+#' sel <- fit_arima(x)
+#' sel$order
+#'@export
+fit_arima <- function(x, auto = "aicc", max_order = 12, cv_folds = 2,
+                      horizon = NULL) {
+  x <- as.numeric(x)
+  if (identical(auto, "cv")) {
+    arima_auto_cv(x, max_order = max_order, folds = cv_folds, horizon = horizon)
+  } else {
+    arima_auto_aicc(x)
+  }
 }
 
 # ---- Native ARIMA order selection (base R; mirrors Python pytspredit.arima) ----
@@ -226,11 +261,8 @@ fit.ts_arima <- function(obj, x, y = NULL, ...) {
     obj$include_mean <- isTRUE(obj$d == 0)
     obj$model <- arima_fit(x, c(obj$p, obj$d, obj$q), obj$include_mean)
   } else {
-    sel <- if (identical(obj$auto, "cv")) {
-      arima_auto_cv(x, max_order = obj$max_order, folds = obj$cv_folds, horizon = obj$horizon)
-    } else {
-      arima_auto_aicc(x)
-    }
+    sel <- fit_arima(x, auto = obj$auto, max_order = obj$max_order,
+                     cv_folds = obj$cv_folds, horizon = obj$horizon)
     obj$p <- sel$order[1]
     obj$d <- sel$order[2]
     obj$q <- sel$order[3]

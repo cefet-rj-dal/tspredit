@@ -15,11 +15,11 @@ ts_arima(
 )
 }
 \arguments{
-\item{p}{Optional integer autoregressive order (NULL -> automatic).}
+\item{p}{Optional integer autoregressive order (NULL or (0,0,0) -> automatic).}
 
-\item{d}{Optional integer differencing order (NULL -> automatic).}
+\item{d}{Optional integer differencing order (NULL or (0,0,0) -> automatic).}
 
-\item{q}{Optional integer moving-average order (NULL -> automatic).}
+\item{q}{Optional integer moving-average order (NULL or (0,0,0) -> automatic).}
 
 \item{auto}{Automatic selector when orders are NULL: "aicc" (default) or "cv".}
 
@@ -42,8 +42,10 @@ package. Orders can be given explicitly or selected automatically:
 }
 \details{
 ARIMA models combine autoregressive (AR), differencing (I), and
-moving average (MA) components. When \code{p}, \code{d}, \code{q} are \code{NULL}, \code{fit()} selects
-the order automatically. \code{auto = "cv"} (ARIMA++) is a smarter selector that
+moving average (MA) components. When \code{p}, \code{d}, \code{q} are \code{NULL} \strong{or all \code{0}}
+(\verb{(0, 0, 0)} is read as the auto-fit sentinel, so a pure white-noise model is not
+reachable), \code{fit()} selects the order automatically via the exported \code{\link[=fit_arima]{fit_arima()}}.
+\code{auto = "cv"} (ARIMA++) is a smarter selector that
 fixes two weaknesses of the classic \code{auto.arima}:
 \enumerate{
 \item the (p, q) candidates come from the significant ACF/PACF lags
