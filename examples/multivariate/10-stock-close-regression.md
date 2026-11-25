@@ -283,10 +283,7 @@ notebooks after this one reuse the same visual convention.
 plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
 
-```
-## Error:
-## ! 'plot_ts_pred' is not an exported object from 'namespace:daltoolbox'
-```
+![plot of chunk unnamed-chunk-12](fig/10-stock-close-regression/unnamed-chunk-12-1.png)
 
 The held-out target values remain available for evaluation against the target
 forecast.

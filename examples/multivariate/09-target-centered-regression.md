@@ -233,11 +233,6 @@ throughout the univariate examples, but now it returns one plot per variable.
 plots <- plot_ts_pred_mv(samp$train, samp$test, pred_all)
 ```
 
-```
-## Error:
-## ! 'plot_ts_pred' is not an exported object from 'namespace:daltoolbox'
-```
-
 Target trajectory:
 
 
@@ -245,10 +240,7 @@ Target trajectory:
 plots$y
 ```
 
-```
-## Error:
-## ! objeto 'plots' não encontrado
-```
+![plot of chunk unnamed-chunk-12](fig/09-target-centered-regression/unnamed-chunk-12-1.png)
 
 Auxiliary variable `x1`:
 
@@ -257,10 +249,7 @@ Auxiliary variable `x1`:
 plots$x1
 ```
 
-```
-## Error:
-## ! objeto 'plots' não encontrado
-```
+![plot of chunk unnamed-chunk-13](fig/09-target-centered-regression/unnamed-chunk-13-1.png)
 
 Auxiliary variable `x2`:
 
@@ -269,10 +258,7 @@ Auxiliary variable `x2`:
 plots$x2
 ```
 
-```
-## Error:
-## ! objeto 'plots' não encontrado
-```
+![plot of chunk unnamed-chunk-14](fig/09-target-centered-regression/unnamed-chunk-14-1.png)
 
 The held-out target values remain available for evaluation against the target
 forecast.

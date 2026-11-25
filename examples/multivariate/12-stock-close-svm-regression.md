@@ -183,10 +183,7 @@ ev_test$metrics
 plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
 
-```
-## Error:
-## ! 'plot_ts_pred' is not an exported object from 'namespace:daltoolbox'
-```
+![plot of chunk unnamed-chunk-9](fig/12-stock-close-svm-regression/unnamed-chunk-9-1.png)
 
 What this example shows
 - `ts_svm()` can be reused directly as the target learner inside `ts_regsw_mv()`.
