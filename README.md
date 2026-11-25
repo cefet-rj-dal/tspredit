@@ -23,7 +23,7 @@ normalize values, which predictor to use, and how to compare forecasting
 protocols. This makes the package useful for teaching, experimentation,
 benchmark studies, and applied time series projects.
 
-Current package version in this repository: `2.0.707`.
+Current package version in this repository: `2.0.757`.
 
 ------------------------------------------------------------------------
 
