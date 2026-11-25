@@ -52,7 +52,7 @@ auxiliary variables returned by the multivariate workflow.
 }
 \details{
 \code{plot_ts_pred_mv()} extends the visual logic already used in the univariate
-examples. It reuses \code{daltoolbox::plot_ts_pred()} variable by variable and
+examples. It reuses \code{plot_ts_pred()} variable by variable and
 returns either:
 \itemize{
 \item one plot when \code{variable} is provided
@@ -76,11 +76,12 @@ x2[is.na(x2)] <- tsd$y[is.na(x2)]
 mv <- ts_data_mv(data.frame(y = tsd$y, x1 = x1, x2 = as.numeric(x2)), y = "y")
 samp <- ts_sample(mv, test_size = 5)
 
+# fast learners + explicit ARIMA order keep the example quick (< 5s)
 model <- ts_regsw_mv(
-  model_y = ts_mv_spec(ts_mlp(ts_norm_gminmax(), input_size = 4), variables = c("y", "x1", "x2")),
+  model_y = ts_mv_spec(ts_knn(ts_norm_gminmax(), input_size = 4), variables = c("y", "x1", "x2")),
   models_x = list(
-    x1 = ts_mv_spec(ts_arima()),
-    x2 = ts_mv_spec(ts_rf(ts_norm_gminmax(), input_size = 4, ntree = 10), variables = c("x2", "y"))
+    x1 = ts_mv_spec(ts_arima(p = 1, d = 0, q = 0)),
+    x2 = ts_mv_spec(ts_knn(ts_norm_gminmax(), input_size = 4), variables = c("x2", "y"))
   ),
   window_size = 5
 )
