@@ -218,7 +218,10 @@ ev_test$metrics
 plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
 
-![plot of chunk unnamed-chunk-10](fig/11-stock-close-knn-regression/unnamed-chunk-10-1.png)
+```
+## Error:
+## ! 'plot_ts_pred' is not an exported object from 'namespace:daltoolbox'
+```
 
 What this example shows
 - `ts_knn()` can be reused directly as the target learner inside `ts_regsw_mv()`.

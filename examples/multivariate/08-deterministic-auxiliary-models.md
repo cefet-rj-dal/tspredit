@@ -69,7 +69,8 @@ class(model_x1$model)
 ```
 
 ```
-## [1] "ts_deterministic" "ts_reg"           "predictor"        "dal_learner"      "dal_base"
+## [1] "ts_deterministic" "ts_reg"           "predictor"        "dal_learner"     
+## [5] "dal_base"
 ```
 
 `x2` is a binary weekend flag. It also follows a periodic law of formation, so
@@ -85,7 +86,8 @@ class(model_x2$model)
 ```
 
 ```
-## [1] "ts_periodic"      "ts_deterministic" "ts_reg"           "predictor"        "dal_learner"      "dal_base"
+## [1] "ts_periodic"      "ts_deterministic" "ts_reg"           "predictor"       
+## [5] "dal_learner"      "dal_base"
 ```
 
 For slowly changing or operationally fixed auxiliary variables, persistence is
@@ -101,7 +103,8 @@ class(model_persist$model)
 ```
 
 ```
-## [1] "ts_persist"       "ts_deterministic" "ts_reg"           "predictor"        "dal_learner"      "dal_base"
+## [1] "ts_persist"       "ts_deterministic" "ts_reg"           "predictor"       
+## [5] "dal_learner"      "dal_base"
 ```
 
 These objects are regular multivariate specifications. They plug into the same
@@ -139,7 +142,7 @@ pred_all
 ```
 
 ```
-## [1] 799.6532 793.5090 786.3970 755.8103 716.0628
+## [1] 799.5268 793.1466 785.5918 755.0655 715.2501
 ## attr(,"y_name")
 ## [1] "y"
 ## attr(,"x_names")
@@ -157,11 +160,11 @@ pred_all
 ## 
 ## attr(,"system")
 ##          y x1 x2
-## 1 799.6532  4  0
-## 2 793.5090  5  0
-## 3 786.3970  6  0
-## 4 755.8103  7  1
-## 5 716.0628  1  1
+## 1 799.5268  4  0
+## 2 793.1466  5  0
+## 3 785.5918  6  0
+## 4 755.0655  7  1
+## 5 715.2501  1  1
 ## attr(,"class")
 ## [1] "ts_mv_prediction" "numeric"
 ```
@@ -173,11 +176,11 @@ attr(pred_all, "system")
 
 ```
 ##          y x1 x2
-## 1 799.6532  4  0
-## 2 793.5090  5  0
-## 3 786.3970  6  0
-## 4 755.8103  7  1
-## 5 716.0628  1  1
+## 1 799.5268  4  0
+## 2 793.1466  5  0
+## 3 785.5918  6  0
+## 4 755.0655  7  1
+## 5 715.2501  1  1
 ```
 
 

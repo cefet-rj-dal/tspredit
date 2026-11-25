@@ -51,7 +51,8 @@ head(names(climate))
 ```
 
 ```
-## [1] "usa_climate"     "china_climate"   "germany_climate" "japan_climate"   "india_climate"   "uk_climate"
+## [1] "usa_climate"     "china_climate"   "germany_climate" "japan_climate"  
+## [5] "india_climate"   "uk_climate"
 ```
 
 ``` r

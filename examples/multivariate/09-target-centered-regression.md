@@ -114,7 +114,7 @@ pred_1
 ```
 
 ```
-## [1] 800.956
+## [1] 797.4414
 ## attr(,"y_name")
 ## [1] "y"
 ## attr(,"x_names")
@@ -131,8 +131,8 @@ pred_1
 ## [1] 0
 ## 
 ## attr(,"system")
-##         y x1 x2
-## 1 800.956  4  0
+##          y x1 x2
+## 1 797.4414  4  0
 ## attr(,"class")
 ## [1] "ts_mv_prediction" "numeric"
 ```
@@ -147,7 +147,7 @@ pred_5
 ```
 
 ```
-## [1] 800.9560 793.2817 786.2419 760.1793 713.9310
+## [1] 797.4414 788.9798 783.0628 757.4086 719.0727
 ## attr(,"y_name")
 ## [1] "y"
 ## attr(,"x_names")
@@ -165,11 +165,11 @@ pred_5
 ## 
 ## attr(,"system")
 ##          y x1 x2
-## 1 800.9560  4  0
-## 2 793.2817  5  0
-## 3 786.2419  6  0
-## 4 760.1793  7  1
-## 5 713.9310  1  1
+## 1 797.4414  4  0
+## 2 788.9798  5  0
+## 3 783.0628  6  0
+## 4 757.4086  7  1
+## 5 719.0727  1  1
 ## attr(,"class")
 ## [1] "ts_mv_prediction" "numeric"
 ```
@@ -184,7 +184,7 @@ pred_all
 ```
 
 ```
-## [1] 800.9560 793.2817 786.2419 760.1793 713.9310
+## [1] 797.4414 788.9798 783.0628 757.4086 719.0727
 ## attr(,"y_name")
 ## [1] "y"
 ## attr(,"x_names")
@@ -202,11 +202,11 @@ pred_all
 ## 
 ## attr(,"system")
 ##          y x1 x2
-## 1 800.9560  4  0
-## 2 793.2817  5  0
-## 3 786.2419  6  0
-## 4 760.1793  7  1
-## 5 713.9310  1  1
+## 1 797.4414  4  0
+## 2 788.9798  5  0
+## 3 783.0628  6  0
+## 4 757.4086  7  1
+## 5 719.0727  1  1
 ## attr(,"class")
 ## [1] "ts_mv_prediction" "numeric"
 ```
@@ -218,11 +218,11 @@ attr(pred_all, "system")
 
 ```
 ##          y x1 x2
-## 1 800.9560  4  0
-## 2 793.2817  5  0
-## 3 786.2419  6  0
-## 4 760.1793  7  1
-## 5 713.9310  1  1
+## 1 797.4414  4  0
+## 2 788.9798  5  0
+## 3 783.0628  6  0
+## 4 757.4086  7  1
+## 5 719.0727  1  1
 ```
 
 The multivariate plotting helper reuses the same visual language already used
@@ -233,6 +233,11 @@ throughout the univariate examples, but now it returns one plot per variable.
 plots <- plot_ts_pred_mv(samp$train, samp$test, pred_all)
 ```
 
+```
+## Error:
+## ! 'plot_ts_pred' is not an exported object from 'namespace:daltoolbox'
+```
+
 Target trajectory:
 
 
@@ -240,7 +245,10 @@ Target trajectory:
 plots$y
 ```
 
-![plot of chunk unnamed-chunk-12](fig/09-target-centered-regression/unnamed-chunk-12-1.png)
+```
+## Error:
+## ! objeto 'plots' não encontrado
+```
 
 Auxiliary variable `x1`:
 
@@ -249,7 +257,10 @@ Auxiliary variable `x1`:
 plots$x1
 ```
 
-![plot of chunk unnamed-chunk-13](fig/09-target-centered-regression/unnamed-chunk-13-1.png)
+```
+## Error:
+## ! objeto 'plots' não encontrado
+```
 
 Auxiliary variable `x2`:
 
@@ -258,7 +269,10 @@ Auxiliary variable `x2`:
 plots$x2
 ```
 
-![plot of chunk unnamed-chunk-14](fig/09-target-centered-regression/unnamed-chunk-14-1.png)
+```
+## Error:
+## ! objeto 'plots' não encontrado
+```
 
 The held-out target values remain available for evaluation against the target
 forecast.
@@ -272,7 +286,7 @@ ev_test$metrics
 
 ```
 ##        mse      smape        R2
-## 1 256.7801 0.01708759 0.2420893
+## 1 178.7239 0.01522645 0.4724798
 ```
 
 What this example shows

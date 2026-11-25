@@ -114,7 +114,7 @@ evaluate(model, as.vector(io_test$output), prediction)$metrics
 
 ```
 ##         mse    smape         R2
-## 1 0.1826307 1.366659 -0.5773911
+## 1 0.1697715 1.360933 -0.4663251
 ```
 
 This example shows the role of a custom augmentation inside `tspredit`: enrich the training windows without changing the rest of the forecasting interface.

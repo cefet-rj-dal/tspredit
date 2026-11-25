@@ -162,7 +162,10 @@ ev_test$metrics
 plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
 
-![plot of chunk unnamed-chunk-9](fig/21-stock-close-vector-autoregression-mv/unnamed-chunk-9-1.png)
+```
+## Error:
+## ! 'plot_ts_pred' is not an exported object from 'namespace:daltoolbox'
+```
 
 What this example shows
 - `ts_var()` models the aligned stock system jointly in the singular multivariate branch.

@@ -51,7 +51,8 @@ head(names(gdp))
 ```
 
 ```
-## [1] "usa_gdp"     "china_gdp"   "germany_gdp" "japan_gdp"   "india_gdp"   "uk_gdp"
+## [1] "usa_gdp"     "china_gdp"   "germany_gdp" "japan_gdp"   "india_gdp"  
+## [6] "uk_gdp"
 ```
 
 ``` r

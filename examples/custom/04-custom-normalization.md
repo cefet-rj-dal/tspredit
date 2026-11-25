@@ -111,10 +111,14 @@ ts_head(tst, 3)
 ```
 
 ```
-##               t9           t8         t7        t6        t5        t4        t3        t2        t1        t0
-## [1,] -0.05810591 -0.001977853 0.06807569 0.1577523 0.2312435 0.3168706 0.4324461 0.5602260 0.7256256 0.8946799
-## [2,] -0.07265343 -0.009532448 0.07126970 0.1374882 0.2146415 0.3187795 0.4339143 0.5829457 0.7352703 0.8623155
-## [3,] -0.07907878 -0.006229238 0.05347196 0.1230318 0.2169205 0.3207236 0.4550872 0.5924199 0.7069612 0.8811504
+##               t9           t8         t7        t6        t5        t4
+## [1,] -0.05810591 -0.001977853 0.06807569 0.1577523 0.2312435 0.3168706
+## [2,] -0.07265343 -0.009532448 0.07126970 0.1374882 0.2146415 0.3187795
+## [3,] -0.07907878 -0.006229238 0.05347196 0.1230318 0.2169205 0.3207236
+##             t3        t2        t1        t0
+## [1,] 0.4324461 0.5602260 0.7256256 0.8946799
+## [2,] 0.4339143 0.5829457 0.7352703 0.8623155
+## [3,] 0.4550872 0.5924199 0.7069612 0.8811504
 ```
 
 The next step shows that the custom normalizer can be plugged directly into a predictive model.
@@ -145,8 +149,8 @@ evaluate(model, as.vector(io_test$output), prediction)$metrics
 ```
 
 ```
-##           mse      smape        R2
-## 1 6.66291e+11 0.02841737 0.8735525
+##            mse      smape        R2
+## 1 656366928969 0.02821532 0.8754358
 ```
 
 This example shows that a custom normalizer in `tspredit` needs to provide the same practical contract as the built-in preprocessors: a fitted state, a forward transformation, and an inverse transformation for predictions.

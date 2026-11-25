@@ -90,7 +90,7 @@ ev_arima$metrics
 
 ```
 ##        mse      smape        R2
-## 1 6.768766 0.02329364 -2.204515
+## 1 8.980067 0.03045938 -3.251405
 ```
 
 The multivariate experiment below follows the same structure used in the model
@@ -185,11 +185,11 @@ pred_1
 ## [1] 82.20966
 ## 
 ## attr(,"prediction_x")$volume
-## [1] 33076060
+## [1] 30721051
 ## 
 ## attr(,"system")
 ##     close     open     high      low   volume
-## 1 86.1927 85.78517 85.99456 82.20966 33076060
+## 1 86.1927 85.78517 85.99456 82.20966 30721051
 ## attr(,"class")
 ## [1] "ts_mv_prediction" "numeric"
 ```
@@ -223,15 +223,15 @@ pred_5
 ## [1] 82.20966 82.47191 82.21620 82.24374 82.37079
 ## 
 ## attr(,"prediction_x")$volume
-## [1] 33076060 33506772 34513366 33013400 31279800
+## [1] 30721051 33586041 33636379 32167952 31000502
 ## 
 ## attr(,"system")
 ##     close     open     high      low   volume
-## 1 86.1927 85.78517 85.99456 82.20966 33076060
-## 2 86.1368 84.00956 87.11913 82.47191 33506772
-## 3 85.7986 85.78546 87.63444 82.21620 34513366
-## 4 85.7490 86.87644 86.98998 82.24374 33013400
-## 5 85.7441 85.34103 86.67025 82.37079 31279800
+## 1 86.1927 85.78517 85.99456 82.20966 30721051
+## 2 86.1368 84.00956 87.11913 82.47191 33586041
+## 3 85.7986 85.78546 87.63444 82.21620 33636379
+## 4 85.7490 86.87644 86.98998 82.24374 32167952
+## 5 85.7441 85.34103 86.67025 82.37079 31000502
 ## attr(,"class")
 ## [1] "ts_mv_prediction" "numeric"
 ```
@@ -255,7 +255,7 @@ attr(pred_5, "prediction_x")
 ## [1] 82.20966 82.47191 82.21620 82.24374 82.37079
 ## 
 ## $volume
-## [1] 33076060 33506772 34513366 33013400 31279800
+## [1] 30721051 33586041 33636379 32167952 31000502
 ```
 
 The synchronized multivariate forecast remains attached as a tabular attribute
@@ -268,11 +268,11 @@ attr(pred_5, "system")
 
 ```
 ##     close     open     high      low   volume
-## 1 86.1927 85.78517 85.99456 82.20966 33076060
-## 2 86.1368 84.00956 87.11913 82.47191 33506772
-## 3 85.7986 85.78546 87.63444 82.21620 34513366
-## 4 85.7490 86.87644 86.98998 82.24374 33013400
-## 5 85.7441 85.34103 86.67025 82.37079 31279800
+## 1 86.1927 85.78517 85.99456 82.20966 30721051
+## 2 86.1368 84.00956 87.11913 82.47191 33586041
+## 3 85.7986 85.78546 87.63444 82.21620 33636379
+## 4 85.7490 86.87644 86.98998 82.24374 32167952
+## 5 85.7441 85.34103 86.67025 82.37079 31000502
 ```
 
 We keep the plot focused on the target trajectory, because the model-comparison
@@ -283,7 +283,10 @@ notebooks after this one reuse the same visual convention.
 plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
 
-![plot of chunk unnamed-chunk-12](fig/10-stock-close-regression/unnamed-chunk-12-1.png)
+```
+## Error:
+## ! 'plot_ts_pred' is not an exported object from 'namespace:daltoolbox'
+```
 
 The held-out target values remain available for evaluation against the target
 forecast.
@@ -313,7 +316,7 @@ rbind(
 
 ```
 ##                  mse      smape        R2
-## ARIMA_close 6.768766 0.02329364 -2.204515
+## ARIMA_close 8.980067 0.03045938 -3.251405
 ## MV_mixed    4.312106 0.01930004 -1.041467
 ```
 

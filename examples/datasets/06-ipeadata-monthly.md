@@ -59,7 +59,8 @@ head(names(ipeadata.m))
 ```
 
 ```
-## [1] "BM12_ERC12"      "BM12_ERV12"      "IGP12_IGPDI12"   "FUNCEX12_MDPT12" "FUNCEX12_XPT12"  "PRECOS12_INPC12"
+## [1] "BM12_ERC12"      "BM12_ERV12"      "IGP12_IGPDI12"   "FUNCEX12_MDPT12"
+## [5] "FUNCEX12_XPT12"  "PRECOS12_INPC12"
 ```
 
 ``` r

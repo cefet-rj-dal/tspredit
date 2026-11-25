@@ -167,7 +167,10 @@ ev_test$metrics
 plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
 
-![plot of chunk unnamed-chunk-9](fig/19-stock-close-linear-regression-mv/unnamed-chunk-9-1.png)
+```
+## Error:
+## ! 'plot_ts_pred' is not an exported object from 'namespace:daltoolbox'
+```
 
 What this example shows
 - `ts_lm_mv()` can be applied to the same stock scenario as the sliding-window battery, but in the aligned singular branch.

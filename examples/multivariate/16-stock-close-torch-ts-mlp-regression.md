@@ -110,78 +110,49 @@ model <- ts_regsw_mv(
 ``` r
 set_example_seed()
 model <- fit(model, samp$train)
+```
+
+```
+## Error in `py_run_file_impl()`:
+## ! ModuleNotFoundError: No module named 'pandas'
+## Run `reticulate::py_last_error()` for details.
+```
+
+``` r
 pred_1 <- predict(model, steps_ahead = 1)
+```
+
+```
+## Error in `predict.ts_regsw_mv()`:
+## ! This multivariate model has no stored history. Fit the model or provide x.
+```
+
+``` r
 pred_1
 ```
 
 ```
-## [1] 91.79826
-## attr(,"y_name")
-## [1] "close"
-## attr(,"x_names")
-## [1] "open"   "high"   "low"    "volume"
-## attr(,"variables")
-## [1] "close"  "open"   "high"   "low"    "volume"
-## attr(,"steps_ahead")
-## [1] 1
-## attr(,"prediction_x")
-## attr(,"prediction_x")$open
-## [1] 86.36187
-## 
-## attr(,"prediction_x")$high
-## [1] 59.70926
-## 
-## attr(,"prediction_x")$low
-## [1] 91.04939
-## 
-## attr(,"prediction_x")$volume
-## [1] 8052113
-## 
-## attr(,"system")
-##      close     open     high      low  volume
-## 1 91.79826 86.36187 59.70926 91.04939 8052113
-## attr(,"class")
-## [1] "ts_mv_prediction" "numeric"
+## Error:
+## ! objeto 'pred_1' não encontrado
 ```
 
 
 ``` r
 pred_5 <- predict(model, steps_ahead = 5)
+```
+
+```
+## Error in `predict.ts_regsw_mv()`:
+## ! This multivariate model has no stored history. Fit the model or provide x.
+```
+
+``` r
 pred_5
 ```
 
 ```
-## [1] 91.79826 92.46502 92.77448 92.28625 91.56537
-## attr(,"y_name")
-## [1] "close"
-## attr(,"x_names")
-## [1] "open"   "high"   "low"    "volume"
-## attr(,"variables")
-## [1] "close"  "open"   "high"   "low"    "volume"
-## attr(,"steps_ahead")
-## [1] 5
-## attr(,"prediction_x")
-## attr(,"prediction_x")$open
-## [1] 86.36187 83.36290 81.77297 79.16950 78.12038
-## 
-## attr(,"prediction_x")$high
-## [1] 59.70926 59.70926 59.12735 59.39346 59.28188
-## 
-## attr(,"prediction_x")$low
-## [1] 91.04939 93.70523 94.55964 94.32892 95.33301
-## 
-## attr(,"prediction_x")$volume
-## [1]  8052112.8  4607293.5  2586505.4   284254.1 -1927496.3
-## 
-## attr(,"system")
-##      close     open     high      low     volume
-## 1 91.79826 86.36187 59.70926 91.04939  8052112.8
-## 2 92.46502 83.36290 59.70926 93.70523  4607293.5
-## 3 92.77448 81.77297 59.12735 94.55964  2586505.4
-## 4 92.28625 79.16950 59.39346 94.32892   284254.1
-## 5 91.56537 78.12038 59.28188 95.33301 -1927496.3
-## attr(,"class")
-## [1] "ts_mv_prediction" "numeric"
+## Error:
+## ! objeto 'pred_5' não encontrado
 ```
 
 
@@ -190,23 +161,27 @@ attr(pred_5, "system")
 ```
 
 ```
-##      close     open     high      low     volume
-## 1 91.79826 86.36187 59.70926 91.04939  8052112.8
-## 2 92.46502 83.36290 59.70926 93.70523  4607293.5
-## 3 92.77448 81.77297 59.12735 94.55964  2586505.4
-## 4 92.28625 79.16950 59.39346 94.32892   284254.1
-## 5 91.56537 78.12038 59.28188 95.33301 -1927496.3
+## Error:
+## ! objeto 'pred_5' não encontrado
 ```
 
 
 ``` r
 ev_test <- evaluate(model, output, pred_5)
+```
+
+```
+## Error:
+## ! objeto 'pred_5' não encontrado
+```
+
+``` r
 ev_test$metrics
 ```
 
 ```
-##        mse      smape       R2
-## 1 23.90212 0.05148355 -10.3159
+## Error:
+## ! objeto 'ev_test' não encontrado
 ```
 
 
@@ -214,7 +189,10 @@ ev_test$metrics
 plot_ts_pred_mv(samp$train, samp$test, pred_5, variable = "close")
 ```
 
-![plot of chunk unnamed-chunk-9](fig/16-stock-close-torch-ts-mlp-regression/unnamed-chunk-9-1.png)
+```
+## Error:
+## ! objeto 'pred_5' não encontrado
+```
 
 What this example shows
 - `torch_ts_mlp()` can be reused directly as the target learner inside `ts_regsw_mv()`.

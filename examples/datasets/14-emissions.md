@@ -51,7 +51,8 @@ head(names(emissions))
 ```
 
 ```
-## [1] "usa_ch4"     "usa_n2o"     "china_ch4"   "china_n2o"   "germany_ch4" "germany_n2o"
+## [1] "usa_ch4"     "usa_n2o"     "china_ch4"   "china_n2o"   "germany_ch4"
+## [6] "germany_n2o"
 ```
 
 ``` r

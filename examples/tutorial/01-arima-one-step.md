@@ -14,6 +14,13 @@ source(url("https://raw.githubusercontent.com/cefet-rj-dal/tspredit/main/example
 # Load the package and the example series used throughout the tutorials.
 library(daltoolbox)
 library(forecast)
+```
+
+```
+## Warning: pacote 'forecast' foi compilado no R versão 4.5.3
+```
+
+``` r
 library(tspredit)
 library(ggplot2)
 
@@ -129,7 +136,7 @@ ev_adjust$metrics
 
 ```
 ##            mse      smape R2
-## 1 1.977804e-10 0.05001045  1
+## 1 5.898807e-11 0.05000581  1
 ```
 
 The table reports three complementary metrics:
@@ -160,20 +167,20 @@ ev_test
 ## [1] -0.5440211
 ## 
 ## $prediction
-## [1] -0.5440215
+## [1] -0.544021
 ## 
 ## $smape
-## [1] 7.671266e-07
+## [1] 1.79757e-07
 ## 
 ## $mse
-## [1] 1.74167e-13
+## [1] 9.563192e-15
 ## 
 ## $R2
 ## [1] NA
 ## 
 ## $metrics
-##           mse        smape R2
-## 1 1.74167e-13 7.671266e-07 NA
+##            mse       smape R2
+## 1 9.563192e-15 1.79757e-07 NA
 ```
 
 Finally, we plot the one-step fitted values on train and the one-step forecast on the held-out observation.

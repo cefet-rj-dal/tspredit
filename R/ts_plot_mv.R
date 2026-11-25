@@ -4,7 +4,7 @@
 #'
 #'@details
 #' `plot_ts_pred_mv()` extends the visual logic already used in the univariate
-#' examples. It reuses `daltoolbox::plot_ts_pred()` variable by variable and
+#' examples. It reuses `plot_ts_pred()` variable by variable and
 #' returns either:
 #' - one plot when `variable` is provided
 #' - a named list of plots when `variable = NULL`
@@ -103,7 +103,7 @@ plot_ts_pred_mv <- function(history, future = NULL, prediction, variable = NULL,
     predicted <- as.vector(prediction_values[[var_name]])
     x <- seq_along(observed)
 
-    daltoolbox::plot_ts_pred(
+    plot_ts_pred(
       x = x,
       y = observed,
       yadj = adjusted,

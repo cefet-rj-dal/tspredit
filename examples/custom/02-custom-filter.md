@@ -86,8 +86,8 @@ evaluate(model, as.vector(io_test$output), prediction)$metrics
 ```
 
 ```
-##         mse     smape        R2
-## 1 0.0312947 0.8513416 0.7297061
+##          mse    smape        R2
+## 1 0.03120786 0.851367 0.7304561
 ```
 
 This example highlights the usual role of a filter extension in `tspredit`: transform the signal first, and then feed the filtered series into the downstream predictive workflow.

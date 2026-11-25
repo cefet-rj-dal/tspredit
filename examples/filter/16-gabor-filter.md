@@ -52,32 +52,14 @@ We now apply the Gabor filter.
 ``` r
 # Apply Gabor smoothing
 filter <- ts_fil_gabor(window_size = 3, central_frequency = 0.05)
-```
-
-```
-## Error in `ts_fil_gabor()`:
-## ! could not find function "ts_fil_gabor"
-```
-
-``` r
 filter <- daltoolbox::fit(filter, y)
 yhat <- transform(filter, y)
-```
 
-```
-## Error in `action.default()`:
-## ! could not find function "action.default"
-```
-
-``` r
 # Compare original vs filtered series
 plot_ts_pred(y = y, yadj = yhat) + theme(text = element_text(size = 16))
 ```
 
-```
-## Error:
-## ! object 'yhat' not found
-```
+![plot of chunk unnamed-chunk-5](fig/16-gabor-filter/unnamed-chunk-5-1.png)
 
 References
 - D. Gabor (1946). Theory of communication. Journal of the Institution of Electrical Engineers - Part III: Radio and Communication Engineering, 93, 429-457.

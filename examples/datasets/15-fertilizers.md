@@ -51,7 +51,8 @@ head(names(fertilizers))
 ```
 
 ```
-## [1] "usa_n"      "usa_p2o5"   "usa_k2o"    "china_n"    "china_p2o5" "china_k2o"
+## [1] "usa_n"      "usa_p2o5"   "usa_k2o"    "china_n"    "china_p2o5"
+## [6] "china_k2o"
 ```
 
 ``` r
