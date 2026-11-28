@@ -20,12 +20,9 @@ A useful way to read this folder is to treat ARIMA as the baseline for protocol 
 
 - [05-mlp-regression.md](05-mlp-regression.md) - train a multilayer perceptron on lagged inputs.
 - [06-elm-regression.md](06-elm-regression.md) - use an Extreme Learning Machine for fast neural regression.
-- [07-torch-ts-mlp-regression.md](07-torch-ts-mlp-regression.md) - train a PyTorch-based multilayer perceptron on lagged inputs.
 
 ## Sequence-oriented neural models
 
-- [08-conv1d-regression.md](08-conv1d-regression.md) - detect local temporal motifs with a 1D convolutional network.
-- [09-lstm-regression.md](09-lstm-regression.md) - model sequential dependencies with an LSTM network.
 
 ## Model search and integrated tuning
 

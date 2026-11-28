@@ -37,9 +37,6 @@ The examples in this folder now follow the most didactic order:
 - [13-stock-close-random-forest-regression.md](13-stock-close-random-forest-regression.md) - keep the stock scenario fixed and use Random Forest as the target learner.
 - [14-stock-close-mlp-regression.md](14-stock-close-mlp-regression.md) - keep the stock scenario fixed and use MLP as the target learner.
 - [15-stock-close-elm-regression.md](15-stock-close-elm-regression.md) - keep the stock scenario fixed and use ELM as the target learner.
-- [16-stock-close-torch-ts-mlp-regression.md](16-stock-close-torch-ts-mlp-regression.md) - keep the stock scenario fixed and use a PyTorch MLP as the target learner.
-- [17-stock-close-conv1d-regression.md](17-stock-close-conv1d-regression.md) - keep the stock scenario fixed and use Conv1D as the target learner.
-- [18-stock-close-lstm-regression.md](18-stock-close-lstm-regression.md) - keep the stock scenario fixed and use LSTM as the target learner.
 
 ### Block 4: Singular stock battery (`ts_reg_mv`)
 
